@@ -369,7 +369,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Radio Transceiver", "radio", r\x + 800.0 * RoomScale, r\y + 112.0 * RoomScale, r\z + 944.0 * RoomScale)
-			it\State = Rnd(100.0)
+			it\State = Rnd(10.0, 100.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "cont1_079"
@@ -594,7 +594,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("S-NAV Navigator", "nav", r\x - 930.0 * RoomScale, r\y + 137.0 * RoomScale, r\z + 190.0 * RoomScale)
-			it\State = Rnd(100.0)
+			it\State = Rnd(10.0, 100.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "room3_2_hcz"
@@ -738,7 +738,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("S-NAV 310 Navigator", "nav310", r\x + 325.0 * RoomScale, r\y + 266.0 * RoomScale, r\z + 60.0 * RoomScale)
-			it\State = Rnd(100.0)
+			it\State = Rnd(10.0, 100.0)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Incident Report SCP-106-0204", "paper", r\x + 704.0 * RoomScale, r\y + 183.0 * RoomScale, r\z - 576.0 * RoomScale)
@@ -1238,7 +1238,7 @@ Function FillRoom%(r.Rooms)
 			TurnEntity(sc\CameraOBJ, 30.0, 0.0, 0.0)
 			
 			it.Items = CreateItem("Night Vision Goggles", "nvg", r\x + 320.0 * RoomScale, r\y + 0.5, r\z + 704.0 * RoomScale)
-			it\State = Rnd(1000.0)
+			it\State = Rnd(100.0, 1000.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "room3_storage"
@@ -1762,7 +1762,7 @@ Function FillRoom%(r.Rooms)
 			EndIf
 			
 			it.Items = CreateItem("S-NAV 310 Navigator", "nav310", r\x + 58.0 * RoomScale, r\y - 504.0 * RoomScale, r\z - 658.0 * RoomScale)
-			it\State = Rnd(100.0)
+			it\State = Rnd(10.0, 100.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "room3_3_ez"
@@ -1905,7 +1905,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("S-NAV Navigator", "nav", r\x + 305.0 * RoomScale, r\y + 153.0 * RoomScale, r\z + 944.0 * RoomScale)
-			it\State = Rnd(100.0)
+			it\State = Rnd(10.0, 100.0)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Notification", "paper", r\x - 137.0 * RoomScale, r\y + 153.0 * RoomScale, r\z + 464.0 * RoomScale)
@@ -1949,7 +1949,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("S-NAV Navigator", "nav", r\x - 336.0 * RoomScale, r\y - 48.0 * RoomScale, r\z - 480.0 * RoomScale)
-			it\State = Rnd(100.0)
+			it\State = Rnd(10.0, 100.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "room2_3_ez"
@@ -2011,7 +2011,7 @@ Function FillRoom%(r.Rooms)
 				FreeEntity(r\RoomDoors[2]\Buttons[i]) : r\RoomDoors[2]\Buttons[i] = 0
 			Next
 			
-			d.Doors = CreateDoor(r\x + 1392.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 64.0 * RoomScale, 90.0, r, True)
+			d.Doors = CreateDoor(r\x + 1392.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 64.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_3)
 			d\Locked = 1 : d\MTFClose = False
 			
 			d.Doors = CreateDoor(r\x - 640.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 64.0 * RoomScale, 90.0, r)
@@ -2335,7 +2335,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Night Vision Goggles", "nvg", r\x + 280.0 * RoomScale, r\y - 1456.0 * RoomScale, r\z + 2164.0 * RoomScale)
-			it\State = Rnd(1000.0)
+			it\State = Rnd(100.0, 1000.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "room2_tesla_lcz", "room2_tesla_hcz", "room2_tesla_ez"
@@ -2430,6 +2430,9 @@ Function FillRoom%(r.Rooms)
 			For i = 0 To 3
 				EntityParent(r\Objects[i], r\OBJ)
 			Next
+			it.Items = CreateItem("Document SCP-914", "paper", r\x + 538.0 * RoomScale, r\y + 248.0 * RoomScale, r\z + 195.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			RotateEntity(it\Collider, 0.0, 0.0, 0.0)
 			
 			it.Items = CreateItem("Addendum: 5/14 Test Log", "paper", r\x + 538.0 * RoomScale, r\y + 178.0 * RoomScale, r\z + 127.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
@@ -2458,7 +2461,7 @@ Function FillRoom%(r.Rooms)
 				FreeEntity(r\RoomDoors[2]\Buttons[i]) : r\RoomDoors[2]\Buttons[i] = 0
 			Next
 			
-			r\RoomDoors.Doors[3] = CreateDoor(r\x - 2324.0 * RoomScale, r\y, r\z - 1248.0 * RoomScale, 90.0, r, True)
+			r\RoomDoors.Doors[3] = CreateDoor(r\x - 2324.0 * RoomScale, r\y, r\z - 1248.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_3)
 			r\RoomDoors[3]\Locked = 1 : r\RoomDoors[3]\MTFClose = False
 			PositionEntity(r\RoomDoors[3]\Buttons[0], EntityX(r\RoomDoors[3]\Buttons[0], True) - 4.0 * RoomScale, EntityY(r\RoomDoors[3]\Buttons[0], True), EntityZ(r\RoomDoors[3]\Buttons[0], True), True)
 			PositionEntity(r\RoomDoors[3]\Buttons[1], EntityX(r\RoomDoors[3]\Buttons[1], True) + 4.0 * RoomScale, EntityY(r\RoomDoors[3]\Buttons[1], True), EntityZ(r\RoomDoors[3]\Buttons[1], True), True)
@@ -2721,7 +2724,7 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case "room1_archive"
 			;[Block]
-			d.Doors = CreateDoor(r\x, r\y, r\z - 512.0 * RoomScale, 0.0, r, False, DEFAULT_DOOR, KEY_CARD_2)
+			d.Doors = CreateDoor(r\x, r\y, r\z - 512.0 * RoomScale, 0.0, r, False, DEFAULT_DOOR, Rnd(KEY_CARD_1, KEY_CARD_2))
 			
 			sc.SecurityCams = CreateSecurityCam(r\x - 256.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 640.0 * RoomScale, r)
 			sc\Angle = 180.0 : sc\Turn = 45.0
@@ -2757,8 +2760,19 @@ Function FillRoom%(r.Rooms)
 								;[End Block]
 							Case ItemChance >= 50 And ItemChance < 60 ; ~ 10% chance for a battery
 								;[Block]
-								ItemName = "9V Battery"
-								ItemTempName = "bat"
+								Temp2 = Rand(2)
+								Select Temp2
+									Case 1 ; ~ 50% chance for 9V Battery
+										;[Block]
+										ItemName = "9V Battery"
+										ItemTempName = "bat"
+										;[End Block]
+									Case 2 ; ~ 50% chance for 18V Battery
+										;[Block]
+										ItemName = "18V Battery"
+										ItemTempName = "finebat"
+										;[End Block]
+								End Select
 								;[End Block]
 							Case ItemChance >= 60 And ItemChance < 70 ; ~ 10% chance for an S-NAV
 								;[Block]
@@ -3038,7 +3052,7 @@ Function FillRoom%(r.Rooms)
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
 			it.Items = CreateItem("Night Vision Goggles", "nvg", r\x + 48.0 * RoomScale, r\y - 648.0 * RoomScale, r\z + 784.0 * RoomScale)
-			it\State = Rnd(1000.0)
+			it\State = Rnd(100.0, 1000.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "room2_gw", "room2_gw_2"
@@ -3138,7 +3152,7 @@ Function FillRoom%(r.Rooms)
 			r\RoomDoors[0]\Locked = 1 : r\RoomDoors[0]\MTFClose = False
 			
 			it.Items = CreateItem("Radio Transceiver", "18vradio", r\x + 308.0 * RoomScale, r\y + 92.0 * RoomScale, r\z + 409.0 * RoomScale)
-			it\State = Rnd(100.0)
+			it\State = Rnd(10.0, 100.0)
 			
 			For i = 0 To 1
 				FreeEntity(r\RoomDoors[0]\Buttons[i]) : r\RoomDoors[0]\Buttons[i] = 0
@@ -3509,9 +3523,17 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("First Aid Kit", "firstaid", r\x + 680.0 * RoomScale, r\y + 260.0 * RoomScale, r\z + 892.5 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 90.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
-			
-			it.Items = CreateItem("9V Battery", "bat", r\x - 700.0 * RoomScale, r\y + 210.0 * RoomScale, r\z + 920.0 * RoomScale)
+			If Rand(2) = 1 Then
+				it.Items = CreateItem("9V Battery", "bat", r\x - 700.0 * RoomScale, r\y + 210.0 * RoomScale, r\z + 920.0 * RoomScale)
+				EntityParent(it\Collider, r\OBJ) 
+			Else
+			it.Items = CreateItem("18V Battery", "finebat", r\x - 700.0 * RoomScale, r\y + 210.0 * RoomScale, r\z + 920.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
+			EndIf
+			
+			it.Items = CreateItem("Document SCP-006", "paper", r\x - 700.0 * RoomScale, r\y + 210.0 * RoomScale, r\z + 26.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			RotateEntity(it\Collider, 0.0, 180.0, 0.0)
 			
 			it.Items = CreateItem("Ballistic Helmet", "helmet", r\x + 344.0 * RoomScale, r\y + 210.0 * RoomScale, r\z - 900.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
@@ -3545,7 +3567,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("SCRAMBLE Gear", "scramble", r\x - 860.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 80.0 * RoomScale)
-			it\State = Rnd(1000.0)
+			it\State = Rnd(100.0, 1000.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "cont2_409"
