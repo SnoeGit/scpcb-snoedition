@@ -647,6 +647,7 @@ Function LoadItems%()
 	CreateItemTemplate("Document SCP-096", "paper", ItemsPath + "paper.b3d", INVPath + "INV_paper.png", ItemsPath + "docs\doc_096.png", 0.003, 0)
 	CreateItemTemplate("Document SCP-106", "paper", ItemsPath + "paper.b3d", INVPath + "INV_paper.png", ItemsPath + "docs\doc_106.png", 0.003, 0)
 	CreateItemTemplate("Document SCP-173", "paper", ItemsPath + "paper.b3d", INVPath + "INV_paper.png", ItemsPath + "docs\doc_173.png", 0.003, 0)
+	CreateItemTemplate("Janitorial Document SCP-173", "paper", ItemsPath + "paper.b3d", INVPath + "INV_paper.png", ItemsPath + "docs\doc_173_intro.png", 0.003, 0)
 	CreateItemTemplate("Document SCP-205", "paper", ItemsPath + "paper.b3d", INVPath + "INV_paper.png", ItemsPath + "docs\doc_205.png", 0.003, 0)
 	CreateItemTemplate("Document SCP-372", "paper", ItemsPath + "paper.b3d", INVPath + "INV_paper.png", ItemsPath + "docs\doc_372.png", 0.003, 0)
 	CreateItemTemplate("Document SCP-409", "paper", ItemsPath + "paper.b3d", INVPath + "INV_paper.png", ItemsPath + "docs\doc_409.png", 0.003, 0)
@@ -1623,7 +1624,7 @@ Function InitNewGame%()
 			EntityType(it\Collider, HIT_ITEM)
 			EntityParent(it\Collider, 0)
 			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Document SCP-173", "paper", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("Janitorial Document SCP-173", "paper", 1.0, 1.0, 1.0)
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(1) = it
 			HideEntity(it\Collider)

@@ -8,5 +8,6 @@ http://creativecommons.org/licenses/by-sa/3.0/
 
 Requirements:
 •	Blitz3D TSS v1.125
+https://github.com/Saalvage/Blitz3D/releases/tag/v1.125
 
 Beware - the source code is perhaps more horrifying than the game itself!

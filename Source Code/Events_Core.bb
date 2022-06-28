@@ -1452,7 +1452,7 @@ Function UpdateEvents%()
 								Else
 									AnimateNPC(e\room\NPC[3], 483.0, 607.0, 0.2, True)
 									If InteractObject(e\room\NPC[3]\OBJ, 2.25) Then
-										SelectedItem = CreateItem("Document SCP-173", "paper", 0.0, 0.0, 0.0)
+										SelectedItem = CreateItem("Janitorial Document SCP-173", "paper", 0.0, 0.0, 0.0)
 										EntityType(SelectedItem\Collider, HIT_ITEM)
 										EntityParent(SelectedItem\Collider, 0)
 										

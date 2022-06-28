@@ -1,4 +1,38 @@
-v1.0.3
+Snoedition
+
+General:
+- Allowed swapping between headgear.
+- Equipping headgear is slightly faster.
+- Batteries in equipment should no longer randomly spawn in with no battery at all.
+- 18V batteries now spawn around naturally if a bit rarer than 9V batteries.
+- Max Stamina when wearing SCP-714 is now 3 bars.
+- New document of 173 replacing the one the escort gives you.
+
+NPCs:
+- Edited multiple SCP's speed.
+SCP-008-1: 2.0 -> 1.85
+SCP-049: 1.5 -> 1.49
+SCP-049-2: 1.0 -> 0.9
+SCP-096: 9.0 -> 8.6
+SCP-106: 1.3 -> 1.23
+SCP-860-2: 8.0 -> 7.2
+
+Rooms:
+- Made the entrance to SCP-173 containment a keypad door.
+- Added SCP-914's document to it's containment cell.
+- Added Playing Card to SCP-914's containment cell to prevent softlocking if SCP-106 drops you off there.
+- Added SCP-006 document to o5 council room.
+- Removed Night Vision Goggles and added a Level 1 Key Card into room3_storage.
+- New HCZ styled rooms from the Nine-Tailed-Fox mod.
+- New Rocky room for the EZ from Nine-Tailed-Fox mod.
+
+
+Bug Fixes:
+- Fixed collision of the doors when they are culled.
+- Fixed buttons disappearing when doors were culled.
+
+
+v1.0.3 (unreleased UE edits)
 
 General:
 - Optimized game.
