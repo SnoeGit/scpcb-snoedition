@@ -789,6 +789,26 @@ Function UpdateConsole%()
 						CreateConsoleMsg("173 COOKIE OFF")
 					EndIf
 					;[End Block]
+					Case "joke" 
+					;[Block]
+					n_I\IsAprilFools = (Not n_I\IsAprilFools)
+					If n_I\IsAprilFools Then
+						Tex = LoadTexture_Strict("GFX\npcs\scp_173_J.png", 1)
+						If opt\Atmosphere Then TextureBlend(Tex, 5)
+						EntityTexture(n_I\Curr173\OBJ, Tex)
+						EntityTexture(n_I\Curr173\OBJ2, Tex)
+						DeleteSingleTextureEntryFromCache(Tex)
+						CreateConsoleMsg("173-J ON")
+					Else
+						If n_I\IsHalloween Then n_I\IsHalloween = (Not n_I\IsHalloween)
+						Tex2 = LoadTexture_Strict("GFX\npcs\scp_173.png", 1)
+						If opt\Atmosphere Then TextureBlend(Tex2, 5)
+						EntityTexture(n_I\Curr173\OBJ, Tex2)
+						EntityTexture(n_I\Curr173\OBJ2, Tex2)
+						DeleteSingleTextureEntryFromCache(Tex2)
+						CreateConsoleMsg("173-J OFF")
+					EndIf
+					;[End Block]
 				Case "sanic"
 					;[Block]
 					chs\SuperMan = (Not chs\SuperMan)
