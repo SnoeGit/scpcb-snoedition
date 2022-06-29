@@ -804,6 +804,10 @@ Function UpdateGame%()
 							;[Block]
 							me\BLINKFREQ = Rnd(200.0, 400.0)
 							;[End Block]
+						Case CAKE
+							;[Block]
+							me\BLINKFREQ = Rnd(520.0, 780.0)
+							;[End Block]
 					End Select 
 					me\BlinkTimer = me\BLINKFREQ
 				EndIf
@@ -3006,7 +3010,7 @@ Function UpdateGUI%()
 						me\EyeStuck = 10000.0
 						me\BlurTimer = 1000.0
 						
-						CreateMsg("You used the eyedrops. Your eyes feel very moisturized.")
+						CreateMsg("You used the eyedrops. Your eyes feel extremely moisturized.")
 						
 						RemoveItem(SelectedItem)
 					EndIf
@@ -6138,6 +6142,9 @@ Function UpdateEnding%()
 		If SelectedDifficulty\Name = "Keter" Then
 			GiveAchievement(AchvKeter)
 			SaveAchievementsFile()
+		ElseIf SelectedDifficulty\Name = "Apollyon" Then
+			GiveAchievement(AchvKeter)
+			SaveAchievementsFile()
 		EndIf
 	EndIf
 	
@@ -7005,7 +7012,7 @@ Function Use427%()
 			Next
 			If me\Injuries > 0.0 Then me\Injuries = Max(me\Injuries - (fps\Factor[0] * 0.0005), 0.0)
 			If me\Bloodloss > 0.0 And me\Injuries <= 1.0 Then me\Bloodloss = Max(me\Bloodloss - (fps\Factor[0] * 0.001), 0.0)
-			If I_008\Timer > 0.0 Then I_008\Timer = Max(I_008\Timer - (fps\Factor[0] * 0.001), 0.0)
+			If I_008\Timer > 0.0 Then I_008\Timer = Max(I_008\Timer - (fps\Factor[0] * 0.002), 0.0)
 			If I_409\Timer > 0.0 Then I_409\Timer = Max(I_409\Timer - (fps\Factor[0] * 0.003), 0.0)
 			For i = 0 To 6
 				If I_1025\State[i] > 0.0 Then I_1025\State[i] = Max(I_1025\State[i] - (0.001 * fps\Factor[0] * I_1025\State[7]), 0.0)

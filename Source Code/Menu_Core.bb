@@ -378,17 +378,17 @@ Function UpdateMainMenu%()
 						; ~ Inventory slots
 						If MouseOn(x + (410 * MenuScale), y + (240 * MenuScale), ImageWidth(ga\ArrowIMG[3]), ImageHeight(ga\ArrowIMG[3])) And mo\MouseHit1 Then
 							SelectedDifficulty\InventorySlots = SelectedDifficulty\InventorySlots + 2
-							If SelectedDifficulty\InventorySlots > 10 Then SelectedDifficulty\InventorySlots = 2
+							If SelectedDifficulty\InventorySlots > 20 Then SelectedDifficulty\InventorySlots = 2
 							PlaySound_Strict(ButtonSFX)
 						ElseIf MouseOn(x + (160 * MenuScale), y + (240 * MenuScale), ImageWidth(ga\ArrowIMG[1]), ImageHeight(ga\ArrowIMG[1])) And mo\MouseHit1
 							SelectedDifficulty\InventorySlots = SelectedDifficulty\InventorySlots - 2
-							If SelectedDifficulty\InventorySlots <= 0 Then SelectedDifficulty\InventorySlots = 10
+							If SelectedDifficulty\InventorySlots <= 0 Then SelectedDifficulty\InventorySlots = 20
 							PlaySound_Strict(ButtonSFX)
 						EndIf
 						
 						; ~ Other factor's difficulty
 						If MouseOn(x + (160 * MenuScale), y + (270 * MenuScale), ImageWidth(ga\ArrowIMG[1]), ImageHeight(ga\ArrowIMG[1])) And mo\MouseHit1 Then
-							If SelectedDifficulty\OtherFactors < EXTREME Then
+							If SelectedDifficulty\OtherFactors < CAKE Then
 								SelectedDifficulty\OtherFactors = SelectedDifficulty\OtherFactors + 1
 							Else
 								SelectedDifficulty\OtherFactors = EASY
@@ -1257,6 +1257,10 @@ Function RenderMainMenu%()
 						Case EXTREME
 							;[Block]
 							TempStr = "Extreme"
+							;[End Block]
+						Case CAKE
+							;[Block]
+							TempStr = "Cake"
 							;[End Block]
 					End Select
 					Text(x + (200 * MenuScale), y + (276 * MenuScale), "Other difficulty factors: " + TempStr)

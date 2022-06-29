@@ -8234,7 +8234,7 @@ Function UpdateEvents%()
 					
 					If EntityDistanceSquared(e\room\NPC[0]\Collider, me\Collider) < 1.44 Then
 						If e\EventState2 = 0.0 Then
-							me\LightBlink = 10.0
+							me\LightBlink = 9.0
 							PlaySound_Strict(LightSFX)
 							e\room\NPC[0]\State = 1.0
 							e\EventState2 = 1.0
@@ -9742,7 +9742,7 @@ Function UpdateEndings%()
 						
 						RenderLoading(60, "ENDING STUFF")
 						
-						e\room\Objects[0] = LoadRMesh("GFX\map\gate_a_tunnel.rmesh", Null)
+						e\room\Objects[0] = LoadRMesh("GFX\map\EZ\gate_a_tunnel.rmesh", Null)
 						PositionEntity(e\room\Objects[0], EntityX(e\room\OBJ, True), EntityY(e\room\OBJ, True), EntityZ(e\room\OBJ, True))
 						ScaleEntity(e\room\Objects[0], RoomScale, RoomScale, RoomScale)
 						EntityType(e\room\Objects[0], HIT_MAP)

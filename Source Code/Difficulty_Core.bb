@@ -36,6 +36,7 @@ Const EASY% = 0
 Const NORMAL% = 1
 Const HARD% = 2
 Const EXTREME% = 3
+Const CAKE% = 4
 ;[End Block]
 
 Function SetDifficultyColor%(ID%, R%, G%, B%)

@@ -10,7 +10,10 @@ General:
 - Renamed Small First Aid Kit to Compact First Aid Kit
 - Adjusted how Key Cards were obtained in SCP-914 from Mastercards and Playing Cards.
 - Super Battery chance in SCP-914 is rarer.
-- Blue Night Vision Goggles now display names of SCP-860-2, SCP-1499-1, and Tentacle instead of unkown.
+- Blue Night Vision Goggles now display names of SCP-860-2, SCP-1499-1, and Tentacle instead of unknown.
+- SCP-427's ability to cure SCP-008 is now faster.
+- Added Cake as a difficulty factor for Esoteric.
+- Apollyon now gives you the Keter Achievement.
 
 NPCs:
 - Edited multiple SCP's speed.
@@ -33,6 +36,7 @@ Rooms:
 - 18V Radio added to room3_gw
 - New HCZ styled rooms from the Nine-Tailed-Fox mod.
 - New Rocky room for the EZ from Nine-Tailed-Fox mod.
+- Lights going out in Medical Bay room has been shortened.
 
 
 Bug Fixes:
