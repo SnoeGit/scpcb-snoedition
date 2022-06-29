@@ -7,6 +7,10 @@ General:
 - 18V batteries now spawn around naturally if a bit rarer than 9V batteries.
 - Max Stamina when wearing SCP-714 is now 3 bars.
 - New document of 173 replacing the one the escort gives you.
+- Renamed Small First Aid Kit to Compact First Aid Kit
+- Adjusted how Key Cards were obtained in SCP-914 from Mastercards and Playing Cards.
+- Super Battery chance in SCP-914 is rarer.
+- Blue Night Vision Goggles now display names of SCP-860-2, SCP-1499-1, and Tentacle instead of unkown.
 
 NPCs:
 - Edited multiple SCP's speed.
@@ -17,12 +21,16 @@ SCP-096: 9.0 -> 8.6
 SCP-106: 1.3 -> 1.23
 SCP-860-2: 8.0 -> 7.2
 
+- SCP-173-J has been added as an April Fools event.
+
 Rooms:
 - Made the entrance to SCP-173 containment a keypad door.
 - Added SCP-914's document to it's containment cell.
 - Added Playing Card to SCP-914's containment cell to prevent softlocking if SCP-106 drops you off there.
 - Added SCP-006 document to o5 council room.
 - Removed Night Vision Goggles and added a Level 1 Key Card into room3_storage.
+- S-Nav 310 added to Maynard's office.
+- 18V Radio added to room3_gw
 - New HCZ styled rooms from the Nine-Tailed-Fox mod.
 - New Rocky room for the EZ from Nine-Tailed-Fox mod.
 

@@ -336,7 +336,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[End Block]
 		Case NPCType035_Tentacle
 			;[Block]
-			n\NVGName = "Unidentified"
+			n\NVGName = "Tentacle"
 			
 			n\Collider = CreatePivot()
 			
@@ -350,7 +350,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[End Block]
 		Case NPCType860_2
 			;[Block]
-			n\NVGName = "Unidentified"
+			n\NVGName = "SCP-860-2"
 			
 			n\Collider = CreatePivot()
 			EntityRadius(n\Collider, 0.25)
@@ -436,7 +436,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[End Block]
 		Case NPCType1499_1
 			;[Block]
-			n\NVGName = "Unidentified"
+			n\NVGName = "SCP-1499-1"
 			n\Collider = CreatePivot()
 			EntityRadius(n\Collider, 0.2)
 			EntityType(n\Collider, HIT_PLAYER)

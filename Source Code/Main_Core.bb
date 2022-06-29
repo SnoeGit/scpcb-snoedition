@@ -195,42 +195,6 @@ Global CameraPitch#
 
 Global GrabbedEntity%
 
-Type Cheats
-	Field GodMode%
-	Field NoBlink%
-	Field NoTarget%
-	Field NoClip%, NoClipSpeed#
-	Field InfiniteStamina%
-	Field SuperMan%, SuperManTimer#
-	Field DebugHUD%
-End Type
-
-Global chs.Cheats = New Cheats
-
-Function ClearCheats%()
-	chs\GodMode = False
-	chs\NoBlink = False
-	chs\NoTarget = False
-	chs\NoClip = False
-	chs\NoClipSpeed = 2.0
-	chs\InfiniteStamina = False
-	chs\SuperMan = False
-	chs\SuperManTimer = 0.0
-	chs\DebugHUD = 0
-End Function
-
-Function InitCheats%()
-	chs\GodMode = True
-	chs\NoBlink = True
-	chs\NoTarget = True
-	chs\NoClip = True
-	chs\NoClipSpeed = 2.0
-	chs\InfiniteStamina = True
-	chs\SuperMan = False
-	chs\SuperManTimer = 0.0
-	chs\DebugHUD = Rand(1, 3)
-End Function
-
 Global CoffinDistance# = 100.0
 
 Global SoundTransmission%
