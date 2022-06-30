@@ -1178,8 +1178,10 @@ End Function
 Function SetCrouch%(NewCrouch%)
 	Local Temp%
 	
+	If me\Stamina > 0.0 Then
 		If NewCrouch <> me\Crouch Then 
 			PlaySound_Strict(CrouchSFX)
+			me\Stamina = me\Stamina - 10.0
 			me\SndVolume = Max(1.0, me\SndVolume)
 			
 			If me\Stamina < 10.0 Then
@@ -1190,6 +1192,7 @@ Function SetCrouch%(NewCrouch%)
 			
 			me\Crouch = NewCrouch
 		EndIf
+	EndIf
 End Function
 
 Function InjurePlayer%(Injuries_#, Infection# = 0.0, BlurTimer_# = 0.0, VestFactor# = 0.0, HelmetFactor# = 0.0)
@@ -1313,7 +1316,9 @@ Function UpdateMoving%()
 				
 				If PlayerRoom\RoomTemplate\Name = "dimension_106" Then 
 					If EntityY(me\Collider) < 2000.0 * RoomScale Lor EntityY(me\Collider) > 2608.0 * RoomScale Then
-						me\Stamina = me\Stamina - (fps\Factor[0] * 0.6 * me\StaminaEffect)
+						If me\Stamina > 0.0 Then
+						me\Stamina = me\Stamina - (fps\Factor[0] * 0.6)
+						EndIf
 						Speed = 0.015
 						Sprint = 1.0
 						If (KeyDown(key\SPRINT)) Then

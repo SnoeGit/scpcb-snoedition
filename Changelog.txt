@@ -1,11 +1,15 @@
 Snoedition
 
 General:
+- Optimized the games textures to take up less filesize.
+- Reorganized a large portion of the files into folders for better organization.
 - Allowed swapping between headgear.
 - Equipping headgear is slightly faster.
 - Batteries in equipment should no longer randomly spawn in with no battery at all.
 - 18V batteries now spawn around naturally if a bit rarer than 9V batteries.
 - Max Stamina when wearing SCP-714 is now 3 bars.
+- Stamina regeneration is faster when standing still.
+- Crouching now removes a consistent 2 bars of stamina instead of a randomized amount between 1.6-3.2 bars.
 - New document of 173 replacing the one the escort gives you.
 - Renamed Small First Aid Kit to Compact First Aid Kit
 - Adjusted how Key Cards were obtained in SCP-914 from Mastercards and Playing Cards.
@@ -14,6 +18,7 @@ General:
 - SCP-427's ability to cure SCP-008 is now faster.
 - Added Cake as a difficulty factor for Esoteric.
 - Apollyon now gives you the Keter Achievement.
+- Subtitles now show who is currently talking.
 
 NPCs:
 - Edited multiple SCP's speed.
@@ -37,6 +42,7 @@ Rooms:
 - New HCZ styled rooms from the Nine-Tailed-Fox mod.
 - New Rocky room for the EZ from Nine-Tailed-Fox mod.
 - Lights going out in Medical Bay room has been shortened.
+- SCP-106's Pocket Dimension now drains your stamina quickly instead of setting it to 0.
 
 
 Bug Fixes:
