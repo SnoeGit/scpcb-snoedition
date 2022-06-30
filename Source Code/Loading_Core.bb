@@ -1546,7 +1546,7 @@ Function InitNewGame%()
 			AccessCode = AccessCode + (Rand(9) * (10 ^ i))
 		Next
 		Skip = False
-		If AccessCode <> 7816 And AccessCode <> 2411 Then 
+		If AccessCode <> 7816 And AccessCode <> 2411 And AccessCode <> 5731 Then 
 			Skip = True
 		Else
 			AccessCode = 0
