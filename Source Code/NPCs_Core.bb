@@ -2242,7 +2242,30 @@ Function UpdateNPCs%()
 										If Dist < 0.49 Then
 											If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 												PlaySound2(DamageSFX[Rand(5, 8)], Camera, n\Collider)
-												InjurePlayer(Rnd(0.4, 1.0), 0.0, 0.0, Rnd(0.1, 0.25), 0.2)
+
+												;rewrite this to be better?
+												Select SelectedDifficulty\OtherFactors
+												Case EASY
+													;[Block]
+													InjurePlayer(Rnd(0.6, 0.9), 0.0, 0.0, Rnd(0.1, 0.25), 0.2)
+													;[End Block]
+												Case NORMAL
+													;[Block]
+													InjurePlayer(Rnd(0.72, 1.08), 0.0, 0.0, Rnd(0.12, 0.3), 0.2)
+													;[End Block]
+												Case HARD
+													;[Block]
+													InjurePlayer(Rnd(0.84, 1.26), 0.0, 0.0, Rnd(0.14, 0.35), 0.2)
+													;[End Block]
+													Case EXTREME
+													;[Block]
+													InjurePlayer(Rnd(0.96, 1.44), 0.0, 0.0, Rnd(0.16, 0.40), 0.2)
+													;[End Block]
+												Case CAKE
+													;[Block]
+													InjurePlayer(Rnd(0.42, 0.63), 0.0, 0.0, Rnd(0.07, 0.175), 0.2)
+													;[End Block]
+													End Select
 												
 												If me\Injuries > 3.0 Then
 													msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2."
@@ -3259,7 +3282,29 @@ Function UpdateNPCs%()
 													InjurePlayer(Rnd(0.5))
 												Else
 													PlaySound_Strict(DamageSFX[Rand(9, 10)])
-													InjurePlayer(Rnd(1.0, 1.5), 0.0, 100.0, Rnd(0.1, 0.55), 0.2)
+												;rewrite this to be better?
+												Select SelectedDifficulty\OtherFactors
+												Case EASY
+													;[Block]
+													InjurePlayer(Rnd(0.8, 1.2), 0.0, 100.0, Rnd(0.15, 0.45), 0.2)
+													;[End Block]
+												Case NORMAL
+													;[Block]
+													InjurePlayer(Rnd(0.96, 1.44), 0.0, 100.0, Rnd(0.18, 0.54), 0.2)
+													;[End Block]
+												Case HARD
+													;[Block]
+													InjurePlayer(Rnd(1.12, 1.68), 0.0, 100.0, Rnd(0.21, 0.63), 0.2)
+													;[End Block]
+													Case EXTREME
+													;[Block]
+													InjurePlayer(Rnd(1.28, 1.92), 0.0, 100.0, Rnd(0.24, 0.72), 0.2)
+													;[End Block]
+												Case CAKE
+													;[Block]
+													InjurePlayer(Rnd(0.56, 0.84), 0.0, 100.0, Rnd(0.105, 0.315), 0.2)
+													;[End Block]
+													End Select
 													
 													If me\Injuries > 3.0 Then
 														If PlayerRoom\RoomTemplate\Name = "room2offices" Then
@@ -4348,7 +4393,29 @@ Function UpdateNPCs%()
 									If Dist < 0.64 Then
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
-											InjurePlayer(Rnd(0.5, 1.0), 0.0, 500.0, Rnd(0.1, 0.3))
+											Select SelectedDifficulty\OtherFactors
+												Case EASY
+													;[Block]
+													InjurePlayer(Rnd(0.5, 0.8), 0.0, 500.0, Rnd(0.1, 0.3))
+													;[End Block]
+												Case NORMAL
+													;[Block]
+													InjurePlayer(Rnd(0.6, 0.96), 0.0, 500.0, Rnd(0.12, 0.36))
+													;[End Block]
+												Case HARD
+													;[Block]
+													InjurePlayer(Rnd(0.7, 1.12), 0.0, 500.0, Rnd(0.14, 0.42))
+													;[End Block]
+													Case EXTREME
+													;[Block]
+													InjurePlayer(Rnd(0.8, 1.28), 0.0, 500.0, Rnd(0.16, 0.48))
+													;[End Block]
+												Case CAKE
+													;[Block]
+													InjurePlayer(Rnd(0.35, 0.56), 0.0, 500.0, Rnd(0.07, 0.21))
+													;[End Block]
+												End Select
+												
 										EndIf
 									Else
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
@@ -4690,9 +4757,30 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.75, 1.5), 0.0, 500.0, Rnd(0.1, 0.4), 0.2)
+											Select SelectedDifficulty\OtherFactors
+												Case EASY
+													;[Block]
+													InjurePlayer(Rnd(0.65, 1.1), 0.0, 500.0, Rnd(0.12, 0.4), 0.2)
+													;[End Block]
+												Case NORMAL
+													;[Block]
+													InjurePlayer(Rnd(0.78, 1.32), 0.0, 500.0, Rnd(0.144, 0.48), 0.2)
+													;[End Block]
+												Case HARD
+													;[Block]
+													InjurePlayer(Rnd(0.91, 1.54), 0.0, 500.0, Rnd(0.168, 0.56), 0.2)
+													;[End Block]
+													Case EXTREME
+													;[Block]
+													InjurePlayer(Rnd(1.04, 1.76), 0.0, 500.0, Rnd(0.192, 0.64), 0.2)
+													;[End Block]
+												Case CAKE
+													;[Block]
+													InjurePlayer(Rnd(0.455, 0.77), 0.0, 500.0, Rnd(0.084, 0.28), 0.2)
+													;[End Block]
+												End Select
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
-										If me\Injuries > 10.0 Then
+										If me\Injuries > 8.0 Then
 											Kill(True)
 											If PlayerRoom\RoomTemplate\Name = "dimension_1499"
 												msg\DeathMsg = "All personnel situated within Evacuation Shelter LC-2 during the breach have been administered "
@@ -4715,7 +4803,28 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.75, 1.5), 0.0, 500.0, Rnd(0.1, 0.4), 0.2)
+										Select SelectedDifficulty\OtherFactors
+												Case EASY
+													;[Block]
+													InjurePlayer(Rnd(0.65, 1.1), 0.0, 500.0, Rnd(0.12, 0.4), 0.2)
+													;[End Block]
+												Case NORMAL
+													;[Block]
+													InjurePlayer(Rnd(0.78, 1.32), 0.0, 500.0, Rnd(0.144, 0.48), 0.2)
+													;[End Block]
+												Case HARD
+													;[Block]
+													InjurePlayer(Rnd(0.91, 1.54), 0.0, 500.0, Rnd(0.168, 0.56), 0.2)
+													;[End Block]
+													Case EXTREME
+													;[Block]
+													InjurePlayer(Rnd(1.04, 1.76), 0.0, 500.0, Rnd(0.192, 0.64), 0.2)
+													;[End Block]
+												Case CAKE
+													;[Block]
+													InjurePlayer(Rnd(0.455, 0.77), 0.0, 500.0, Rnd(0.084, 0.28), 0.2)
+													;[End Block]
+												End Select
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 										If me\Injuries > 10.0 Then
 											Kill(True)
@@ -4938,7 +5047,28 @@ Function UpdateNPCs%()
 									If Dist < 0.49 Then
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound_Strict(DamageSFX[Rand(5, 8)])
-											InjurePlayer(Rnd(0.4, 1.0), 1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs), 0.0, Rnd(0.1, 0.25), 0.2)
+											Select SelectedDifficulty\OtherFactors
+												Case EASY
+													;[Block]
+													InjurePlayer(Rnd(0.4, 0.7), 1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs), 0.0, Rnd(0.1, 0.25), 0.2)
+													;[End Block]
+												Case NORMAL
+													;[Block]
+													InjurePlayer(Rnd(0.48, 0.84), 1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs), 0.0, Rnd(0.12, 0.3), 0.2)
+													;[End Block]
+												Case HARD
+													;[Block]
+													InjurePlayer(Rnd(0.56, 0.98), 1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs), 0.0, Rnd(0.14, 0.35), 0.2)
+													;[End Block]
+													Case EXTREME
+													;[Block]
+													InjurePlayer(Rnd(0.64, 1.12), 1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs), 0.0, Rnd(0.16, 0.4), 0.2)
+													;[End Block]
+												Case CAKE
+													;[Block]
+													InjurePlayer(Rnd(0.28, 0.49), 1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs), 0.0, Rnd(0.07, 0.21), 0.2)
+													;[End Block]
+												End Select
 											If me\Injuries > 3.0 Then
 												msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by [DATA REDACTED], who was infected with SCP-008. Said subject was located by Nine-Tailed Fox and terminated."
 												Kill(True)
@@ -7098,7 +7228,7 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 			Case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ; ~ Vest
 				;[Block]
 				me\Stamina = me\Stamina - Rnd(5.0)
-				InjurePlayer(Rnd(0.7, 0.9), 0.0, 650.0, Rnd(0.3, 0.6))
+				InjurePlayer(Rnd(0.7, 0.9), 0.0, 650.0, Rnd(0.25, 0.5))
 				If wi\BallisticVest > 0 Then
 					ShotMessageUpdate = "A bullet penetrated your vest."
 				Else
@@ -7108,13 +7238,13 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 			Case 11 ; ~ Left Leg
 				;[Block]
 				me\Stamina = me\Stamina - Rnd(10.0)
-				InjurePlayer(Rnd(0.6, 0.8), 0.0, 650.0)
+				InjurePlayer(Rnd(0.5, 0.7), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your left leg."
 				;[End Block]
 			Case 12 ; ~ Right Leg
 				;[Block]
 				me\Stamina = me\Stamina - Rnd(10.0)
-				InjurePlayer(Rnd(0.6, 0.8), 0.0, 650.0)
+				InjurePlayer(Rnd(0.5, 0.7), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your right leg."
 				;[End Block]
 			Case 13 ; ~ Left Arm
@@ -7135,7 +7265,7 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 			Case 16, 17 ; ~ Helmet, Face or Head
 				;[Block]
 				If wi\BallisticHelmet Then
-					InjurePlayer(0.0)
+					InjurePlayer(0.1)
 				Else
 					For n.NPCs = Each NPCs
 						If n\NPCType = NPCTypeMTF Lor n\NPCType = NPCTypeApache Lor n\NPCType = NPCTypeGuard
