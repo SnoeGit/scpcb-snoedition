@@ -191,15 +191,15 @@ Function UpdateWorld2%()
 	Local HasBattery%
 	Local Power%
 	
-	If (wi\NightVision > 0 And wi\NightVision <> 3) Lor wi\SCRAMBLE Then
+	If (wi\NightVision > 0 And wi\NightVision <> 3) Lor wi\SCRAMBLE > 0 Then
 		For i = 0 To MaxItemAmount - 1
 			If Inventory(i) <> Null Then
-				If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\SCRAMBLE And Inventory(i)\ItemTemplate\TempName = "scramble") Then
+				If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
 					Inventory(i)\State = Max(0.0, Inventory(i)\State - (fps\Factor[0] * (0.02 * wi\NightVision) + (0.15 * (wi\SCRAMBLE))))
 					Power = Int(Inventory(i)\State)
 					If Power = 0 Then ; ~ This NVG or SCRAMBLE can't be used
 						HasBattery = 0
-						If wi\SCRAMBLE Then
+						If wi\SCRAMBLE > 0 Then
 							CreateMsg("The batteries in this gear died.")
 						Else
 							CreateMsg("The batteries in these night vision goggles died.")
@@ -230,7 +230,7 @@ Function UpdateWorld2%()
 		EndIf
 	EndIf
 	
-	If wi\SCRAMBLE Then
+	If wi\SCRAMBLE > 0 Then
 		If HasBattery = 0 Then
 			If ChannelPlaying(SCRAMBLECHN) Then StopChannel(SCRAMBLECHN)
 		Else
@@ -275,10 +275,10 @@ Function RenderWorld2%(Tween#)
 	Local HasBattery%
 	Local Power%
 	
-	If (wi\NightVision > 0 And wi\NightVision <> 3) Lor wi\SCRAMBLE Then
+	If (wi\NightVision > 0 And wi\NightVision <> 3) Lor wi\SCRAMBLE > 0 Then
 		For i = 0 To MaxItemAmount - 1
 			If Inventory(i) <> Null Then
-				If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\SCRAMBLE And Inventory(i)\ItemTemplate\TempName = "scramble") Then
+				If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
 					Power = Int(Inventory(i)\State)
 					If Power = 0 Then ; ~ This NVG or SCRAMBLE can't be used
 						HasBattery = 0

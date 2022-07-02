@@ -353,9 +353,9 @@ Function RemoveWearableItems%(item.Items)
 			;[Block]
 			I_427\Using = False
 			;[End Block]
-		Case "scramble"
+		Case "scramble", "finescramble"
 			;[Block]
-			wi\SCRAMBLE = False
+			wi\SCRAMBLE = 0
 			;[End Block]
 	End Select
 	
@@ -734,7 +734,7 @@ Function CanUseItem%(CanUseWithGasMask%, CanUseWithEyewear%)
 	If (Not CanUseWithGasMask) And (wi\GasMask > 0 Lor I_1499\Using > 0) Then
 		CreateMsg("You can't use that item while wearing a gas mask.")
 		Return(False)
-	ElseIf (Not CanUseWithEyewear) And (wi\NightVision > 0 Lor wi\SCRAMBLE)
+	ElseIf (Not CanUseWithEyewear) And (wi\NightVision > 0 Lor wi\SCRAMBLE > 0)
 		CreateMsg("You can't use that item while wearing headgear.")
 		Return(False)
 	EndIf
@@ -743,24 +743,24 @@ End Function
 
 ; ~ Maybe re-work?
 Function PreventItemOverlapping%(GasMask% = False, NVG% = False, SCP1499% = False, Helmet% = False, SCRAMBLE% = False)
-	If (Not GasMask) And wi\GasMask > 0 Then
-		CreateMsg("You need to take off the gas mask in order to use that item.")
+	If SCP1499 And wi\GasMask > 0 Then
+		CreateMsg("You need to take off the gas mask in order to use SCP-1499.")
 		SelectedItem = Null
 		Return(True)
 	ElseIf (Not SCP1499) And I_1499\Using > 0
 		CreateMsg("You need to take off SCP-1499 in order to use that item.")
 		SelectedItem = Null
 		Return(True)
-	ElseIf (Not NVG) And wi\NightVision > 0 Then
-		CreateMsg("You need to take off the goggles in order to use that item.")
+	ElseIf SCP1499 And wi\NightVision > 0 Then
+		CreateMsg("You need to take off the goggles in order to use SCP-1499.")
 		SelectedItem = Null
 		Return(True)
-	ElseIf (Not Helmet) And wi\BallisticHelmet
-		CreateMsg("You need to take off the helmet in order to use that item.")
+	ElseIf SCP1499 And wi\BallisticHelmet
+		CreateMsg("You need to take off the helmet in order to use SCP-1499.")
 		SelectedItem = Null
 		Return(True)
-	ElseIf (Not SCRAMBLE) And wi\SCRAMBLE
-		CreateMsg("You need to take off the gear in order to use that item.")
+	ElseIf SCP1499 And wi\SCRAMBLE > 0 Then
+		CreateMsg("You need to take off the gear in order to use SCP-1499.")
 		SelectedItem = Null
 		Return(True)
 	EndIf

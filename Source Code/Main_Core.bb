@@ -814,7 +814,7 @@ Function UpdateGame%()
 				me\BlinkTimer = me\BlinkTimer - fps\Factor[0]
 			Else
 				me\BlinkTimer = me\BlinkTimer - (fps\Factor[0] * 0.6 * me\BlinkEffect)
-				If wi\NightVision = 0 And (Not wi\SCRAMBLE) Then
+				If wi\NightVision = 0 And wi\SCRAMBLE = 0 Then
 					If me\EyeIrritation > 0.0 Then me\BlinkTimer = me\BlinkTimer - Min((me\EyeIrritation / 100.0) + 1.0, 4.0) * fps\Factor[0]
 				EndIf
 			EndIf
@@ -1760,7 +1760,7 @@ Function UpdateMouseLook%()
 		If (Not EntityHidden(t\OverlayID[8])) Then HideEntity(t\OverlayID[8])
 	EndIf
 	
-	If wi\NightVision > 0 Lor wi\SCRAMBLE Then
+	If wi\NightVision > 0 Lor wi\SCRAMBLE > 0 Then
 		If EntityHidden(t\OverlayID[4]) Then ShowEntity(t\OverlayID[4])
 		If wi\NightVision = 2 Then
 			EntityColor(t\OverlayID[4], 0.0, 100.0, 255.0)
@@ -2340,9 +2340,9 @@ Function UpdateGUI%()
 								InvOpen = False
 							EndIf
 							;[End Block]
-						Case "scramble"
+						Case "scramble", "finescramble"
 							;[Block]
-							If wi\SCRAMBLE Then
+							If wi\SCRAMBLE > 0 Then
 								CreateHintMsg("Double click on this item to take it off.")
 							Else
 								DropItem(SelectedItem)
@@ -2645,6 +2645,13 @@ Function UpdateGUI%()
 										;[Block]
 										CreateMsg("The battery doesn't fit inside this gear.")
 										;[End Block]
+									Case "finescramble"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Rnd(200.0, 2000.0)
+										CreateMsg("You replaced the gear's battery.")
+										;[End Block]
 									Default
 										;[Block]
 										For z = 0 To MaxItemAmount - 1
@@ -2701,7 +2708,7 @@ Function UpdateGUI%()
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in these goggles.")
 										;[End Block]
-									Case "scramble"
+									Case "scramble", "finescramble"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
@@ -2775,7 +2782,7 @@ Function UpdateGUI%()
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[1])
 							Else
 								wi\GasMask = 0
-								wi\SCRAMBLE = False
+								wi\SCRAMBLE = 0
 								wi\BallisticHelmet = False
 								CreateMsg("You put on the goggles.")
 								Select SelectedItem\ItemTemplate\TempName
@@ -3633,7 +3640,7 @@ Function UpdateGUI%()
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								wi\GasMask = 0
 								wi\BallisticHelmet = False
-								wi\SCRAMBLE = False
+								wi\SCRAMBLE = 0
 							EndIf
 							SelectedItem\State = 0.0
 							SelectedItem = Null
@@ -3698,7 +3705,7 @@ Function UpdateGUI%()
 								wi\GasMask = 0
 							Else
 								wi\NightVision = 0
-								wi\SCRAMBLE = False
+								wi\SCRAMBLE = 0
 								wi\BallisticHelmet = False
 								Select SelectedItem\ItemTemplate\TempName
 									Case "gasmask"
@@ -3911,7 +3918,7 @@ Function UpdateGUI%()
 							Else
 								wi\GasMask = 0
 								wi\NightVision = 0
-								wi\SCRAMBLE = False
+								wi\SCRAMBLE = 0
 								CreateMsg("You put on the helmet.")
 								wi\BallisticHelmet = True
 							EndIf
@@ -3919,8 +3926,18 @@ Function UpdateGUI%()
 							SelectedItem = Null
 						EndIf
 					;[End Block]
-				Case "scramble"
+				Case "scramble", "finescramble"
 					;[Block]
+					Select SelectedItem\ItemTemplate\TempName
+							Case "scramble"
+								;[Block]
+								If IsDoubleItem(wi\SCRAMBLE, 1, "gears") Then Return
+								;[End Block]
+							Case "finescramble"
+								;[Block]
+								If IsDoubleItem(wi\SCRAMBLE, 2, "gears") Then Return
+								;[End Block]
+						End Select
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 6.0)
 						
 						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.5), 100.0)
@@ -3928,15 +3945,24 @@ Function UpdateGUI%()
 						If SelectedItem\State3 = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 							
-							If wi\SCRAMBLE Then
+							If wi\SCRAMBLE > 0 Then
 								CreateMsg("You removed the gear.")
-								wi\SCRAMBLE = False
+								wi\SCRAMBLE = 0
 							Else
 								wi\GasMask = 0
 								wi\NightVision = 0
 								wi\BallisticHelmet = False
 								CreateMsg("You put on the gear.")
-								wi\SCRAMBLE = True
+								Select SelectedItem\ItemTemplate\TempName
+									Case "scramble"
+										;[Block]
+										wi\SCRAMBLE = 1
+										;[End Block]
+									Case "finescramble"
+										;[Block]
+										wi\SCRAMBLE = 2
+										;[End Block]
+								End Select
 							EndIf
 							SelectedItem\State3 = 0.0
 							SelectedItem = Null
@@ -4010,7 +4036,7 @@ Function UpdateGUI%()
 							DropItem(SelectedItem, False)
 						EndIf
 						;[End Block]
-					Case "nvg", "supernvg", "finenvg", "scramble", "scp1025"
+					Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "scp1025"
 						;[Block]
 						SelectedItem\State3 = 0.0
 						;[End Block]
@@ -4038,7 +4064,7 @@ Function UpdateGUI%()
 					;[Block]
 					it\State = 0.0
 					;[End Block]
-				Case "nvg", "supernvg", "finenvg", "scramble", "scp1025"
+				Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "scp1025"
 					;[Block]
 					it\State3 = 0.0
 					;[End Block]
@@ -4546,7 +4572,7 @@ Function RenderGUI%()
 						;[Block]
 						If wi\HazmatSuit = 2 Then ShouldDrawRect = True
 						;[End Block]
-					Case "hazmatsuit3
+					Case "hazmatsuit3"
 						;[Block]"
 						If wi\HazmatSuit = 3 Then ShouldDrawRect = True	
 						;[End Block]
@@ -4580,7 +4606,11 @@ Function RenderGUI%()
 						;[End Block]
 					Case "scramble"
 						;[Block]
-						If wi\SCRAMBLE Then ShouldDrawRect = True
+						If wi\SCRAMBLE = 1 Then ShouldDrawRect = True
+						;[End Block]
+					Case "finescramble"
+						;[Block]
+						If wi\SCRAMBLE = 2 Then ShouldDrawRect = True
 						;[End Block]
 					Case "scp1499"
 						;[Block]
@@ -5077,7 +5107,7 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					EndIf
 					;[End Block]
-				Case "scramble"
+				Case "scramble", "finescramble"
 					;[Block]
 					If (Not PreventItemOverlapping(False, False, False, False, True)) Then
 						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))

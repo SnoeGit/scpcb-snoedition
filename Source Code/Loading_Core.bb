@@ -826,6 +826,7 @@ Function LoadItems%()
 	CreateItemTemplate("Night Vision Goggles", "finenvg", ItemsPath + "night_vision_goggles.b3d", INVPath + "INV_night_vision_goggles(2).png", "", 0.02, 2)
 	CreateItemTemplate("Night Vision Goggles", "supernvg", ItemsPath + "night_vision_goggles.b3d", INVPath + "INV_night_vision_goggles(3).png", "", 0.02, 2)
 	CreateItemTemplate("SCRAMBLE Gear", "scramble", ItemsPath + "SCRAMBLE_gear.b3d", INVPath + "INV_SCRAMBLE_gear.png", "", 0.02, 2)
+	CreateItemTemplate("SCRAMBLE Gear", "finescramble", ItemsPath + "SCRAMBLE_gear.b3d", INVPath + "INV_SCRAMBLE_gear.png", "", 0.02, 2)
 	
 	it.ItemTemplates = CreateItemTemplate("Pill", "pill", ItemsPath + "scps\pill.b3d", INVPath + "INV_pill.png", "", 0.0001, 2)
 	EntityColor(it\OBJ, 255.0, 255.0, 255.0)

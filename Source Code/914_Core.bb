@@ -14,7 +14,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 	Local Remove% = True, i%
 	
 	Select item\ItemTemplate\TempName
-		Case "gasmask", "gasmask3"
+		Case "gasmask", "supergasmask", "gasmask3"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -156,7 +156,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "nvg", "supernvg", "finenvg", "scramble"
+		Case "nvg", "supernvg", "finenvg"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -176,12 +176,32 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case VERYFINE
 					;[Block]
 					If Rand(5) = 1 Then
-						it2.Items = CreateItem("SCRAMBLE Gear", "scramble", x, y, z)
-						it2\State = Rnd(100.0, 1000.0)
+						it2.Items = CreateItem("SCRAMBLE Gear", "finescramble", x, y, z)
+						it2\State = Rnd(200.0, 2000.0)
 					Else
 						it2.Items = CreateItem("Night Vision Goggles", "supernvg", x, y, z)
-						it2\State = Rnd(100.0, 1000.0)
+						it2\State = Rnd(200.0, 2000.0)
 					EndIf
+					;[End Block]
+			End Select
+			;[End Block]
+		Case "scramble", "finescramble"
+			;[Block]
+			Select Setting
+				Case ROUGH, COARSE
+					;[Block]
+					de.Decals = CreateDecal(DECAL_CORROSIVE_1, x, 8 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.12)
+					EntityParent(de\OBJ, PlayerRoom\OBJ)
+					;[End Block]
+				Case ONETOONE
+					;[Block]
+					it2.Items = CreateItem("Night Vision Goggles", "nvg", x, y, z)
+					it2\State = Rnd(100.0, 1000.0)
+					;[End Block]
+				Case FINE, VERYFINE
+					;[Block]
+					it2.Items = CreateItem("SCRAMBLE Gear", "finescramble", x, y, z)
+					it2\State = Rnd(200.0, 2000.0)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -293,12 +313,6 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										;[Block]
 										RemoveItem(it)
 										it2.Items = CreateItem("Heavy Gas Mask", "gasmask3", x, y, z)
-										Exit
-										;[End Block]
-									Case "vest"
-										;[Block]
-										RemoveItem(it)
-										it2.Items = CreateItem("Heavy Ballistic Vest", "finevest", x, y, z)
 										Exit
 										;[End Block]
 									Case "hazmatsuit", "hazmatsuit2"

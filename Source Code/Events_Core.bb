@@ -7300,7 +7300,7 @@ Function UpdateEvents%()
 							PointEntity(e\room\Objects[0], me\Collider)
 							RotateEntity(e\room\Objects[0], -90.0, EntityYaw(e\room\Objects[0]), 0.0)
 							
-							If PrevFrame > 646.0 Then
+							If PrevFrame > 646.0 and wi\HazmatSuit <> 3 Then
 								If PlayerRoom = e\room Then
 									e\EventState = 3.0	
 									PlaySound_Strict(e\Sound2)
@@ -8705,7 +8705,7 @@ Function UpdateDimension106%()
 						
 						If Safe Lor chs\NoTarget Then
 							EntityTexture(e\room\Objects[19], e\room\Textures[0])
-						ElseIf Dist < 64.0 And (Not I_714\Using)
+						ElseIf Dist < 64.0 And (Not I_714\Using) And wi\GasMask <> 3 And wi\HazmatSuit <> 3 Then
 							e\SoundCHN = LoopSound2(e\Sound, e\SoundCHN, Camera, e\room\Objects[19], 8.0)
 							EntityTexture(e\room\Objects[19], e\room\Textures[1])
 							InjurePlayer((8.0 - Sqr(Dist)) * (fps\Factor[0] * 0.0003))

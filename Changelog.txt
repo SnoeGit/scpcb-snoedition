@@ -20,10 +20,11 @@ General:
 - Added Cake as a difficulty factor for Esoteric.
 - Apollyon now gives you the Keter Achievement.
 - Subtitles now show who is currently talking.
-- SCP-714 protects you from the bird planes in pocket dimension.
+- SCP-714 and Heavy equipement protects you from the bird planes in pocket dimension.
 - SCP-714 resists the poisonous gas in Storage Area 6.
 - Monitors displaying SCP-895 will kill you quicker.
 - Apollyon difficulty no longer gives you the intro papers.
+- Fine Scramble Gear has been added to the game.
 
 NPCs:
 - Edited multiple SCP's speed.
@@ -36,6 +37,7 @@ SCP-860-2: 8.0 -> 7.2
 
 - SCP-173-J has been added as an April Fools event.
 - Enemy attacks scale with difficulty.
+- SCP-096 will no longer attack if SCP-106 is actively chasing. Idea from https://www.youtube.com/watch?v=pG-VCQ7_MR8
 
 Rooms:
 - Made the entrance to SCP-173 containment a keypad door.
@@ -52,6 +54,7 @@ Rooms:
 
 
 Bug Fixes:
+- Hazmat suit properly protects against poisonous gas in Storage Area 6.
 - Fixed collision of the doors when they are culled.
 - Fixed buttons disappearing when doors were culled.
 
