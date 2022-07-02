@@ -2502,7 +2502,7 @@ Function UpdateGUI%()
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in this radio.")
 										;[End Block]
-									Case "nvg", "supernvg"
+									Case "nvg"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
@@ -2512,6 +2512,10 @@ Function UpdateGUI%()
 									Case "finenvg"
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in these goggles.")
+										;[End Block]
+									Case "supernvg"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside these goggles.")
 										;[End Block]
 									Case "scramble"
 										;[Block]
@@ -2540,7 +2544,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(100.0)
+										Inventory(MouseSlot)\State = Rnd(10.0, 100.0)
 										CreateMsg("You replaced the navigator's battery.")
 										;[End Block]
 									Case "navulti", "nav300"
@@ -2551,7 +2555,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(100.0)
+										Inventory(MouseSlot)\State = Rnd(10.0, 100.0)
 										CreateMsg("You replaced the radio's battery.")
 										;[End Block]
 									Case "18vradio"
@@ -2562,22 +2566,26 @@ Function UpdateGUI%()
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in this radio.")
 										;[End Block]
-									Case "nvg", "supernvg"
+									Case "nvg"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(1000.0)
+										Inventory(MouseSlot)\State = Rnd(100.0, 1000.0)
 										CreateMsg("You replaced the goggles' battery.")
 										;[End Block]
 									Case "finenvg"
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in these goggles.")
 										;[End Block]
+									Case "supernvg"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside these goggles.")
+										;[End Block]
 									Case "scramble"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(1000.0)
+										Inventory(MouseSlot)\State = Rnd(100.0, 1000.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
 									Default
@@ -2612,17 +2620,23 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(200.0)
+										Inventory(MouseSlot)\State = Rnd(20.0, 200.0)
 										CreateMsg("You replaced the radio's battery.")
 										;[End Block]
 									Case "fineradio", "veryfineradio"
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in this radio.")	
 										;[End Block]
-									Case "nvg", "supernvg"
+									Case "nvg"
 										;[Block]
 										CreateMsg("The battery doesn't fit inside these goggles.")
 										;[End Block]
+									Case "supernvg"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Rnd(200.0, 2000.0)
+										CreateMsg("You replaced the goggles' battery.")
 									Case "finenvg"
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in these goggles.")
@@ -2651,7 +2665,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(1000.0)
+										Inventory(MouseSlot)\State = Rnd(50.0, 500.0)
 										CreateMsg("You replaced the navigator's battery.")
 										;[End Block]
 									Case "navulti", "nav300"
@@ -2662,12 +2676,15 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(1000.0)
+										Inventory(MouseSlot)\State = Rnd(50.0, 500.0)
 										CreateMsg("You replaced the radio's battery.")
 										;[End Block]
 									Case "18vradio"
 										;[Block]
-										CreateMsg("The battery doesn't fit inside this radio.")
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Rnd(50.0, 500.0)
+										CreateMsg("You replaced the radio's battery.")
 										;[End Block]
 									Case "fineradio", "veryfineradio"
 										;[Block]
@@ -2677,7 +2694,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(10000.0)
+										Inventory(MouseSlot)\State = Rnd(500.0, 5000.0)
 										CreateMsg("You replaced the goggles' battery.")
 										;[End Block]
 									Case "finenvg"
@@ -2688,7 +2705,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(10000.0)
+										Inventory(MouseSlot)\State = Rnd(500.0, 5000.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
 									Default

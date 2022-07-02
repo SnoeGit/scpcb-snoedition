@@ -15,6 +15,7 @@ General:
 - Adjusted how Key Cards were obtained in SCP-914 from Mastercards and Playing Cards.
 - Super Battery chance in SCP-914 is rarer.
 - Blue Night Vision Goggles now display names of SCP-860-2, SCP-1499-1, and Tentacle instead of unknown.
+- Blue Night Vision Goggles now require 18V batteries.
 - SCP-427's ability to cure SCP-008 is now faster.
 - Added Cake as a difficulty factor for Esoteric.
 - Apollyon now gives you the Keter Achievement.
@@ -22,6 +23,7 @@ General:
 - SCP-714 protects you from the bird planes in pocket dimension.
 - SCP-714 resists the poisonous gas in Storage Area 6.
 - Monitors displaying SCP-895 will kill you quicker.
+- Apollyon difficulty no longer gives you the intro papers.
 
 NPCs:
 - Edited multiple SCP's speed.

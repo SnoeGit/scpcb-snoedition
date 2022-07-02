@@ -1614,7 +1614,10 @@ Function InitNewGame%()
 			EndIf
 		EndIf
 		
-		If r\RoomTemplate\Name = "cont1_173" And (Not opt\IntroEnabled) Then 
+		If r\RoomTemplate\Name = "cont1_173" And (Not opt\IntroEnabled) And SelectedDifficulty\Name = "Apollyon" Then
+			PositionEntity(me\Collider, EntityX(r\OBJ) + 3584.0 * RoomScale, r\y + 704.0 * RoomScale, EntityZ(r\OBJ) + 1024.0 * RoomScale)
+			PlayerRoom = r
+		ElseIf r\RoomTemplate\Name = "cont1_173" And (Not opt\IntroEnabled) Then 
 			PositionEntity(me\Collider, EntityX(r\OBJ) + 3584.0 * RoomScale, r\y + 704.0 * RoomScale, EntityZ(r\OBJ) + 1024.0 * RoomScale)
 			PlayerRoom = r
 			it.Items = CreateItem("Class D Orientation Leaflet", "paper", 1.0, 1.0, 1.0)
