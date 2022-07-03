@@ -2272,12 +2272,12 @@ Function UpdateEvents%()
 						EndIf
 					EndIf
 					
-					If wi\NightVision > 0 Lor wi\SCRAMBLE Then
+					If wi\NightVision > 0 Lor wi\SCRAMBLE > 0 Then
 						Local HasBatteryFor895% = False
 						
 						For i = 0 To MaxItemAmount - 1
 							If Inventory(i) <> Null Then
-								If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE And Inventory(i)\ItemTemplate\TempName = "scramble") Then
+								If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
 									If Inventory(i)\State > 0.0 Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Then
 										HasBatteryFor895 = True
 										Exit
@@ -2289,33 +2289,36 @@ Function UpdateEvents%()
 							TurnEntity(me\Collider, 0.0, AngleDist(PointDirection(EntityX(me\Collider, True), EntityZ(me\Collider, True), EntityX(e\room\Objects[1], True), EntityZ(e\room\Objects[1], True)) + 90.0 + Sin(WrapAngle(e\EventState3 / 10.0)), EntityYaw(me\Collider)) / 4.0, 0.0, True)
 							CameraPitch = (CameraPitch * 0.8) + (((-60.0) * Min(Max((2.0 - Distance(EntityX(me\Collider, True), EntityX(e\room\Objects[1], True), EntityZ(me\Collider, True), EntityZ(e\room\Objects[1], True))) / 2.0, 0.0), 1.0)) * 0.2)
 							
-							me\Sanity = me\Sanity - (fps\Factor[0] * 1.1 * wi\NightVision + wi\SCRAMBLE)
+							me\Sanity = me\Sanity - (fps\Factor[0] / (wi\NightVision + wi\SCRAMBLE))
 							me\RestoreSanity = False
 							me\BlurTimer = Sin(MilliSecs2() / 10) * Abs(me\Sanity)
 							
 							If me\VomitTimer < 0.0 Then
 								me\RestoreSanity = False
-								me\Sanity = -1010.0
+								me\Sanity = -810.0
 							EndIf
 							
-							If me\Sanity < -1000.0 Then
+							If me\Sanity < -800.0 Then
 								If wi\NightVision > 1 Then
 									msg\DeathMsg = Chr(34) + "Class D viewed SCP-895 through a pair of digital night vision goggles, presumably enhanced by SCP-914. It might be possible that the subject "
 									msg\DeathMsg = msg\DeathMsg + "was able to resist the memetic effects partially through these goggles. The goggles have been stored for further study." + Chr(34)
-								ElseIf wi\SCRAMBLE
+								ElseIf wi\SCRAMBLE = 1
 									msg\DeathMsg = Chr(34) + "Class D viewed SCP-895 through an apparatus called " + Chr(34) + "SCRAMBLE Gear" + Chr(34) + ", killing him." + Chr(34)
+								ElseIf wi\SCRAMBLE = 2
+									msg\DeathMsg = Chr(34) + "Class D viewed SCP-895 through an apparatus called " + Chr(34) + "SCRAMBLE Gear" + Chr(34) + ", presumably enhanced by SCP-914. It might be possible that the subject " + Chr(34)
+									msg\DeathMsg = msg\DeathMsg + "was able to resist the memetic effects partially through this apparatus. The apparatus has been stored for further study." + Chr(34)
 								Else
 									msg\DeathMsg = Chr(34) + "Class D viewed SCP-895 through a pair of digital night vision goggles, killing him." + Chr(34)
 								EndIf
 								EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If me\VomitTimer < -10.0 Then Kill()
-							ElseIf me\Sanity < -800.0 Then
+							ElseIf me\Sanity < -640.0 Then
 								If Rand(3) = 1 Then EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If Rand(6) < 5 Then
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
 									For i = 0 To MaxItemAmount - 1
 										If Inventory(i) <> Null Then
-											If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE And Inventory(i)\ItemTemplate\TempName = "scramble") Then
+											If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
 												If Inventory(i)\State2 = 1.0 Then PlaySound_Strict(HorrorSFX[1])
 												Inventory(i)\State2 = 2.0
 												Exit
@@ -2325,13 +2328,13 @@ Function UpdateEvents%()
 								EndIf
 								me\BlurTimer = 1000.0
 								If me\VomitTimer = 0.0 Then me\VomitTimer = 1.0
-							ElseIf me\Sanity < -500.0 Then
+							ElseIf me\Sanity < -400.0 Then
 								If Rand(7) = 1 Then EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If Rand(50) = 1 Then
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
 									For i = 0 To MaxItemAmount - 1
 										If Inventory(i) <> Null Then
-											If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE And Inventory(i)\ItemTemplate\TempName = "scramble") Then
+											If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
 												If Inventory(i)\State2 = 0.0 Then PlaySound_Strict(HorrorSFX[0])
 												Inventory(i)\State2 = 1.0
 												Exit
@@ -2343,7 +2346,7 @@ Function UpdateEvents%()
 								EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								For i = 0 To MaxItemAmount - 1
 									If Inventory(i) <> Null Then
-										If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE And Inventory(i)\ItemTemplate\TempName = "scramble") Then
+										If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
 											Inventory(i)\State2 = 0.0
 											Exit
 										EndIf
@@ -4755,12 +4758,12 @@ Function UpdateEvents%()
 					If EntityY(me\Collider) < (-4600.0) * RoomScale Then
 						GiveAchievement(Achv939)
 						
-						If wi\GasMask = 0 And (Not I_714\Using) Then
+						If wi\GasMask = 0 And wi\HazmatSuit = 0 And (Not I_714\Using) Then
 							me\BlurTimer = Min(me\BlurTimer + (fps\Factor[0] * 1.055), 1500.0)
 							If me\BlurTimer >= 500.0 Then UpdateCough(1000)
 							If me\BlurTimer >= 1500.0 Then Kill(False)
 							msg\DeathMsg = "Class D found dead in Storage Area 6 having suffocated on the gas leak that happened during the breach. A repair team has been sent after recontainment of all four (4) SCP-939 specimens."
-						ElseIf wi\GasMask = 0 And I_714\Using Then
+						ElseIf wi\GasMask = 0 And wi\HazmatSuit = 0 And I_714\Using Then
 							me\BlurTimer = Min(me\BlurTimer + (fps\Factor[0] * 1.045), 1500.0)
 							If me\BlurTimer >= 500.0 Then UpdateCough(1000)
 							If me\BlurTimer >= 1500.0 Then Kill(False)

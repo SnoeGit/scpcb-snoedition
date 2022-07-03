@@ -3371,7 +3371,7 @@ Function UpdateSecurityCams%()
 							EndIf
 						EndIf
 						
-						If me\Sanity < -800.0 Then 
+						If me\Sanity < -900.0 Then 
 							msg\DeathMsg = Chr(34) + "What we know is that he died of cardiac arrest. My guess is that it was caused by SCP-895, although it has never been observed affecting video equipment from this far before. "
 							msg\DeathMsg = msg\DeathMsg + "Further testing is needed to determine whether SCP-895's " + Chr(34) + "Red Zone" + Chr(34) + " is increasing." + Chr(34)
 							
@@ -3380,7 +3380,7 @@ Function UpdateSecurityCams%()
 						
 						If me\VomitTimer < 0.0 And me\Sanity < -800.0 Then
 							me\RestoreSanity = False
-							me\Sanity = -810.0
+							me\Sanity = -910.0
 						EndIf
 						
 						If me\BlinkTimer > -5.0 And EntityInView(sc\ScrOBJ, Camera) And EntityVisible(Camera, sc\ScrOBJ) Then
@@ -3404,7 +3404,7 @@ Function UpdateSecurityCams%()
 								
 								FreeEntity(Pvt)
 								If (sc\CoffinEffect = 1 Lor sc\CoffinEffect = 3) And ((Not I_714\Using) And wi\GasMask <> 3 And wi\HazmatSuit <> 3) Then
-									If me\Sanity < -640.0 Then
+									If me\Sanity < -720.0 Then
 										If Rand(3) = 1 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
 										If Rand(6) < 5 Then
 											EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
@@ -3419,7 +3419,7 @@ Function UpdateSecurityCams%()
 										EndIf	
 										me\BlurTimer = 1000.0
 										If me\VomitTimer = 0.0 Then me\VomitTimer = 1.0
-									ElseIf me\Sanity < -400.0
+									ElseIf me\Sanity < -450.0
 										If Rand(7) = 1 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
 										If Rand(50) = 1 Then
 											EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
