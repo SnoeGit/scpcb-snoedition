@@ -136,7 +136,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			
 			n\Speed = GetINIFloat(NPCsFile, "SCP-106", "Speed") / 100.0
 			
-			Tex = LoadTexture_Strict("GFX\npcs\scp_106_eyes.png", 1, DeleteAllTextures)
+			Tex = LoadTexture_Strict("GFX\npcs\scps\scp_106_eyes.png", 1, DeleteAllTextures)
 			n\OBJ2 = CreateSprite()
 			ScaleSprite(n\OBJ2, 0.03, 0.03)
 			EntityTexture(n\OBJ2, Tex)
@@ -359,7 +359,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			
 			EntityFX(n\OBJ, 1)
 			
-			Tex = LoadTexture_Strict("GFX\npcs\scp_860_2_eyes.png", 1 + 2, DeleteAllTextures)
+			Tex = LoadTexture_Strict("GFX\npcs\scps\scp_860_2_eyes.png", 1 + 2, DeleteAllTextures)
 			n\OBJ2 = CreateSprite()
 			ScaleSprite(n\OBJ2, 0.1, 0.1)
 			EntityTexture(n\OBJ2, Tex)

@@ -2980,7 +2980,7 @@ Function FillRoom%(r.Rooms)
 			
 			r\Textures[1] = LoadTexture_Strict("GFX\npcs\pd_plane_eye.png", 1 + 2, DeleteAllTextures)
 			
-			Tex = LoadTexture_Strict("GFX\npcs\scp_106_eyes.png", 1, DeleteAllTextures)
+			Tex = LoadTexture_Strict("GFX\npcs\scps\scp_106_eyes.png", 1, DeleteAllTextures)
 			r\Objects[17] = CreateSprite()
 			EntityTexture(r\Objects[17], Tex)
 			DeleteSingleTextureEntryFromCache(Tex)

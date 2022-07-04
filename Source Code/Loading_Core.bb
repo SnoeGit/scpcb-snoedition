@@ -461,59 +461,59 @@ Function LoadNPCs%()
 	
 	n_I.NPCInstance = New NPCInstance
 	
-	n_I\NPCModelID[NPC_008_1_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_008_1.b3d")
+	n_I\NPCModelID[NPC_008_1_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_008_1.b3d")
 	
-	n_I\NPCModelID[NPC_035_TENTACLE_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_035_tentacle.b3d")
+	n_I\NPCModelID[NPC_035_TENTACLE_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_035_tentacle.b3d")
 	
-	n_I\NPCModelID[NPC_049_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_049.b3d")
+	n_I\NPCModelID[NPC_049_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_049.b3d")
 	
-	n_I\NPCModelID[NPC_049_2_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_049_2.b3d")
+	n_I\NPCModelID[NPC_049_2_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_049_2.b3d")
 	
-	n_I\NPCModelID[NPC_066_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_066.b3d")
+	n_I\NPCModelID[NPC_066_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_066.b3d")
 	
-	n_I\NPCModelID[NPC_096_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_096.b3d")
+	n_I\NPCModelID[NPC_096_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_096.b3d")
 	
-	n_I\NPCModelID[NPC_106_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_106.b3d")
+	n_I\NPCModelID[NPC_106_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_106.b3d")
 	
-	n_I\NPCModelID[NPC_173_MODEL] = LoadMesh_Strict("GFX\npcs\scp_173_body.b3d")
-	n_I\NPCModelID[NPC_173_HEAD_MODEL] = LoadMesh_Strict("GFX\npcs\scp_173_head.b3d")
-	n_I\NPCModelID[NPC_173_BOX_MODEL] = LoadMesh_Strict("GFX\npcs\scp_173_box.b3d")
+	n_I\NPCModelID[NPC_173_MODEL] = LoadMesh_Strict("GFX\npcs\scps\scp_173_body.b3d")
+	n_I\NPCModelID[NPC_173_HEAD_MODEL] = LoadMesh_Strict("GFX\npcs\scps\scp_173_head.b3d")
+	n_I\NPCModelID[NPC_173_BOX_MODEL] = LoadMesh_Strict("GFX\npcs\scps\scp_173_box.b3d")
 	
-	n_I\NPCModelID[NPC_205_DEMON_1_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_205_demon.b3d")
-	n_I\NPCModelID[NPC_205_DEMON_2_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_205_demon(2).b3d")
-	n_I\NPCModelID[NPC_205_DEMON_3_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_205_demon(3).b3d")
-	n_I\NPCModelID[NPC_205_WOMAN_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_205_woman.b3d")
+	n_I\NPCModelID[NPC_205_DEMON_1_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_205_demon.b3d")
+	n_I\NPCModelID[NPC_205_DEMON_2_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_205_demon(2).b3d")
+	n_I\NPCModelID[NPC_205_DEMON_3_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_205_demon(3).b3d")
+	n_I\NPCModelID[NPC_205_WOMAN_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_205_woman.b3d")
 	
-	n_I\NPCModelID[NPC_372_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_372.b3d")
+	n_I\NPCModelID[NPC_372_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_372.b3d")
 	
-	n_I\NPCModelID[NPC_513_1_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_513_1.b3d")
+	n_I\NPCModelID[NPC_513_1_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_513_1.b3d")
 	
-	n_I\NPCModelID[NPC_860_2_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_860_2.b3d")
+	n_I\NPCModelID[NPC_860_2_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_860_2.b3d")
 	
-	n_I\NPCModelID[NPC_939_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_939.b3d")
+	n_I\NPCModelID[NPC_939_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_939.b3d")
 	
-	n_I\NPCModelID[NPC_966_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_966.b3d")
+	n_I\NPCModelID[NPC_966_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_966.b3d")
 	
-	n_I\NPCModelID[NPC_1048_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_1048.b3d")
-	n_I\NPCModelID[NPC_1048_A_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_1048_a.b3d")
+	n_I\NPCModelID[NPC_1048_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_1048.b3d")
+	n_I\NPCModelID[NPC_1048_A_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_1048_a.b3d")
 	
-	n_I\NPCModelID[NPC_1499_1_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scp_1499_1.b3d")
+	n_I\NPCModelID[NPC_1499_1_MODEL] = LoadAnimMesh_Strict("GFX\npcs\scps\scp_1499_1.b3d")
 	
 	n_I\NPCModelID[NPC_APACHE_MODEL] = LoadAnimMesh_Strict("GFX\npcs\apache.b3d")
 	n_I\NPCModelID[NPC_APACHE_ROTOR_1_MODEL] = LoadAnimMesh_Strict("GFX\npcs\apache_rotor.b3d")
 	n_I\NPCModelID[NPC_APACHE_ROTOR_2_MODEL] = LoadAnimMesh_Strict("GFX\npcs\apache_rotor(2).b3d")
 	
-	n_I\NPCModelID[NPC_CLERK_MODEL] = LoadAnimMesh_Strict("GFX\npcs\clerk.b3d")
+	n_I\NPCModelID[NPC_CLERK_MODEL] = LoadAnimMesh_Strict("GFX\npcs\humans\clerk.b3d")
 	
-	n_I\NPCModelID[NPC_CLASS_D_MODEL] = LoadAnimMesh_Strict("GFX\npcs\class_d.b3d")
+	n_I\NPCModelID[NPC_CLASS_D_MODEL] = LoadAnimMesh_Strict("GFX\npcs\humans\class_d.b3d")
 	
 	n_I\NPCModelID[NPC_DUCK_MODEL] = LoadAnimMesh_Strict("GFX\npcs\duck.b3d")
 	
-	n_I\NPCModelID[NPC_GUARD_MODEL] = LoadAnimMesh_Strict("GFX\npcs\guard.b3d")
+	n_I\NPCModelID[NPC_GUARD_MODEL] = LoadAnimMesh_Strict("GFX\npcs\humans\guard.b3d")
 	
-	n_I\NPCModelID[NPC_MTF_MODEL] = LoadAnimMesh_Strict("GFX\npcs\MTF.b3d")
+	n_I\NPCModelID[NPC_MTF_MODEL] = LoadAnimMesh_Strict("GFX\npcs\humans\MTF.b3d")
 	
-	n_I\NPCModelID[NPC_NAZI_MODEL] = LoadAnimMesh_Strict("GFX\npcs\nazi_officer.b3d")
+	n_I\NPCModelID[NPC_NAZI_MODEL] = LoadAnimMesh_Strict("GFX\npcs\humans\nazi_officer.b3d")
 	
 	n_I\NPCModelID[NPC_VEHICLE_MODEL] = LoadAnimMesh_Strict("GFX\npcs\vehicle.b3d")
 	
@@ -521,24 +521,24 @@ Function LoadNPCs%()
 		HideEntity(n_I\NPCModelID[i])
 	Next
 	
-	n_I\NPCTextureID[NPC_CLASS_D_GONZALES_TEXTURE] = LoadTexture_Strict("GFX\npcs\Gonzales.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_BENJAMIN_TEXTURE] = LoadTexture_Strict("GFX\npcs\D_9341(2).png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_SCIENTIST_TEXTURE] = LoadTexture_Strict("GFX\npcs\scientist.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_FRANKLIN_TEXTURE] = LoadTexture_Strict("GFX\npcs\Franklin.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_MAYNARD_TEXTURE] = LoadTexture_Strict("GFX\npcs\Maynard.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_CLASS_D_TEXTURE] = LoadTexture_Strict("GFX\npcs\class_d(2).png", 1, DeleteAllTextures)
-	If opt\IntroEnabled Then n_I\NPCTextureID[NPC_CLASS_D_D9341_TEXTURE] = LoadTexture_Strict("GFX\npcs\D_9341.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_BODY_1_TEXTURE] = LoadTexture_Strict("GFX\npcs\body.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_BODY_2_TEXTURE] = LoadTexture_Strict("GFX\npcs\body(2).png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_JANITOR_1_TEXTURE] = LoadTexture_Strict("GFX\npcs\janitor.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_JANITOR_2_TEXTURE] = LoadTexture_Strict("GFX\npcs\janitor(2).png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_008_TEXTURE] = LoadTexture_Strict("GFX\npcs\scp_008_1_victim.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_035_TEXTURE] = LoadTexture_Strict("GFX\npcs\scp_035_victim.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_409_TEXTURE] = LoadTexture_Strict("GFX\npcs\scp_409_victim.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_939_1_TEXTURE] = LoadTexture_Strict("GFX\npcs\scp_939_victim.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_939_2_TEXTURE] = LoadTexture_Strict("GFX\npcs\scp_939_victim(2).png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_GONZALES_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\Gonzales.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_BENJAMIN_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\D_9341(2).png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_SCIENTIST_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\scientist.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_FRANKLIN_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\Franklin.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_MAYNARD_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\Maynard.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_CLASS_D_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\class_d(2).png", 1, DeleteAllTextures)
+	If opt\IntroEnabled Then n_I\NPCTextureID[NPC_CLASS_D_D9341_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\D_9341.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_BODY_1_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\body.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_BODY_2_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\body(2).png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_JANITOR_1_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\janitor.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_JANITOR_2_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\janitor(2).png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_008_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\scp_008_1_victim.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_035_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\scp_035_victim.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_409_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\scp_409_victim.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_939_1_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\scp_939_victim.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_939_2_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\scp_939_victim(2).png", 1, DeleteAllTextures)
 	
-	n_I\NPCTextureID[NPC_096_BLOODY_TEXTURE] = LoadTexture_Strict("GFX\npcs\scp_096_bloody.png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_096_BLOODY_TEXTURE] = LoadTexture_Strict("GFX\npcs\scps\scp_096_bloody.png", 1, DeleteAllTextures)
 End Function
 
 Const MaxMTModelIDAmount% = 7
