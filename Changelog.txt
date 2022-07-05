@@ -18,13 +18,13 @@ General:
 - Blue Night Vision Goggles now require 18V batteries.
 - SCP-427's ability to cure SCP-008 is now faster.
 - Added Cake as a difficulty factor for Esoteric.
-- Apollyon now gives you the Keter Achievement.
 - Subtitles now show who is currently talking.
 - SCP-714 and Heavy equipement protects you from the bird planes in pocket dimension.
 - SCP-714 resists the poisonous gas in Storage Area 6.
 - Monitors displaying SCP-895 will kill you quicker.
 - Apollyon difficulty no longer gives you the intro papers.
 - Fine Scramble Gear has been added to the game.
+- Rework how battery drains.
 
 NPCs:
 - Edited multiple SCP's speed.
@@ -54,6 +54,7 @@ Rooms:
 
 
 Bug Fixes:
+- Apollyon now gives you the Keter Achievement.
 - Hazmat suit properly protects against poisonous gas in Storage Area 6.
 - Fixed collision of the doors when they are culled.
 - Fixed buttons disappearing when doors were culled.

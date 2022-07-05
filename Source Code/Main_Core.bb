@@ -2620,7 +2620,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(20.0, 200.0)
+										Inventory(MouseSlot)\State = Rnd(10.0, 100.0)
 										CreateMsg("You replaced the radio's battery.")
 										;[End Block]
 									Case "fineradio", "veryfineradio"
@@ -2635,7 +2635,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(200.0, 2000.0)
+										Inventory(MouseSlot)\State = Rnd(100.0, 1000.0)
 										CreateMsg("You replaced the goggles' battery.")
 									Case "finenvg"
 										;[Block]
@@ -2649,7 +2649,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(200.0, 2000.0)
+										Inventory(MouseSlot)\State = Rnd(100.0, 1000.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
 									Default
@@ -3192,7 +3192,8 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "radio", "18vradio", "fineradio", "veryfineradio"
 					;[Block]
-					If SelectedItem\ItemTemplate\TempName <> "fineradio" And SelectedItem\ItemTemplate\TempName <> "veryfineradio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.004)
+					If SelectedItem\ItemTemplate\TempName = "radio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.004)
+					If SelectedItem\ItemTemplate\TempName = "18vradio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.002)
 					
 					; ~ RadioState[5] = Has the "use the number keys" -message been shown yet (True / False)
 					; ~ RadioState[6] = A timer for the "code channel"

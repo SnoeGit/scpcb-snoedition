@@ -173,10 +173,10 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[Block]
 					If Rand(5) = 1 Then
 						it2.Items = CreateItem("SCRAMBLE Gear", "finescramble", x, y, z)
-						it2\State = Rnd(200.0, 2000.0)
+						it2\State = Rnd(100.0, 1000.0)
 					Else
 						it2.Items = CreateItem("Night Vision Goggles", "supernvg", x, y, z)
-						it2\State = Rnd(200.0, 2000.0)
+						it2\State = Rnd(100.0, 1000.0)
 					EndIf
 					;[End Block]
 			End Select
@@ -197,7 +197,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case FINE, VERYFINE
 					;[Block]
 					it2.Items = CreateItem("SCRAMBLE Gear", "finescramble", x, y, z)
-					it2\State = Rnd(200.0, 2000.0)
+					it2\State = Rnd(100.0, 1000.0)
 					;[End Block]
 			End Select
 			;[End Block]
