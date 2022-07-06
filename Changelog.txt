@@ -28,7 +28,7 @@ General:
 
 NPCs:
 - Edited multiple SCP's speed.
-SCP-008-1: 2.0 -> 1.85
+SCP-008-1: 2.0 -> 1.35 (0.7 multiplier removed from chase line so this isn't actually as big as it looks)
 SCP-049: 1.5 -> 1.49
 SCP-049-2: 1.0 -> 0.9
 SCP-096: 9.0 -> 8.6

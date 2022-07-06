@@ -4913,7 +4913,7 @@ Function UpdateNPCs%()
 								RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 20.0), 0.0)
 								
 								AnimateNPC(n, 64.0, 93.0, n\CurrSpeed * 30.0)
-								n\CurrSpeed = CurveValue(n\Speed * 0.7, n\CurrSpeed, 20.0)
+								n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 20.0)
 								MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 								
 								
@@ -7563,7 +7563,7 @@ End Function
 
 Function NPCSpeedChange%(n.NPCs)
 	Select n\NPCType
-		Case NPCType173, NPCType106, NPCType096, NPCType049, NPCType939, NPCTypeMTF
+		Case NPCType173, NPCType106, NPCType096, NPCType049, NPCType049_2, NPCType939, NPCType008_1, NPCTypeMTF
 			Select SelectedDifficulty\OtherFactors
 				Case NORMAL
 					;[Block]
