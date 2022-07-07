@@ -1291,7 +1291,7 @@ Function UpdateMoving%()
 	Next
 	
 	If I_714\Using Then
-		me\Stamina = Min(me\Stamina, 15.0)
+		me\Stamina = Min(me\Stamina, 10.0)
 		me\Sanity = Max(-720.0, me\Sanity)
 	EndIf
 	
