@@ -3579,7 +3579,7 @@ Function UpdateNPCs%()
 									
 									RotateEntity(n\Collider, 0.0, Angle - 90.0, 0.0, True)
 									
-									n\CurrSpeed = CurveValue(n\Speed * 0.3, n\CurrSpeed, 50.0)
+									n\CurrSpeed = CurveValue(n\Speed * 0.33, n\CurrSpeed, 50.0)
 									MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 									
 									AnimateNPC(n, 494.0, 569.0, n\CurrSpeed * 25.0)
