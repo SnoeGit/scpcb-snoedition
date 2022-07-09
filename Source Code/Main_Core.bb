@@ -2866,7 +2866,7 @@ Function UpdateGUI%()
 				Case "veryfinefirstaid"
 					;[Block]
 					If CanUseItem(False, True) Then
-						Select Rand(5)
+						Select Rand(7)
 							Case 1
 								;[Block]
 								me\Injuries = 3.5
@@ -2891,6 +2891,18 @@ Function UpdateGUI%()
 								CreateMsg("You feel nauseated.")
 								;[End Block]
 							Case 5
+								;[Block]
+								me\BlurTimer = 1000.0
+								I_008\Timer = I_008\Timer + 5.0
+								CreateMsg("You feel hungry.")
+								;[End Block]
+							Case 6
+								;[Block]
+								me\BlurTimer = 1000.0
+								I_409\Timer = I_409\Timer + 5.0
+								CreateMsg("You feel a sharp pain.")
+								;[End Block]
+							Case 7
 								;[Block]
 								me\BlinkTimer = -10.0
 								
@@ -3108,9 +3120,9 @@ Function UpdateGUI%()
 						EndIf
 						If GetINIInt2(SCP294File, Loc, "Stomach Ache") Then I_1025\State[3] = 1.0
 						
-						If GetINIInt2(SCP294File, Loc, "Infection") Then I_008\Timer = 1.0
+						If GetINIInt2(SCP294File, Loc, "Infection") Then I_008\Timer = I_008\Timer + 1.0
 						
-						If GetINIInt2(SCP294File, Loc, "Crystallization") Then I_409\Timer = 1.0
+						If GetINIInt2(SCP294File, Loc, "Crystallization") Then I_409\Timer = I_409\Timer + 1.0
 						
 						If me\DeathTimer = 0.0 Then
 							me\DeathTimer = GetINIInt2(SCP294File, Loc, "Death Timer") * 70.0
@@ -7589,9 +7601,7 @@ Function Update1025%()
 					If fps\Factor[0] > 0.0 Then 
 						UpdateCough(1000)
 					EndIf
-					if me\CurrSpeed > 0 Then
-					me\Stamina = me\Stamina - (Factor1025 * 0.3)
-					EndIf
+					me\Stamina = me\Stamina - (Factor1025 * 0.1)
 					;[End Block]
 				Case 1 ; ~ Chicken pox
 					;[Block]
@@ -7603,7 +7613,7 @@ Function Update1025%()
 						UpdateCough(800)
 					EndIf
 					if me\CurrSpeed > 0 Then
-					me\Stamina = me\Stamina - (Factor1025 * 0.1)
+					me\Stamina = me\Stamina - (Factor1025 * 0.3)
 					EndIf
 					;[End Block]
 				Case 3 ; ~ Appendicitis

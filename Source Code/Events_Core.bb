@@ -8359,8 +8359,8 @@ Function UpdateEvents%()
 								; ~ Touching the SCP-409
 								If InteractObject(e\room\Objects[3], 0.64) Then
 									CreateMsg("You touched SCP-409.")
-									me\BlurTimer = 2000.0
-									I_409\Timer = 0.001
+									me\BlurTimer = 1500.0
+									I_409\Timer = 0.01
 									GiveAchievement(Achv409)
 								EndIf
 							EndIf

@@ -24,6 +24,7 @@ General:
 - Apollyon difficulty no longer gives you the intro papers.
 - Fine Scramble Gear has been added to the game.
 - Rework how battery drains.
+- Strange bottle can now infect you with either 008 or 409.
 
 NPCs:
 - Edited multiple SCP's speed.
@@ -57,6 +58,7 @@ Bug Fixes:
 - Hazmat suit properly protects against poisonous gas in room3_storage(Storage Area 6).
 - Fixed collision of the doors when they are culled.
 - Fixed buttons disappearing when doors were culled.
+- Cups of SCP-008 and SCP-409 no longer reset their progression if you have already been infected.
 
 
 v1.0.3 (unreleased UE edits)
