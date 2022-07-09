@@ -2266,7 +2266,7 @@ Function FillRoom%(r.Rooms)
 				FreeEntity(r\RoomDoors[0]\Buttons[i]) : r\RoomDoors[0]\Buttons[i] = 0
 			Next
 			
-			r\RoomDoors.Doors[1] = CreateDoor(r\x + 128.0 * RoomScale, r\y, r\z + 640.0 * RoomScale, 90.0, r, False, DEFAULT_DOOR, KEY_CARD_3)
+			r\RoomDoors.Doors[1] = CreateDoor(r\x + 128.0 * RoomScale, r\y, r\z + 640.0 * RoomScale, 90.0, r, False, DEFAULT_DOOR, KEY_CARD_2)
 			
 			sc.SecurityCams = CreateSecurityCam(r\x - 1152.0 * RoomScale, r\y + 900.0 * RoomScale, r\z + 176.0 * RoomScale, r, True, r\x - 1716.0 * RoomScale, r\y + 160.0 * RoomScale, r\z + 176.0 * RoomScale)
 			sc\Angle = 90.0 : sc\Turn = 0.0 : sc\AllowSaving = False : sc\RenderInterval = 0.0
