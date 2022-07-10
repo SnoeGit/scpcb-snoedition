@@ -5260,25 +5260,29 @@ Function UpdateMenu%()
 					
 					y = y + (45 * MenuScale)
 					
-					opt\TextureDetails = UpdateMainMenuSlider5(x + (270 * MenuScale), y, 100 * MenuScale, opt\TextureDetails, 3, "0.8", "0.4", "0.0", "-0.4", "-0.8")
+					opt\TextureDetails = UpdateMainMenuSlider6(x + (270 * MenuScale), y, 100 * MenuScale, opt\TextureDetails, 3, "1.2", "0.8", "0.4", "0.0", "-0.4", "-0.8")
 					Select opt\TextureDetails
 						Case 0
 							;[Block]
-							opt\TextureDetailsLevel = 0.8
+							opt\TextureDetailsLevel = 1.2
 							;[End Block]
 						Case 1
 							;[Block]
-							opt\TextureDetailsLevel = 0.4
+							opt\TextureDetailsLevel = 0.8
 							;[End Block]
 						Case 2
 							;[Block]
-							opt\TextureDetailsLevel = 0.0
+							opt\TextureDetailsLevel = 0.4
 							;[End Block]
 						Case 3
 							;[Block]
-							opt\TextureDetailsLevel = -0.4
+							opt\TextureDetailsLevel = 0.0
 							;[End Block]
 						Case 4
+							;[Block]
+							opt\TextureDetailsLevel = -0.4
+							;[End Block]
+						Case 5
 							;[Block]
 							opt\TextureDetailsLevel = -0.8
 							;[End Block]

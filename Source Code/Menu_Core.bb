@@ -634,25 +634,29 @@ Function UpdateMainMenu%()
 							
 							y = y + (45 * MenuScale)
 							
-							opt\TextureDetails = UpdateMainMenuSlider5(x, y, 150 * MenuScale, opt\TextureDetails, 3, "0.8", "0.4", "0.0", "-0.4", "-0.8")
+							opt\TextureDetails = UpdateMainMenuSlider6(x, y, 150 * MenuScale, opt\TextureDetails, 3, "1.2", "0.8", "0.4", "0.0", "-0.4", "-0.8")
 							Select opt\TextureDetails
 								Case 0
 									;[Block]
-									opt\TextureDetailsLevel = 0.8
+									opt\TextureDetailsLevel = 1.2
 									;[End Block]
 								Case 1
 									;[Block]
-									opt\TextureDetailsLevel = 0.4
+									opt\TextureDetailsLevel = 0.8
 									;[End Block]
 								Case 2
 									;[Block]
-									opt\TextureDetailsLevel = 0.0
+									opt\TextureDetailsLevel = 0.4
 									;[End Block]
 								Case 3
 									;[Block]
-									opt\TextureDetailsLevel = -0.4
+									opt\TextureDetailsLevel = 0.0
 									;[End Block]
 								Case 4
+									;[Block]
+									opt\TextureDetailsLevel = -0.4
+									;[End Block]
+								Case 5
 									;[Block]
 									opt\TextureDetailsLevel = -0.8
 									;[End Block]
@@ -2877,7 +2881,7 @@ Type MenuSlider
 	Field x%, y%, Width%
 	Field Value%
 	Field ID%
-	Field Val1$, Val2$, Val3$, Val4$, Val5$
+	Field Val1$, Val2$, Val3$, Val4$, Val5$, Val6$
 	Field Amount%
 End Type
 
@@ -2975,6 +2979,59 @@ Function UpdateMainMenuSlider5%(x%, y%, Width%, Value%, ID%, Val1$, Val2$, Val3$
 	Return(Value)
 End Function
 
+Function UpdateMainMenuSlider6%(x%, y%, Width%, Value%, ID%, Val1$, Val2$, Val3$, Val4$, Val5$, Val6$)
+	Local ms.MenuSlider, currSlider.MenuSlider
+	Local Slider6Exists% = False
+	
+	For ms.MenuSlider = Each MenuSlider
+		If ms\x = x And ms\y = y And ms\Width = Width And ms\Amount = 6 Then
+			Slider6Exists = True
+			Exit
+		EndIf
+	Next
+	If (Not Slider6Exists) Then
+		ms.MenuSlider = New MenuSlider
+		ms\x = x
+		ms\y = y
+		ms\Width = Width
+		ms\ID = ID
+		ms\Value = Value
+		ms\Val1 = Val1
+		ms\Val2 = Val2
+		ms\Val3 = Val3
+		ms\Val4 = Val4
+		ms\Val5 = Val5
+		ms\Val6 = Val6
+		ms\Amount = 6
+	Else
+		currSlider = ms
+		currSlider\Value = Value
+	EndIf
+	
+	If mo\MouseDown1 Then
+		If (ScaledMouseX() >= x) And (ScaledMouseX() <= x + Width + (14 * MenuScale)) And (ScaledMouseY() >= y - (8 * MenuScale)) And (ScaledMouseY() <= y + (10 * MenuScale)) Then
+			mm\OnSliderID = ID
+		EndIf
+	EndIf
+	
+	If ID = mm\OnSliderID Then
+		If ScaledMouseX() <= x + (8 * MenuScale) Then
+			Value = 0
+		ElseIf (ScaledMouseX() >= x + (Width / 8)) And (ScaledMouseX() <= x + (Width / 8) + (8 * MenuScale))
+			Value = 1
+		ElseIf (ScaledMouseX() >= x + (Width / 4)) And (ScaledMouseX() <= x + (Width / 4) + (8 * MenuScale))
+			Value = 2
+		ElseIf (ScaledMouseX() >= x + (Width / 2)) And (ScaledMouseX() <= x + (Width / 2) + (8 * MenuScale))
+			Value = 3
+		ElseIf (ScaledMouseX() >= x + (Width * 0.75)) And (ScaledMouseX() <= x + (Width * 0.75) + (8 * MenuScale))
+			Value = 4
+		ElseIf ScaledMouseX() >= x + Width
+			Value = 5
+		EndIf
+	EndIf
+	Return(Value)
+End Function
+
 Function RenderMenuSliders%()
 	Local ms.MenuSlider
 	
@@ -3064,6 +3121,61 @@ Function RenderMenuSliders%()
 				Text(ms\x + (ms\Width * 0.75) + (9.5 * MenuScale), ms\y + (12 * MenuScale), ms\Val4, True)
 			Else
 				Text(ms\x + ms\Width + (12 * MenuScale), ms\y + (12 * MenuScale), ms\Val5, True)
+			EndIf
+		ElseIf ms\Amount = 6
+			If ms\ID = mm\OnSliderID Then
+				Color(0, 255, 0)
+			Else
+				Color(200, 200, 200)
+			EndIf
+			Rect(ms\x, ms\y, ms\Width + (14 * MenuScale), 10 * MenuScale)
+			Rect(ms\x, ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
+			Rect(ms\x + (ms\Width / 8) + (1.25 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
+			Rect(ms\x + (ms\Width / 4) + (2.5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
+			Rect(ms\x + (ms\Width / 2) + (5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
+			Rect(ms\x + (ms\Width * 0.75) + (7.5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
+			Rect(ms\x + ms\Width + (10 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
+			
+			If ms\ID <> mm\OnSliderID Then
+				If (ScaledMouseX() >= ms\x) And (ScaledMouseX() <= ms\x + ms\Width + (14 * MenuScale)) And (ScaledMouseY() >= ms\y - (8 * MenuScale)) And (ScaledMouseY() <= ms\y + (10 * MenuScale)) Then
+					Color(0, 200, 0)
+					Rect(ms\x, ms\y, ms\Width + (14 * MenuScale), 10 * MenuScale, False)
+					Rect(ms\x, ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
+					Rect(ms\x + (ms\Width / 8) + (MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
+					Rect(ms\x + (ms\Width / 4) + (2.5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
+					Rect(ms\x + (ms\Width / 2) + (5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
+					Rect(ms\x + (ms\Width * 0.75) + (7.5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
+					Rect(ms\x + ms\Width + (10 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
+				EndIf
+			EndIf
+			
+			If ms\Value = 0 Then
+				DrawImage(BlinkMeterIMG, ms\x, ms\y - (8 * MenuScale))
+			ElseIf ms\Value = 1
+				DrawImage(BlinkMeterIMG, ms\x + (ms\Width / 8) + (MenuScale), ms\y - (8 * MenuScale))
+			ElseIf ms\Value = 2
+				DrawImage(BlinkMeterIMG, ms\x + (ms\Width / 4) + (1.5 * MenuScale), ms\y - (8 * MenuScale))
+			ElseIf ms\Value = 3
+				DrawImage(BlinkMeterIMG, ms\x + (ms\Width / 2) + (3 * MenuScale), ms\y - (8 * MenuScale))
+			ElseIf ms\Value = 4
+				DrawImage(BlinkMeterIMG, ms\x + (ms\Width * 0.75) + (4.5 * MenuScale), ms\y - (8 * MenuScale))
+			Else
+				DrawImage(BlinkMeterIMG, ms\x + ms\Width + (6 * MenuScale), ms\y - (8 * MenuScale))
+			EndIf
+			
+			Color(170, 170, 170)
+			If ms\Value = 0 Then
+				Text(ms\x + (2 * MenuScale), ms\y + (12 * MenuScale), ms\Val1, True)
+			ElseIf ms\Value = 1
+				Text(ms\x + (ms\Width / 8) + (2 * MenuScale), ms\y + (12 * MenuScale), ms\Val2, True)
+			ElseIf ms\Value = 2
+				Text(ms\x + (ms\Width / 4) + (4.5 * MenuScale), ms\y + (12 * MenuScale), ms\Val3, True)
+			ElseIf ms\Value = 3
+				Text(ms\x + (ms\Width / 2) + (7 * MenuScale), ms\y + (12 * MenuScale), ms\Val4, True)
+			ElseIf ms\Value = 4
+				Text(ms\x + (ms\Width * 0.75) + (9.5 * MenuScale), ms\y + (12 * MenuScale), ms\Val5, True)
+			Else
+				Text(ms\x + ms\Width + (12 * MenuScale), ms\y + (12 * MenuScale), ms\Val6, True)
 			EndIf
 		EndIf
 	Next
