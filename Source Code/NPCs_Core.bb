@@ -3579,7 +3579,7 @@ Function UpdateNPCs%()
 									
 									RotateEntity(n\Collider, 0.0, Angle - 90.0, 0.0, True)
 									
-									n\CurrSpeed = CurveValue(n\Speed * 0.33, n\CurrSpeed, 50.0)
+									n\CurrSpeed = CurveValue(n\Speed * 0.36, n\CurrSpeed, 50.0)
 									MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 									
 									AnimateNPC(n, 494.0, 569.0, n\CurrSpeed * 25.0)
@@ -3659,7 +3659,7 @@ Function UpdateNPCs%()
 									If (PrevFrame < 476.0 And n\Frame >= 476.0) Then PlaySound_Strict(DamageSFX[12])
 									If (PrevFrame < 486.0 And n\Frame >= 486.0) Then PlaySound_Strict(DamageSFX[12])
 								Else
-									n\CurrSpeed = CurveValue(n\Speed * 0.8, n\CurrSpeed, 10.0)
+									n\CurrSpeed = CurveValue(n\Speed * 0.9, n\CurrSpeed, 10.0)
 									
 									AnimateNPC(n, 298.0, 316.0, n\CurrSpeed * 10.0)
 									

@@ -6187,14 +6187,14 @@ Function UpdateEvents%()
 										msg\DeathMsg = msg\DeathMsg + "The subject exhibits signs of blunt force trauma typical for personnel who have "
 										msg\DeathMsg = msg\DeathMsg + "entered the chamber when the lights are off."
 										
-										InjurePlayer(Rnd(0.4, 0.8), 0.0, 300.0)
+										InjurePlayer(Rnd(0.3, 0.6), 0.0, 300.0)
 										PlaySound_Strict(DamageSFX[Rand(2, 3)])
 										me\CameraShake = 0.5
 										
 										e\EventState2 = Rnd(-0.1, 0.1)
 										e\EventState3 = Rnd(-0.1, 0.1)
 										
-										If me\Injuries > 5.0 Then Kill(True)
+										If me\Injuries > 4.0 Then Kill(True)
 									EndIf
 								EndIf
 								
