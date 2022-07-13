@@ -51,12 +51,14 @@ Rooms:
 - New HCZ styled rooms from the Nine-Tailed-Fox mod.
 - New Rocky room for the EZ from Nine-Tailed-Fox mod.
 - Lights going out in Medical Bay room has been shortened.
+- Medical Bay First Aid Kit is now a Compact First Aid Kit.
 - SCP-106's Pocket Dimension now drains your stamina quickly instead of setting it to 0.
 - SCP-205 Containment Key Card Door level reduced from 3 to 2.
 - SCP-205 has a Level 3 in the containment area.
 
 
 Bug Fixes:
+- Wearing Heavy Hazmat Suit and getting touched no longer allows to doctor to instantly take your ring off later on.
 - Apollyon now gives you the Keter Achievement.
 - Hazmat suit properly protects against poisonous gas in room3_storage(Storage Area 6).
 - Fixed collision of the doors when they are culled.
