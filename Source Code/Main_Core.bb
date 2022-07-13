@@ -1316,9 +1316,7 @@ Function UpdateMoving%()
 				
 				If PlayerRoom\RoomTemplate\Name = "dimension_106" Then 
 					If EntityY(me\Collider) < 2000.0 * RoomScale Lor EntityY(me\Collider) > 2608.0 * RoomScale Then
-						If me\Stamina > 0.0 Then
-						me\Stamina = me\Stamina - (fps\Factor[0] * 0.6)
-						EndIf
+						me\Stamina = Max(me\Stamina - (fps\Factor[0] * 0.6), 0.0)
 						Speed = 0.015
 						Sprint = 1.0
 						If (KeyDown(key\SPRINT)) Then
@@ -6208,10 +6206,7 @@ Function UpdateEnding%()
 	GiveAchievement(Achv055)
 	If ((Not UsedConsole) Lor opt\DebugMode) And SelectedMap = "" Then
 		GiveAchievement(AchvConsole)
-		If SelectedDifficulty\Name = "Keter" Then
-			GiveAchievement(AchvKeter)
-			SaveAchievementsFile()
-		ElseIf SelectedDifficulty\Name = "Apollyon" Then
+		If SelectedDifficulty\Name = "Keter" Lor SelectedDifficulty\Name = "Apollyon" Then
 			GiveAchievement(AchvKeter)
 			SaveAchievementsFile()
 		EndIf
