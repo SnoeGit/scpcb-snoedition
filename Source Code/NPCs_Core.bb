@@ -81,7 +81,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			; ~ On Halloween set Jack-o'-lantern texture
 			If (Left(CurrentDate(), 7) = "31 Oct ") Then
 				n_I\IsHalloween = True
-				TexFestive = LoadTexture_Strict("GFX\npcs\scp_173_H.png")
+				TexFestive = LoadTexture_Strict("GFX\npcs\scps\scp_173_H.png")
 				If opt\Atmosphere Then TextureBlend(TexFestive, 5)
 				EntityTexture(n\OBJ, TexFestive)
 				EntityTexture(n\OBJ2, TexFestive)
@@ -91,7 +91,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			; ~ On New Year set cookie texture
 			If (Left(CurrentDate(), 7) = "01 Jan ") Then
 				n_I\IsNewYear = True
-				TexFestive = LoadTexture_Strict("GFX\npcs\scp_173_NY.png")
+				TexFestive = LoadTexture_Strict("GFX\npcs\scps\scp_173_NY.png")
 				If opt\Atmosphere Then TextureBlend(TexFestive, 5)
 				EntityTexture(n\OBJ, TexFestive)
 				EntityTexture(n\OBJ2, TexFestive)
@@ -101,7 +101,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			; ~ On April Fools set kawaii texture
 			If (Left(CurrentDate(), 7) = "01 Apr ") Then
 				n_I\IsAprilFools = True
-				TexFestive = LoadTexture_Strict("GFX\npcs\scp_173_J.png")
+				TexFestive = LoadTexture_Strict("GFX\npcs\scps\scp_173_J.png")
 				If opt\Atmosphere Then TextureBlend(TexFestive, 5)
 				EntityTexture(n\OBJ, TexFestive)
 				EntityTexture(n\OBJ2, TexFestive)
@@ -540,13 +540,13 @@ Function CreateNPCAsset%(n.NPCs)
 			EndIf
 			
 			If I_035\Sad <> 0 Then
-				n\OBJ2 = LoadMesh_Strict("GFX\npcs\scp_035_sad.b3d")
+				n\OBJ2 = LoadMesh_Strict("GFX\npcs\scps\scp_035_sad.b3d")
 				If Save Then
 					RotateEntity(n\OBJ2, Pitch, Yaw, Roll)
 					PositionEntity(n\OBJ2, x, y, z)
 				EndIf
 			Else
-				n\OBJ2 = LoadMesh_Strict("GFX\npcs\scp_035_smile.b3d")
+				n\OBJ2 = LoadMesh_Strict("GFX\npcs\scps\scp_035_smile.b3d")
 			EndIf
 			Temp = GetINIFloat(NPCsFile, "Class D", "Scale") / MeshWidth(n\OBJ)
 			ScaleEntity(n\OBJ2, Temp, Temp, Temp)

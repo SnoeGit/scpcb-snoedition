@@ -1319,9 +1319,7 @@ Function UpdateMoving%()
 						me\Stamina = Max(me\Stamina - (fps\Factor[0] * 0.6), 0.0)
 						Speed = 0.015
 						Sprint = 1.0
-						If (KeyDown(key\SPRINT)) Then
-						me\Stamina = 0.0
-						EndIf
+						If (KeyDown(key\SPRINT)) Then me\Stamina = 0.0
 					EndIf
 				EndIf	
 				
@@ -1702,9 +1700,9 @@ Function UpdateMouseLook%()
 		EndIf
 	EndIf
 	
-	If wi\GasMask > 0 Lor I_1499\Using > 0 Then
+	If wi\GasMask > 0 Lor I_1499\Using > 0 Lor wi\HazmatSuit > 0 Then
 		If (Not I_714\Using) And PlayerRoom\RoomTemplate\Name <> "dimension_106" Then
-			If wi\GasMask = 2 Lor I_1499\Using = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.01 * fps\Factor[0])
+			If wi\GasMask = 2 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.005 * fps\Factor[0])
 		EndIf
 		If (Not me\Terminated) Then
 			If (Not ChannelPlaying(BreathCHN)) Then
@@ -1719,7 +1717,7 @@ Function UpdateMouseLook%()
 		If ChannelPlaying(BreathCHN) Then
 			wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * 2.0), 100.0)
 		Else
-			If wi\GasMask = 2 Lor I_1499\Using = 2 Then
+			If wi\GasMask = 2 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 2 Then
 				If me\CurrSpeed > 0.0 And (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) Then
 					wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * 0.2), 100.0)
 				Else
@@ -1743,9 +1741,6 @@ Function UpdateMouseLook%()
 	If wi\HazmatSuit > 0 Then
 		If wi\HazmatSuit = 1 Then
 			me\Stamina = Min(60.0, me\Stamina)
-		EndIf
-		If (Not I_714\Using) Then
-			If wi\HazmatSuit = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.01 * fps\Factor[0])
 		EndIf
 		If EntityHidden(t\OverlayID[2]) Then ShowEntity(t\OverlayID[2])
 	Else
