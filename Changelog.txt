@@ -30,10 +30,9 @@ General:
 NPCs:
 - Edited multiple SCP's speed.
 SCP-008-1: 2.0 -> 1.35 (0.7 multiplier removed from chase line)
-SCP-049: 1.5 -> 1.49
 SCP-049-2: 1.0 -> 0.9 (Speed scales with difficulty now)
 SCP-096: 9.0 -> 8.6
-SCP-106: 1.3 -> 1.23
+SCP-106: 1.3 -> 1.27
 SCP-860-2: 8.0 -> 6.5
 
 - SCP-173-J has been added as an April Fools event.
@@ -51,7 +50,7 @@ Rooms:
 - New HCZ styled rooms from the Nine-Tailed-Fox mod.
 - New Rocky room for the EZ from Nine-Tailed-Fox mod.
 - Lights going out in Medical Bay room has been shortened.
-- Medical Bay First Aid Kit is now a Compact First Aid Kit.
+- Medical Bay's First Aid Kit is now a Compact First Aid Kit.
 - SCP-106's Pocket Dimension now drains your stamina quickly instead of setting it to 0.
 - SCP-205 Containment Key Card Door level reduced from 3 to 2.
 - SCP-205 has a Level 3 in the containment area.
@@ -62,7 +61,7 @@ Bug Fixes:
 - Apollyon now gives you the Keter Achievement.
 - Hazmat suit properly protects against poisonous gas in room3_storage(Storage Area 6).
 - Fixed collision of the doors when they are culled.
-- Fixed buttons disappearing when doors were culled.
+- Fixed buttons disappearing when doors were culled. (revert)
 - Cups of SCP-008 and SCP-409 no longer reset their progression if you have already been infected.
 
 
