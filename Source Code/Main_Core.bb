@@ -3628,7 +3628,7 @@ Function UpdateGUI%()
 					If wi\BallisticVest = 0 Then
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 6.0)
 						
-						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 3.0), 100.0)
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 3.5), 100.0)
 						
 						If SelectedItem\State = 100.0 Then
 							If wi\HazmatSuit > 0 Then

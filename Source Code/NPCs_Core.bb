@@ -1618,7 +1618,7 @@ Function UpdateNPCs%()
 											ElseIf TakeOffTimer >= 340.0
 												For i = 0 To MaxItemAmount - 1
 													If Inventory(i) <> Null Then
-														If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") And wi\HazmatSuit <> 3 Then
+														If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") And wi\HazmatSuit = 3 Then
 															If Inventory(i)\State2 < 3.0 Then
 																Inventory(i)\State2 = Inventory(i)\State2 + 1.0
 																TakeOffTimer = 170.0
@@ -1630,6 +1630,12 @@ Function UpdateNPCs%()
 																CreateMsg("The hazmat suit was destroyed.")
 																TakeOffTimer = 0.0
 															EndIf
+														ElseIf Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") And wi\HazmatSuit <> 3 Then
+															RemoveItem(Inventory(i))
+															wi\HazmatSuit = 0
+															PlaySound_Strict(PickSFX[2])
+															CreateMsg("The hazmat suit was destroyed.")
+															TakeOffTimer = 0.0
 															Exit
 														EndIf
 													EndIf

@@ -489,10 +489,6 @@ Function UpdateItems%()
 End Function
 
 Function PickItem%(item.Items)
-	If wi\HazmatSuit > 0 Then
-		CreateMsg("You cannot pick up any items while wearing a hazmat suit.")
-		Return
-	EndIf
 	
 	If InvOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Then Return
 	
@@ -643,10 +639,6 @@ Function PickItem%(item.Items)
 End Function
 
 Function DropItem%(item.Items, PlayDropSound% = True)
-	If wi\HazmatSuit > 0 Then
-		CreateMsg("You cannot drop any items while wearing a hazmat suit.")
-		Return
-	EndIf
 	
 	CatchErrors("Uncaught (DropItem)")
 	
