@@ -21,6 +21,8 @@ General:
 - SCP-714 and Heavy equipement protects you from the bird planes in pocket dimension.
 - SCP-714 resists the poisonous gas in room3_storage(Storage Area 6).
 - Monitors displaying SCP-895 will kill you quicker.
+- SCP-513 if rung will permenantly descrease your sanity.
+- SCP-513 achievement only obtained by ringing the bell now.
 - Apollyon difficulty no longer gives you the intro papers.
 - Fine Scramble Gear has been added to the game.
 - Rework how battery drains.

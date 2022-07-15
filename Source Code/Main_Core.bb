@@ -1293,6 +1293,8 @@ Function UpdateMoving%()
 	If I_714\Using Then
 		me\Stamina = Min(me\Stamina, 10.0)
 		me\Sanity = Max(-720.0, me\Sanity)
+	ElseIf n_I\Curr513_1 <> Null Then
+		me\Sanity = Min(me\Sanity, -230.0)
 	EndIf
 	
 	If me\Zombie Then 
@@ -2803,7 +2805,7 @@ Function UpdateGUI%()
 				Case "scp513"
 					;[Block]
 					PlaySound_Strict(LoadTempSound("SFX\SCP\513\Bell.ogg"))
-					
+					GiveAchievement(Achv513)
 					If n_I\Curr513_1 = Null Then n_I\Curr513_1 = CreateNPC(NPCType513_1, 0.0, 0.0, 0.0)
 					SelectedItem = Null
 					;[End Block]
