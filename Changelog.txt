@@ -28,6 +28,7 @@ General:
 - Rework how battery drains.
 - Strange bottle can now infect you with either 008 or 409.
 - Add LOD 1.2 option
+- Higher quality textures for cards from Graphics Overhaul mod by Placeholder Studios. (HD Playing card and Mastercard by Snoe)
 
 NPCs:
 - Edited multiple SCP's speed.
