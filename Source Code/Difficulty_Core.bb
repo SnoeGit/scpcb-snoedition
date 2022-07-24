@@ -59,7 +59,7 @@ difficulties[EUCLID]\Name = "Euclid"
 difficulties[EUCLID]\Description = "In Euclid difficulty, saving is only allowed at specific locations marked by lit up computer screens. "
 difficulties[EUCLID]\Description = difficulties[EUCLID]\Description + "Euclid-class objects are inherently unpredictable, so that reliable containment is not always possible."
 difficulties[EUCLID]\AggressiveNPCs = False
-difficulties[EUCLID]\InventorySlots = 6
+difficulties[EUCLID]\InventorySlots = 8
 difficulties[EUCLID]\SaveType = SAVE_ON_SCREENS
 difficulties[EUCLID]\OtherFactors = NORMAL
 SetDifficultyColor(EUCLID, 200, 200, 0)

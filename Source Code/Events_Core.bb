@@ -3911,7 +3911,7 @@ Function UpdateEvents%()
 							e\EventState = 2.0
 							
 							If (Not n_I\Curr106\Contained) Then 	
-								de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(e\room\Objects[Temp], True), EntityY(e\room\Objects[Temp], True) + 0.005, EntityZ(e\room\Objects[Temp], True), 90.0, Rnd(360.0), 0.0, 0.05, 0.8)
+								de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(e\room\Objects[Temp], True), EntityY(e\room\Objects[Temp], True) + 0.02, EntityZ(e\room\Objects[Temp], True), 90.0, Rnd(360.0), 0.0, 0.05, 0.8)
 								de\SizeChange = 0.001
 								EntityParent(de\OBJ, e\room\OBJ)
 								
@@ -4756,7 +4756,6 @@ Function UpdateEvents%()
 					e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[2], e\room\RoomDoors[3], e\room\Objects[2], e\room\Objects[3], e)
 					
 					If EntityY(me\Collider) < (-4600.0) * RoomScale Then
-						GiveAchievement(Achv939)
 						
 						If wi\GasMask = 0 And wi\HazmatSuit = 0 Then
 							If (Not I_714\Using) Then
@@ -7302,7 +7301,7 @@ Function UpdateEvents%()
 							PointEntity(e\room\Objects[0], me\Collider)
 							RotateEntity(e\room\Objects[0], -90.0, EntityYaw(e\room\Objects[0]), 0.0)
 							
-							If PrevFrame > 646.0 and wi\HazmatSuit <> 3 Then
+							If PrevFrame > 646.0 Then
 								If PlayerRoom = e\room Then
 									e\EventState = 3.0	
 									PlaySound_Strict(e\Sound2)

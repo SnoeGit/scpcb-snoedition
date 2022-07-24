@@ -372,7 +372,7 @@ Function UpdateConsole%()
 							CreateConsoleMsg("making everything else transparent.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "spawnitem", "si", "giveitem"
+						Case "spawnitem", "si", "giveitem", "give"
 							;[Block]
 							CreateConsoleMsg("HELP - spawnitem")
 							CreateConsoleMsg("******************************")
@@ -499,7 +499,7 @@ Function UpdateConsole%()
 							CreateConsoleMsg("animation triggers.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "teleport"
+						Case "teleport", "tp", "goto"
 							;[Block]
 							CreateConsoleMsg("HELP - teleport")
 							CreateConsoleMsg("******************************")
@@ -601,7 +601,7 @@ Function UpdateConsole%()
 					
 					chs\NoClipSpeed = Float(StrTemp)
 					;[End Block]
-				Case "injure"
+				Case "injure", "damage"
 					;[Block]
 					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
@@ -627,7 +627,7 @@ Function UpdateConsole%()
 					;[Block]
 					ResetNegativeStats()
 					;[End Block]
-				Case "teleport", "tp"
+				Case "teleport", "tp", "goto"
 					;[Block]
 					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
@@ -642,7 +642,7 @@ Function UpdateConsole%()
 					
 					If PlayerRoom\RoomTemplate\Name <> StrTemp Then CreateConsoleMsg("Room not found.", 255, 0, 0)
 					;[End Block]
-				Case "spawnitem", "si", "giveitem"
+				Case "spawnitem", "si", "giveitem", "give"
 					;[Block]
 					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Temp = False 
@@ -952,7 +952,7 @@ Function UpdateConsole%()
 						CreateConsoleMsg("NOBLINK OFF")	
 					EndIf
 					;[End Block]
-				Case "debughud"
+				Case "debughud", "dbh"
 					;[Block]
 					If Instr(ConsoleInput, " ") <> 0 Then
 						StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
@@ -983,7 +983,7 @@ Function UpdateConsole%()
 							;[End Block]
 					End Select
 					;[End Block]
-				Case "stopsound", "stfu"
+				Case "stopsound", "stfu", "silence", "quiet"
 					;[Block]
 					KillSounds()
 					
@@ -1211,7 +1211,7 @@ Function UpdateConsole%()
 						If MusicCHN <> 0 Then StopChannel(MusicCHN)
 					EndIf
 					;[End Block]
-				Case "tele"
+				Case "warp"
 					;[Block]
 					Args = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					StrTemp = Piece(Args, 1, " ")
@@ -1221,7 +1221,7 @@ Function UpdateConsole%()
 					PositionEntity(Camera, Float(StrTemp), Float(StrTemp2), Float(StrTemp3))
 					ResetEntity(me\Collider)
 					ResetEntity(Camera)
-					CreateConsoleMsg("Teleported to coordinates (X|Y|Z): " + EntityX(me\Collider) + "|" + EntityY(me\Collider) + "|" + EntityZ(me\Collider))
+					CreateConsoleMsg("Warped to coordinates (X|Y|Z): " + EntityX(me\Collider) + "|" + EntityY(me\Collider) + "|" + EntityZ(me\Collider))
 					;[End Block]
 				Case "asd"
 					;[Block]
@@ -1470,6 +1470,297 @@ Function RenderConsole%()
 		If opt\DisplayMode = 0 Then DrawImage(CursorIMG, ScaledMouseX(), ScaledMouseY())
 	EndIf
 	SetFont(fo\FontID[Font_Default])
+End Function
+
+Function RenderDebugHUD%()
+	Local ev.Events, ch.Chunk
+	Local x%, y%, i%
+	
+	x = 20 * MenuScale
+	y = 40 * MenuScale
+	
+	Color(255, 255, 255)
+	SetFont(fo\FontID[Font_Console])
+	
+	Select chs\DebugHUD
+		Case 1
+			;[Block]
+			Text(x, y, "Room: " + PlayerRoom\RoomTemplate\Name)
+			Text(x, y + (20 * MenuScale), "Room Coordinates: (" + Floor(EntityX(PlayerRoom\OBJ) / 8.0 + 0.5) + ", " + Floor(EntityZ(PlayerRoom\OBJ) / 8.0 + 0.5) + ", Angle: " + PlayerRoom\Angle + ")")
+			For ev.Events = Each Events
+				If ev\room = PlayerRoom Then
+					Text(x, y + (40 * MenuScale), "Room Event: " + ev\EventName + ", ID: " + ev\EventID) 
+					Text(x, y + (60 * MenuScale), "State: " + ev\EventState)
+					Text(x, y + (80 * MenuScale), "State2: " + ev\EventState2)   
+					Text(x, y + (100 * MenuScale), "State3: " + ev\EventState3)
+					Text(x, y + (120 * MenuScale), "State4: " + ev\EventState4)
+					Text(x, y + (140 * MenuScale), "Str: "+ ev\EventStr)
+					Exit
+				EndIf
+			Next
+			If PlayerRoom\RoomTemplate\Name = "dimension_1499" Then
+				Text(x, y + (180 * MenuScale), "Current Chunk X / Z: (" + (Int((EntityX(me\Collider) + 20) / 40)) + ", "+(Int((EntityZ(me\Collider) + 20) / 40)) + ")")
+				
+				Local CH_Amount% = 0
+				
+				For ch.Chunk = Each Chunk
+					CH_Amount = CH_Amount + 1
+				Next
+				Text(x, y + (200 * MenuScale), "Current Chunk Amount: " + CH_Amount)
+			Else
+				Text(x, y + (200 * MenuScale), "Current Room Position: (" + PlayerRoom\x + ", " + PlayerRoom\y + ", " + PlayerRoom\z + ")")
+			EndIf
+			
+			If sc_I\SelectedMonitor <> Null Then
+				Text(x, y + (240 * MenuScale), "Current Monitor: " + sc_I\SelectedMonitor\ScrOBJ)
+			Else
+				Text(x, y + (240 * MenuScale), "Current Monitor: Null")
+			EndIf
+			
+			If SelectedItem <> Null Then
+				Text(x, y + (280 * MenuScale), "Current Button: " + SelectedItem\ItemTemplate\Name)
+			Else
+				Text(x, y + (280 * MenuScale), "Current Button: Null")
+			EndIf
+			
+			Text(x, y + (320 * MenuScale), "Current Floor: " + PlayerElevatorFloor)
+			Text(x, y + (340 * MenuScale), "Room floor: " + ToElevatorFloor)
+			If PlayerInsideElevator Then
+				Text(x, y + (360 * MenuScale), "Player is inside elevator: True")
+			Else
+				Text(x, y + (360 * MenuScale), "Player is inside elevator: False")
+			EndIf
+			
+			Text(x, y + (400 * MenuScale), "Date and Time: " + CurrentDate() + ", " + CurrentTime())
+			Text(x, y + (420 * MenuScale), "Video memory: " + ((TotalVidMem() / 1024) - (AvailVidMem() / 1024)) + " MB/" + (TotalVidMem() / 1024) + " MB" + Chr(10))
+			Text(x, y + (440 * MenuScale), "Global memory status: " + ((TotalPhys() / 1024) - (AvailPhys() / 1024)) + " MB/" + (TotalPhys() / 1024) + " MB")
+			Text(x, y + (460 * MenuScale), "Triangles Rendered: " + CurrTrisAmount)
+			Text(x, y + (480 * MenuScale), "Active Textures: " + ActiveTextures())
+			;[End Block]
+		Case 2
+			;[Block]
+			Text(x, y, "Player Position: (" + FloatToString(EntityX(me\Collider), 1) + ", " + FloatToString(EntityY(me\Collider), 1) + ", " + FloatToString(EntityZ(me\Collider), 1) + ")")
+			Text(x, y + (20 * MenuScale), "Player Rotation: (" + FloatToString(EntityPitch(me\Collider), 1) + ", " + FloatToString(EntityYaw(me\Collider), 1) + ", " + FloatToString(EntityRoll(me\Collider), 1) + ")")
+			
+			Text(x, y + (60 * MenuScale), "Injuries: " + me\Injuries)
+			Text(x, y + (80 * MenuScale), "Bloodloss: " + me\Bloodloss)
+			
+			Text(x, y + (120 * MenuScale), "Blur Timer: " + me\BlurTimer)
+			Text(x, y + (140 * MenuScale), "Light Blink: " + me\LightBlink)
+			Text(x, y + (160 * MenuScale), "Light Flash: " + me\LightFlash)
+			
+			Text(x, y + (200 * MenuScale), "Blink Frequency: " + me\BLINKFREQ)
+			Text(x, y + (220 * MenuScale), "Blink Timer: " + me\BlinkTimer)
+			Text(x, y + (240 * MenuScale), "Blink Effect: " + me\BlinkEffect)
+			Text(x, y + (260 * MenuScale), "Blink Effect Timer: " + me\BlinkEffectTimer)
+			Text(x, y + (280 * MenuScale), "Eye Irritation: " + me\EyeIrritation)
+			Text(x, y + (300 * MenuScale), "Eye Stuck: " + me\EyeStuck)
+			
+			Text(x, y + (340 * MenuScale), "Stamina: " + me\Stamina)
+			Text(x, y + (360 * MenuScale), "Stamina Effect: " + me\StaminaEffect)
+			Text(x, y + (380 * MenuScale), "Stamina Effect Timer: " + me\StaminaEffectTimer)
+			
+			Text(x, y + (420 * MenuScale), "Deaf Timer: " + me\DeafTimer)
+			
+			If me\Terminated Then
+				Text(x + (380 * MenuScale), y, "Terminated: True")
+			Else
+				Text(x + (380 * MenuScale), y, "Terminated: False")
+			EndIf
+			
+			Text(x + (380 * MenuScale), y + (20 * MenuScale), "Death Timer: " + me\DeathTimer)
+			Text(x + (380 * MenuScale), y + (40 * MenuScale), "Fall Timer: " + me\FallTimer)
+			
+			Text(x + (380 * MenuScale), y + (80 * MenuScale), "Heal Timer: " + me\HealTimer)
+			
+			Text(x + (380 * MenuScale), y + (120 * MenuScale), "Heart Beat Timer: " + me\HeartBeatTimer)
+			
+			Text(x + (380 * MenuScale), y + (160 * MenuScale), "Explosion Timer: " + me\ExplosionTimer)
+			
+			Text(x + (380 * MenuScale), y + (200 * MenuScale), "Current Speed: " + me\CurrSpeed)
+			
+			Text(x + (380 * MenuScale), y + (240 * MenuScale), "Camera Shake Timer: " + me\CameraShakeTimer)
+			Text(x + (380 * MenuScale), y + (260 * MenuScale), "Current Camera Zoom: " + me\CurrCameraZoom)
+			
+			Text(x + (380 * MenuScale), y + (300 * MenuScale), "Vomit Timer: " + me\VomitTimer)
+			
+			If me\Playable Then
+				Text(x + (380 * MenuScale), y + (340 * MenuScale), "Is Playable: True")
+			Else
+				Text(x + (380 * MenuScale), y + (340 * MenuScale), "Is Playable: False")
+			EndIf
+			
+			Text(x + (380 * MenuScale), y + (380 * MenuScale), "Refined Items: " + me\RefinedItems)
+			Text(x + (380 * MenuScale), y + (400 * MenuScale), "Funds: " + me\Funds)
+			;[End Block]
+		Case 3
+			;[Block]
+			If n_I\Curr049 <> Null Then
+			Text(x, y, "SCP-049 Position: (" + FloatToString(EntityX(n_I\Curr049\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr049\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr049\OBJ), 2) + ")")
+			Text(x, y + (20 * MenuScale), "SCP-049 Idle: " + n_I\Curr049\Idle)
+			Text(x, y + (40 * MenuScale), "SCP-049 State: " + n_I\Curr049\State)
+			EndIf
+			If n_I\Curr096 <> Null Then
+			Text(x, y + (60 * MenuScale), "SCP-096 Position: (" + FloatToString(EntityX(n_I\Curr096\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr096\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr096\OBJ), 2) + ")")
+			Text(x, y + (80 * MenuScale), "SCP-096 Idle: " + n_I\Curr096\Idle)
+			Text(x, y + (100 * MenuScale), "SCP-096 State: " + n_I\Curr096\State)
+			EndIf
+			If n_I\Curr106 <> Null Then
+			Text(x, y + (120 * MenuScale), "SCP-106 Position: (" + FloatToString(EntityX(n_I\Curr106\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr106\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr106\OBJ), 2) + ")")
+			Text(x, y + (140 * MenuScale), "SCP-106 Idle: " + n_I\Curr106\Idle)
+			Text(x, y + (160 * MenuScale), "SCP-106 State: " + n_I\Curr106\State)
+			EndIf
+			If n_I\Curr173 <> Null Then
+			Text(x, y + (180 * MenuScale), "SCP-173 Position: (" + FloatToString(EntityX(n_I\Curr173\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr173\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr173\OBJ), 2) + ")")
+			Text(x, y + (200 * MenuScale), "SCP-173 Idle: " + n_I\Curr173\Idle)
+			Text(x, y + (220 * MenuScale), "SCP-173 State: " + n_I\Curr173\State)
+			EndIf
+			
+			Text(x, y + (260 * MenuScale), "Pills Taken: " + I_500\Taken)
+			
+			Text(x, y + (300 * MenuScale), "SCP-008 Infection: " + I_008\Timer)
+			Text(x, y + (320 * MenuScale), "SCP-409 Crystallization: " + I_409\Timer)
+			Text(x, y + (340 * MenuScale), "SCP-427 State (Secs): " + Int(I_427\Timer / 70.0))
+			For i = 0 To 7
+				Text(x, y + ((360 + (20 * i)) * MenuScale), "SCP-1025 State " + i + ": " + I_1025\State[i])
+			Next
+			
+			If I_005\ChanceToSpawn = 1 Then
+				Text(x, y + (540 * MenuScale), "SCP-005 Spawned in the Chamber!")
+			ElseIf I_005\ChanceToSpawn = 2
+				Text(x, y + (540 * MenuScale), "SCP-005 Spawned in Dr.Maynard's Office!")
+			ElseIf I_005\ChanceToSpawn = 3
+				Text(x, y + (540 * MenuScale), "SCP-005 Spawned in SCP-409's Containment Chamber!")
+			EndIf
+			;[End Block]
+	End Select
+	SetFont(fo\FontID[Font_Default])
+End Function
+
+Function ConsoleSpawnNPC%(Name$, NPCState$ = "")
+	Local n.NPCs
+	Local ConsoleMsg$
+	
+	Select Name 
+		Case "008", "008zombie", "008-1", "infectedhuman", "humaninfected", "scp008-1", "scp-008-1", "scp0081", "0081", "scp-0081", "008_1", "scp_008_1"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType008_1, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			n\State = 1.0
+			ConsoleMsg = "SCP-008 infected human spawned."
+			;[End Block]
+		Case "049", "scp049", "scp-049", "plaguedoctor", "doc"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType049, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			n\State = 1.0
+			If n_I\Curr049 = Null Then n_I\Curr049 = n
+			ConsoleMsg = "SCP-049 spawned."
+			;[End Block]
+		Case "049-2", "0492", "scp-049-2", "scp049-2", "049zombie", "curedhuman", "scp0492", "scp-0492", "049_2", "scp_049_2"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType049_2, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			n\State = 1.0
+			ConsoleMsg = "SCP-049-2 spawned."
+			;[End Block]
+		Case "066", "scp066", "scp-066", "eric"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType066, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = "SCP-066 spawned."
+			;[End Block]
+		Case "096", "scp096", "scp-096", "shyguy"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType096, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			n\State = 5.0
+			If n_I\Curr096 = Null Then n_I\Curr096 = n
+			ConsoleMsg = "SCP-096 spawned."
+			;[End Block]
+		Case "106", "scp106", "scp-106", "larry", "oldman"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType106, EntityX(me\Collider), EntityY(me\Collider) - 0.5, EntityZ(me\Collider))
+			n\State = -1.0
+			ConsoleMsg = "SCP-106 spawned."
+			;[End Block]
+		Case "173", "scp173", "scp-173", "statue", "sculpture", "peanut"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType173, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			n_I\Curr173 = n
+			If n_I\Curr173\Idle = 3 Then n_I\Curr173\Idle = 0
+			ConsoleMsg = "SCP-173 spawned."
+			;[End Block]
+		Case "372", "scp372", "scp-372", "pj", "jumper"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType372, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = "SCP-372 spawned."
+			;[End Block]
+		Case "513-1", "5131", "scp513-1", "scp-513-1", "bll", "scp-5131", "scp5131"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType513_1, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = "SCP-513-1 spawned."
+			;[End Block]
+		Case "860-2", "8602", "scp860-2", "scp-860-2", "forestmonster", "scp8602"
+			;[Block]
+			CreateConsoleMsg("SCP-860-2 cannot be spawned with the console. Sorry!", 255, 0, 0)
+			;[End Block]
+		Case "939", "scp939", "scp-939"
+			CreateConsoleMsg("SCP-939 instances cannot be spawned with the console. Sorry!", 255, 0, 0)
+			;[End Block]
+		Case "966", "scp966", "scp-966", "sleepkiller"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType966, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = "SCP-966 instance spawned."
+			;[End Block]
+		Case "1048-a", "scp1048-a", "scp-1048-a", "scp1048a", "scp-1048a", "earbear"
+			;[Block]
+			CreateConsoleMsg("SCP-1048-A cannot be spawned with the console. Sorry!", 255, 0, 0)
+			;[End Block]
+		Case "1048", "scp1048", "scp-1048", "scp-1048", "bear", "builderbear"
+			;[Block]
+			CreateConsoleMsg("SCP-1048 cannot be spawned with the console. Sorry!", 255, 0, 0)
+			;[End Block]
+		Case "1499-1", "14991", "scp-1499-1", "scp1499-1", "scp-14991", "scp14991"
+			n.NPCs = CreateNPC(NPCType1499_1, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = "SCP-1499-1 instance spawned."
+			;[End Block]
+		Case "class-d", "classd", "d"
+			;[Block]
+			n.NPCs = CreateNPC(NPCTypeD, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = "D-Class spawned."
+			;[End Block]
+		Case "guard", "ulgrin"
+			;[Block]
+			n.NPCs = CreateNPC(NPCTypeGuard, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = "Guard spawned."
+			;[End Block]
+		Case "mtf", "ntf"
+			;[Block]
+			n.NPCs = CreateNPC(NPCTypeMTF, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = "MTF unit spawned."
+			;[End Block]
+		Case "apache", "helicopter"
+			;[Block]
+			n.NPCs = CreateNPC(NPCTypeApache, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = "Apache spawned."
+			;[End Block]
+		Case "tentacle", "scp035tentacle", "scp-035tentacle", "scp-035-tentacle", "scp035-tentacle"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType035_Tentacle, EntityX(me\Collider), EntityY(me\Collider) - 0.12, EntityZ(me\Collider))
+			ConsoleMsg = "SCP-035 tentacle spawned."
+			;[End Block]
+		Case "clerk", "woman", "lady", "reyes", "rebbeca"
+			;[Block]
+			n.NPCs = CreateNPC(NPCTypeClerk, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = "Clerk spawned."
+			;[End Block]
+		Default 
+			;[Block]
+			CreateConsoleMsg("NPC type not found.", 255, 0, 0) : Return
+			;[End Block]
+	End Select
+	
+	If n <> Null Then
+		If NPCState <> "" Then n\State = Float(NPCState) : ConsoleMsg = ConsoleMsg + " (State = " + n\State + ")"
+	EndIf
+	
+	CreateConsoleMsg(ConsoleMsg)
 End Function
 
 Function ClearConsole%()

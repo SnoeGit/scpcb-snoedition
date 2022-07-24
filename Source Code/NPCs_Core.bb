@@ -1003,8 +1003,13 @@ Function UpdateNPCs%()
 										If (Dist > 1600.0 Lor PlayerRoom\RoomTemplate\Name = "dimension_106") Then
 											TranslateEntity(n\Collider, 0.0, ((EntityY(me\Collider) - 0.14) - EntityY(n\Collider)) / 50.0, 0.0)
 										EndIf
-										
-										n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
+										If Dist > 0.64 And Dist < 4.5 Then
+											n\CurrSpeed = CurveValue(n\Speed * 1.15, n\CurrSpeed, 10.0)
+										ElseIf Dist > 4.5 And Dist < 9.0 Then
+											n\CurrSpeed = CurveValue(n\Speed * 1.075, n\CurrSpeed, 10.0)
+										ElseIf Dist > 9.0 Then
+											n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
+										EndIf
 										
 										PointEntity(n\OBJ, me\Collider)
 										RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 10.0), 0.0)
@@ -3881,6 +3886,8 @@ Function UpdateNPCs%()
 								
 								PlaySound_Strict(LoadTempSound("SFX\SCP\939\Attack.ogg"))
 								n\State3 = 1.0
+								
+								GiveAchievement(Achv939)
 							EndIf
 							
 							n\State = 3.0
@@ -3895,6 +3902,8 @@ Function UpdateNPCs%()
 								SetNPCFrame(n, 175.0)
 								
 								n\Reload = 70.0 * 3.0
+								
+								GiveAchievement(Achv939)
 							EndIf
 							n\State = 1.0
 						EndIf
@@ -4231,10 +4240,10 @@ Function UpdateNPCs%()
 												End Select
 											EndIf
 											me\BlinkEffect = Max(me\BlinkEffect, 1.5)
-											me\BlinkEffectTimer = 1000.0
+											me\BlinkEffectTimer = 500.0
 											
 											me\StaminaEffect = 2.0
-											me\StaminaEffectTimer = 1000.0
+											me\StaminaEffectTimer = 500.0
 										EndIf			
 									EndIf
 								EndIf
@@ -7376,132 +7385,6 @@ Function ForceSetNPCID%(n.NPCs, NewID%)
 			n2\ID = FindFreeNPCID()
 		EndIf
 	Next
-End Function
-
-Function ConsoleSpawnNPC%(Name$, NPCState$ = "")
-	Local n.NPCs
-	Local ConsoleMsg$
-	
-	Select Name 
-		Case "008", "008zombie", "008-1", "infectedhuman", "humaninfected", "scp008-1", "scp-008-1", "scp0081", "0081", "scp-0081", "008_1", "scp_008_1"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType008_1, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			n\State = 1.0
-			ConsoleMsg = "SCP-008 infected human spawned."
-			;[End Block]
-		Case "049", "scp049", "scp-049", "plaguedoctor", "doc"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType049, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			n\State = 1.0
-			If n_I\Curr049 = Null Then n_I\Curr049 = n
-			ConsoleMsg = "SCP-049 spawned."
-			;[End Block]
-		Case "049-2", "0492", "scp-049-2", "scp049-2", "049zombie", "curedhuman", "scp0492", "scp-0492", "049_2", "scp_049_2"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType049_2, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			n\State = 1.0
-			ConsoleMsg = "SCP-049-2 spawned."
-			;[End Block]
-		Case "066", "scp066", "scp-066", "eric"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType066, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = "SCP-066 spawned."
-			;[End Block]
-		Case "096", "scp096", "scp-096", "shyguy"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType096, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			n\State = 5.0
-			If n_I\Curr096 = Null Then n_I\Curr096 = n
-			ConsoleMsg = "SCP-096 spawned."
-			;[End Block]
-		Case "106", "scp106", "scp-106", "larry", "oldman"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType106, EntityX(me\Collider), EntityY(me\Collider) - 0.5, EntityZ(me\Collider))
-			n\State = -1.0
-			ConsoleMsg = "SCP-106 spawned."
-			;[End Block]
-		Case "173", "scp173", "scp-173", "statue", "sculpture", "peanut"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType173, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			n_I\Curr173 = n
-			If n_I\Curr173\Idle = 3 Then n_I\Curr173\Idle = 0
-			ConsoleMsg = "SCP-173 spawned."
-			;[End Block]
-		Case "372", "scp372", "scp-372", "pj", "jumper"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType372, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = "SCP-372 spawned."
-			;[End Block]
-		Case "513-1", "5131", "scp513-1", "scp-513-1", "bll", "scp-5131", "scp5131"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType513_1, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = "SCP-513-1 spawned."
-			;[End Block]
-		Case "860-2", "8602", "scp860-2", "scp-860-2", "forestmonster", "scp8602"
-			;[Block]
-			CreateConsoleMsg("SCP-860-2 cannot be spawned with the console. Sorry!", 255, 0, 0)
-			;[End Block]
-		Case "939", "scp939", "scp-939"
-			CreateConsoleMsg("SCP-939 instances cannot be spawned with the console. Sorry!", 255, 0, 0)
-			;[End Block]
-		Case "966", "scp966", "scp-966", "sleepkiller"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType966, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = "SCP-966 instance spawned."
-			;[End Block]
-		Case "1048-a", "scp1048-a", "scp-1048-a", "scp1048a", "scp-1048a", "earbear"
-			;[Block]
-			CreateConsoleMsg("SCP-1048-A cannot be spawned with the console. Sorry!", 255, 0, 0)
-			;[End Block]
-		Case "1048", "scp1048", "scp-1048", "scp-1048", "bear", "builderbear"
-			;[Block]
-			CreateConsoleMsg("SCP-1048 cannot be spawned with the console. Sorry!", 255, 0, 0)
-			;[End Block]
-		Case "1499-1", "14991", "scp-1499-1", "scp1499-1", "scp-14991", "scp14991"
-			n.NPCs = CreateNPC(NPCType1499_1, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = "SCP-1499-1 instance spawned."
-			;[End Block]
-		Case "class-d", "classd", "d"
-			;[Block]
-			n.NPCs = CreateNPC(NPCTypeD, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = "D-Class spawned."
-			;[End Block]
-		Case "guard", "ulgrin"
-			;[Block]
-			n.NPCs = CreateNPC(NPCTypeGuard, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = "Guard spawned."
-			;[End Block]
-		Case "mtf", "ntf"
-			;[Block]
-			n.NPCs = CreateNPC(NPCTypeMTF, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = "MTF unit spawned."
-			;[End Block]
-		Case "apache", "helicopter"
-			;[Block]
-			n.NPCs = CreateNPC(NPCTypeApache, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = "Apache spawned."
-			;[End Block]
-		Case "tentacle", "scp035tentacle", "scp-035tentacle", "scp-035-tentacle", "scp035-tentacle"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType035_Tentacle, EntityX(me\Collider), EntityY(me\Collider) - 0.12, EntityZ(me\Collider))
-			ConsoleMsg = "SCP-035 tentacle spawned."
-			;[End Block]
-		Case "clerk", "woman", "lady", "reyes", "rebbeca"
-			;[Block]
-			n.NPCs = CreateNPC(NPCTypeClerk, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = "Clerk spawned."
-			;[End Block]
-		Default 
-			;[Block]
-			CreateConsoleMsg("NPC type not found.", 255, 0, 0) : Return
-			;[End Block]
-	End Select
-	
-	If n <> Null Then
-		If NPCState <> "" Then n\State = Float(NPCState) : ConsoleMsg = ConsoleMsg + " (State = " + n\State + ")"
-	EndIf
-	
-	CreateConsoleMsg(ConsoleMsg)
 End Function
 
 Function ManipulateNPCBones%()
