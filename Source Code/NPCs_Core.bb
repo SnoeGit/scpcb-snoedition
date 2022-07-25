@@ -1615,16 +1615,17 @@ Function UpdateNPCs%()
 									RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 10.0), 0.0)
 									
 									If Dist < 0.25 Then
-										If wi\HazmatSuit > 0 Then
-											TakeOffTimer = Min(TakeOffTimer + fps\Factor[0], 340.0)
+										TakeOffTimer = Min(TakeOffTimer + fps\Factor[0], 340.0)
+										If wi\HazmatSuit > 0 Lor I_714\Using Then
 											If TakeOffTimer > 100.0 And TakeOffTimer - fps\Factor[0] <= 100.0 And (Not ChannelPlaying(n\SoundCHN2)) Then
 												If n\SoundCHN2 <> 0 Then StopChannel(n\SoundCHN2)
-												n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\TakeOffHazmat.ogg"))
+												If wi\HazmatSuit > 0 Then n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\TakeOffHazmat.ogg"))
+												If I_714\Using Then	n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\714Equipped.ogg"))
 											ElseIf TakeOffTimer >= 340.0
 												For i = 0 To MaxItemAmount - 1
 													If Inventory(i) <> Null Then
-														If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") And wi\HazmatSuit = 3 Then
-															If Inventory(i)\State2 < 3.0 Then
+														If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") Then
+															If Inventory(i)\State2 < 3.0 And wi\HazmatSuit = 3 Then
 																Inventory(i)\State2 = Inventory(i)\State2 + 1.0
 																TakeOffTimer = 170.0
 																me\CameraShake = 2.0
@@ -1635,29 +1636,15 @@ Function UpdateNPCs%()
 																CreateMsg("The hazmat suit was destroyed.")
 																TakeOffTimer = 0.0
 															EndIf
-														ElseIf Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") And wi\HazmatSuit <> 3 Then
-															RemoveItem(Inventory(i))
-															wi\HazmatSuit = 0
-															PlaySound_Strict(PickSFX[2])
-															CreateMsg("The hazmat suit was destroyed.")
+														ElseIf I_714\Using Then
+															I_714\Using = False
+															PlaySound_Strict(PickSFX[3])
+															CreateMsg("The ring was forcibly removed.")
 															TakeOffTimer = 0.0
 															Exit
 														EndIf
 													EndIf
 												Next
-											EndIf
-										ElseIf I_714\Using Then
-											TakeOffTimer = TakeOffTimer + fps\Factor[0]
-											If TakeOffTimer > 100.0 And TakeOffTimer - fps\Factor[0] <= 100.0 And (Not ChannelPlaying(n\SoundCHN2)) Then
-												If n\SoundCHN2 <> 0 Then
-													If ChannelPlaying(n\SoundCHN2) Then StopChannel(n\SoundCHN2)
-												EndIf
-												n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\714Equipped.ogg"))
-											ElseIf TakeOffTimer >= 340.0
-												I_714\Using = False
-												PlaySound_Strict(PickSFX[3])
-												CreateMsg("The ring was forcibly removed.")
-												TakeOffTimer = 0.0
 											EndIf
 										Else
 											me\CurrCameraZoom = 20.0
