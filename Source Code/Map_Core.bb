@@ -39,6 +39,10 @@ Function CheckForPropModel%(File$)
 			;[Block]
 			Return(CopyEntity(d_I\DoorModelID[DOOR_DEFAULT_MODEL]))
 			;[End Block]
+		;Case Path + "doorwindow.b3d"
+		;	;[Block]
+		;	Return(CopyEntity(d_I\DoorModelID[DOOR_WINDOWED_MODEL]))
+		;	;[End Block]
 		Case Path + "contdoorleft.b3d"
 			;[Block]
 			Return(CopyEntity(d_I\DoorModelID[DOOR_BIG_MODEL_1]))
@@ -2029,6 +2033,7 @@ Const OFFICE_DOOR% = 4
 Const WOODEN_DOOR% = 5
 Const ONE_SIDED_DOOR% = 6
 Const SCP_914_DOOR% = 7
+;Const WINDOWED_DOOR% = 8
 ;[End Block]
 
 Function CreateDoor.Doors(x#, y#, z#, Angle#, room.Rooms, Open% = False, DoorType% = DEFAULT_DOOR, Keycard% = KEY_MISC, Code$ = "", CustomParent% = 0)
@@ -2130,6 +2135,14 @@ Function CreateDoor.Doors(x#, y#, z#, Angle#, room.Rooms, Open% = False, DoorTyp
 			FrameModelID = DOOR_WOODEN_FRAME_MODEL
 			FrameScaleX = 45.0 * RoomScale : FrameScaleY = 44.0 * RoomScale : FrameScaleZ = 80.0 * RoomScale
 			;[End Block]
+		;Case WINDOWED_DOOR
+		;	;[Block]
+		;	DoorModelID_1 = DOOR_WINDOWED_MODEL
+		;	DoorScaleX = 46.0 * RoomScale : DoorScaleY = 44.0 * RoomScale : DoorScaleZ = 46.0 * RoomScale
+		;	
+		;	FrameModelID = DOOR_DEFAULT_FRAME_MODEL
+		;	FrameScaleX = 45.0 * RoomScale : FrameScaleY = 44.0 * RoomScale : FrameScaleZ = 80.0 * RoomScale
+		;	;[End Block]
 	End Select
 	
 	d\FrameOBJ = CopyEntity(d_I\DoorFrameModelID[FrameModelID])
@@ -2251,7 +2264,7 @@ Function UpdateDoors%()
 			If d\Open Then
 				If d\OpenState < 180.0 Then
 					Select d\DoorType
-						Case DEFAULT_DOOR
+						Case DEFAULT_DOOR;, WINDOWED_DOOR
 							;[Block]
 							d\OpenState = Min(180.0, d\OpenState + (fps\Factor[0] * 2.0 * (d\FastOpen + 1)))
 							MoveEntity(d\OBJ, Sin(d\OpenState) * (d\FastOpen * 2 + 1) * fps\Factor[0] / 80.0, 0.0, 0.0)
@@ -2323,7 +2336,7 @@ Function UpdateDoors%()
 			Else
 				If d\OpenState > 0.0 Then
 					Select d\DoorType
-						Case DEFAULT_DOOR
+						Case DEFAULT_DOOR;, WINDOWED_DOOR
 							;[Block]
 							d\OpenState = Max(0.0, d\OpenState - (fps\Factor[0] * 2.0 * (d\FastOpen + 1)))
 							MoveEntity(d\OBJ, Sin(d\OpenState) * (-fps\Factor[0]) * (d\FastOpen + 1) / 80.0, 0.0, 0.0)
