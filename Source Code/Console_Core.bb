@@ -306,7 +306,7 @@ Function UpdateConsole%()
 							CreateConsoleMsg("Use " + Chr(34) + "help [command name]" + Chr(34) + " to get more information about a command.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "camerafog"
+						Case "camerafog", "cf"
 							;[Block]
 							CreateConsoleMsg("HELP - camerafog")
 							CreateConsoleMsg("******************************")
@@ -317,7 +317,7 @@ Function UpdateConsole%()
 							CreateConsoleMsg("Example: camerafog 20 40")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "noclip", "fly"
+						Case "noclip", "fly", "nc"
 							;[Block]
 							CreateConsoleMsg("HELP - noclip")
 							CreateConsoleMsg("******************************")
@@ -336,7 +336,7 @@ Function UpdateConsole%()
 							CreateConsoleMsg("Removes player's blinking.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "godmode", "god"
+						Case "godmode", "god", "gm"
 							;[Block]
 							CreateConsoleMsg("HELP - godmode")
 							CreateConsoleMsg("******************************")
@@ -393,56 +393,56 @@ Function UpdateConsole%()
 							CreateConsoleMsg("/ guard / mtf / apache / tentacle / 1048_a/ 1048")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "reset372" 
+						Case "reset372", "r372"
 							;[Block]
 							CreateConsoleMsg("HELP - reset372")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Returns SCP-372 to inactive state.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "106retreat" 
+						Case "106retreat"
 							;[Block]
 							CreateConsoleMsg("HELP - 106retreat")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Returns SCP-106 to inactive state.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "disable106"
+						Case "disable106", "d106"
 							;[Block]
 							CreateConsoleMsg("HELP - disable106")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Removes SCP-106 from the map.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "enable106"
+						Case "enable106", "e106"
 							;[Block]
 							CreateConsoleMsg("HELP - enable106")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Returns SCP-106 to the map.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "disable173"
+						Case "disable173", "d173"
 							;[Block]
 							CreateConsoleMsg("HELP - disable173")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Removes SCP-173 from the map.")
 							CreateConsoleMsg("******************************")	
 							;[End Block]
-						Case "enable173"
+						Case "enable173", "e173"
 							;[Block]
 							CreateConsoleMsg("HELP - enable173")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Returns SCP-173 to the map.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "reset096" 
+						Case "reset096", "r096"
 							;[Block]
 							CreateConsoleMsg("HELP - reset096")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Returns SCP-096 to idle state.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "doorcontrol" 
+						Case "doorcontrol"
 							;[Block]
 							CreateConsoleMsg("HELP - enablecontrol")
 							CreateConsoleMsg("******************************")
@@ -463,28 +463,28 @@ Function UpdateConsole%()
 							CreateConsoleMsg("Unlocks all checkpoints.")
 							CreateConsoleMsg("******************************")	
 							;[End Block]
-						Case "disable049"
+						Case "disable049", "d049"
 							;[Block]
 							CreateConsoleMsg("HELP - disable049")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Removes SCP-049 from the map.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "enable049"
+						Case "enable049", "e049"
 							;[Block]
 							CreateConsoleMsg("HELP - enable049")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Returns SCP-049 to the map.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "disable966"
+						Case "disable966", "d966"
 							;[Block]
 							CreateConsoleMsg("HELP - disable966")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Removes SCP-966 from the map.")
 							CreateConsoleMsg("******************************")	
 							;[End Block]
-						Case "enable966"
+						Case "enable966", "e966"
 							;[Block]
 							CreateConsoleMsg("HELP - enable966")
 							CreateConsoleMsg("******************************")
@@ -691,7 +691,7 @@ Function UpdateConsole%()
 					
 					WireFrame(WireFrameState)
 					;[End Block]
-				Case "reset096"
+				Case "reset096", "r096"
 					;[Block]
 					For n.NPCs = Each NPCs
 						If n\NPCType = NPCType096 Then
@@ -704,7 +704,7 @@ Function UpdateConsole%()
 						EndIf
 					Next
 					;[End Block]
-				Case "reset372" 
+				Case "reset372", "r372"
 					;[Block]				
 					For n.NPCs = Each NPCs
 						If n\NPCType = NPCType372 Then
@@ -714,34 +714,34 @@ Function UpdateConsole%()
 						EndIf
 					Next
 					;[End Block]
-				Case "disable173"
+				Case "disable173", "d173"
 					;[Block]
 					n_I\Curr173\Idle = 3 ; ~ This phenominal comment is brought to you by PolyFox. His absolute wisdom in this fatigue of knowledge brought about a new era of SCP-173 state checks.
 					HideEntity(n_I\Curr173\OBJ)
 					HideEntity(n_I\Curr173\OBJ2)
 					HideEntity(n_I\Curr173\Collider)
 					;[End Block]
-				Case "enable173"
+				Case "enable173", "e173"
 					;[Block]
 					n_I\Curr173\Idle = 0
 					ShowEntity(n_I\Curr173\OBJ)
 					ShowEntity(n_I\Curr173\OBJ2)
 					ShowEntity(n_I\Curr173\Collider)
 					;[End Block]
-				Case "disable106"
+				Case "disable106", "d106"
 					;[Block]
 					n_I\Curr106\Idle = 1
 					n_I\Curr106\State = 100000.0
 					n_I\Curr106\Contained = True
 					;[End Block]
-				Case "enable106"
+				Case "enable106", "e106"
 					;[Block]
 					n_I\Curr106\Idle = 0
 					n_I\Curr106\Contained = False
 					ShowEntity(n_I\Curr106\Collider)
 					ShowEntity(n_I\Curr106\OBJ)
 					;[End Block]
-				Case "disable966"
+				Case "disable966", "d966"
 					;[Block]
 					For n.NPCs = Each NPCs
 						If n\NPCType = NPCType966 Then
@@ -752,7 +752,7 @@ Function UpdateConsole%()
 						EndIf
 					Next
 					;[End Block]
-				Case "enable966"
+				Case "enable966", "e966"
 					;[Block]
 					For n.NPCs = Each NPCs
 						If n\NPCType = NPCType966 Then
@@ -763,13 +763,13 @@ Function UpdateConsole%()
 						EndIf
 					Next
 					;[End Block]
-				Case "disable049" 
+				Case "disable049", "d049"
 					;[Block]
 					n_I\Curr049\Idle = 1
 					HideEntity(n_I\Curr049\Collider)
 					HideEntity(n_I\Curr049\OBJ)
 					;[End Block]
-				Case "enable049"
+				Case "enable049", "e049"
 					;[Block]
 					n_I\Curr049\Idle = 0
 					ShowEntity(n_I\Curr049\Collider)
@@ -845,7 +845,7 @@ Function UpdateConsole%()
 						CreateConsoleMsg("173-J OFF")
 					EndIf
 					;[End Block]
-				Case "sanic"
+				Case "sanic", "superman"
 					;[Block]
 					chs\SuperMan = (Not chs\SuperMan)
 					If chs\SuperMan = True Then
@@ -866,7 +866,7 @@ Function UpdateConsole%()
 					Next
 					PlaySound_Strict(LoadTempSound("SFX\Music\Using420J.ogg"))
 					;[End Block]
-				Case "godmode", "god"
+				Case "godmode", "god", "gm"
 					;[Block]
 					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
@@ -894,7 +894,7 @@ Function UpdateConsole%()
 					;[Block]
 					ResetNegativeStats(True)
 					;[End Block]
-				Case "noclip", "fly"
+				Case "noclip", "fly", "nc"
 					;[Block]
 					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
@@ -1002,7 +1002,7 @@ Function UpdateConsole%()
 					Next
 					CreateConsoleMsg("Stopped all sounds.")
 					;[End Block]
-				Case "camerafog"
+				Case "camerafog", "cf"
 					;[Block]
 					Args = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					opt\CameraFogNear = Float(Left(Args, Len(Args) - Instr(Args, " ")))
@@ -1047,7 +1047,7 @@ Function UpdateConsole%()
 						CreateConsoleMsg("INFINITE STAMINA OFF")	
 					EndIf
 					;[End Block]
-				Case "money", "rich"
+				Case "money", "rich", "cash"
 					;[Block]
 					For i = 1 To 20
 						If Rand(2) = 1 Then
