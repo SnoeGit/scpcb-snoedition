@@ -2138,10 +2138,11 @@ Function CreateDoor.Doors(x#, y#, z#, Angle#, room.Rooms, Open% = False, DoorTyp
 		;Case WINDOWED_DOOR
 		;	;[Block]
 		;	DoorModelID_1 = DOOR_WINDOWED_MODEL
-		;	DoorScaleX = 46.0 * RoomScale : DoorScaleY = 44.0 * RoomScale : DoorScaleZ = 46.0 * RoomScale
+		;	DoorModelID_2 = DoorModelID_1
+		;	DoorScaleX = 203.0 * RoomScale / MeshWidth(d_I\DoorModelID[DoorModelID_1]) : DoorScaleY = 313.0 * RoomScale / MeshHeight(d_I\DoorModelID[DoorModelID_1]) : DoorScaleZ = 15.0 * RoomScale / MeshDepth(d_I\DoorModelID[DoorModelID_1])
 		;	
 		;	FrameModelID = DOOR_DEFAULT_FRAME_MODEL
-		;	FrameScaleX = 45.0 * RoomScale : FrameScaleY = 44.0 * RoomScale : FrameScaleZ = 80.0 * RoomScale
+		;	FrameScaleX = RoomScale : FrameScaleY = RoomScale : FrameScaleZ = RoomScale
 		;	;[End Block]
 	End Select
 	

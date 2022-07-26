@@ -144,6 +144,7 @@ Const DOOR_BIG_MODEL_2% = 5
 Const DOOR_OFFICE_MODEL% = 6
 Const DOOR_WOODEN_MODEL% = 7
 Const DOOR_ONE_SIDED_MODEL% = 8
+;Const DOOR_WINDOWED_MODEL% = 9
 ;[End Block]
 
 ; ~ Door Frame Model ID Constants
@@ -196,6 +197,8 @@ Function LoadDoors%()
 	d_I\DoorModelID[DOOR_WOODEN_MODEL] = LoadMesh_Strict("GFX\map\Props\DoorWooden.b3d")
 	
 	d_I\DoorModelID[DOOR_ONE_SIDED_MODEL] = LoadMesh_Strict("GFX\map\Props\Door02.x")
+	
+	;d_I\DoorModelID[DOOR_WINDOWED_MODEL] = LoadMesh_Strict("GFX\map\Props\DoorWindowed.b3d")
 	
 	For i = 0 To MaxDoorModelIDAmount - 1
 		HideEntity(d_I\DoorModelID[i])
