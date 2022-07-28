@@ -712,7 +712,7 @@ Function LoadItems%()
 	
 	CreateItemTemplate("Blood-stained Note", "paper", ItemsPath + "notes\note.b3d", INVPath + "INV_note_bloody.png", ItemsPath + "notes\note_L(3).png", 0.0025, 0, ItemsPath + "notes\note_bloody.png")
 	
-	it.ItemTemplates = CreateItemTemplate("Burnt Note", "paper", ItemsPath + "paper.b3d", INVPath + "INV_burnt_note.png", ItemsPath + "note_Maynard.png", 0.003, 0, ItemsPath + "notes\burnt_note.png")
+	it.ItemTemplates = CreateItemTemplate("Burnt Note", "paper", ItemsPath + "paper.b3d", INVPath + "INV_burnt_note.png", ItemsPath + "notes\note_Maynard.png", 0.003, 0, ItemsPath + "notes\burnt_note.png")
 	it\Img = BurntNote
 	
 	CreateItemTemplate("Data Report", "paper", ItemsPath + "paper.b3d", INVPath + "INV_paper_bloody.png", ItemsPath + "docs\doc_data.png", 0.003, 0, ItemsPath + "paper_bloody.png")
@@ -751,9 +751,9 @@ Function LoadItems%()
 	
 	CreateItemTemplate("Origami", "origami", ItemsPath + "origami.b3d", INVPath + "INV_origami.png", "", 0.003, 0)
 	
-	CreateItemTemplate("Scorched Note", "paper", ItemsPath + "paper.b3d", INVPath + "INV_burnt_note.png", ItemsPath + "note_L(6).png", 0.0025, 0, ItemsPath + "notes\burnt_note.png")
+	CreateItemTemplate("Scorched Note", "paper", ItemsPath + "paper.b3d", INVPath + "INV_burnt_note.png", ItemsPath + "notes\note_L(6).png", 0.0025, 0, ItemsPath + "notes\burnt_note.png")
 	
-	CreateItemTemplate("Strange Note", "paper", ItemsPath + "paper.b3d", INVPath + "INV_note.png", ItemsPath + "note_strange.png", 0.0025, 0, ItemsPath + "notes\note.png")
+	CreateItemTemplate("Strange Note", "paper", ItemsPath + "paper.b3d", INVPath + "INV_note.png", ItemsPath + "notes\note_strange.png", 0.0025, 0, ItemsPath + "notes\note.png")
 	
 	CreateItemTemplate("Unknown Note", "paper", ItemsPath + "notes\note.b3d", INVPath + "INV_note_bloody.png", ItemsPath + "note_unknown.png", 0.003, 0, ItemsPath + "notes\note_bloody.png")
 	
