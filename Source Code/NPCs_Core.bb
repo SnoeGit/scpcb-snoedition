@@ -4417,7 +4417,9 @@ Function UpdateNPCs%()
 													InjurePlayer(Rnd(0.35, 0.56), 0.0, 500.0, Rnd(0.07, 0.21))
 													;[End Block]
 												End Select
-												
+											If me\Injuries > 14.0 Then
+												Kill(True)
+											EndIf
 										EndIf
 									Else
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)

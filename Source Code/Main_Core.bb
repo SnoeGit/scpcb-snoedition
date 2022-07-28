@@ -4585,6 +4585,18 @@ Function RenderGUI%()
 								Color(255, 255, 255)
 								SetBuffer(BackBuffer())
 								;[End Block]
+								Case "Leaflet"
+								;[Block]
+								SelectedItem\ItemTemplate\Img = LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath)	
+								SelectedItem\ItemTemplate\Img = ScaleImage2(SelectedItem\ItemTemplate\Img, MenuScale, MenuScale)
+								
+								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
+								Color(140, 61, 37)
+								SetFont(fo\FontID[Font_Journal])
+								Text(423 * MenuScale, 785 * MenuScale, "4242", True, True)
+								Color(255, 255, 255)
+								SetBuffer(BackBuffer())
+								;[End Block]
 							Case "Document SCP-035"
 								;[Block]
 								If I_035\Sad <> 0 Then
