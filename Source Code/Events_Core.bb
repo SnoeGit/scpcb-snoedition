@@ -6041,7 +6041,7 @@ Function UpdateEvents%()
 								SetAnimTime(e\room\Objects[4], 434.0)
 								SetAnimTime(e\room\Objects[5], 434.0)
 								
-								If e\room\RoomDoors[0]\Open Then UseDoor(e\room\RoomDoors[0], True)
+								If Not e\room\RoomDoors[0]\Open Then UseDoor(e\room\RoomDoors[0], True)
 							EndIf
 							
 							If e\EventState > 7.0 Then

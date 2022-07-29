@@ -2861,7 +2861,7 @@ Function UpdateGUI%()
 				Case "veryfinefirstaid"
 					;[Block]
 					If CanUseItem(False, True) Then
-						Select Rand(7)
+						Select Rand(6)
 							Case 1
 								;[Block]
 								me\Injuries = 3.5
@@ -2887,17 +2887,23 @@ Function UpdateGUI%()
 								;[End Block]
 							Case 5
 								;[Block]
-								me\BlurTimer = 1000.0
-								I_008\Timer = I_008\Timer + 5.0
-								CreateMsg("You feel hungry.")
+								Temp2 = Rand(2)
+								Select Temp2
+									Case 1 ; ~ 50% chance for 008 infection
+										;[Block]
+										me\BlurTimer = 1000.0
+										I_008\Timer = I_008\Timer + 5.0
+										CreateMsg("You feel hungry.")
+										;[End Block]
+									Case 2 ; ~ 50% chance for 409 infection
+										;[Block]
+										me\BlurTimer = 1000.0
+										I_409\Timer = I_409\Timer + 5.0
+										CreateMsg("You feel a sharp pain.")
+										;[End Block]
+								End Select
 								;[End Block]
 							Case 6
-								;[Block]
-								me\BlurTimer = 1000.0
-								I_409\Timer = I_409\Timer + 5.0
-								CreateMsg("You feel a sharp pain.")
-								;[End Block]
-							Case 7
 								;[Block]
 								me\BlinkTimer = -10.0
 								

@@ -25,6 +25,7 @@ General:
 - SCP-513 achievement only obtained by ringing the bell now.
 - SCP-939 Achievement only obtained by alerting the 939 specimen.
 - Apollyon difficulty no longer gives you the intro papers.
+- Euclid difficulty gives you 8 slots instead of just 6.
 - Fine Scramble Gear has been added to the game.
 - Rework how battery drains.
 - Strange bottle can now infect you with either 008 or 409.
@@ -59,6 +60,10 @@ Rooms:
 - SCP-106's Pocket Dimension now drains your stamina quickly instead of setting it to 0.
 - SCP-205 Containment Key Card Door level reduced from 3 to 2.
 - SCP-205 has a Level 3 in the containment area.
+- SCP-1123 Containment Key Card Door level reduced from 3 to 2.
+- SCP-1123 Pre-Containment now requires Level 0 Key Card.
+- Office in room2_office_3 now has a numpad to access its room like all the other offices.
+- HCZ to EZ Checkpoint Gates Key Card Door level reduced from 5 to 4.
 
 
 Bug Fixes:

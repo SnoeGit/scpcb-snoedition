@@ -2245,23 +2245,23 @@ Function UpdateNPCs%()
 												Select SelectedDifficulty\OtherFactors
 												Case EASY
 													;[Block]
-													InjurePlayer(Rnd(0.6, 0.9), 0.0, 0.0, Rnd(0.1, 0.25), 0.2)
+													InjurePlayer(Rnd(0.55, 0.85), 0.0, 0.0, Rnd(0.1, 0.25), 0.2)
 													;[End Block]
 												Case NORMAL
 													;[Block]
-													InjurePlayer(Rnd(0.72, 1.08), 0.0, 0.0, Rnd(0.12, 0.3), 0.2)
+													InjurePlayer(Rnd(0.66, 1.02), 0.0, 0.0, Rnd(0.12, 0.3), 0.2)
 													;[End Block]
 												Case HARD
 													;[Block]
-													InjurePlayer(Rnd(0.84, 1.26), 0.0, 0.0, Rnd(0.14, 0.35), 0.2)
+													InjurePlayer(Rnd(0.77, 1.19), 0.0, 0.0, Rnd(0.14, 0.35), 0.2)
 													;[End Block]
 													Case EXTREME
 													;[Block]
-													InjurePlayer(Rnd(0.96, 1.44), 0.0, 0.0, Rnd(0.16, 0.40), 0.2)
+													InjurePlayer(Rnd(0.88, 1.36), 0.0, 0.0, Rnd(0.16, 0.40), 0.2)
 													;[End Block]
 												Case CAKE
 													;[Block]
-													InjurePlayer(Rnd(0.42, 0.63), 0.0, 0.0, Rnd(0.07, 0.175), 0.2)
+													InjurePlayer(Rnd(0.385, 0.595), 0.0, 0.0, Rnd(0.07, 0.175), 0.2)
 													;[End Block]
 													End Select
 												
@@ -4398,23 +4398,23 @@ Function UpdateNPCs%()
 											Select SelectedDifficulty\OtherFactors
 												Case EASY
 													;[Block]
-													InjurePlayer(Rnd(0.5, 0.8), 0.0, 500.0, Rnd(0.1, 0.3))
+													InjurePlayer(Rnd(0.45, 0.75), 0.0, 500.0, Rnd(0.1, 0.3))
 													;[End Block]
 												Case NORMAL
 													;[Block]
-													InjurePlayer(Rnd(0.6, 0.96), 0.0, 500.0, Rnd(0.12, 0.36))
+													InjurePlayer(Rnd(0.54, 0.9), 0.0, 500.0, Rnd(0.12, 0.36))
 													;[End Block]
 												Case HARD
 													;[Block]
-													InjurePlayer(Rnd(0.7, 1.12), 0.0, 500.0, Rnd(0.14, 0.42))
+													InjurePlayer(Rnd(0.63, 1.05), 0.0, 500.0, Rnd(0.14, 0.42))
 													;[End Block]
 													Case EXTREME
 													;[Block]
-													InjurePlayer(Rnd(0.8, 1.28), 0.0, 500.0, Rnd(0.16, 0.48))
+													InjurePlayer(Rnd(0.72, 1.2), 0.0, 500.0, Rnd(0.16, 0.48))
 													;[End Block]
 												Case CAKE
 													;[Block]
-													InjurePlayer(Rnd(0.35, 0.56), 0.0, 500.0, Rnd(0.07, 0.21))
+													InjurePlayer(Rnd(0.315, 0.525), 0.0, 500.0, Rnd(0.07, 0.21))
 													;[End Block]
 												End Select
 											If me\Injuries > 14.0 Then
