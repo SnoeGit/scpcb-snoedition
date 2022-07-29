@@ -4615,7 +4615,7 @@ Function UpdateEvents%()
 								;[Block]
 								If n_I\Curr173 <> Null Then
 									If (Not n_I\IsHalloween) Then
-										Tex = LoadTexture_Strict("GFX\npcs\scp_173_H.png")
+										Tex = LoadTexture_Strict("GFX\npcs\scps\scp_173_H.png")
 										If opt\Atmosphere Then TextureBlend(Tex, 5)
 										EntityTexture(n_I\Curr173\OBJ, Tex)
 										EntityTexture(n_I\Curr173\OBJ2, Tex)

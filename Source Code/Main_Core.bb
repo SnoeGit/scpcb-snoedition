@@ -4591,7 +4591,7 @@ Function RenderGUI%()
 								Color(255, 255, 255)
 								SetBuffer(BackBuffer())
 								;[End Block]
-								Case "Leaflet"
+							Case "Strange Note"
 								;[Block]
 								SelectedItem\ItemTemplate\Img = LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath)	
 								SelectedItem\ItemTemplate\Img = ScaleImage2(SelectedItem\ItemTemplate\Img, MenuScale, MenuScale)
@@ -4599,7 +4599,9 @@ Function RenderGUI%()
 								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
 								Color(140, 61, 37)
 								SetFont(fo\FontID[Font_Journal])
-								Text(423 * MenuScale, 785 * MenuScale, "4242", True, True)
+								Temp = ((Int(AccessCode) * 2) Mod 10000)
+								If Temp < 1000 Then Temp = Temp + 1000
+								Text(423 * MenuScale, 20 * MenuScale, Temp, True, True)
 								Color(255, 255, 255)
 								SetBuffer(BackBuffer())
 								;[End Block]

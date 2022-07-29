@@ -654,7 +654,9 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case "room2_office_3"
 			;[Block]
-			d.Doors = CreateDoor(r\x + 1456.0 * RoomScale, r\y + 224.0 * RoomScale, r\z, 90.0, r, False, DEFAULT_DOOR, KEY_MISC, "4242")
+			Temp = ((Int(AccessCode) * 2) Mod 10000)
+			If Temp < 1000 Then Temp = Temp + 1000
+			d.Doors = CreateDoor(r\x + 1456.0 * RoomScale, r\y + 224.0 * RoomScale, r\z, 90.0, r, False, DEFAULT_DOOR, KEY_MISC, Temp)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.1, True)
 			
 			d.Doors = CreateDoor(r\x + 463.0 * RoomScale, r\y, r\z, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_5)
