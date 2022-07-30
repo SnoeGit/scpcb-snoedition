@@ -3518,9 +3518,7 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case "room1_o5"
 			;[Block]
-			Temp = ((Int(AccessCode) + 1122) Mod 10000)
-			If Temp < 1000 Then Temp = Temp + 1000
-			d.Doors = CreateDoor(r\x, r\y, r\z - 240.0 * RoomScale, 0.0, r, False, DEFAULT_DOOR, KEY_MISC, Temp)
+			d.Doors = CreateDoor(r\x, r\y, r\z - 240.0 * RoomScale, 0.0, r, False, DEFAULT_DOOR, KEY_MISC, "2411")
 			
 			it.Items = CreateItem("Field Agent Log #235-001-CO5", "paper", r\x, r\y + 200.0 * RoomScale, r\z + 870.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)

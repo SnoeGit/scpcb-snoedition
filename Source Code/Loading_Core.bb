@@ -755,7 +755,7 @@ Function LoadItems%()
 	
 	CreateItemTemplate("Strange Note", "paper", ItemsPath + "paper.b3d", INVPath + "INV_note.png", ItemsPath + "notes\note_strange.png", 0.0025, 0, ItemsPath + "notes\note.png")
 	
-	CreateItemTemplate("Unknown Note", "paper", ItemsPath + "notes\note.b3d", INVPath + "INV_note_bloody.png", ItemsPath + "notes\note_unknown.png", 0.003, 0, ItemsPath + "notes\note_bloody.png")
+	CreateItemTemplate("Unknown Note", "paper", ItemsPath + "notes\note.b3d", INVPath + "INV_note_bloody.png", ItemsPath + "note_unknown.png", 0.003, 0, ItemsPath + "notes\note_bloody.png")
 	
 	; ~ [SCPs]
 	
