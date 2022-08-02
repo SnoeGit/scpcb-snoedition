@@ -3849,140 +3849,6 @@ Function HideRoomLights%(r.Rooms, HideLights% = True)
 	Next
 End Function
 
-; ~ TODO: Fix collisions (EntityAlpha) and adjacent doors
-Function HideRooms%(r.Rooms, HideLights% = True)
-	Local sc.SecurityCams, p.Props, d.Doors
-	Local HideSecurityCams%, HideProps%, HideDoors%
-	Local i%
-	
-	If (Not EntityHidden(r\OBJ)) Then
-		For sc.SecurityCams = Each SecurityCams
-			HideSecurityCams = True
-			If sc\room <> r Then HideSecurityCams = False
-			If HideSecurityCams Then
-				If sc\BaseOBJ <> 0 Then HideEntity(sc\BaseOBJ)
-				If sc\CameraOBJ <> 0 Then HideEntity(sc\CameraOBJ)
-				If sc\MonitorOBJ <> 0 Then HideEntity(sc\MonitorOBJ)
-				If sc\ScrOBJ <> 0 Then HideEntity(sc\ScrOBJ)
-				If sc\ScrOverlay <> 0 Then HideEntity(sc\ScrOverlay)
-				If sc\Cam <> 0 Then HideEntity(sc\Cam)
-			EndIf
-		Next
-		
-		For p.Props = Each Props
-			HideProps = True
-			If p\room <> r Then HideProps = False
-			If HideProps Then
-				If p\OBJ <> 0 Then
-					If CheckPropCollision(p\Name) Then
-						EntityAlpha(p\OBJ, 0.0)
-					Else
-						HideEntity(p\OBJ)
-					EndIf
-				EndIf
-			EndIf
-		Next
-		
-		For d.Doors = Each Doors
-			HideDoors = True
-			If d\room <> r Then HideDoors = False
-			If HideDoors Then
-				If d\FrameOBJ <> 0 Then EntityAlpha(d\FrameOBJ, 0.0)
-				If d\OBJ <> 0 Then EntityAlpha(d\OBJ, 0.0)
-				If d\OBJ2 <> 0 Then EntityAlpha(d\OBJ2, 0.0)
-			EndIf
-		Next
-		
-		HideRoomLights(r, HideLights)
-		
-		For i = 0 To MaxRoomLevers - 1
-			If r\Levers[i] <> 0 Then
-				HideEntity(r\Levers[i])
-			Else
-				Exit
-			EndIf
-		Next
-		
-		;For i = 0 To MaxRoomObjects - 1
-		;	If r\Objects[i] <> 0 Then HideEntity(r\Objects[i])
-		;Next
-		
-		HideEntity(r\OBJ)
-	EndIf
-End Function
-
-Function ShowRooms%(r.Rooms)
-	Local sc.SecurityCams, p.Props, d.Doors
-	Local ShowSecurityCams%, ShowProps%, ShowDoors%
-	Local i%
-	
-	If EntityHidden(r\OBJ) Then
-		For sc.SecurityCams = Each SecurityCams
-			ShowSecurityCams = True
-			If sc\room <> r Then ShowSecurityCams = False
-			If ShowSecurityCams Then
-				If sc\BaseOBJ <> 0 Then ShowEntity(sc\BaseOBJ)
-				If sc\CameraOBJ <> 0 Then ShowEntity(sc\CameraOBJ)
-				If sc\MonitorOBJ <> 0 Then ShowEntity(sc\MonitorOBJ)
-				If sc\ScrOBJ <> 0 Then ShowEntity(sc\ScrOBJ)
-				If sc\ScrOverlay <> 0 Then ShowEntity(sc\ScrOverlay)
-			EndIf
-		Next
-		
-		For p.Props = Each Props
-			ShowProps = True
-			If p\room <> r Then ShowProps = False
-			If ShowProps Then
-				If p\OBJ <> 0 Then
-					If CheckPropCollision(p\Name) Then
-						EntityAlpha(p\OBJ, 1.0)
-					Else
-						ShowEntity(p\OBJ)
-					EndIf
-				EndIf
-			EndIf
-		Next
-		
-				For d.Doors = Each Doors
-			ShowDoors = True
-			If d\room <> r Then ShowDoors = False
-			If ShowDoors Then
-				If d\FrameOBJ <> 0 Then EntityAlpha(d\FrameOBJ, 1.0)
-				If d\OBJ <> 0 Then EntityAlpha(d\OBJ, 1.0)
-				If d\OBJ2 <> 0 Then EntityAlpha(d\OBJ2, 1.0)
-			EndIf
-		Next
-		
-		For i = 0 To MaxRoomLevers - 1
-			If r\Levers[i] <> 0 Then
-				ShowEntity(r\Levers[i])
-			Else
-				Exit
-			EndIf
-		Next
-		
-		;For i = 0 To MaxRoomObjects - 1
-		;	If r\Objects[i] <> 0 Then ShowEntity(r\Objects[i])
-		;Next
-		
-		ShowEntity(r\OBJ)
-		
-		If r\TriggerBoxAmount > 0 Then
-			For i = 0 To r\TriggerBoxAmount - 1
-				If chs\DebugHUD <> 0 Then
-					EntityColor(r\TriggerBoxes[i]\OBJ, 255, 255, 0)
-					EntityAlpha(r\TriggerBoxes[i]\OBJ, 0.2)
-				Else
-					EntityColor(r\TriggerBoxes[i]\OBJ, 255, 255, 255)
-					EntityAlpha(r\TriggerBoxes[i]\OBJ, 0.0)
-				EndIf
-			Next
-		EndIf
-	EndIf
-	
-	RenderRoomLights(r)
-End Function
-
 Global UpdateTimer#
 
 Function UpdateDistanceTimer%()
@@ -4009,7 +3875,7 @@ Function UpdateRooms%()
 	CatchErrors("Uncaught (UpdateRooms)")
 	
 	Local Dist#, i%, j%, r.Rooms
-	Local x#, y#, z#, Hide%
+	Local x#, y#, z#, Hide% = True
 	
 	; ~ The reason why it is like this:
 	; ~ When the map gets spawned by a seed, it starts from LCZ to HCZ to EZ (bottom to top)
@@ -4037,15 +3903,18 @@ Function UpdateRooms%()
 			EndIf
 			
 			If (Not FoundNewPlayerRoom) Then ; ~ It's likely that an adjacent room is the new player room, check for that
-				For i = 0 To MaxRoomAdjacents - 1
+				For i = 0 To 3
 					If PlayerRoom\Adjacent[i] <> Null Then
 						x = Abs(PlayerRoom\Adjacent[i]\x - EntityX(me\Collider, True))
 						If x < 4.0 Then
 							z = Abs(PlayerRoom\Adjacent[i]\z - EntityZ(me\Collider, True))
 							If z < 4.0 Then
-								FoundNewPlayerRoom = True
-								PlayerRoom = PlayerRoom\Adjacent[i]
-								Exit
+								y = Abs(PlayerRoom\Adjacent[i]\y - EntityY(me\Collider, True))
+								If y < 4.0 Then
+									FoundNewPlayerRoom = True
+									PlayerRoom = PlayerRoom\Adjacent[i]
+									Exit
+								EndIf
 							EndIf
 						EndIf
 					EndIf
@@ -4079,12 +3948,13 @@ Function UpdateRooms%()
 		EndIf
 		
 		Hide = True
+		
 		If r = PlayerRoom Then Hide = False
 		If Hide Then
 			If IsRoomAdjacent(PlayerRoom, r) Then Hide = False
 		EndIf
 		If Hide Then
-			For i = 0 To MaxRoomAdjacents - 1
+			For i = 0 To 3
 				If IsRoomAdjacent(PlayerRoom\Adjacent[i], r) Then
 					Hide = False
 					Exit
@@ -4093,36 +3963,61 @@ Function UpdateRooms%()
 		EndIf
 		
 		If Hide Then
-			HideRooms(r, True)
+			HideEntity(r\OBJ)
 		Else
-			ShowRooms(r)
+			ShowEntity(r\OBJ)
+			For i = 0 To MaxRoomLights - 1
+				If r\Lights[i] <> 0 Then
+					Dist = EntityDistanceSquared(me\Collider, r\Lights[i])
+					If Dist < PowTwo(HideDistance) Then
+						TempLightVolume = TempLightVolume + r\LightIntensity[i] * r\LightIntensity[i] * ((HideDistance - Sqr(Dist)) / HideDistance)						
+					EndIf
+				Else
+					Exit
+				EndIf
+			Next
+			If chs\DebugHUD <> 0 Then
+				If r\TriggerBoxAmount > 0 Then
+					For i = 0 To r\TriggerBoxAmount - 1
+						EntityColor(r\TriggerBoxes[i]\OBJ, 255, 255, 0)
+						EntityAlpha(r\TriggerBoxes[i]\OBJ, 0.2)
+					Next
+				EndIf
+			Else
+				If r\TriggerBoxAmount > 0 Then
+					For i = 0 To r\TriggerBoxAmount - 1
+						EntityColor(r\TriggerBoxes[i]\OBJ, 255, 255, 255)
+						EntityAlpha(r\TriggerBoxes[i]\OBJ, 0.0)
+					Next
+				EndIf
+			EndIf
 		EndIf
 	Next
 	
-	TempLightVolume = Max(TempLightVolume / 4.5, 1.0)
+	CurrMapGrid\Found[Floor(EntityX(PlayerRoom\OBJ) / 8.0) + (Floor(EntityZ(PlayerRoom\OBJ) / 8.0) * MapGridSize)] = MapGrid_Tile
+	PlayerRoom\Found = True
+	
+	TempLightVolume = Max(TempLightVolume / 5.0, 0.8)
 	
 	If PlayerRoom <> Null Then
-		CurrMapGrid\Found[Floor(EntityX(PlayerRoom\OBJ) / 8.0) + (Floor(EntityZ(PlayerRoom\OBJ) / 8.0) * MapGridSize)] = MapGrid_Tile
-		PlayerRoom\Found = True
-		
-		ShowRooms(PlayerRoom)
-		For i = 0 To MaxRoomAdjacents - 1
+		EntityAlpha(GetChild(PlayerRoom\OBJ, 2), 1.0)
+		For i = 0 To 3
 			If PlayerRoom\Adjacent[i] <> Null Then
-				If PlayerRoom\AdjDoor[i] <> Null Then
+				If PlayerRoom\AdjDoor[i] <> Null
+					x = Abs(EntityX(me\Collider, True) - EntityX(PlayerRoom\AdjDoor[i]\FrameOBJ, True))
+					z = Abs(EntityZ(me\Collider, True) - EntityZ(PlayerRoom\AdjDoor[i]\FrameOBJ, True))
 					If PlayerRoom\AdjDoor[i]\OpenState = 0.0 Then
-						HideRooms(PlayerRoom\Adjacent[i], False)
+						EntityAlpha(GetChild(PlayerRoom\Adjacent[i]\OBJ, 2), 0.0)
 					ElseIf (Not EntityInView(PlayerRoom\AdjDoor[i]\FrameOBJ, Camera))
-						HideRooms(PlayerRoom\Adjacent[i], False)
+						EntityAlpha(GetChild(PlayerRoom\Adjacent[i]\OBJ, 2), 0.0)
 					Else
-						ShowRooms(PlayerRoom\Adjacent[i])
+						EntityAlpha(GetChild(PlayerRoom\Adjacent[i]\OBJ, 2), 1.0)
 					EndIf
 				EndIf
 				
-				For j = 0 To MaxRoomAdjacents - 1
+				For j = 0 To 3
 					If PlayerRoom\Adjacent[i]\Adjacent[j] <> Null Then
-						If PlayerRoom\Adjacent[i]\Adjacent[j] <> PlayerRoom Then
-							HideRooms(PlayerRoom\Adjacent[i]\Adjacent[j], False)
-						EndIf
+						If PlayerRoom\Adjacent[i]\Adjacent[j] <> PlayerRoom Then EntityAlpha(GetChild(PlayerRoom\Adjacent[i]\Adjacent[j]\OBJ, 2), 0.0)
 					EndIf
 				Next
 			EndIf
