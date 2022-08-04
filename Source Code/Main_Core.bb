@@ -810,6 +810,7 @@ Function UpdateGame%()
 							;[End Block]
 					End Select 
 					me\BlinkTimer = me\BLINKFREQ
+					me\BlurTimer = me\BlurTimer - Rnd(50.0, 100.0)
 				EndIf
 				me\BlinkTimer = me\BlinkTimer - fps\Factor[0]
 			Else
@@ -1029,6 +1030,10 @@ Function RenderGame%()
 	If fps\Factor[0] > 0.0 And PlayerRoom\RoomTemplate\Name <> "dimension_1499" Then RenderSecurityCams()
 	
 	RenderWorld2(Max(0.0, 1.0 + (fps\Accumulator / TICK_DURATION)))
+	
+	If (Not MenuOpen) And (Not InvOpen) And (OtherOpen = Null) And (d_I\SelectedDoor = Null) And (Not ConsoleOpen) And (Not I_294\Using) And (SelectedScreen = Null) And me\EndingTimer >= 0.0 Then
+		RenderRoomLights(Camera)
+	EndIf
 	
 	RenderBlur(me\BlurVolume)
 	

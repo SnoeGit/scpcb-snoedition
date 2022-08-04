@@ -32,6 +32,9 @@ General:
 - Add LOD 1.2 option
 - Higher quality textures for cards from Graphics Overhaul mod by Placeholder Studios. (HD Playing card and Mastercard by Snoe)
 
+Mechanics and effects:
+- Blinking reduces blur.
+
 NPCs:
 - Edited multiple SCP's speed.
 SCP-008-1: 2.0 -> 1.35 (0.7 multiplier removed from chase line)
