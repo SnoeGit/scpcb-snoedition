@@ -891,6 +891,20 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
+		Case "badge"
+			;[Block]
+			Select Setting
+				Case ROUGH, COARSE
+					;[Block]
+					de.Decals = CreateDecal(DECAL_CORROSIVE_1, x, 8.0 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.07)
+					EntityParent(de\OBJ, PlayerRoom\OBJ)
+					;[End Block]
+				Case ONETOONE, FINE, VERYFINE
+					;[Block]
+					it2.Items = CreateItem("Level 2 Key Card", "key2", x, y, z)
+					;[End Block]
+			End Select
+			;[End Block]
 		Case "nav", "nav300", "nav310", "navulti"
 			;[Block]
 			Select Setting
