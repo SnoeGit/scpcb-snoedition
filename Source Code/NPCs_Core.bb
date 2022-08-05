@@ -962,15 +962,15 @@ Function UpdateNPCs%()
 									n\State = n\State - fps\Factor[0]
 								EndIf
 								
-								If Dist > 0.64 Then
+								If Dist > 0.58 Then
 									If (Dist > 625.0 Lor PlayerRoom\RoomTemplate\Name = "dimension_106" Lor Visible Lor n\PathStatus <> 1) And PlayerRoom\RoomTemplate\Name <> "gate_a" Then 
 										If (Dist > 1600.0 Lor PlayerRoom\RoomTemplate\Name = "dimension_106") Then
 											TranslateEntity(n\Collider, 0.0, ((EntityY(me\Collider) - 0.14) - EntityY(n\Collider)) / 50.0, 0.0)
 										EndIf
-										If Dist > 0.64 And Dist < 4.5 Then
-											n\CurrSpeed = CurveValue(n\Speed * 1.15, n\CurrSpeed, 10.0)
+										If Dist > 0.58 And Dist < 4.5 Then
+											n\CurrSpeed = CurveValue(n\Speed * 1.16, n\CurrSpeed, 10.0)
 										ElseIf Dist > 4.5 And Dist < 9.0 Then
-											n\CurrSpeed = CurveValue(n\Speed * 1.075, n\CurrSpeed, 10.0)
+											n\CurrSpeed = CurveValue(n\Speed * 1.08, n\CurrSpeed, 10.0)
 										ElseIf Dist > 9.0 Then
 											n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
 										EndIf

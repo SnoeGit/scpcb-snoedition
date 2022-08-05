@@ -9406,7 +9406,7 @@ Function UpdateEndings%()
 						e\room\NPC[1] = CreateNPC(NPCTypeGuard, EntityX(e\room\Objects[2], True), EntityY(e\room\Objects[2], True), EntityZ(e\room\Objects[2], True))
 						e\room\NPC[1]\State = 0.0 : e\room\NPC[1]\State2 = 10.0
 						
-						e\room\Objects[0] = LoadMesh_Strict("GFX\map\exit1terrain.b3d", e\room\OBJ)
+						e\room\Objects[0] = LoadMesh_Strict("GFX\map\ez\exit1terrain.b3d", e\room\OBJ)
 						ScaleEntity(e\room\Objects[0], RoomScale, RoomScale, RoomScale, True)
 						RotateEntity(e\room\Objects[0], 0.0, e\room\Angle, 0.0, True)
 						PositionEntity(e\room\Objects[0], e\room\x + 4356.0 * RoomScale, e\room\y - 1017.0 * RoomScale, e\room\z + 2588.0 * RoomScale, True)
