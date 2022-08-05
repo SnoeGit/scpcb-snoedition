@@ -4971,14 +4971,14 @@ Function UpdateEvents%()
 									StopBreathSound()
 									
 									If Dist < 0.36 Then
-										e\EventState3 = Min(e\EventState3 + fps\Factor[0], 70.0 * 86.0)
+										e\EventState3 = Min(e\EventState3 + fps\Factor[0], 70.0 * 82.0)
 										If e\EventState3 > 70.0 * 1.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 1.0 Then
 											PlaySound_Strict(LoadTempSound("SFX\SCP\012\Speech1.ogg"))
-										ElseIf e\EventState3 > 70.0 * 13.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 13.0
+										ElseIf e\EventState3 > 70.0 * 12.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 12.0
 											CreateMsg("You start pushing your nails into your wrist, drawing blood.")
 											InjurePlayer(0.5)
 											PlaySound_Strict(LoadTempSound("SFX\SCP\012\Speech2.ogg"))
-										ElseIf e\EventState3 > 70.0 * 31.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 31.0
+										ElseIf e\EventState3 > 70.0 * 29.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 29.0
 											Tex = LoadTexture_Strict("GFX\map\textures\scp_012(2).png")
 											If opt\Atmosphere Then TextureBlend(Tex, 5)
 											EntityTexture(e\room\Objects[4], Tex)
@@ -4987,11 +4987,11 @@ Function UpdateEvents%()
 											CreateMsg("You tear open your left wrist and start writing on the composition with your blood.")
 											me\Injuries = Max(me\Injuries, 1.5)
 											PlaySound_Strict(LoadTempSound("SFX\SCP\012\Speech" + Rand(3, 4) + ".ogg"))
-										ElseIf e\EventState3 > 70.0 * 49.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 49.0
+										ElseIf e\EventState3 > 70.0 * 45.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 45.0
 											CreateMsg("You push your fingers deeper into the wound.")
 											InjurePlayer(0.3)
 											PlaySound_Strict(LoadTempSound("SFX\SCP\012\Speech5.ogg"))
-										ElseIf e\EventState3 > 70.0 * 63.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 63.0
+										ElseIf e\EventState3 > 70.0 * 59.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 59.0
 											Tex = LoadTexture_Strict("GFX\map\textures\scp_012(3).png")
 											If opt\Atmosphere Then TextureBlend(Tex, 5)
 											EntityTexture(e\room\Objects[4], Tex)	
@@ -4999,7 +4999,7 @@ Function UpdateEvents%()
 											
 											InjurePlayer(0.5)
 											PlaySound_Strict(LoadTempSound("SFX\SCP\012\Speech6.ogg"))
-										ElseIf e\EventState3 > 70.0 * 74.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 74.0
+										ElseIf e\EventState3 > 70.0 * 71.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 71.0
 											Tex = LoadTexture_Strict("GFX\map\textures\scp_012(4).png")
 											If opt\Atmosphere Then TextureBlend(Tex, 5)
 											EntityTexture(e\room\Objects[4], Tex)
@@ -5013,7 +5013,7 @@ Function UpdateEvents%()
 											de.Decals = CreateDecal(DECAL_BLOOD_6, EntityX(me\Collider), e\room\y - 768.0 * RoomScale + 0.005, EntityZ(me\Collider), 90.0, Rnd(360.0), 0.0, 0.1)
 											de\MaxSize = 0.45 : de\SizeChange = 0.0002
 											EntityParent(de\OBJ, e\room\OBJ)
-										ElseIf e\EventState3 > 70.0 * 85.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 85.0	
+										ElseIf e\EventState3 > 70.0 * 81.5 And e\EventState3 - fps\Factor[0] <= 70.0 * 81.5
 											msg\DeathMsg = SubjectName + " found in a pool of blood next to SCP-012. Subject seems to have ripped open his wrists and written three extra "
 											msg\DeathMsg = msg\DeathMsg + "lines to the composition before dying of blood loss."
 											Kill(True)
@@ -9623,7 +9623,7 @@ Function UpdateEndings%()
 						
 						If e\EventState > 70.0 * 26.5 Then
 							If e\EventState3 = 0.0 Then
-								e\room\Objects[7] = LoadMesh_Strict("GFX\npcs\scp_682_arm.b3d")
+								e\room\Objects[7] = LoadMesh_Strict("GFX\npcs\scps\scp_682_arm.b3d")
 								ScaleEntity(e\room\Objects[7], 0.15, 0.15, 0.15)
 								Temp = (Min(((EntityDistance(e\room\NPC[3]\Collider, me\Collider) / RoomScale) - 3000.0) / 4.0, 1000.0) + 1408.0) * RoomScale
 								PositionEntity(e\room\Objects[7], EntityX(e\room\NPC[3]\Collider), e\room\y + 1408.0 * RoomScale, EntityZ(e\room\NPC[3]\Collider))
