@@ -2903,8 +2903,10 @@ Function UseDoor%(d.Doors, Scripted% = False, PlaySFX% = True)
 							If Temp = KEY_005 Then
 								CreateMsg("You hold the key close to the slot.")
 							Else
-								If Temp < d\KeyCard Then
+								If Temp < d\KeyCard And d\KeyCard <> KEY_CARD_5 Then
 									CreateMsg("A keycard with security clearance " + (d\KeyCard - 2) + " or higher is required to operate this door.")
+								ElseIf Temp < d\KeyCard And d\KeyCard = KEY_CARD_5 Then
+									CreateMsg("A keycard with security clearance " + (d\KeyCard - 2) + " is required to operate this door.")
 								Else
 									CreateMsg("The keycard was inserted into the slot.")
 								EndIf
