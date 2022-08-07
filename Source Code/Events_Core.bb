@@ -4761,11 +4761,13 @@ Function UpdateEvents%()
 							If (Not I_714\Using) Then
 							me\BlurTimer = Min(me\BlurTimer + (fps\Factor[0] * 1.055), 1500.0)
 							Else
-							me\BlurTimer = Min(me\BlurTimer + (fps\Factor[0] * 1.04), 1500.0)
+							me\BlurTimer = Min(me\BlurTimer + (fps\Factor[0] * 1.035), 1500.0)
 							EndIf
 							If me\BlurTimer >= 500.0 Then UpdateCough(1000)
-							If me\BlurTimer >= 1500.0 Then Kill(False)
-							msg\DeathMsg = "Class D found dead in Storage Area 6 having suffocated on the gas leak that happened during the breach. A repair team has been sent after recontainment of all four (4) SCP-939 specimens."
+							If me\BlurTimer >= 1500.0 Then
+								Kill(False)
+								msg\DeathMsg = SubjectName + " found dead in Storage Area 6 having suffocated on the gas leak that happened during the breach. A repair team has been sent after recontainment of all four (4) SCP-939 specimens was completed."
+							EndIf
 						EndIf
 						
 						ShouldPlay = 7

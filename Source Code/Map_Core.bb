@@ -3105,8 +3105,8 @@ Function OpenCloseDoor%(d.Doors, PlaySFX% = True)
 		DoorType = DEFAULT_DOOR
 	EndIf
 	
-	Local SoundOpen% = OpenDoorSFX(d\DoorType, DoorType)
-	Local SoundClose% = CloseDoorSFX(d\DoorType, DoorType)
+	Local SoundOpen% = OpenDoorSFX(d\DoorType, SoundRand)
+	Local SoundClose% = CloseDoorSFX(d\DoorType, SoundRand)
 	
 	If d\Locked = 2 Then SoundOpen = BigDoorErrorSFX[Rand(0, 2)]
 	
@@ -3230,7 +3230,7 @@ Function UpdateDecals%()
 						;[Block]
 						If de\FX <> 1 Then
 							CurrStepSFX = 1
-							me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, Max(100.0 - (Sqr(ActualSize - Dist)) * 50.0, 1.0))
+							me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, Max(100.0 - (Sqr(ActualSize - Dist)) * 20.0, 1.0))
 							me\CrouchState = Max(me\CrouchState, (ActualSize - Dist) / 2.0)
 						EndIf
 						;[End Block]
