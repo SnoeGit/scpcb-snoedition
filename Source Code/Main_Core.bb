@@ -2401,7 +2401,7 @@ Function UpdateGUI%()
 												EndIf
 											EndIf
 										Next
-										If SelectedItem <> Null Then
+										If Inventory(z) <> Null Then
 											CreateMsg("The paperclip is not strong enough to hold any more items.")
 										Else
 											If added\ItemTemplate\TempName = "paper" Lor added\ItemTemplate\TempName = "oldpaper" Then
@@ -2448,7 +2448,7 @@ Function UpdateGUI%()
 												EndIf
 											EndIf
 										Next
-										If SelectedItem <> Null Then
+										If Inventory(z) <> Null Then
 											CreateMsg("The wallet is full.")
 										Else
 											CreateMsg("You put " + added\ItemTemplate\Name + " into the wallet.")
