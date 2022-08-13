@@ -523,6 +523,12 @@ Function PickItem%(item.Items)
 						msg\DeathMsg = msg\DeathMsg + "electrical burns, and assumed to be killed via an electrical shock caused by the battery. The battery has been stored for further study."
 						Kill()
 						;[End Block]
+					Case "coin"
+						;[Block]
+						InjurePlayer(0.1)
+						me\CameraShake = 0.5
+						CreateMsg("Ouch! The coin bit your finger.")
+						;[End Block]
 					Case "scp148"
 						;[Block]
 						GiveAchievement(Achv148)

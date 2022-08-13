@@ -197,7 +197,7 @@ Function UpdateWorld2%()
 				If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
 					If wi\NightVision = 1 Then Inventory(i)\State = Max(0.0, Inventory(i)\State - (fps\Factor[0] * 0.02))
 					If wi\NightVision = 2 Then Inventory(i)\State = Max(0.0, Inventory(i)\State - (fps\Factor[0] * 0.03))
-					If wi\SCRAMBLE > 0 Then Inventory(i)\State = Max(0.0, Inventory(i)\State - (fps\Factor[0] * (0.15 / wi\SCRAMBLE)))
+					If wi\SCRAMBLE > 0 Then Inventory(i)\State = Max(0.0, Inventory(i)\State - (fps\Factor[0] * (0.14 / wi\SCRAMBLE)))
 					Power = Int(Inventory(i)\State)
 					If Power = 0 Then ; ~ This NVG or SCRAMBLE can't be used
 						HasBattery = 0

@@ -222,6 +222,12 @@ Function LoadDoors%()
 	d_I\ElevatorPanelTextureID[ELEVATOR_PANEL_DOWN] = LoadTexture_Strict("GFX\map\textures\elevator_panel_down.png", 1, DeleteAllTextures)
 	d_I\ElevatorPanelTextureID[ELEVATOR_PANEL_UP] = LoadTexture_Strict("GFX\map\textures\elevator_panel_up.png", 1, DeleteAllTextures)
 	d_I\ElevatorPanelTextureID[ELEVATOR_PANEL_IDLE] = LoadTexture_Strict("GFX\map\textures\elevator_panel_idle.png", 1, DeleteAllTextures)
+
+	If opt\Atmosphere Then
+		For i = ELEVATOR_PANEL_DOWN To ELEVATOR_PANEL_IDLE
+			TextureBlend(d_I\ElevatorPanelTextureID[i], 5)
+		Next
+	EndIf
 	
 	d_I\ButtonModelID[BUTTON_DEFAULT_MODEL] = LoadMesh_Strict("GFX\map\Props\Button.b3d")
 	
@@ -239,6 +245,12 @@ Function LoadDoors%()
 	
 	d_I\ButtonTextureID[BUTTON_GREEN_TEXTURE] = LoadTexture_Strict("GFX\map\textures\keypad.jpg", 1, DeleteAllTextures)
 	d_I\ButtonTextureID[BUTTON_RED_TEXTURE] = LoadTexture_Strict("GFX\map\textures\keypad_locked.png", 1, DeleteAllTextures)
+
+	If opt\Atmosphere Then
+		For i = BUTTON_GREEN_TEXTURE To BUTTON_RED_TEXTURE
+			TextureBlend(d_I\ButtonTextureID[i], 5)
+		Next
+	EndIf
 End Function
 
 Const MaxLeverModelIDAmount% = 2
@@ -312,6 +324,7 @@ Function LoadSecurityCams%()
 	
 	For i = CAM_HEAD_DEFAULT_TEXTURE To CAM_HEAD_RED_LIGHT_TEXTURE
 		sc_I\CamTextureID[i] = LoadTexture_Strict("GFX\map\textures\camera(" + (i + 1) + ").png", 1, DeleteAllTextures)
+		If opt\Atmosphere Then TextureBlend(sc_I\CamTextureID[i], 5)
 	Next
 End Function
 
@@ -542,6 +555,15 @@ Function LoadNPCs%()
 	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_939_2_TEXTURE] = LoadTexture_Strict("GFX\npcs\humans\scp_939_victim(2).png", 1, DeleteAllTextures)
 	
 	n_I\NPCTextureID[NPC_096_BLOODY_TEXTURE] = LoadTexture_Strict("GFX\npcs\scps\scp_096_bloody.png", 1, DeleteAllTextures)
+
+	If opt\Atmosphere Then
+		For i = NPC_CLASS_D_GONZALES_TEXTURE To NPC_096_BLOODY_TEXTURE
+			Local Skip% = False
+
+			If (Not opt\IntroEnabled) And i = NPC_CLASS_D_D9341_TEXTURE Then Skip = True
+			If (Not Skip) Then TextureBlend(n_I\NPCTextureID[i], 5)
+		Next
+	EndIf
 End Function
 
 Const MaxMTModelIDAmount% = 7

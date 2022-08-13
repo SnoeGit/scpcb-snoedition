@@ -643,7 +643,7 @@ Function FillRoom%(r.Rooms)
 			RotateEntity(it\Collider, 0.0, r\Angle + 4.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("9V Battery", "bat", r\x + 352.0 * RoomScale, r\y + 112.0 * RoomScale, r\z + 448.0 * RoomScale)
+			it.Items = CreateItem("4.5V Battery", "badbat", r\x + 352.0 * RoomScale, r\y + 112.0 * RoomScale, r\z + 448.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Empty Cup", "emptycup", r\x - 672.0 * RoomScale, 240.0 * RoomScale, r\z + 288.0 * RoomScale)
@@ -1870,20 +1870,17 @@ Function FillRoom%(r.Rooms)
 			If Rand(2) = 1 Then
 				it.Items = CreateItem("9V Battery", "bat", r\x + 730.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 580.0 * RoomScale)
 				EntityParent(it\Collider, r\OBJ)
+			Else
+				it.Items = CreateItem("4.5V Battery", "badbat", r\x + 730.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 580.0 * RoomScale)
+				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			
 			If Rand(2) = 1 Then
-				it.Items = CreateItem("9V Battery", "bat", r\x + 740.0 * RoomScale, r\y + 240.0 * RoomScale, r\z - 750.0 * RoomScale)
+				it.Items = CreateItem("4.5V Battery", "badbat", r\x + 740.0 * RoomScale, r\y + 240.0 * RoomScale, r\z - 750.0 * RoomScale)
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			
 			it.Items = CreateItem("Level 0 Key Card", "key0", r\x + 736.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 752.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
-			
-			it.Items = CreateItem("Clipboard", "clipboard", r\x - 400.0 * RoomScale, r\y - 50.0 * RoomScale, r\z - 700.0 * RoomScale)
-			; ~ A hacky fix for clipboard's model and icon
-			it\InvImg = it\ItemTemplate\InvImg
-			SetAnimTime(it\Model, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it2.Items = CreateItem("Document SCP-1048", "paper", 1.0, 1.0, 1.0)
@@ -3485,6 +3482,15 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\Objects[0], r\x - 700.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 290.0 * RoomScale, True)
 			ScaleEntity(r\Objects[0], 2.0, 2.0, 2.0)
 			RotateEntity(r\Objects[0], 0.0, 0.0, 0.0)
+
+			it.Items = CreateItem("Clipboard", "clipboard", r\x + 916.0 * RoomScale, r\y + 210.0 * RoomScale, r\z - 830.0 * RoomScale)
+			; ~ A hacky fix for clipboard's model and icon
+			it\InvImg = it\ItemTemplate\InvImg
+			SetAnimTime(it\Model, 0.0)
+			EntityParent(it\Collider, r\OBJ)
+
+			it.Items = CreateItem("4.5V Battery", "badbat", r\x + 922.0 * RoomScale, r\y + 210.0 * RoomScale, r\z - 922.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "room2_bio"
 			;[Block]
