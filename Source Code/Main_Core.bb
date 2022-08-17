@@ -1068,7 +1068,10 @@ Function Kill%(IsBloody% = False)
 		
 		me\KillAnim = Rand(0, 1)
 		PlaySound_Strict(DamageSFX[0])
-		
+		If SelectedDifficulty\SaveType = NO_SAVES Then
+			DeleteGame(CurrSave)
+			LoadSavedGames()
+		EndIf
 		me\Terminated = True
 		ShowEntity(me\Head)
 		PositionEntity(me\Head, EntityX(Camera, True), EntityY(Camera, True), EntityZ(Camera, True), True)
@@ -6003,7 +6006,12 @@ Function RenderMenu%()
 		Else
 			SetFont(fo\FontID[Font_Default])
 			Text(x, y, "Difficulty: " + SelectedDifficulty\Name)
-			Text(x, y + (20 * MenuScale), "Save: " + CurrSave\Name)
+			If CurrSave = Null Then
+				TempStr = "[DATA REDACTED]"
+			Else
+				TempStr = CurrSave\Name
+			EndIf
+			Text(x, y + (20 * MenuScale), "Save: " + TempStr)
 			If SelectedMap = "" Then
 				TempStr = "Map seed: " + RandomSeed
 			Else

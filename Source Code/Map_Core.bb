@@ -124,6 +124,26 @@ Function ShowProps%(room.Rooms)
 	Next
 End Function
 
+Function HideAlphaProps%(room.Rooms)
+	Local p.Props
+	
+	For p.Props = Each Props
+		If p\room = room Then
+			EntityAlpha(p\OBJ, 0.0)
+		EndIf
+	Next
+End Function
+
+Function ShowAlphaProps%(room.Rooms)
+	Local p.Props
+	
+	For p.Props = Each Props
+		If p\room = room Then
+			EntityAlpha(p\OBJ, 1.0)
+		EndIf
+	Next
+End Function
+
 Global LightVolume#, TempLightVolume#
 
 Function AddLight%(room.Rooms, x#, y#, z#, lType%, Range#, R%, G%, B%)
@@ -3940,8 +3960,10 @@ Function UpdateRooms%()
 		
 		If Hide Then
 			HideEntity(r\OBJ)
+			HideProps(r)
 		Else
 			ShowEntity(r\OBJ)
+			ShowProps(r)
 			
 			For i = 0 To MaxRoomLights - 1
 				If r\Lights[i] <> 0 Then
@@ -3974,19 +3996,19 @@ Function UpdateRooms%()
 		PlayerRoom\Found = True
 		
 		EntityAlpha(GetChild(PlayerRoom\OBJ, 2), 1.0)
-		ShowProps(PlayerRoom)
+		ShowAlphaProps(PlayerRoom)
 		For i = 0 To MaxRoomAdjacents - 1
 			If PlayerRoom\Adjacent[i] <> Null Then
 				If PlayerRoom\AdjDoor[i] <> Null Then
 					If PlayerRoom\AdjDoor[i]\OpenState = 0.0 Then
 						EntityAlpha(GetChild(PlayerRoom\Adjacent[i]\OBJ, 2), 0.0)
-						HideProps(PlayerRoom\Adjacent[i])
+						HideAlphaProps(PlayerRoom\Adjacent[i])
 					ElseIf (Not EntityInView(PlayerRoom\AdjDoor[i]\FrameOBJ, Camera))
 						EntityAlpha(GetChild(PlayerRoom\Adjacent[i]\OBJ, 2), 0.0)
-						HideProps(PlayerRoom\Adjacent[i])
+						HideAlphaProps(PlayerRoom\Adjacent[i])
 					Else
 						EntityAlpha(GetChild(PlayerRoom\Adjacent[i]\OBJ, 2), 1.0)
-						ShowProps(PlayerRoom\Adjacent[i])
+						ShowAlphaProps(PlayerRoom\Adjacent[i])
 					EndIf
 				EndIf
 				
@@ -3994,7 +4016,7 @@ Function UpdateRooms%()
 					If PlayerRoom\Adjacent[i]\Adjacent[j] <> Null Then
 						If PlayerRoom\Adjacent[i]\Adjacent[j] <> PlayerRoom Then
 							EntityAlpha(GetChild(PlayerRoom\Adjacent[i]\Adjacent[j]\OBJ, 2), 0.0)
-							HideProps(PlayerRoom\Adjacent[i]\Adjacent[j])
+							HideAlphaProps(PlayerRoom\Adjacent[i]\Adjacent[j])
 						EndIf
 					EndIf
 				Next

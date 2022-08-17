@@ -3255,14 +3255,14 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case "room3_office"
 			;[Block]			
-			d.Doors = CreateDoor(r\x + 736.0 * RoomScale, r\y, r\z + 240.0 * RoomScale, 0.0, r, False, ONE_SIDED_DOOR, KEY_CARD_3)
-			PositionEntity(d\Buttons[0], r\x + 892.0 * RoomScale, EntityY(d\Buttons[0], True), r\z + 226.0 * RoomScale, True)
-			PositionEntity(d\Buttons[1], r\x + 892.0 * RoomScale, EntityY(d\Buttons[1], True), r\z + 253.0 * RoomScale, True)
+			d.Doors = CreateDoor(r\x + 768.0 * RoomScale, r\y, r\z + 234.0 * RoomScale, 180.0, r, True, OFFICE_DOOR)
 			
-			r\Objects[0] = LoadMesh_Strict("GFX\map\ez\room3offices_hb.b3d", r\OBJ)
+			r\Objects[0] = LoadMesh_Strict("GFX\map\ez\room3_office_hb.b3d", r\OBJ)
 			EntityPickMode(r\Objects[0], 2)
 			EntityType(r\Objects[0], HIT_MAP)
 			EntityAlpha(r\Objects[0], 0.0)
+			de.Decals = CreateDecal(DECAL_WATER, r\x + 236.0 * RoomScale, r\y + 0.005, r\z - 68.0 * RoomScale, 90.0, Rnd(360.0), 0.0, Rnd(0.5, 0.7), 1.0)
+			EntityParent(de\OBJ, r\OBJ)
 			;[End Block]
 		Case "room2_office"
 			;[Block]
@@ -3757,6 +3757,39 @@ Function FillRoom%(r.Rooms)
 			
 			it.Items = CreateItem("Empty Cup", "emptycup", r\x + 143.0 * RoomScale, r\y + 100.0 * RoomScale, r\z + 966.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
+			;[End Block]
+		Case "room3_ez"
+			;[Block]
+			d.Doors = CreateDoor(r\x + 605.0 * RoomScale, r\y, r\z - 234.0 * RoomScale, 0.0, r, False, OFFICE_DOOR)
+			
+			d.Doors = CreateDoor(r\x - 605.0 * RoomScale, r\y, r\z - 234.0 * RoomScale, 0.0, r, False, OFFICE_DOOR)
+			
+			r\Objects[0] = LoadMesh_Strict("GFX\map\room3_ez_hb.b3d", r\OBJ)
+			EntityPickMode(r\Objects[0], 2)
+			EntityType(r\Objects[0], HIT_MAP)
+			EntityAlpha(r\Objects[0], 0.0)
+			
+			sc.SecurityCams = CreateSecurityCam(r\x - 320.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 512.25 * RoomScale, r)
+			sc\Angle = 225.0 : sc\Turn = 45.0
+			TurnEntity(sc\CameraOBJ, 20.0, 0.0, 0.0)
+			
+			it.Items = CreateItem("9V Battery", "bat", r\x - 937.0 * RoomScale, r\y + 260.0 * RoomScale, r\z - 937.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Radio Transceiver", "radio", r\x + 712.0 * RoomScale, r\y + 165.0 * RoomScale, r\z - 797.0 * RoomScale)
+			it\State = Rnd(100.0)
+			EntityParent(it\Collider, r\OBJ)
+			
+			If Rand(4) = 1 Then
+				it.Items = CreateItem("Cup", "cup", r\x + 880.0 * RoomScale, r\y + 100.0 * RoomScale, r\z - 300.0 * RoomScale, 200, 200, 200)
+				it\Name = "Cup of Coffee"
+				EntityParent(it\Collider, r\OBJ)
+			EndIf
+			
+			If Rand(2) = 1 Then
+				it.Items = CreateItem("Quarter", "25ct", r\x - 234.0 * RoomScale, r\y + 30.0 * RoomScale, r\z + 505.0 * RoomScale)
+				EntityParent(it\Collider, r\OBJ)
+			EndIf
 			;[End Block]
 	End Select
 	

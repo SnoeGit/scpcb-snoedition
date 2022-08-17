@@ -2289,16 +2289,16 @@ Function UpdateEvents%()
 							TurnEntity(me\Collider, 0.0, AngleDist(PointDirection(EntityX(me\Collider, True), EntityZ(me\Collider, True), EntityX(e\room\Objects[1], True), EntityZ(e\room\Objects[1], True)) + 90.0 + Sin(WrapAngle(e\EventState3 / 10.0)), EntityYaw(me\Collider)) / 4.0, 0.0, True)
 							CameraPitch = (CameraPitch * 0.8) + (((-60.0) * Min(Max((2.0 - Distance(EntityX(me\Collider, True), EntityX(e\room\Objects[1], True), EntityZ(me\Collider, True), EntityZ(e\room\Objects[1], True))) / 2.0, 0.0), 1.0)) * 0.2)
 							
-							me\Sanity = me\Sanity - (fps\Factor[0] / (wi\NightVision + wi\SCRAMBLE))
+							me\Sanity = me\Sanity - (fps\Factor[0] * 1.1 / (wi\NightVision + wi\SCRAMBLE))
 							me\RestoreSanity = False
 							me\BlurTimer = Sin(MilliSecs2() / 10) * Abs(me\Sanity)
 							
 							If me\VomitTimer < 0.0 Then
 								me\RestoreSanity = False
-								me\Sanity = -810.0
+								me\Sanity = -910.0
 							EndIf
 							
-							If me\Sanity < -800.0 Then
+							If me\Sanity < -900.0 Then
 								If wi\NightVision > 1 Then
 									msg\DeathMsg = Chr(34) + "Class D viewed SCP-895 through a pair of digital night vision goggles, presumably enhanced by SCP-914. It might be possible that the subject "
 									msg\DeathMsg = msg\DeathMsg + "was able to resist the memetic effects partially through these goggles. The goggles have been stored for further study." + Chr(34)
@@ -2312,7 +2312,7 @@ Function UpdateEvents%()
 								EndIf
 								EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If me\VomitTimer < -10.0 Then Kill()
-							ElseIf me\Sanity < -640.0 Then
+							ElseIf me\Sanity < -720.0 Then
 								If Rand(3) = 1 Then EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If Rand(6) < 5 Then
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
@@ -2328,7 +2328,7 @@ Function UpdateEvents%()
 								EndIf
 								me\BlurTimer = 1000.0
 								If me\VomitTimer = 0.0 Then me\VomitTimer = 1.0
-							ElseIf me\Sanity < -400.0 Then
+							ElseIf me\Sanity < -450.0 Then
 								If Rand(7) = 1 Then EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If Rand(50) = 1 Then
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
