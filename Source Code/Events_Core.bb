@@ -505,7 +505,7 @@ Function QuickLoadEvents%()
 	Local Scale#, Pvt%, i%, x#, z#
 	
 	; ~ Might be a good idea to use QuickLoadPercent to determine the "steps" of the loading process 
-	; ~ Instead of magic values in e\eventState and e\eventStr
+	; ~ Instead of magic values in e\EventState and e\EventStr
 	
 	Select e\EventID
 		Case e_cont1_205
@@ -1128,12 +1128,12 @@ Function UpdateEvents%()
 										Case 1
 											;[Block]
 											StrTemp = "Crew"
-											e\EventStr = e\EventStr + "|2\Crew" + Rand(0, 4) + ".ogg"
+											e\EventStr = e\EventStr + "|2\Crew" + Rand(0, 5) + ".ogg"
 											;[End Block]
 										Case 2
 											;[Block]
 											StrTemp = "Scientist"
-											e\EventStr = e\EventStr + "|2\Scientist" + Rand(0, 18) + ".ogg"
+											e\EventStr = e\EventStr + "|2\Scientist" + Rand(0, 17) + ".ogg"
 											;[End Block]
 										Case 3
 											;[Block]
@@ -2624,7 +2624,7 @@ Function UpdateEvents%()
 								If SelectedItem\ItemTemplate\TempName = "25ct" Lor SelectedItem\ItemTemplate\TempName = "coin" Then
 									RemoveItem(SelectedItem)
 									e\EventState2 = e\EventState2 + 1.0
-									PlaySound_Strict(LoadTempSound("SFX\SCP\294\coin_drop.ogg"))
+									PlaySound_Strict(LoadTempSound("SFX\SCP\294\CoinDrop.ogg"))
 									Inserted = True
 								ElseIf SelectedItem\ItemTemplate\TempName = "mastercard"
 									If me\Funds <> 0 Then

@@ -39,7 +39,6 @@ Function CreateItemTemplate.ItemTemplates(Name$, TempName$, OBJPath$, InvImgPath
 		EndIf
 		it\OBJPath = OBJPath
 	EndIf
-	it\OBJPath = OBJPath
 	
 	Local Texture%
 	
