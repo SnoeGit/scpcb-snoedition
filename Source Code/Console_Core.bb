@@ -793,7 +793,7 @@ Function UpdateConsole%()
 					;[Block]
 					n_I\IsHalloween = (Not n_I\IsHalloween)
 					If n_I\IsHalloween Then
-						Tex = LoadTexture_Strict("GFX\npcs\scp_173_H.png", 1)
+						Tex = LoadTexture_Strict("GFX\npcs\scps\scp_173_H.png", 1)
 						If opt\Atmosphere Then TextureBlend(Tex, 5)
 						EntityTexture(n_I\Curr173\OBJ, Tex)
 						EntityTexture(n_I\Curr173\OBJ2, Tex)
@@ -801,7 +801,7 @@ Function UpdateConsole%()
 						CreateConsoleMsg("173 JACK-O-LANTERN ON")
 					Else
 						If n_I\IsNewYear Then n_I\IsNewYear = (Not n_I\IsNewYear)
-						Tex2 = LoadTexture_Strict("GFX\npcs\scp_173.png", 1)
+						Tex2 = LoadTexture_Strict("GFX\npcs\scps\scp_173.png", 1)
 						If opt\Atmosphere Then TextureBlend(Tex2, 5)
 						EntityTexture(n_I\Curr173\OBJ, Tex2)
 						EntityTexture(n_I\Curr173\OBJ2, Tex2)
@@ -813,7 +813,7 @@ Function UpdateConsole%()
 					;[Block]
 					n_I\IsNewYear = (Not n_I\IsNewYear)
 					If n_I\IsNewYear Then
-						Tex = LoadTexture_Strict("GFX\npcs\scp_173_NY.png", 1)
+						Tex = LoadTexture_Strict("GFX\npcs\scps\scp_173_NY.png", 1)
 						If opt\Atmosphere Then TextureBlend(Tex, 5)
 						EntityTexture(n_I\Curr173\OBJ, Tex)
 						EntityTexture(n_I\Curr173\OBJ2, Tex)
@@ -821,7 +821,7 @@ Function UpdateConsole%()
 						CreateConsoleMsg("173 COOKIE ON")
 					Else
 						If n_I\IsHalloween Then n_I\IsHalloween = (Not n_I\IsHalloween)
-						Tex2 = LoadTexture_Strict("GFX\npcs\scp_173.png", 1)
+						Tex2 = LoadTexture_Strict("GFX\npcs\scps\scp_173.png", 1)
 						If opt\Atmosphere Then TextureBlend(Tex2, 5)
 						EntityTexture(n_I\Curr173\OBJ, Tex2)
 						EntityTexture(n_I\Curr173\OBJ2, Tex2)
@@ -833,7 +833,7 @@ Function UpdateConsole%()
 					;[Block]
 					n_I\IsAprilFools = (Not n_I\IsAprilFools)
 					If n_I\IsAprilFools Then
-						Tex = LoadTexture_Strict("GFX\npcs\scp_173_J.png", 1)
+						Tex = LoadTexture_Strict("GFX\npcs\scps\scp_173_J.png", 1)
 						If opt\Atmosphere Then TextureBlend(Tex, 5)
 						EntityTexture(n_I\Curr173\OBJ, Tex)
 						EntityTexture(n_I\Curr173\OBJ2, Tex)
@@ -841,7 +841,7 @@ Function UpdateConsole%()
 						CreateConsoleMsg("173-J ON")
 					Else
 						If n_I\IsHalloween Then n_I\IsHalloween = (Not n_I\IsHalloween)
-						Tex2 = LoadTexture_Strict("GFX\npcs\scp_173.png", 1)
+						Tex2 = LoadTexture_Strict("GFX\npcs\scps\scp_173.png", 1)
 						If opt\Atmosphere Then TextureBlend(Tex2, 5)
 						EntityTexture(n_I\Curr173\OBJ, Tex2)
 						EntityTexture(n_I\Curr173\OBJ2, Tex2)
@@ -1364,7 +1364,7 @@ Function UpdateConsole%()
 					;[End Block]
 				Case "resetfunds"
 					;[Block]
-					me\Funds = Rand(0, 6)
+					me\Funds = Rand(1, 6)
 					;[End Block]
 				Case "codes"
 					;[Block]

@@ -3214,7 +3214,7 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case "cont2_500_1499"
 			;[Block]
-			r\RoomDoors.Doors[0] = CreateDoor(r\x + 288.0 * RoomScale, r\y, r\z + 576.0 * RoomScale, 90.0, r, False, DEFAULT_DOOR, KEY_CARD_4)
+			r\RoomDoors.Doors[0] = CreateDoor(r\x + 288.0 * RoomScale, r\y, r\z + 576.0 * RoomScale, 90.0, r, False, DEFAULT_DOOR, KEY_CARD_3)
 			r\RoomDoors[0]\Locked = 1
 			
 			d.Doors = CreateDoor(r\x + 784.0 * RoomScale, r\y, r\z + 672.0 * RoomScale, 90.0, r, False, DEFAULT_DOOR, KEY_CARD_4)
@@ -3784,7 +3784,7 @@ Function FillRoom%(r.Rooms)
 			
 			d.Doors = CreateDoor(r\x - 605.0 * RoomScale, r\y, r\z - 234.0 * RoomScale, 0.0, r, False, OFFICE_DOOR)
 			
-			r\Objects[0] = LoadMesh_Strict("GFX\map\room3_ez_hb.b3d", r\OBJ)
+			r\Objects[0] = LoadMesh_Strict("GFX\map\ez\room3_ez_hb.b3d", r\OBJ)
 			EntityPickMode(r\Objects[0], 2)
 			EntityType(r\Objects[0], HIT_MAP)
 			EntityAlpha(r\Objects[0], 0.0)

@@ -328,7 +328,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "hand", "hand2", "hand3"
+		Case "hand", "hand2"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -339,23 +339,9 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case ONETOONE, FINE, VERYFINE
 					;[Block]
 					If item\ItemTemplate\TempName = "hand" Then
-						If Rand(2) = 1 Then
-							it2.Items = CreateItem("Black Severed Hand", "hand2", x, y, z)
-						Else
-							it2.Items = CreateItem("Severed Hand", "hand3", x, y, z)
-						EndIf
-					ElseIf item\ItemTemplate\TempName = "hand2"
-						If Rand(2) = 1 Then
-							it2.Items = CreateItem("Severed Hand", "hand", x, y, z)
-						Else
-							it2.Items = CreateItem("Severed Hand", "hand3", x, y, z)
-						EndIf
+						it2.Items = CreateItem("Black Severed Hand", "hand2", x, y, z)
 					Else
-						If Rand(2) = 1 Then
-							it2.Items = CreateItem("Severed Hand", "hand", x, y, z)
-						Else
-							it2.Items = CreateItem("Black Severed Hand", "hand2", x, y, z)
-						EndIf
+						it2.Items = CreateItem("Severed Hand", "hand", x, y, z)
 					EndIf
 					;[End Block]
 			End Select

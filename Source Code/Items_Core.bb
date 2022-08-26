@@ -877,10 +877,6 @@ Function GetUsingItem%(item.Items)
 			;[Block]
 			Return(KEY_HAND_BLACK)
 			;[End Block]
-		Case "hand3"
-			;[Block]
-			Return(KEY_HAND_YELLOW)
-			;[End Block]
 		Case "scp860"
 			;[Block]
 			Return(KEY_860)

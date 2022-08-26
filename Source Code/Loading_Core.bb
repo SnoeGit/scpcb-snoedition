@@ -864,7 +864,6 @@ Function LoadItems%()
 	
 	CreateItemTemplate("Severed Hand", "hand", ItemsPath + "severed_hand.b3d", INVPath + "INV_severed_hand(1).png", "", 0.03, 2)
 	CreateItemTemplate("Black Severed Hand", "hand2", ItemsPath + "severed_hand.b3d", INVPath + "INV_severed_hand(2).png", "", 0.03, 2, ItemsPath + "severed_hand(2).png")
-	CreateItemTemplate("Severed Hand", "hand3", ItemsPath + "severed_hand.b3d", INVPath + "INV_severed_hand(3).png", "", 0.03, 2, ItemsPath + "severed_hand(3).png")
 	
 	CreateItemTemplate("S-NAV Navigator", "nav", ItemsPath + "navigator.b3d", INVPath + "INV_navigator.png", ItemsPath + "navigator_HUD.png", 0.0008, 1)
 	CreateItemTemplate("S-NAV Navigator Ultimate", "navulti", ItemsPath + "navigator.b3d", INVPath + "INV_navigator.png", ItemsPath + "navigator_HUD.png", 0.0008, 1)
