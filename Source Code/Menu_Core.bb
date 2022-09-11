@@ -97,6 +97,11 @@ Function ChangePage%(Page%)
 	mm\ShouldDeleteGadgets = True
 End Function
 
+If opt\AntiAliasing And opt\DisplayMode <> 0 Then
+	opt\AntiAliasing = False
+	PutINIValue(OptionFile, "Graphics", "Anti-Aliasing", opt\AntiAliasing)
+EndIf
+
 Function UpdateMainMenu%()
 	CatchErrors("Uncaught (UpdateMainMenu")
 	
@@ -262,11 +267,6 @@ Function UpdateMainMenu%()
 				
 				UpdateMainMenuButton(x, y, Width, Height, Txt)
 			Next
-			
-			If opt\AntiAliasing And opt\DisplayMode <> 0 Then
-				opt\AntiAliasing = False
-				PutINIValue(OptionFile, "Graphics", "Anti-Aliasing", opt\AntiAliasing)
-			EndIf
 		Else
 			
 			Select mm\MainMenuTab
@@ -465,14 +465,14 @@ Function UpdateMainMenu%()
 						Next
 						
 						If DelSave <> Null Then
-							x = 740 * MenuScale
+							x = 739 * MenuScale
 							y = 376 * MenuScale
 							
-							If UpdateMainMenuButton(x + (50 * MenuScale), y + (150 * MenuScale), 100 * MenuScale, 30 * MenuScale, "YES", False) Then
+							If UpdateMainMenuButton(x + (74 * MenuScale), y + (150 * MenuScale), 100 * MenuScale, 30 * MenuScale, "YES", False) Then
 								DeleteGame(DelSave)
 								mm\ShouldDeleteGadgets = True
 							EndIf
-							If UpdateMainMenuButton(x + (250 * MenuScale), y + (150 * MenuScale), 100 * MenuScale, 30 * MenuScale, "NO", False) Then
+							If UpdateMainMenuButton(x + (246 * MenuScale), y + (150 * MenuScale), 100 * MenuScale, 30 * MenuScale, "NO", False) Then
 								DelSave = Null
 								mm\ShouldDeleteGadgets = True
 							EndIf
@@ -487,12 +487,12 @@ Function UpdateMainMenu%()
 					Width = 580 * MenuScale
 					Height = 350 * MenuScale
 					
-					If mm\CurrMenuPage < Ceil(Float(SavedMapsAmount) / 5.0) - 1 Then 
+					If mm\CurrMenuPage < Ceil(Float(SavedMapsAmount) / 5.0) - 1 And SelectedMapActionMsg = "" Then
 						If UpdateMainMenuButton(x + Width - (50 * MenuScale), y + (440 * MenuScale), 50 * MenuScale, 50 * MenuScale, ">") Then ChangePage(mm\CurrMenuPage + 1)
 					Else
 						UpdateMainMenuButton(x + Width - (50 * MenuScale), y + (440 * MenuScale), 50 * MenuScale, 50 * MenuScale, ">", True, False, True)
 					EndIf
-					If mm\CurrMenuPage > 0 Then
+					If mm\CurrMenuPage > 0 And SelectedMapActionMsg = "" Then
 						If UpdateMainMenuButton(x, y + (440 * MenuScale), 50 * MenuScale, 50 * MenuScale, "<") Then ChangePage(mm\CurrMenuPage - 1)
 					Else
 						UpdateMainMenuButton(x, y + (440 * MenuScale), 50 * MenuScale, 50 * MenuScale, "<", True, False, True)
@@ -526,16 +526,16 @@ Function UpdateMainMenu%()
 						Next
 						
 						If SelectedMapActionMsg <> "" Then
-							x = 740 * MenuScale
+							x = 739 * MenuScale
 							y = 376 * MenuScale
 							
-							If UpdateMainMenuButton(x + (50 * MenuScale), y + (150 * MenuScale), 100 * MenuScale, 30 * MenuScale, "YES", False) Then
+							If UpdateMainMenuButton(x + (74 * MenuScale), y + (150 * MenuScale), 100 * MenuScale, 30 * MenuScale, "YES", False) Then
 								DeleteFile(CurrentDir() + MapCreatorPath + SelectedMapActionMsg)
 								SelectedMapActionMsg = ""
 								LoadSavedMaps()
 								mm\ShouldDeleteGadgets = True
 							EndIf
-							If UpdateMainMenuButton(x + (250 * MenuScale), y + (150 * MenuScale), 100 * MenuScale, 30 * MenuScale, "NO", False) Then
+							If UpdateMainMenuButton(x + (246 * MenuScale), y + (150 * MenuScale), 100 * MenuScale, 30 * MenuScale, "NO", False) Then
 								SelectedMapActionMsg = ""
 								mm\ShouldDeleteGadgets = True
 							EndIf
@@ -999,46 +999,50 @@ Function UpdateMainMenu%()
 			Width = 400 * MenuScale
 			Height = 70 * MenuScale
 			
-			If UpdateMainMenuButton(x + Width + (20 * MenuScale), y, (580 * MenuScale) - Width - (20 * MenuScale), Height, "BACK", False) Lor KeyDown(1) Then 
-				Select mm\MainMenuTab
-					Case MainMenuTab_New_Game
-						;[Block]
-						PutINIValue(OptionFile, "Global", "Enable Intro", opt\IntroEnabled)
-						For sv.Save = Each Save
-							Delete(sv)
-						Next
-						mm\MainMenuTab = MainMenuTab_Default
-						;[End Block]
-					Case MainMenuTab_Load_Game
-						;[Block]
-						mm\CurrMenuPage = 0
-						For sv.Save = Each Save
-							Delete(sv)
-						Next
-						mm\MainMenuTab = MainMenuTab_Default
-						;[End Block]
-					Case MainMenuTab_Options_Graphics, MainMenuTab_Options_Audio, MainMenuTab_Options_Controls, MainMenuTab_Options_Advanced ; ~ Save the options
-						;[Block]
-						SaveOptionsINI()
-						
-						UserTrackCheck = 0
-						UserTrackCheck2 = 0
-						
-						mm\CurrMenuPage = 0
-						AntiAlias(opt\AntiAliasing)
-						mm\MainMenuTab = MainMenuTab_Default
-						;[End Block]
-					Case MainMenuTab_Load_Map ; ~ Move back to the "New Game" tab
-						;[Block]
-						mm\MainMenuTab = MainMenuTab_New_Game
-						mm\CurrMenuPage = 0
-						mo\MouseHit1 = False
-						;[End Block]
-					Default
-						;[Block]
-						mm\MainMenuTab = MainMenuTab_Default
-						;[End Block]
-				End Select
+			If SelectedMapActionMsg = "" And DelSave = Null Then
+				If UpdateMainMenuButton(x + Width + (20 * MenuScale), y, (580 * MenuScale) - Width - (20 * MenuScale), Height, "BACK", False) Lor KeyDown(1) Then 
+					Select mm\MainMenuTab
+						Case MainMenuTab_New_Game
+							;[Block]
+							PutINIValue(OptionFile, "Global", "Enable Intro", opt\IntroEnabled)
+							For sv.Save = Each Save
+								Delete(sv)
+							Next
+							mm\MainMenuTab = MainMenuTab_Default
+							;[End Block]
+						Case MainMenuTab_Load_Game
+							;[Block]
+							mm\CurrMenuPage = 0
+							For sv.Save = Each Save
+								Delete(sv)
+							Next
+							mm\MainMenuTab = MainMenuTab_Default
+							;[End Block]
+						Case MainMenuTab_Options_Graphics, MainMenuTab_Options_Audio, MainMenuTab_Options_Controls, MainMenuTab_Options_Advanced ; ~ Save the options
+							;[Block]
+							SaveOptionsINI()
+
+							UserTrackCheck = 0
+							UserTrackCheck2 = 0
+
+							mm\CurrMenuPage = 0
+							AntiAlias(opt\AntiAliasing)
+							mm\MainMenuTab = MainMenuTab_Default
+							;[End Block]
+						Case MainMenuTab_Load_Map ; ~ Move back to the "New Game" tab
+							;[Block]
+							mm\MainMenuTab = MainMenuTab_New_Game
+							mm\CurrMenuPage = 0
+							mo\MouseHit1 = False
+							;[End Block]
+						Default
+							;[Block]
+							mm\MainMenuTab = MainMenuTab_Default
+							;[End Block]
+					End Select
+				EndIf
+			Else
+				UpdateMainMenuButton(x + Width + (20 * MenuScale), y, (580 * MenuScale) - Width - (20 * MenuScale), Height, "BACK", False, False, True)
 			EndIf
 		EndIf
 	Wend
@@ -1343,7 +1347,7 @@ Function RenderMainMenu%()
 					Next
 					
 					If DelSave <> Null Then
-						x = 740 * MenuScale
+						x = 739 * MenuScale
 						y = 376 * MenuScale
 						RenderFrame(x, y, 420 * MenuScale, 200 * MenuScale)
 						RowText("Are you sure you want to delete this save?", x + (20 * MenuScale), y + (15 * MenuScale), 400 * MenuScale, 200 * MenuScale)
@@ -1542,7 +1546,7 @@ Function RenderMainMenu%()
 						If opt\EnableUserTracks Then
 							Color(255, 255, 255)
 							Text(x, y + (5 * MenuScale), "User track mode:")
-							If opt\UserTrackMode
+							If opt\UserTrackMode Then
 								TempStr = "Repeat"
 							Else
 								TempStr = "Random"
@@ -1555,7 +1559,7 @@ Function RenderMainMenu%()
 								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_UserTrackScan)
 							EndIf
 							If UserTrackCheck > 0 Then
-								Text(x, y + (100 * MenuScale), "User tracks found (" + UserTrackCheck2 + "/" + UserTrackCheck + " successfully loaded)")
+								Text(x, y + (100 * MenuScale), "User tracks found (" + UserTrackCheck2 + "/" + UserTrackCheck + " successfully loaded!)")
 							EndIf
 						EndIf
 						;[End Block]
@@ -1645,7 +1649,7 @@ Function RenderMainMenu%()
 						
 						RenderFrame(x + (15 * MenuScale), y + Height + (5 * MenuScale), Width - (70 * MenuScale), 30 * MenuScale)	
 						
-						Text(x + (Width / 2), y + Height + (20 * MenuScale), "PAGE " + Int(Max((mm\CurrMenuPage + 1), 1)) + "/2", True, True)
+						Text(x + (Width / 2), y + Height + (20 * MenuScale), "PAGE " + (mm\CurrMenuPage + 1) + "/2", True, True)
 						
 						If mm\CurrMenuPage = 0 Then
 							y = y + (20 * MenuScale)
@@ -1869,7 +1873,7 @@ Function RenderMainMenu%()
 					Next
 					
 					If SelectedMapActionMsg <> "" Then
-						x = 740 * MenuScale
+						x = 739 * MenuScale
 						y = 376 * MenuScale
 						RenderFrame(x, y, 420 * MenuScale, 200 * MenuScale)
 						RowText("Are you sure you want to delete this map?", x + (20 * MenuScale), y + (15 * MenuScale), 400 * MenuScale, 200 * MenuScale)
@@ -2878,8 +2882,8 @@ Function RenderMenuSlideBars%()
 		DrawImage(BlinkMeterIMG, msb\x + msb\Width * msb\Value / 100.0 + (3 * MenuScale), msb\y + (3 * MenuScale))
 		
 		Color(170, 170, 170)
-		Text(msb\x - (50 * MenuScale), msb\y + (4 * MenuScale), msb\TextLeft)					
-		Text(msb\x + msb\Width + (38 * MenuScale), msb\y + (4 * MenuScale), msb\TextRight)	
+		Text(msb\x - (50 * MenuScale), msb\y + (5 * MenuScale), msb\TextLeft)					
+		Text(msb\x + msb\Width + (34 * MenuScale), msb\y + (5 * MenuScale), msb\TextRight)	
 	Next
 End Function
 
@@ -3023,9 +3027,9 @@ Function UpdateMainMenuSlider6%(x%, y%, Width%, Value%, ID%, Val1$, Val2$, Val3$
 	If ID = mm\OnSliderID Then
 		If ScaledMouseX() <= x + (8 * MenuScale) Then
 			Value = 0
-		ElseIf (ScaledMouseX() >= x + (Width / 8)) And (ScaledMouseX() <= x + (Width / 8) + (8 * MenuScale))
+		ElseIf (ScaledMouseX() >= x + (Width / 6)) And (ScaledMouseX() <= x + (Width / 6) + (8 * MenuScale))
 			Value = 1
-		ElseIf (ScaledMouseX() >= x + (Width / 4)) And (ScaledMouseX() <= x + (Width / 4) + (8 * MenuScale))
+		ElseIf (ScaledMouseX() >= x + (Width / 3)) And (ScaledMouseX() <= x + (Width / 3) + (8 * MenuScale))
 			Value = 2
 		ElseIf (ScaledMouseX() >= x + (Width / 2)) And (ScaledMouseX() <= x + (Width / 2) + (8 * MenuScale))
 			Value = 3
@@ -3136,8 +3140,8 @@ Function RenderMenuSliders%()
 			EndIf
 			Rect(ms\x, ms\y, ms\Width + (14 * MenuScale), 10 * MenuScale)
 			Rect(ms\x, ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
-			Rect(ms\x + (ms\Width / 8) + (1.25 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
-			Rect(ms\x + (ms\Width / 4) + (2.5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
+			Rect(ms\x + (ms\Width / 6) + (1.25 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
+			Rect(ms\x + (ms\Width / 3) + (2.5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
 			Rect(ms\x + (ms\Width / 2) + (5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
 			Rect(ms\x + (ms\Width * 0.75) + (7.5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
 			Rect(ms\x + ms\Width + (10 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale)
@@ -3147,8 +3151,8 @@ Function RenderMenuSliders%()
 					Color(0, 200, 0)
 					Rect(ms\x, ms\y, ms\Width + (14 * MenuScale), 10 * MenuScale, False)
 					Rect(ms\x, ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
-					Rect(ms\x + (ms\Width / 8) + (MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
-					Rect(ms\x + (ms\Width / 4) + (2.5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
+					Rect(ms\x + (ms\Width / 6) + (MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
+					Rect(ms\x + (ms\Width / 3) + (2.5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
 					Rect(ms\x + (ms\Width / 2) + (5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
 					Rect(ms\x + (ms\Width * 0.75) + (7.5 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
 					Rect(ms\x + ms\Width + (10 * MenuScale), ms\y - (8 * MenuScale), 4 * MenuScale, 9 * MenuScale, False)
@@ -3158,9 +3162,9 @@ Function RenderMenuSliders%()
 			If ms\Value = 0 Then
 				DrawImage(BlinkMeterIMG, ms\x, ms\y - (8 * MenuScale))
 			ElseIf ms\Value = 1
-				DrawImage(BlinkMeterIMG, ms\x + (ms\Width / 8) + (MenuScale), ms\y - (8 * MenuScale))
+				DrawImage(BlinkMeterIMG, ms\x + (ms\Width / 6) + (MenuScale), ms\y - (8 * MenuScale))
 			ElseIf ms\Value = 2
-				DrawImage(BlinkMeterIMG, ms\x + (ms\Width / 4) + (1.5 * MenuScale), ms\y - (8 * MenuScale))
+				DrawImage(BlinkMeterIMG, ms\x + (ms\Width / 3) + (1.5 * MenuScale), ms\y - (8 * MenuScale))
 			ElseIf ms\Value = 3
 				DrawImage(BlinkMeterIMG, ms\x + (ms\Width / 2) + (3 * MenuScale), ms\y - (8 * MenuScale))
 			ElseIf ms\Value = 4
@@ -3173,9 +3177,9 @@ Function RenderMenuSliders%()
 			If ms\Value = 0 Then
 				Text(ms\x + (2 * MenuScale), ms\y + (12 * MenuScale), ms\Val1, True)
 			ElseIf ms\Value = 1
-				Text(ms\x + (ms\Width / 8) + (2 * MenuScale), ms\y + (12 * MenuScale), ms\Val2, True)
+				Text(ms\x + (ms\Width / 6) + (2 * MenuScale), ms\y + (12 * MenuScale), ms\Val2, True)
 			ElseIf ms\Value = 2
-				Text(ms\x + (ms\Width / 4) + (4.5 * MenuScale), ms\y + (12 * MenuScale), ms\Val3, True)
+				Text(ms\x + (ms\Width / 3) + (4.5 * MenuScale), ms\y + (12 * MenuScale), ms\Val3, True)
 			ElseIf ms\Value = 3
 				Text(ms\x + (ms\Width / 2) + (7 * MenuScale), ms\y + (12 * MenuScale), ms\Val4, True)
 			ElseIf ms\Value = 4

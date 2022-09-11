@@ -2460,9 +2460,7 @@ Function UpdateDoors%()
 					EndIf
 				EndIf
 			EndIf
-			If d\SoundCHN <> 0 Then
-				If ChannelPlaying(d\SoundCHN) Then UpdateSoundOrigin(d\SoundCHN, Camera, d\FrameOBJ)
-			EndIf
+			UpdateSoundOrigin(d\SoundCHN, Camera, d\FrameOBJ)
 			
 			If d\DoorType <> OFFICE_DOOR And d\DoorType <> WOODEN_DOOR Then
 				If d\Locked <> d\LockedUpdated Then
@@ -3378,7 +3376,7 @@ Function UpdateSecurityCams%()
 						PositionEntity(sc\CameraOBJ, EntityX(sc\BaseOBJ, True), EntityY(sc\BaseOBJ, True) - 0.083, EntityZ(sc\BaseOBJ, True))
 						RotateEntity(sc\CameraOBJ, EntityPitch(sc\CameraOBJ), sc\room\Angle + sc\Angle + Max(Min(sc\CurrAngle, sc\Turn), -sc\Turn), 0.0)
 						
-						If (MilliSecs2() Mod 1200) < 800 Then
+						If (MilliSecs2() Mod 1350) < 800 Then
 							EntityTexture(sc\CameraOBJ, sc_I\CamTextureID[CAM_HEAD_DEFAULT_TEXTURE])
 						Else
 							EntityTexture(sc\CameraOBJ, sc_I\CamTextureID[CAM_HEAD_RED_LIGHT_TEXTURE])
@@ -4492,13 +4490,13 @@ Function CreateMap%()
 						Select True ; ~ See if adding some rooms is possible
 							Case CurrMapGrid\Grid[(x - 1) + (y * MapGridSize)] > MapGrid_NoTile
 								;[Block]
-								If (CurrMapGrid\Grid[x + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[x + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[(x + 2) + (y * MapGridSize)]) = 0 Then
-									If (CurrMapGrid\Grid[(x + 1) + ((y - 2) * MapGridSize)] + CurrMapGrid\Grid[(x + 2) + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + ((y - 1) * MapGridSize)]) = 0 Then
+								If (CurrMapGrid\Grid[(x + 1) + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[(x + 2) + (y * MapGridSize)]) = 0 Then
+									If (CurrMapGrid\Grid[(x + 1) + ((y - 2) * MapGridSize)] + CurrMapGrid\Grid[(x + 2) + ((y - 1) * MapGridSize)]) = 0 Then
 										CurrMapGrid\Grid[x + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x + 1) + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x + 1) + ((y - 1) * MapGridSize)] = 1
 										Temp = 1
-									ElseIf (CurrMapGrid\Grid[(x + 1) + ((y + 2) * MapGridSize)] + CurrMapGrid\Grid[(x + 2) + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + ((y + 1) * MapGridSize)]) = 0 Then
+									ElseIf (CurrMapGrid\Grid[(x + 1) + ((y + 2) * MapGridSize)] + CurrMapGrid\Grid[(x + 2) + ((y + 1) * MapGridSize)]) = 0 Then
 										CurrMapGrid\Grid[x + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x + 1) + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x + 1) + ((y + 1) * MapGridSize)] = 1
@@ -4508,13 +4506,13 @@ Function CreateMap%()
 								;[End Block]
 							Case CurrMapGrid\Grid[(x + 1) + (y * MapGridSize)] > MapGrid_NoTile
 								;[Block]
-								If (CurrMapGrid\Grid[x + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[x + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[(x - 2) + (y * MapGridSize)]) = 0 Then
-									If (CurrMapGrid\Grid[(x - 1) + ((y - 2) * MapGridSize)] + CurrMapGrid\Grid[(x - 2) + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[(x - 1) + ((y - 1) * MapGridSize)]) = 0 Then
+								If (CurrMapGrid\Grid[(x - 1) + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[(x - 1) + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[(x - 2) + (y * MapGridSize)]) = 0 Then
+									If (CurrMapGrid\Grid[(x - 1) + ((y - 2) * MapGridSize)] + CurrMapGrid\Grid[(x - 2) + ((y - 1) * MapGridSize)]) = 0 Then
 										CurrMapGrid\Grid[x + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x - 1) + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x - 1) + ((y - 1) * MapGridSize)] = 1
 										Temp = 1
-									ElseIf (CurrMapGrid\Grid[(x - 1) + ((y + 2) * MapGridSize)] + CurrMapGrid\Grid[(x - 2) + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[(x - 1) + ((y + 1) * MapGridSize)]) = 0 Then
+									ElseIf (CurrMapGrid\Grid[(x - 1) + ((y + 2) * MapGridSize)] + CurrMapGrid\Grid[(x - 2) + ((y + 1) * MapGridSize)]) = 0 Then
 										CurrMapGrid\Grid[x + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x - 1) + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x - 1) + ((y + 1) * MapGridSize)] = 1
@@ -4524,13 +4522,13 @@ Function CreateMap%()
 								;[End Block]
 							Case CurrMapGrid\Grid[x + ((y - 1) * MapGridSize)] > MapGrid_NoTile
 								;[Block]
-								If (CurrMapGrid\Grid[(x - 1) + (y * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + (y * MapGridSize)] + CurrMapGrid\Grid[x + ((y + 2) * MapGridSize)]) = 0 Then
-									If (CurrMapGrid\Grid[(x - 2) + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[(x - 1) + ((y + 2) * MapGridSize)] + CurrMapGrid\Grid[(x - 1) + ((y + 1) * MapGridSize)]) = 0 Then
+								If (CurrMapGrid\Grid[(x - 1) + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[x + ((y + 2) * MapGridSize)]) = 0 Then
+									If (CurrMapGrid\Grid[(x - 2) + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[(x - 1) + ((y + 2) * MapGridSize)]) = 0 Then
 										CurrMapGrid\Grid[x + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[x + ((y + 1) * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x - 1) + ((y + 1) * MapGridSize)] = 1
 										Temp = 1
-									ElseIf (CurrMapGrid\Grid[(x + 2) + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + ((y + 2) * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + ((y + 1) * MapGridSize)]) = 0 Then
+									ElseIf (CurrMapGrid\Grid[(x + 2) + ((y + 1) * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + ((y + 2) * MapGridSize)]) = 0 Then
 										CurrMapGrid\Grid[x + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[x + ((y + 1) * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x + 1) + ((y + 1) * MapGridSize)] = 1
@@ -4540,13 +4538,13 @@ Function CreateMap%()
 								;[End Block]
 							Case CurrMapGrid\Grid[x + ((y + 1) * MapGridSize)] > MapGrid_NoTile
 								;[Block]
-								If (CurrMapGrid\Grid[(x - 1) + (y * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + (y * MapGridSize)] + CurrMapGrid\Grid[x + ((y - 2) * MapGridSize)]) = 0 Then
-									If (CurrMapGrid\Grid[(x - 2) + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[(x - 1) + ((y - 2) * MapGridSize)] + CurrMapGrid\Grid[(x - 1) + ((y - 1) * MapGridSize)]) = 0 Then
+								If (CurrMapGrid\Grid[(x - 1) + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[x + ((y - 2) * MapGridSize)]) = 0 Then
+									If (CurrMapGrid\Grid[(x - 2) + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[(x - 1) + ((y - 2) * MapGridSize)]) = 0 Then
 										CurrMapGrid\Grid[x + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[x + ((y - 1) * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x - 1) + ((y - 1) * MapGridSize)] = 1
 										Temp = 1
-									ElseIf (CurrMapGrid\Grid[(x + 2) + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + ((y - 2) * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + ((y - 1) * MapGridSize)]) = 0 Then
+									ElseIf (CurrMapGrid\Grid[(x + 2) + ((y - 1) * MapGridSize)] + CurrMapGrid\Grid[(x + 1) + ((y - 2) * MapGridSize)]) = 0 Then
 										CurrMapGrid\Grid[x + (y * MapGridSize)] = 2
 										CurrMapGrid\Grid[x + ((y - 1) * MapGridSize)] = 2
 										CurrMapGrid\Grid[(x + 1) + ((y - 1) * MapGridSize)] = 1
@@ -4805,7 +4803,7 @@ Function CreateMap%()
 	r.Rooms = CreateRoom(0, ROOM1, (MapGridSize - 1) * RoomSpacing, 500.0, -(RoomSpacing ^ 2), "gate_b")
 	CurrMapGrid\RoomID[ROOM1] = CurrMapGrid\RoomID[ROOM1] + 1
 	
-	r.Rooms = CreateRoom(0, ROOM1, (MapGridSize - 1) * RoomSpacing, 500.0, RoomSpacing, "gate_a")
+	r.Rooms = CreateRoom(0, ROOM1, (MapGridSize - 1) * RoomSpacing, 500.0, RoomSpacing ^ 2, "gate_a")
 	CurrMapGrid\RoomID[ROOM1] = CurrMapGrid\RoomID[ROOM1] + 1
 	
 	r.Rooms = CreateRoom(0, ROOM1, (MapGridSize - 1) * RoomSpacing, 0.0, (MapGridSize - 1) * RoomSpacing, "dimension_106")
@@ -5001,7 +4999,7 @@ Function LoadTerrain%(HeightMap%, yScale# = 0.7, t1%, t2%, Mask%)
 	; ~ Store HeightMap dimensions
 	Local x% = ImageWidth(HeightMap) - 1
 	Local y% = ImageHeight(HeightMap) - 1
-	Local lx%, ly%, Index%
+	Local lX%, lY%, Index%
 	
 	; ~ Load texture and lightmaps
 	If (Not t1) Then RuntimeError("Texture #1 " + Chr(34) + t1 + Chr(34) + " not found.")
@@ -5018,18 +5016,18 @@ Function LoadTerrain%(HeightMap%, yScale# = 0.7, t1%, t2%, Mask%)
 	Local Surf% = CreateSurface(Mesh)
 	
 	; ~ Create some verts for the terrain
-	For ly = 0 To y
-		For lx = 0 To x
-			AddVertex(Surf, lx, 0, ly, 1.0 / lx, 1.0 / ly)
+	For lY = 0 To y
+		For lX = 0 To x
+			AddVertex(Surf, lX, 0, lY, 1.0 / lX, 1.0 / lY)
 		Next
 	Next
 	RenderWorld()
 	
 	; ~ Connect the verts with faces
-	For ly = 0 To y - 1
-		For lx = 0 To x - 1
-			AddTriangle(Surf, lx + ((x + 1) * ly), lx + ((x + 1) * ly) + (x + 1), (lx + 1) + ((x + 1) * ly))
-			AddTriangle(Surf, (lx + 1) + ((x + 1) * ly), lx + ((x + 1) * ly) + (x + 1), (lx + 1) + ((x + 1) * ly) + (x + 1))
+	For lY = 0 To y - 1
+		For lX = 0 To x - 1
+			AddTriangle(Surf, lX + ((x + 1) * lY), lX + ((x + 1) * lY) + (x + 1), (lX + 1) + ((x + 1) * lY))
+			AddTriangle(Surf, (lX + 1) + ((x + 1) * lY), lX + ((x + 1) * lY) + (x + 1), (lX + 1) + ((x + 1) * lY) + (x + 1))
 		Next
 	Next
 	
@@ -5044,16 +5042,16 @@ Function LoadTerrain%(HeightMap%, yScale# = 0.7, t1%, t2%, Mask%)
 	LockBuffer(ImageBuffer(HeightMap))
 	LockBuffer(TextureBuffer(Mask))
 	
-	For lx = 0 To x
-		For ly = 0 To y
+	For lX = 0 To x
+		For lY = 0 To y
 			; ~ Using vertex alpha and two meshes instead of FE_ALPHAWHATEVER
 			; ~ It doesn't look perfect but it does the job
 			; ~ You might get better results by downscaling the mask to the same size as the heightmap
-			Local MaskX# = Min(lx * Float(TextureWidth(Mask)) / Float(ImageWidth(HeightMap)), TextureWidth(Mask) - 1)
-			Local MaskY# = TextureHeight(Mask) - Min(ly * Float(TextureHeight(Mask)) / Float(ImageHeight(HeightMap)), TextureHeight(Mask) - 1)
+			Local MaskX# = Min(lX * Float(TextureWidth(Mask)) / Float(ImageWidth(HeightMap)), TextureWidth(Mask) - 1)
+			Local MaskY# = TextureHeight(Mask) - Min(lY * Float(TextureHeight(Mask)) / Float(ImageHeight(HeightMap)), TextureHeight(Mask) - 1)
 			Local RGB%, RED%
 			
-			RGB = ReadPixelFast(Min(lx, x - 1.0), y - Min(ly, y - 1.0), ImageBuffer(HeightMap))
+			RGB = ReadPixelFast(Min(lX, x - 1.0), y - Min(lY, y - 1.0), ImageBuffer(HeightMap))
 			RED = (RGB And $FF0000) Shr 16 ; ~ Separate out the red
 			
 			Local Alpha# = (((ReadPixelFast(Max(MaskX -5.0, 5.0), Max(MaskY - 5.0, 5.0), TextureBuffer(Mask)) And $FF000000) Shr 24) / $FF)
@@ -5064,13 +5062,13 @@ Function LoadTerrain%(HeightMap%, yScale# = 0.7, t1%, t2%, Mask%)
 			Alpha = Alpha * 0.25
 			Alpha = Sqr(Alpha)
 			
-			Index = lx + ((x + 1) * ly)
+			Index = lX + ((x + 1) * lY)
 			VertexCoords(Surf, Index , VertexX(Surf, Index), RED * yScale, VertexZ(Surf, Index))
 			VertexCoords(Surf2, Index , VertexX(Surf2, Index), RED * yScale, VertexZ(Surf2, Index))
 			VertexColor(Surf2, Index, 255.0, 255.0, 255.0, Alpha)
 			; ~ Set the terrain texture coordinates
-			VertexTexCoords(Surf, Index, lx, -ly )
-			VertexTexCoords(Surf2, Index, lx, -ly) 
+			VertexTexCoords(Surf, Index, lX, -lY )
+			VertexTexCoords(Surf2, Index, lX, -lY) 
 		Next
 	Next
 	UnlockBuffer(TextureBuffer(Mask))

@@ -7186,7 +7186,28 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 			Case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ; ~ Vest
 				;[Block]
 				me\Stamina = me\Stamina - Rnd(5.0)
-				InjurePlayer(Rnd(0.7, 0.9), 0.0, 650.0, Rnd(0.25, 0.5))
+				Select SelectedDifficulty\OtherFactors
+				Case EASY
+				;[Block]
+				InjurePlayer(Rnd(0.55, 0.66), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case NORMAL
+				;[Block]
+				InjurePlayer(Rnd(0.55 * 1.2, 0.66 * 1.2), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case HARD
+				;[Block]
+				InjurePlayer(Rnd(0.55 * 1.4, 0.66 * 1.4), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case EXTREME
+				;[Block]
+				InjurePlayer(Rnd(0.55 * 1.6, 0.66 * 1.6), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case CAKE
+				;[Block]
+				InjurePlayer(Rnd(0.55 * 0.7, 0.66 * 0.7), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				End Select
 				If wi\BallisticVest > 0 Then
 					ShotMessageUpdate = "A bullet penetrated your vest."
 				Else
@@ -7196,28 +7217,129 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 			Case 11 ; ~ Left Leg
 				;[Block]
 				me\Stamina = me\Stamina - Rnd(10.0)
-				InjurePlayer(Rnd(0.5, 0.7), 0.0, 650.0)
+				Select SelectedDifficulty\OtherFactors
+				Case EASY
+				;[Block]
+				InjurePlayer(Rnd(0.4, 0.5), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case NORMAL
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.2, 0.5 * 1.2), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case HARD
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.4, 0.5 * 1.4), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case EXTREME
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.6, 0.5 * 1.6), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case CAKE
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 0.7, 0.5 * 0.7), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				End Select
 				ShotMessageUpdate = "A bullet hit your left leg."
 				;[End Block]
 			Case 12 ; ~ Right Leg
 				;[Block]
 				me\Stamina = me\Stamina - Rnd(10.0)
-				InjurePlayer(Rnd(0.5, 0.7), 0.0, 650.0)
+				Select SelectedDifficulty\OtherFactors
+				Case EASY
+				;[Block]
+				InjurePlayer(Rnd(0.4, 0.5), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case NORMAL
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.2, 0.5 * 1.2), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case HARD
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.4, 0.5 * 1.4), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case EXTREME
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.6, 0.5 * 1.6), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case CAKE
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 0.7, 0.5 * 0.7), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
 				ShotMessageUpdate = "A bullet hit your right leg."
 				;[End Block]
 			Case 13 ; ~ Left Arm
 				;[Block]
-				InjurePlayer(Rnd(0.5, 0.7), 0.0, 650.0)
+				Select SelectedDifficulty\OtherFactors
+				Case EASY
+				;[Block]
+				InjurePlayer(Rnd(0.4, 0.5), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case NORMAL
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.2, 0.5 * 1.2), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case HARD
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.4, 0.5 * 1.4), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case EXTREME
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.6, 0.5 * 1.6), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case CAKE
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 0.7, 0.5 * 0.7), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
 				ShotMessageUpdate = "A bullet hit your left arm."
 				;[End Block]
 			Case 14 ; ~ Right Arm
 				;[Block]
-				InjurePlayer(Rnd(0.5, 0.7), 0.0, 650.0)
+				Select SelectedDifficulty\OtherFactors
+				Case EASY
+				;[Block]
+				InjurePlayer(Rnd(0.4, 0.5), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case NORMAL
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.2, 0.5 * 1.2), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case HARD
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.4, 0.5 * 1.4), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case EXTREME
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 1.6, 0.5 * 1.6), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case CAKE
+				;[Block]
+				InjurePlayer(Rnd(0.4 * 0.7, 0.5 * 0.7), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
 				ShotMessageUpdate = "A bullet hit your right arm."
 				;[End Block]
 			Case 15 ; ~ Neck
 				;[Block]
-				InjurePlayer(Rnd(1.0, 1.2), 0.0, 650.0)
+				Select SelectedDifficulty\OtherFactors
+				Case EASY
+				;[Block]
+				InjurePlayer(Rnd(0.8, 0.9), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case NORMAL
+				;[Block]
+				InjurePlayer(Rnd(0.8 * 1.2, 0.9 * 1.2), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case HARD
+				;[Block]
+				InjurePlayer(Rnd(0.8 * 1.4, 0.9 * 1.4), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case EXTREME
+				;[Block]
+				InjurePlayer(Rnd(0.8 * 1.6, 0.9 * 1.6), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
+				Case CAKE
+				;[Block]
+				InjurePlayer(Rnd(0.8 * 0.7, 0.9 * 0.7), 0.0, 650.0, Rnd(0.25, 0.5))
+				;[End Block]
 				ShotMessageUpdate = "A bullet struck your neck, making you gasp."
 				;[End Block]
 			Case 16, 17 ; ~ Helmet, Face or Head

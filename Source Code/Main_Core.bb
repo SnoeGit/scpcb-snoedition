@@ -797,7 +797,7 @@ Function UpdateGame%()
 							;[End Block]
 					End Select 
 					me\BlinkTimer = me\BLINKFREQ
-					If PlayerRoom\RoomTemplate\Name <> "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale Then me\BlurTimer = me\BlurTimer - Rnd(25.0, 50.0)
+					If PlayerRoom\RoomTemplate\Name <> "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale Then me\BlurTimer = me\BlurTimer - Rnd(25.0, 75.0)
 				EndIf
 				me\BlinkTimer = me\BlinkTimer - fps\Factor[0]
 			Else
@@ -1247,7 +1247,7 @@ Function UpdateMoving%()
 	If me\CurrSpeed > 0.0 Then
 		me\Stamina = Min(me\Stamina + (0.12 * fps\Factor[0]), 100.0)
 	Else
-		me\Stamina = Min(me\Stamina + (0.15 * fps\Factor[0]), 100.0)
+		me\Stamina = Min(me\Stamina + (0.1875 * fps\Factor[0]), 100.0)
 	EndIf
 	
 	If me\StaminaEffectTimer > 0.0 Then
@@ -3085,6 +3085,7 @@ Function UpdateGUI%()
 				Case "book"
 					;[Block]
 					CreateMsg(Chr(34) + "I really don't have the time for that right now..." + Chr(34))
+					SelectedItem = Null
 					;[End Block]
 				Case "cup"
 					;[Block]
@@ -4112,11 +4113,9 @@ Function RenderHUD%()
 	If me\BlurTimer > 550.0 Lor me\BlinkEffect > 1.0 Lor me\LightFlash > 0.0 Lor (((me\LightBlink > 0.0 And (Not chs\NoBlink)) Lor me\EyeIrritation > 0.0) And wi\NightVision = 0) Then
 		Color(200, 0, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-	Else
-		If me\BlinkEffect < 1.0 Lor chs\NoBlink Then
-			Color(0, 200, 0)
-			Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-		EndIf
+	ElseIf me\BlinkEffect < 1.0 Lor chs\NoBlink
+		Color(0, 200, 0)
+		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
 	EndIf
 	
 	Color(255, 255, 255)
@@ -4142,11 +4141,9 @@ Function RenderHUD%()
 	If PlayerRoom\RoomTemplate\Name = "dimension_106" Lor I_714\Using Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor wi\HazmatSuit = 1 Lor wi\BallisticVest = 2 Lor I_409\Timer >= 55.0 Then
 		Color(200, 0, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-	Else
-		If chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask = 2 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 2 Then
-			Color(0, 200, 0)
-			Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-		EndIf 
+	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask = 2 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 2
+		Color(0, 200, 0)
+		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
 	EndIf
 	
 	Color(255, 255, 255)
@@ -5101,7 +5098,7 @@ Function UpdateMenu%()
 					
 					y = y + (40 * MenuScale)
 					
-					opt\ScreenGamma = UpdateMainMenuSlideBar(x + (270 * MenuScale), y, 100 * MenuScale, opt\ScreenGamma * 50.0) / 50.0
+					opt\ScreenGamma = UpdateMainMenuSlideBar(x + (270 * MenuScale), y, 100 * MenuScale, opt\ScreenGamma * 66.6) / 66.6
 					
 					y = y + (45 * MenuScale)
 					
@@ -5442,16 +5439,20 @@ Function UpdateMenu%()
 			
 			If mm\AchievementsMenu > 0 Then
 				If mm\AchievementsMenu <= Floor(Float(MAXACHIEVEMENTS - 1) / 12.0) Then 
-					If UpdateMainMenuButton(x + (341 * MenuScale), y + (345 * MenuScale), 50 * MenuScale, 60 * MenuScale, ">") Then
+					If UpdateMainMenuButton(x + (341 * MenuScale), y + (345 * MenuScale), 60 * MenuScale, 60 * MenuScale, ">") Then
 						mm\AchievementsMenu = mm\AchievementsMenu + 1
 						mm\ShouldDeleteGadgets = True
 					EndIf
+				Else
+					UpdateMainMenuButton(x + (341 * MenuScale), y + (345 * MenuScale), 60 * MenuScale, 60 * MenuScale, ">", True, False, True)
 				EndIf
 				If mm\AchievementsMenu > 1 Then
-					If UpdateMainMenuButton(x + (41 * MenuScale), y + (345 * MenuScale), 50 * MenuScale, 60 * MenuScale, "<") Then
+					If UpdateMainMenuButton(x + (31 * MenuScale), y + (345 * MenuScale), 60 * MenuScale, 60 * MenuScale, "<") Then
 						mm\AchievementsMenu = mm\AchievementsMenu - 1
 						mm\ShouldDeleteGadgets = True
 					EndIf
+				Else
+					UpdateMainMenuButton(x + (31 * MenuScale), y + (345 * MenuScale), 60 * MenuScale, 60 * MenuScale, "<", True, False, True)
 				EndIf
 			EndIf
 		Else
@@ -5619,7 +5620,7 @@ Function RenderMenu%()
 			TempStr = "YOU DIED"
 		EndIf		
 		SetFont(fo\FontID[Font_Default_Big])
-		Text(x + (Width / 2) + (40 * MenuScale), y + (30 * MenuScale), TempStr, True)
+		Text(x + (Width / 2) + (47 * MenuScale), y + (48 * MenuScale), TempStr, True, True)
 		SetFont(fo\FontID[Font_Default])
 		
 		x = x + (132 * MenuScale)
@@ -6093,26 +6094,23 @@ Function UpdateEnding%()
 			EndIf			
 		Else
 			If me\EndingTimer < -1000.0 And me\EndingTimer > -2000.0 Then
-				Width = ImageWidth(t\ImageID[0])
-				Height = ImageHeight(t\ImageID[0])
-				x = mo\Viewport_Center_X - (Width / 2)
-				y = mo\Viewport_Center_Y - (Height / 2)
-				
 				If mm\AchievementsMenu =< 0 Then 
-					x = x + (132 * MenuScale)
-					y = y + (122 * MenuScale)
+					Width = ImageWidth(t\ImageID[0])
+					Height = ImageHeight(t\ImageID[0])
 					
 					x = mo\Viewport_Center_X - (Width / 2)
 					y = mo\Viewport_Center_Y - (Height / 2)
-					x = x + (Width / 2)
-					y = y + Height - (100 * MenuScale)
+					x = x + (132 * MenuScale)
+					y = y + (432 * MenuScale)
 					
-					If UpdateMainMenuButton(x - (170 * MenuScale), y - (200 * MenuScale), 430 * MenuScale, 60 * MenuScale, "ACHIEVEMENTS", True) Then
+					If UpdateMainMenuButton(x, y, 430 * MenuScale, 60 * MenuScale, "ACHIEVEMENTS", True) Then
 						mm\AchievementsMenu = 1
 						mm\ShouldDeleteGadgets = True
 					EndIf
 					
-					If UpdateMainMenuButton(x - (170 * MenuScale), y - (100 * MenuScale), 430 * MenuScale, 60 * MenuScale, "MAIN MENU", True)
+					y = y + 75 * MenuScale
+					
+					If UpdateMainMenuButton(x, y, 430 * MenuScale, 60 * MenuScale, "MAIN MENU", True)
 						ShouldPlay = 24
 						NowPlaying = ShouldPlay
 						For i = 0 To 9
@@ -6180,7 +6178,7 @@ Function RenderEnding%()
 				
 				Color(255, 255, 255)
 				SetFont(fo\FontID[Font_Default_Big])
-				Text(x + (Width / 2) + (40 * MenuScale), y + (20 * MenuScale), "THE END", True)
+				Text(x + (Width / 2) + (47 * MenuScale), y + (48 * MenuScale), "THE END", True, True)
 				SetFont(fo\FontID[Font_Default])
 				
 				If mm\AchievementsMenu =< 0 Then 

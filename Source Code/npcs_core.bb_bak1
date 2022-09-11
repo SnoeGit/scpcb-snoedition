@@ -7298,6 +7298,27 @@ Function MoveToPocketDimension%()
 	Next		
 End Function
 
+Function MoveToPocketDimension%()
+	Local r.Rooms
+	
+	For r.Rooms = Each Rooms
+		If r\RoomTemplate\Name = "dimension_106" Then
+			HideEntity(me\Head)
+			ShowEntity(me\Collider)
+			PlaySound_Strict(Use914SFX)
+			PlaySound_Strict(OldManSFX[5])
+			
+			TeleportEntity(me\Collider, EntityX(r\OBJ), 0.8, EntityZ(r\OBJ))
+			TeleportToRoom(r)
+			
+			me\BlinkTimer = -10.0 : me\FallTimer = 0.0 : me\DropSpeed = 0.0
+			InjurePlayer(0.5, 0.0, 1600.0)
+			
+			Exit
+		EndIf
+	Next		
+End Function
+
 Function FindFreeNPCID%()
 	Local n2.NPCs
 	Local ID% = 1
