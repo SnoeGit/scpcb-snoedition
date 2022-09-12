@@ -981,17 +981,19 @@ Function UpdateGame%()
 		UpdateAutoSave()
 		
 		If KeyHit(key\CONSOLE) Then
-			If opt\CanOpenConsole Then
-				If ConsoleOpen Then
-					UsedConsole = True
-					ResumeSounds()
-					StopMouseMovement()
-					mm\ShouldDeleteGadgets = True
-				Else
-					PauseSounds()
+			If SelectedDifficulty\Name <> "Keter" And SelectedDifficulty\Name <> "Apollyon" Then
+				If opt\CanOpenConsole Then
+					If ConsoleOpen Then
+						UsedConsole = True
+						ResumeSounds()
+						StopMouseMovement()
+						mm\ShouldDeleteGadgets = True
+					Else
+						PauseSounds()
+					EndIf
+					ConsoleOpen = (Not ConsoleOpen)
+					FlushKeys()
 				EndIf
-				ConsoleOpen = (Not ConsoleOpen)
-				FlushKeys()
 			EndIf
 		EndIf
 		
@@ -5267,12 +5269,12 @@ Function UpdateMenu%()
 						
 						y = y + (20 * MenuScale)
 						
-						UpdateMainMenuInputBox(x + (200 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\SCREENSHOT, 210.0)], 12)
+						UpdateMainMenuInputBox(x + (200 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\SCREENSHOT, 210.0)], 13)
 						
 						If opt\CanOpenConsole Then
 							y = y + (20 * MenuScale)
 							
-							UpdateMainMenuInputBox(x + (200 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\CONSOLE, 210.0)], 13)
+							UpdateMainMenuInputBox(x + (200 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\CONSOLE, 210.0)], 12)
 						EndIf
 						
 						Local TempKey%
@@ -5919,11 +5921,15 @@ Function RenderMenu%()
 					
 					y = y + (30 * MenuScale)
 					
-					Color(255, 255, 255)
-					Text(x, y + (5 * MenuScale), "Enable console:")
-					If MouseOn(x + (270 * MenuScale), y, 20 * MenuScale, 20 * MenuScale)
-						RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_Console)
+					If SelectedDifficulty\Name <> "Keter" Lor SelectedDifficulty\Name <> "Apollyon" Then
+						Color(255, 255, 255)
+					Else
+						Color(100, 100, 100)
 					EndIf
+						Text(x, y + (5 * MenuScale), "Enable console:")
+						If MouseOn(x + (270 * MenuScale), y, 20 * MenuScale, 20 * MenuScale)
+							RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_Console)
+						EndIf
 					
 					y = y + (30 * MenuScale)
 					
@@ -6216,12 +6222,12 @@ Function RenderEnding%()
 					For i = 0 To MAXACHIEVEMENTS - 1
 						AchievementsUnlocked = AchievementsUnlocked + achv\Achievement[i]
 					Next
-					
-					Text(x, y, "SCPs encountered: " + SCPsEncountered)
-					Text(x, y + (20 * MenuScale), "Achievements unlocked: " + AchievementsUnlocked + "/" + (MAXACHIEVEMENTS))
-					Text(x, y + (40 * MenuScale), "Rooms found: " + RoomsFound + "/" + RoomAmount)
-					Text(x, y + (60 * MenuScale), "Documents discovered: " + DocsFound + "/" + DocAmount)
-					Text(x, y + (80 * MenuScale), "Items refined in SCP-914: " + me\RefinedItems)
+					Text(x, y, "Difficulty: " + SelectedDifficulty\Name)
+					Text(x, y + (20 * MenuScale), "SCPs encountered: " + SCPsEncountered)
+					Text(x, y + (40 * MenuScale), "Achievements unlocked: " + AchievementsUnlocked + "/" + (MAXACHIEVEMENTS))
+					Text(x, y + (60 * MenuScale), "Rooms found: " + RoomsFound + "/" + RoomAmount)
+					Text(x, y + (80 * MenuScale), "Documents discovered: " + DocsFound + "/" + DocAmount)
+					Text(x, y + (100 * MenuScale), "Items refined in SCP-914: " + me\RefinedItems)
 				Else
 					RenderMenu()
 				EndIf

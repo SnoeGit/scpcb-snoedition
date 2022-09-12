@@ -9,7 +9,7 @@ Type Difficulty
 	Field InventorySlots%
 End Type
 
-Global difficulties.Difficulty[5]
+Global difficulties.Difficulty[6]
 
 Global SelectedDifficulty.Difficulty
 
@@ -19,7 +19,8 @@ Const SAFE% = 0
 Const EUCLID% = 1
 Const KETER% = 2
 Const APOLLYON% = 3
-Const ESOTERIC% = 4
+Const THAUMIEL% = 4
+Const ESOTERIC% = 5
 ;[End Block]
 
 ; ~ Save Types ID Constants
@@ -83,6 +84,16 @@ difficulties[APOLLYON]\InventorySlots = 2
 difficulties[APOLLYON]\SaveType = NO_SAVES
 difficulties[APOLLYON]\OtherFactors = EXTREME
 SetDifficultyColor(APOLLYON, 150, 150, 150)
+
+difficulties[THAUMIEL] = New Difficulty
+difficulties[THAUMIEL]\Name = "Thaumiel"
+difficulties[THAUMIEL]\Description = "This difficulty is designed around allowing you to lay back and have a good time without having to worry about constantly dying."
+difficulties[THAUMIEL]\Description = difficulties[THAUMIEL]\Description + "Achievements are disabled when playing on this difficulty."
+difficulties[THAUMIEL]\AggressiveNPCs = False
+difficulties[THAUMIEL]\InventorySlots = 16
+difficulties[THAUMIEL]\SaveType = SAVE_ANYWHERE
+difficulties[THAUMIEL]\OtherFactors = CAKE
+SetDifficultyColor(THAUMIEL, 55, 70, 215)
 
 difficulties[ESOTERIC] = New Difficulty
 difficulties[ESOTERIC]\Name = "Esoteric"

@@ -300,7 +300,7 @@ Function UpdateConsole%()
 							CreateConsoleMsg("- crystal [value]") 
 							CreateConsoleMsg("- teleport [room name]")
 							CreateConsoleMsg("- spawnitem [item name]")
-							CreateConsoleMsg("- giveachievement [ID / All]")
+							;CreateConsoleMsg("- giveachievement [ID / All]")
 							CreateConsoleMsg("- codes")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Use " + Chr(34) + "help [command name]" + Chr(34) + " to get more information about a command.")
@@ -552,15 +552,15 @@ Function UpdateConsole%()
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Resets your Mastercard funds.")
 							CreateConsoleMsg("******************************")
-						Case "giveachievement"
-							;[Block]
-							CreateConsoleMsg("HELP - giveachievement")
-							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Grants any achievement you want.")
-							CreateConsoleMsg("You can guess the ID by counting in the achievements menu (starts at 0).")
-							CreateConsoleMsg("You can also use " + Chr(34) + "all" + Chr(34) + " to immediately unlock every achievement.")
-							CreateConsoleMsg("******************************")
-							;[End Block]
+						;Case "giveachievement"
+						;	;[Block]
+						;	CreateConsoleMsg("HELP - giveachievement")
+						;	CreateConsoleMsg("******************************")
+						;	CreateConsoleMsg("Grants any achievement you want.")
+						;	CreateConsoleMsg("You can guess the ID by counting in the achievements menu (starts at 0).")
+						;	CreateConsoleMsg("You can also use " + Chr(34) + "all" + Chr(34) + " to immediately unlock every achievement.")
+						;	CreateConsoleMsg("******************************")
+						;	;[End Block]
 						Case "codes" 
 							;[Block]
 							CreateConsoleMsg("HELP - codes")
@@ -1325,28 +1325,28 @@ Function UpdateConsole%()
 						EndIf
 					EndIf
 					;[End Block]
-				Case "giveachievement"
-					;[Block]
-					If Instr(ConsoleInput, " ") <> 0 Then
-						StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					Else
-						StrTemp = ""
-					EndIf
-					
-					If StrTemp = "all" Then
-						For i = 0 To MAXACHIEVEMENTS - 1
-							achv\Achievement[i] = True
-						Next
-						CreateConsoleMsg("All the achievements have been unlocked.")
-					EndIf
-					
-					If Int(StrTemp) >= 0 And Int(StrTemp) < MAXACHIEVEMENTS And StrTemp <> "all" Then
-						achv\Achievement[Int(StrTemp)] = True
-						CreateConsoleMsg("Achievement " + achv\AchievementStrings[Int(StrTemp)] + " unlocked.")
-					ElseIf StrTemp <> "all"
-						CreateConsoleMsg("Achievement with ID " + Int(StrTemp) + " doesn't exist.", 255, 0, 0)
-					EndIf
-					;[End Block]
+			;	Case "giveachievement"
+			;		;[Block]
+			;		If Instr(ConsoleInput, " ") <> 0 Then
+			;			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			;		Else
+			;			StrTemp = ""
+			;		EndIf
+			;		
+			;		If StrTemp = "all" Then
+			;			For i = 0 To MAXACHIEVEMENTS - 1
+			;				achv\Achievement[i] = True
+			;			Next
+			;			CreateConsoleMsg("All the achievements have been unlocked.")
+			;		EndIf
+			;		
+			;		If Int(StrTemp) >= 0 And Int(StrTemp) < MAXACHIEVEMENTS And StrTemp <> "all" Then
+			;			achv\Achievement[Int(StrTemp)] = True
+			;			CreateConsoleMsg("Achievement " + achv\AchievementStrings[Int(StrTemp)] + " unlocked.")
+			;		ElseIf StrTemp <> "all"
+			;			CreateConsoleMsg("Achievement with ID " + Int(StrTemp) + " doesn't exist.", 255, 0, 0)
+			;		EndIf
+			;		;[End Block]
 				Case "427state"
 					;[Block]
 					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))

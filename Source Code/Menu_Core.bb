@@ -307,7 +307,7 @@ Function UpdateMainMenu%()
 					For i = SAFE To ESOTERIC
 						Local PrevSelectedDifficulty.Difficulty = SelectedDifficulty
 						
-						If UpdateMainMenuTick(x + (20 * MenuScale), y + ((180 + 30 * i) * MenuScale), (SelectedDifficulty = difficulties[i])) Then SelectedDifficulty = difficulties[i]
+						If UpdateMainMenuTick(x + (20 * MenuScale), y + ((175 + 28 * i) * MenuScale), (SelectedDifficulty = difficulties[i])) Then SelectedDifficulty = difficulties[i]
 						
 						If SelectedDifficulty\SaveType <> SAVE_ANYWHERE Then opt\AutoSaveEnabled = False
 						
@@ -788,12 +788,12 @@ Function UpdateMainMenu%()
 								y = y + (20 * MenuScale)
 								
 								UpdateMainMenuInputBox(x - (150 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\SPRINT, 210.0)], 7)
-								UpdateMainMenuInputBox(x + (140 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\SCREENSHOT, 210.0)], 12)
+								UpdateMainMenuInputBox(x + (140 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\SCREENSHOT, 210.0)], 13)
 								
 								If opt\CanOpenConsole Then
 									y = y + (20 * MenuScale)
 									
-									UpdateMainMenuInputBox(x - (150 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\CONSOLE, 210.0)], 13)
+									UpdateMainMenuInputBox(x - (150 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\CONSOLE, 210.0)], 12)
 								EndIf
 								
 								Local TempKey%
@@ -1212,7 +1212,7 @@ Function RenderMainMenu%()
 				Text(x + (20 * MenuScale), y + (155 * MenuScale), "Difficulty:")
 				For i = SAFE To ESOTERIC
 					Color(difficulties[i]\R, difficulties[i]\G, difficulties[i]\B)
-					Text(x + (60 * MenuScale), y + ((185 + 30 * i) * MenuScale), difficulties[i]\Name)
+					Text(x + (60 * MenuScale), y + ((180 + 28 * i) * MenuScale), difficulties[i]\Name)
 				Next
 				
 				Color(255, 255, 255)
@@ -3507,7 +3507,7 @@ Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
 			;[End Block]
 		Case Tooltip_Console
 			;[Block]
-			Txt = "Toggles the use of the developer console. Can be used in-game by pressing " + key\Name[key\CONSOLE] + "."
+			Txt = "Toggles the use of the developer console. Can be used in-game by pressing " + key\Name[key\CONSOLE] + ". Not available in Keter and Apollyon."
 			;[End Block]
 		Case Tooltip_ConsoleOnError
 			;[Block]

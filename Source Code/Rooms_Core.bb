@@ -2599,7 +2599,9 @@ Function FillRoom%(r.Rooms)
 			sc\Angle = 270.0 : sc\Turn = 45.0
 			TurnEntity(sc\CameraOBJ, 20.0, 0.0, 0.0)
 			TurnEntity(sc\ScrOBJ, 0.0, 90.0, 0.0)
-			
+			If SelectedDifficulty\Name = "Thaumiel" Then
+				it.Items = CreateItem("Level 5 Key Card", "key5", r\x - (2914.0 + 1024.0) * RoomScale, r\y + 170.0 * RoomScale, r\z + 15.0 * RoomScale)
+			EndIf
 			it.Items = CreateItem("Class D Orientation Leaflet", "paper", r\x - (2914.0 + 1024.0) * RoomScale, r\y + 170.0 * RoomScale, r\z + 40.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
