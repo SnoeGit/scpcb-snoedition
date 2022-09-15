@@ -36,6 +36,7 @@ General:
 - Max brightness setting is now 150% instead of 200%
 - Higher quality textures for cards from Graphics Overhaul mod by Placeholder Studios. (HD Playing card and Mastercard by Snoe)
 - Removed the third hand from the game.
+- Cups from SCP-294 have been nerfed.
 
 Mechanics and effects:
 - Nerfed Blinking reducing blur and buffed the minimum it can reduce.

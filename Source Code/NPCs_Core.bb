@@ -7079,6 +7079,30 @@ End Function
 Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = False)  
 	Local p.Particles, de.Decals, n.NPCs
 	Local Pvt%, ShotMessageUpdate$, i%
+	Local DifficultyDMGMult#
+	
+	Select SelectedDifficulty\OtherFactors
+		Case EASY
+		;[Block]
+		DifficultyDMGMult = 1.0
+		;[End Block]
+		Case NORMAL
+		;[Block]
+		DifficultyDMGMult = 1.2
+		;[End Block]
+		Case HARD
+		;[Block]
+		DifficultyDMGMult = 1.4
+		;[End Block]
+		Case EXTREME
+		;[Block]
+		DifficultyDMGMult = 1.6
+		;[End Block]
+		Case CAKE
+		;[Block]
+		DifficultyDMGMult = 0.7
+		;[End Block]
+	End Select
 	
 	p.Particles = CreateParticle(PARTICLE_FLASH, x, y, z, Rnd(0.08, 0.1), 0.0, 5.0)
 	p\AlphaChange = -0.15

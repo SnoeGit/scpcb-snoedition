@@ -26,7 +26,7 @@ Const AchvO5% = 37, AchvPD% = 38, AchvSNAV% = 39, AchvTesla% = 40
 Const AchievementsFile$ = "Data\Achievements.ini"
 
 Function GiveAchievement%(AchvName%, ShowMessage% = True)
-	If SelectedDifficulty\Name <> "Thaumiel" And SelectedDifficulty\Name <> "Esoteric" Then
+	If SelectedDifficulty\Name <> "Thaumiel" And SelectedDifficulty\Name <> "Esoteric" And (Not UsedConsole) Then
 		If achv\Achievement[AchvName] <> True Then
 			achv\Achievement[AchvName] = True
 			If opt\AchvMsgEnabled And ShowMessage Then
