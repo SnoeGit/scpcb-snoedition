@@ -1725,7 +1725,9 @@ Function UpdateNPCs%()
 												Temp = True
 												If n\Path[n\PathLocation]\door <> Null Then
 													If (Not n\Path[n\PathLocation]\door\IsElevatorDoor > 0) Then
-														If (n\Path[n\PathLocation]\door\Locked > 0 Lor n\Path[n\PathLocation]\door\KeyCard <> 0 Lor n\Path[n\PathLocation]\door\Code <> "") And (Not n\Path[n\PathLocation]\door\Open) Then
+														If (n\Path[n\PathLocation]\door\Locked > 0 Lor n\Path[n\PathLocation]\door\KeyCard > 3 Lor n\Path[n\PathLocation]\door\Code <> "") And (Not n\Path[n\PathLocation]\door\Open) And PostChamber = False Then
+															Temp = False
+														ElseIf (n\Path[n\PathLocation]\door\Locked > 0 Lor n\Path[n\PathLocation]\door\KeyCard > 5 Lor n\Path[n\PathLocation]\door\Code <> "") And (Not n\Path[n\PathLocation]\door\Open) Then
 															Temp = False
 														Else
 															If (Not n\Path[n\PathLocation]\door\Open) And (n\Path[n\PathLocation]\door\Buttons[0] <> 0 Lor n\Path[n\PathLocation]\door\Buttons[1] <> 0) Then
@@ -2233,7 +2235,7 @@ Function UpdateNPCs%()
 											If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 												PlaySound2(DamageSFX[Rand(5, 8)], Camera, n\Collider)
 
-													InjurePlayer(Rnd(0.55 * DifficultyDMGMult, 0.85 * DifficultyDMGMult), 0.0, 0.0, Rnd(0.1 * DifficultyDMGMult, 0.25 * DifficultyDMGMult), 0.2)
+													InjurePlayer(Rnd(0.55 * DifficultyDMGMult, 0.85 * DifficultyDMGMult), 0.0, 0.0, Rnd(0.1, 0.25), 0.2)
 												
 												If me\Injuries > 3.0 Then
 													msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2."
@@ -3755,7 +3757,7 @@ Function UpdateNPCs%()
 									If Temp Then
 										If DistanceSquared(n\EnemyX, EntityX(n\Collider), n\EnemyZ, EntityZ(n\Collider)) < 2.25 Then
 											PlaySound_Strict(DamageSFX[11])
-											InjurePlayer(Rnd(1.5, 2.5), 0.0, 500.0, Rnd(0.1, 0.75))
+											InjurePlayer(Rnd(1.5, 2.5), 0.0, 500.0, Rnd(0.2, 0.75))
 										Else
 											SetNPCFrame(n, 449.0)
 										EndIf
@@ -4338,7 +4340,7 @@ Function UpdateNPCs%()
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 											
-													InjurePlayer(Rnd(0.45 * DifficultyDMGMult, 0.75 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.1 * DifficultyDMGMult, 0.3 * DifficultyDMGMult))
+													InjurePlayer(Rnd(0.45 * DifficultyDMGMult, 0.75 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.1, 0.3))
 													
 											If me\Injuries > 14.0 Then
 												Kill(True)
@@ -4684,7 +4686,7 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.12 * DifficultyDMGMult, 0.4 * DifficultyDMGMult), 0.2)
+										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.1, 0.4), 0.2)
 
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 										If me\Injuries > 8.0 Then
@@ -4710,7 +4712,7 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.12 * DifficultyDMGMult, 0.4 * DifficultyDMGMult), 0.2)
+										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.1, 0.4), 0.2)
 										
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 										If me\Injuries > 10.0 Then
@@ -4933,7 +4935,7 @@ Function UpdateNPCs%()
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound_Strict(DamageSFX[Rand(5, 8)])
 											
-													InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.7 * DifficultyDMGMult), 1.0, 0.0, Rnd(0.1 * DifficultyDMGMult, 0.25 * DifficultyDMGMult), 0.2)
+													InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.7 * DifficultyDMGMult), 1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs), 0.0, Rnd(0.1, 0.25), 0.2)
 													
 											If me\Injuries > 3.0 Then
 												msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by [DATA REDACTED], who was infected with SCP-008. Said subject was located by Nine-Tailed Fox and terminated."
@@ -7128,28 +7130,28 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 			Case 11 ; ~ Left Leg
 				;[Block]
 				me\Stamina = me\Stamina - Rnd(10.0)
-				InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.5 * DifficultyDMGMult), 0.0, 650.0, Rnd(0.25, 0.5))
+				InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.5 * DifficultyDMGMult), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your left leg."
 				;[End Block]
 			Case 12 ; ~ Right Leg
 				;[Block]
 				me\Stamina = me\Stamina - Rnd(10.0)
-				InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.5 * DifficultyDMGMult), 0.0, 650.0, Rnd(0.25, 0.5))
+				InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.5 * DifficultyDMGMult), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your right leg."
 				;[End Block]
 			Case 13 ; ~ Left Arm
 				;[Block]
-				InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.5 * DifficultyDMGMult), 0.0, 650.0, Rnd(0.25, 0.5))
+				InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.5 * DifficultyDMGMult), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your left arm."
 				;[End Block]
 			Case 14 ; ~ Right Arm
 				;[Block]
-				InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.5 * DifficultyDMGMult), 0.0, 650.0, Rnd(0.25, 0.5))
+				InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.5 * DifficultyDMGMult), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your right arm."
 				;[End Block]
 			Case 15 ; ~ Neck
 				;[Block]
-				InjurePlayer(Rnd(0.8 * DifficultyDMGMult, 0.9 * DifficultyDMGMult), 0.0, 650.0, Rnd(0.25, 0.5))
+				InjurePlayer(Rnd(0.8 * DifficultyDMGMult, 0.9 * DifficultyDMGMult), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet struck your neck, making you gasp."
 				;[End Block]
 			Case 16, 17 ; ~ Helmet, Face or Head

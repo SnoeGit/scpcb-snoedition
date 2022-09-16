@@ -11,32 +11,33 @@ General:
 - New document of 173 replacing the one the escort gives you.
 - Renamed Small First Aid Kit to Compact First Aid Kit
 - Adjusted how Key Cards were obtained in SCP-914 from Mastercards and Playing Cards.
-- Super Battery have reduced charge 10000 -> 5000/ 1000 -> 500
 - Blue Night Vision Goggles now display names of SCP-860-2, SCP-1499-1, and Tentacle instead of unknown.
 - Blue Night Vision Goggles now require 18V batteries.
+- Fine Scramble Gear has been added to the game.
+- Super Battery have reduced charge 10000 -> 5000/ 1000 -> 500
+- Rework how battery drains.
+- Strange bottle can now infect you with either 008 or 409.
 - SCP-427's ability to cure SCP-008 is now faster.
-- New casual difficulty for players called Thaumiel.
-- Added Cake as a difficulty factor for Esoteric.
-- Subtitles now show who is currently talking.
+- Cups from SCP-294 have been nerfed.
 - SCP-714 and Heavy equipement protects you from the bird planes in pocket dimension.
 - SCP-714 resists the poisonous gas in room3_storage(Storage Area 6).
 - Monitors displaying SCP-895 will kill you quicker.
 - SCP-012 now kills you slightly sooner.
 - SCP-513 if rung will permenantly decrease your sanity.
 - SCP-939 Achievement only obtained by alerting the 939 specimen.
+- Achievements are only obtainable in Safe, Euclid, Keter, and Apollyon.
 - Apollyon difficulty no longer gives you the intro papers.
 - Keter and Apollyon difficulties no longer allow you to open up the console.
 - Achievements are only obtainable in Safe, Euclid, Keter, and Apollyon.
 - Euclid difficulty gives you 8 slots instead of just 6.
+- New casual difficulty for players called Thaumiel.
+- Added Cake as a difficulty factor for Esoteric.
 - End Screen now tells you what difficulty you beat that save in.
-- Fine Scramble Gear has been added to the game.
-- Rework how battery drains.
-- Strange bottle can now infect you with either 008 or 409.
+- Subtitles now show who is currently talking.
 - Add LOD 1.2 option
 - Max brightness setting is now 150% instead of 200%
 - Higher quality textures for cards from Graphics Overhaul mod by Placeholder Studios. (HD Playing card and Mastercard by Snoe)
 - Removed the third hand from the game.
-- Cups from SCP-294 have been nerfed.
 
 Mechanics and effects:
 - Nerfed Blinking reducing blur and buffed the minimum it can reduce.

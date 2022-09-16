@@ -3127,6 +3127,13 @@ Function UpdateGUI%()
 						
 						If GetINIInt2(SCP294File, Loc, "Crystallization") Then I_409\Timer = I_409\Timer + 1.0
 						
+						If GetINIInt2(SCP294File, Loc, "Revitalize") Then
+							For i = 0 To 6
+								I_1025\State[i] = 0.0
+							Next
+						EndIf
+						
+						
 						If me\DeathTimer = 0.0 Then
 							me\DeathTimer = GetINIInt2(SCP294File, Loc, "Death Timer") * 70.0
 						Else
