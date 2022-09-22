@@ -3507,7 +3507,7 @@ Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
 			;[End Block]
 		Case Tooltip_Console
 			;[Block]
-			Txt = "Toggles the use of the developer console. Can be used in-game by pressing " + key\Name[key\CONSOLE] + ". Not available in Keter and Apollyon."
+			Txt = "Toggles the use of the developer console. Can be used in-game by pressing " + key\Name[key\CONSOLE] + ". Not available Apollyon."
 			;[End Block]
 		Case Tooltip_ConsoleOnError
 			;[Block]

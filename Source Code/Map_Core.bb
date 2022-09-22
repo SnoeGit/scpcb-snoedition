@@ -4607,6 +4607,8 @@ Function CreateMap%()
 	
 	MapRoom(ROOM2C, Floor(0.5 * Float(Room2CAmount[0]))) = "cont2c_1162_arc"
 	
+	MapRoom(ROOM2C, Floor(0.6 * Float(Room2CAmount[0]))) = "cont2c_066"
+	
 	MapRoom(ROOM3, Floor(Rnd(0.2, 0.8) * Float(Room3Amount[0]))) = "room3_storage"
 	
 	MapRoom(ROOM4, Floor(0.3 * Float(Room4Amount[0]))) = "room4_ic"

@@ -27,7 +27,7 @@ General:
 - SCP-939 Achievement only obtained by alerting the 939 specimen.
 - Achievements are only obtainable in Safe, Euclid, Keter, and Apollyon.
 - Apollyon difficulty no longer gives you the intro papers.
-- Keter and Apollyon difficulties no longer allow you to open up the console.
+- Apollyon difficulty no longer allow you to open up the console.
 - Achievements are only obtainable in Safe, Euclid, Keter, and Apollyon.
 - Euclid difficulty gives you 8 slots instead of just 6.
 - New casual difficulty for players called Thaumiel.
@@ -36,7 +36,7 @@ General:
 - Subtitles now show who is currently talking.
 - Add LOD 1.2 option
 - Max brightness setting is now 150% instead of 200%
-- Higher quality textures for cards from Graphics Overhaul mod by Placeholder Studios. (HD Playing card and Mastercard by Snoe)
+- Higher quality textures for cards and coins from Graphics Overhaul mod by Placeholder Studios. (HD Playing card and Mastercard by Snoe)
 - Removed the third hand from the game.
 
 Mechanics and effects:
@@ -50,10 +50,18 @@ NPCs:
 - SCP-106: 1.3 -> 1.24
 - SCP-860-2: 8.0 -> 6.5
 
-- SCP-173-J has been added as an April Fools event.
-- Enemy attacks scale with difficulty.
+- Edited Mutliple SCP's damage.
+- SCP-008-1: (0.4 Min, 1.0 Max) -> (0.45 Min, 0.75 Max)
+- SCP-049-2: (0.5 Min, 1.0 Max) -> (0.6 Min, 0.9 Max)
+- SCP-966's: (0.5 Min, 1.0 Max) -> (0.5 Min, 0.8 Max)
+- SCP-1499-1: (0.75 Min, 1.5 Max) -> (0.7 Min, 1.15 Max)
+- Tentacle: (1.0 Min, 1.5 Max) -> (0.8 Min, 1.2 Max)
+
+- Enemy attacks scale with difficulty. +15% On Euclid, +30% on Keter, +45% On Apollyon.
+- SCP-049 Can unlock Key card doors based on progression. Level 1 at Surveillance room event; Level 3 after SCP-049's chamebr event.
 - SCP-096 will no longer attack if SCP-106 is actively chasing. Idea from https://www.youtube.com/watch?v=pG-VCQ7_MR8
 - SCP-106 will get faster as he is getting closer to the player.
+- SCP-173-J has been added as an April Fools event.
 
 Rooms:
 - Made the entrance to SCP-173 containment a keypad door.
@@ -75,6 +83,7 @@ Rooms:
 - SCP-1499 Containment Key Card Door level reduced from 4 to 3.
 - Office in room2_office_3 now has a numpad to access its room like all the other offices.
 - HCZ to EZ Checkpoint Gates Key Card Door level reduced from 5 to 4.
+- SCP-205: (0.4 Min, 0.8 Max) -> (0.2 Min, 0.6 Max) damage change.
 
 v1.0.31
 

@@ -3214,6 +3214,13 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Document SCP-1162-ARC", "paper", r\x + 863.227 * RoomScale, r\y + 152.0 * RoomScale, r\z - 953.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
+		Case "cont2c_066"
+			;[Block]
+			d.Doors = CreateDoor(r\x - 268.0 * RoomScale, r\y, r\z, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_3)
+			d\Locked = 1 : d\MTFClose = False
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) + 0.018, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
+			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) - 0.018, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
+			;[End Block]
 		Case "cont2_500_1499"
 			;[Block]
 			r\RoomDoors.Doors[0] = CreateDoor(r\x + 288.0 * RoomScale, r\y, r\z + 576.0 * RoomScale, 90.0, r, False, DEFAULT_DOOR, KEY_CARD_3)

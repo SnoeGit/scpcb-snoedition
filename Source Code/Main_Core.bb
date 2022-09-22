@@ -797,7 +797,7 @@ Function UpdateGame%()
 							;[End Block]
 					End Select 
 					me\BlinkTimer = me\BLINKFREQ
-					If PlayerRoom\RoomTemplate\Name <> "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale Then me\BlurTimer = me\BlurTimer - Rnd(25.0, 75.0)
+					If (PlayerRoom\RoomTemplate\Name = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor PlayerRoom\RoomTemplate\Name <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - Rnd(25.0, 75.0), 0.0)
 				EndIf
 				me\BlinkTimer = me\BlinkTimer - fps\Factor[0]
 			Else
@@ -981,7 +981,7 @@ Function UpdateGame%()
 		UpdateAutoSave()
 		
 		If KeyHit(key\CONSOLE) Then
-			If SelectedDifficulty\Name <> "Keter" And SelectedDifficulty\Name <> "Apollyon" Then
+			If SelectedDifficulty\Name <> "Apollyon" Then
 				If opt\CanOpenConsole Then
 					If ConsoleOpen Then
 						UsedConsole = True
@@ -5928,7 +5928,7 @@ Function RenderMenu%()
 					
 					y = y + (30 * MenuScale)
 					
-					If SelectedDifficulty\Name <> "Keter" Lor SelectedDifficulty\Name <> "Apollyon" Then
+					If SelectedDifficulty\Name <> "Apollyon" Then
 						Color(255, 255, 255)
 					Else
 						Color(100, 100, 100)
