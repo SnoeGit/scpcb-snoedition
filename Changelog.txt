@@ -35,9 +35,10 @@ General:
 - End Screen now tells you what difficulty you beat that save in.
 - Subtitles now show who is currently talking.
 - Add LOD 1.2 option
-- Max brightness setting is now 150% instead of 200%
+- Max brightness setting is now 175% instead of 200%
 - Higher quality textures for cards and coins from Graphics Overhaul mod by Placeholder Studios. (HD Playing card and Mastercard by Snoe)
 - Removed the third hand from the game.
+- The Hazmat suit does not prevent the player from picking up or dropping items anymore.
 
 Mechanics and effects:
 - Nerfed Blinking reducing blur and buffed the minimum it can reduce.
@@ -58,7 +59,7 @@ NPCs:
 - Tentacle: (1.0 Min, 1.5 Max) -> (0.8 Min, 1.2 Max)
 
 - Enemy attacks scale with difficulty. +15% On Euclid, +30% on Keter, +45% On Apollyon.
-- SCP-049 Can unlock Key card doors based on progression. Level 1 at Surveillance room event; Level 3 after SCP-049's chamebr event.
+- SCP-049 Can unlock Key card doors based on progression. Level 1 at Surveillance room event; Level 3 after SCP-049's chamber event.
 - SCP-096 will no longer attack if SCP-106 is actively chasing. Idea from https://www.youtube.com/watch?v=pG-VCQ7_MR8
 - SCP-106 will get faster as he is getting closer to the player.
 - SCP-173-J has been added as an April Fools event.

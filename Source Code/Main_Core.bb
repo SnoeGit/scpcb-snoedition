@@ -797,7 +797,7 @@ Function UpdateGame%()
 							;[End Block]
 					End Select 
 					me\BlinkTimer = me\BLINKFREQ
-					If (PlayerRoom\RoomTemplate\Name = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor PlayerRoom\RoomTemplate\Name <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - Rnd(25.0, 75.0), 0.0)
+					If (PlayerRoom\RoomTemplate\Name = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor PlayerRoom\RoomTemplate\Name <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - Rnd(30.0, 80.0), 0.0)
 				EndIf
 				me\BlinkTimer = me\BlinkTimer - fps\Factor[0]
 			Else
@@ -5109,7 +5109,7 @@ Function UpdateMenu%()
 					
 					y = y + (40 * MenuScale)
 					
-					opt\ScreenGamma = UpdateMainMenuSlideBar(x + (270 * MenuScale), y, 100 * MenuScale, opt\ScreenGamma * 66.6) / 66.6
+					opt\ScreenGamma = UpdateMainMenuSlideBar(x + (270 * MenuScale), y, 100 * MenuScale, opt\ScreenGamma * 57.25) / 57.25
 					
 					y = y + (45 * MenuScale)
 					
