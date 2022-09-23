@@ -74,6 +74,7 @@ Rooms:
 - 18V Radio added to room3_gw (Entrance Zone decontamination room)
 - New HCZ styled rooms from the Nine-Tailed-Fox mod.
 - New Rocky room for the EZ from Nine-Tailed-Fox mod.
+- Added back SCP-066 Containment room from the older Ultimate Editions.
 - Lights going out in Medical Bay room has been shortened.
 - Medical Bay's First Aid Kit is now a Compact First Aid Kit.
 - SCP-106's Pocket Dimension now drains your stamina quickly instead of setting it to 0.
