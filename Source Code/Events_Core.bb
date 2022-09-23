@@ -6526,6 +6526,12 @@ Function UpdateEvents%()
 							If Inventory(i) <> Null Then
 								If Inventory(i)\ItemTemplate\Name = "Leaflet"
 									RemoveItem(Inventory(i))
+									Inventory(i) = CreateItem("Strange Note", "paper", 1.0, 1.0, 1.0)
+									HideEntity(Inventory(i)\Collider)
+									Inventory(i)\Picked = True
+									Inventory(i)\ItemTemplate\Found = True
+									EntityType(Inventory(i)\Collider, HIT_ITEM)
+									ItemAmount = ItemAmount + 1
 									Exit
 								EndIf
 							EndIf
