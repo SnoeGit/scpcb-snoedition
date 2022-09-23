@@ -3218,7 +3218,7 @@ Function UpdateDecals%()
 						;[Block]
 						If de\FX <> 1 Then
 							CurrStepSFX = 1
-							me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, Max(100.0 - (Sqr(ActualSize - Dist)) * 20.0, 1.0))
+							me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, Max(100.0 - (Sqr(ActualSize - Dist)) * 15.0, 1.0))
 							me\CrouchState = Max(me\CrouchState, (ActualSize - Dist) / 2.0)
 						EndIf
 						;[End Block]
