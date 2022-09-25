@@ -134,6 +134,18 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.07, True)
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
+			d.Doors = CreateDoor(r\x - 512.0 * RoomScale, r\y, r\z - 400.0 * RoomScale, 90.0, r, True, ONE_SIDED_DOOR)
+			d\Locked = 1 : d\MTFClose = False
+			For i = 0 To 1
+				FreeEntity(d\Buttons[i]) : d\Buttons[i] = 0
+			Next
+			
+			d.Doors = CreateDoor(r\x + 400.0 * RoomScale, r\y, r\z + 512.0 * RoomScale, 180.0, r, True, ONE_SIDED_DOOR)
+			d\Locked = 1 : d\MTFClose = False
+			For i = 0 To 1
+				FreeEntity(d\Buttons[i]) : d\Buttons[i] = 0
+			Next
+			
 			; ~ Security cameras inside
 			sc.SecurityCams = CreateSecurityCam(r\x + 512.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 384.0 * RoomScale, r, True, r\x + 668.0 * RoomScale, r\y + 1.1, r\z - 96.0 * RoomScale)
 			sc\Angle = 135.0 : sc\Turn = 45.0
@@ -1240,7 +1252,7 @@ Function FillRoom%(r.Rooms)
 			sc\Angle = -45.0 : sc\Turn = 0.0
 			TurnEntity(sc\CameraOBJ, 30.0, 0.0, 0.0)
 			
-			it.Items = CreateItem("Night Vision Goggles", "nvg", r\x + 320.0 * RoomScale, r\y + 0.5, r\z + 704.0 * RoomScale)
+			it.Items = CreateItem("Night Vision Goggles", "nvg", r\x + 173.0 * RoomScale, r\y + 0.5, r\z + 631.0 * RoomScale)
 			it\State = Rnd(100.0, 1000.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
@@ -2041,7 +2053,7 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\Objects[1], r\x + 448.0 * RoomScale, r\y, r\z + 192.0 * RoomScale)
 			
 			r\Objects[2] = CreatePivot()
-			PositionEntity(r\Objects[2], EntityX(r\OBJ) - 400.0 * RoomScale, r\y + 440.0 * RoomScale, EntityZ(r\OBJ) + 1322.0 * RoomScale)
+			PositionEntity(r\Objects[2], EntityX(r\OBJ) - 200.0 * RoomScale, r\y + 440.0 * RoomScale, EntityZ(r\OBJ) + 1322.0 * RoomScale)
 			
 			r\Objects[3] = CreatePivot()
 			PositionEntity(r\Objects[3], EntityX(r\OBJ) + 1000.0 * RoomScale, r\y + 120.0 * RoomScale, EntityZ(r\OBJ) + 666.0 * RoomScale)
@@ -2286,10 +2298,14 @@ Function FillRoom%(r.Rooms)
 			
 			r\Objects[1] = sc\ScrOBJ
 			
+			; ~ Dead guard spawnpoint
+			r\Objects[7] = CreatePivot()
+			PositionEntity(r\Objects[7], r\x + 540.0 * RoomScale, r\y, r\z + 1140.0 * RoomScale)
+			
 			it.Items = CreateItem("Document SCP-205", "paper", r\x - 357.0 * RoomScale, r\y + 115.0 * RoomScale, r\z + 50.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Level 3 Key Card", "key3", r\x - 357.0 * RoomScale, r\y + 115.0 * RoomScale, r\z - 10.0 * RoomScale)
+			it.Items = CreateItem("Level 3 Key Card", "key3", r\x - 975.0 * RoomScale, r\y - 5.0 * RoomScale, r\z + 650.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "room1_dead_end_lcz", "room1_dead_end_ez"
@@ -3274,7 +3290,7 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case "room3_office"
 			;[Block]			
-			d.Doors = CreateDoor(r\x + 768.0 * RoomScale, r\y, r\z + 234.0 * RoomScale, 180.0, r, False, OFFICE_DOOR)
+			d.Doors = CreateDoor(r\x + 768.0 * RoomScale, r\y, r\z + 234.0 * RoomScale, 180.0, r, True, OFFICE_DOOR)
 			
 			r\Objects[0] = LoadMesh_Strict("GFX\map\ez\room3_office_hb.b3d", r\OBJ)
 			EntityPickMode(r\Objects[0], 2)
