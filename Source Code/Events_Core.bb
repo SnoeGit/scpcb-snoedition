@@ -5979,11 +5979,6 @@ Function UpdateEvents%()
 						If e\room\RoomDoors[1]\Open Then
 							e\EventState = 1.0
 							GiveAchievement(Achv205)
-							e\room\NPC[0] = CreateNPC(NPCTypeGuard, EntityX(e\room\Objects[7], True), EntityY(e\room\Objects[7], True), EntityZ(e\room\Objects[7], True))
-							e\room\NPC[0]\State = 8.0
-							SetNPCFrame(e\room\NPC[0], 288.0)
-							PointEntity(e\room\NPC[0]\Collider, e\room\OBJ)
-							
 						EndIf
 					Else
 						ShouldPlay = 16

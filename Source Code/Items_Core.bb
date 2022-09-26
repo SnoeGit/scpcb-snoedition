@@ -726,6 +726,9 @@ Function CanUseItem%(CanUseWithGasMask%, CanUseWithEyewear%)
 	If (Not CanUseWithGasMask) And (wi\GasMask > 0 Lor I_1499\Using > 0) Then
 		CreateMsg("You can't use that item while wearing a gas mask.")
 		Return(False)
+	ElseIf (Not CanUseWithGasMask) And wi\HazmatSuit > 0 Then
+		CreateMsg("You can't use that item while wearing the hazmat suit.")
+		Return(False)
 	ElseIf (Not CanUseWithEyewear) And (wi\NightVision > 0 Lor wi\SCRAMBLE > 0)
 		CreateMsg("You can't use that item while wearing headgear.")
 		Return(False)
@@ -734,12 +737,12 @@ Function CanUseItem%(CanUseWithGasMask%, CanUseWithEyewear%)
 End Function
 
 ; ~ Maybe re-work?
-Function PreventItemOverlapping%(GasMask% = False, NVG% = False, SCP1499% = False, Helmet% = False, SCRAMBLE% = False)
+Function PreventItemOverlapping%(GasMask% = False, NVG% = False, SCP1499% = False, Helmet% = False, SCRAMBLE% = False, HAZMAT% = False)
 	If SCP1499 And wi\GasMask > 0 Then
 		CreateMsg("You need to take off the gas mask in order to use SCP-1499.")
 		SelectedItem = Null
 		Return(True)
-	ElseIf (Not SCP1499) And I_1499\Using > 0
+	ElseIf (Not SCP1499) And I_1499\Using > 0 Then
 		CreateMsg("You need to take off SCP-1499 in order to use that item.")
 		SelectedItem = Null
 		Return(True)
@@ -747,12 +750,16 @@ Function PreventItemOverlapping%(GasMask% = False, NVG% = False, SCP1499% = Fals
 		CreateMsg("You need to take off the goggles in order to use SCP-1499.")
 		SelectedItem = Null
 		Return(True)
-	ElseIf SCP1499 And wi\BallisticHelmet
+	ElseIf SCP1499 And wi\BallisticHelmet Then
 		CreateMsg("You need to take off the helmet in order to use SCP-1499.")
 		SelectedItem = Null
 		Return(True)
 	ElseIf SCP1499 And wi\SCRAMBLE > 0 Then
 		CreateMsg("You need to take off the gear in order to use SCP-1499.")
+		SelectedItem = Null
+		Return(True)
+	ElseIf (Not HAZMAT) and wi\HazmatSuit > 0 Then
+		CreateMsg("You need to take off the hazmat suit in order to use that item.")
 		SelectedItem = Null
 		Return(True)
 	EndIf

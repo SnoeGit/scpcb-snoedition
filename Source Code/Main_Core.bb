@@ -2255,11 +2255,6 @@ Function UpdateGUI%()
 							SelectedItem = Inventory(n)
 							
 							If mo\DoubleClick And mo\DoubleClickSlot = n Then
-								If wi\HazmatSuit > 0 And (Not Instr(SelectedItem\ItemTemplate\TempName, "hazmatsuit")) Then
-									CreateMsg("You can't use any items while wearing a hazmat suit.")
-									SelectedItem = Null
-									Return
-								EndIf
 								If Inventory(n)\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[Inventory(n)\ItemTemplate\Sound])
 								InvOpen = False
 								mo\DoubleClick = False
