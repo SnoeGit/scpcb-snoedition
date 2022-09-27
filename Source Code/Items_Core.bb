@@ -722,15 +722,15 @@ Function IsItemInFocus%()
 	Return(False)
 End Function
 
-Function CanUseItem%(CanUseWithGasMask%, CanUseWithEyewear%)
-	If (Not CanUseWithGasMask) And (wi\GasMask > 0 Lor I_1499\Using > 0) Then
+Function CanUseItem%(CanUseWithEyewear% = False, CanUseWithGasMask% = False, CanUseWithHazmatSuit% = False)
+	If (Not CanUseWithEyewear) And (wi\NightVision > 0 Lor wi\SCRAMBLE > 0) Then
+		CreateMsg("You can't use that item while wearing headgear.")
+		Return(False)
+	ElseIf (Not CanUseWithGasMask) And (wi\GasMask > 0 Lor I_1499\Using > 0) Then
 		CreateMsg("You can't use that item while wearing a gas mask.")
 		Return(False)
-	ElseIf (Not CanUseWithGasMask) And wi\HazmatSuit > 0 Then
+	ElseIf (Not CanUseWithHazmatSuit) And wi\HazmatSuit > 0 Then
 		CreateMsg("You can't use that item while wearing the hazmat suit.")
-		Return(False)
-	ElseIf (Not CanUseWithEyewear) And (wi\NightVision > 0 Lor wi\SCRAMBLE > 0)
-		CreateMsg("You can't use that item while wearing headgear.")
 		Return(False)
 	EndIf
 	Return(True)

@@ -3576,13 +3576,10 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("First Aid Kit", "firstaid", r\x + 680.0 * RoomScale, r\y + 260.0 * RoomScale, r\z + 892.5 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 90.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
-			If Rand(2) = 1 Then
-				it.Items = CreateItem("9V Battery", "bat", r\x - 700.0 * RoomScale, r\y + 210.0 * RoomScale, r\z + 920.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ) 
-			Else
+			
 			it.Items = CreateItem("18V Battery", "finebat", r\x - 700.0 * RoomScale, r\y + 210.0 * RoomScale, r\z + 920.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
-			EndIf
+			
 			
 			it.Items = CreateItem("Document SCP-006", "paper", r\x - 700.0 * RoomScale, r\y + 210.0 * RoomScale, r\z + 26.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)

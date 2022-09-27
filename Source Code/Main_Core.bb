@@ -1331,7 +1331,7 @@ Function UpdateMoving%()
 				If me\ForceMove > 0.0 Then Speed = Speed * me\ForceMove
 				
 				If SelectedItem <> Null Then
-					If SelectedItem\ItemTemplate\TempName = "firstaid" Lor SelectedItem\ItemTemplate\TempName = "finefirstaid" Lor SelectedItem\ItemTemplate\TempName = "firstaid2" Then
+					If (SelectedItem\ItemTemplate\TempName = "firstaid" Lor SelectedItem\ItemTemplate\TempName = "finefirstaid" Lor SelectedItem\ItemTemplate\TempName = "firstaid2") And wi\HazmatSuit = 0 Then
 						Sprint = 0.0
 					EndIf
 				EndIf
@@ -2809,7 +2809,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp500pill"
 					;[Block]
-					If CanUseItem(False, True) Then
+					If CanUseItem(True) Then
 						GiveAchievement(Achv500)
 						
 						If I_008\Timer > 0.0 Then
@@ -2858,7 +2858,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "veryfinefirstaid"
 					;[Block]
-					If CanUseItem(False, True) Then
+					If CanUseItem(True) Then
 						Select Rand(6)
 							Case 1
 								;[Block]
@@ -2932,6 +2932,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "firstaid", "finefirstaid", "firstaid2"
 					;[Block]
+					If CanUseItem(True, True) Then
 					If me\Bloodloss = 0.0 And me\Injuries = 0.0 Then
 						CreateMsg("You don't need to use a first aid kit right now.")
 						SelectedItem = Null
@@ -2940,7 +2941,11 @@ Function UpdateGUI%()
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						If (Not me\Crouch) Then SetCrouch(True)
 						
-						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 5.0), 100.0)			
+						If SelectedItem\ItemTemplate\TempName = "finefirstaid" Then
+							SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 4.0), 100.0)
+						Else
+							SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 5.0), 100.0)
+						EndIf
 						
 						If SelectedItem\State = 100.0 Then
 							If SelectedItem\ItemTemplate\TempName = "finefirstaid" Then
@@ -3016,10 +3021,11 @@ Function UpdateGUI%()
 							EndIf
 						EndIf
 					EndIf
+					EndIf
 					;[End Block]
 				Case "eyedrops", "eyedrops2"
 					;[Block]
-					If CanUseItem(False, False) Then
+					If CanUseItem(False) Then
 						me\BlinkEffect = 0.6
 						me\BlinkEffectTimer = Rnd(20.0, 30.0)
 						me\BlurTimer = 200.0
@@ -3031,7 +3037,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "fineeyedrops"
 					;[Block]
-					If CanUseItem(False, False) Then
+					If CanUseItem(False) Then
 						me\BlinkEffect = 0.4
 						me\BlinkEffectTimer = Rnd(30.0, 40.0)
 						me\Bloodloss = Max(me\Bloodloss - 1.0, 0.0)
@@ -3044,7 +3050,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "supereyedrops"
 					;[Block]
-					If CanUseItem(False, False) Then
+					If CanUseItem(False) Then
 						me\BlinkEffect = 0.0
 						me\BlinkEffectTimer = 60.0
 						me\EyeStuck = 10000.0
@@ -3088,7 +3094,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "cup"
 					;[Block]
-					If CanUseItem(False, True) Then
+					If CanUseItem(True) Then
 						StrTemp = Trim(Lower(SelectedItem\Name))
 						If Left(StrTemp, 6) = "cup of" Then
 							StrTemp = Right(StrTemp, Len(StrTemp) - 7)
@@ -3167,47 +3173,53 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "syringe"
 					;[Block]
-					me\HealTimer = 30.0
-					me\StaminaEffect = 0.5
-					me\StaminaEffectTimer = 20.0
+					If CanUseItem(True, True) Then
+						me\HealTimer = 30.0
+						me\StaminaEffect = 0.5
+						me\StaminaEffectTimer = 20.0
 					
-					CreateMsg("You injected yourself with the syringe and feel a slight adrenaline rush.")
+						CreateMsg("You injected yourself with the syringe and feel a slight adrenaline rush.")
 					
-					RemoveItem(SelectedItem)
+						RemoveItem(SelectedItem)
+					EndIf
 					;[End Block]
 				Case "finesyringe"
 					;[Block]
-					me\HealTimer = Rnd(20.0, 40.0)
-					me\StaminaEffect = Rnd(0.5, 0.8)
-					me\StaminaEffectTimer = Rnd(20.0, 30.0)
+					If CanUseItem(True, True) Then
+						me\HealTimer = Rnd(20.0, 40.0)
+						me\StaminaEffect = Rnd(0.5, 0.8)
+						me\StaminaEffectTimer = Rnd(20.0, 30.0)
 					
-					CreateMsg("You injected yourself with the syringe and feel an adrenaline rush.")
+						CreateMsg("You injected yourself with the syringe and feel an adrenaline rush.")
 					
-					RemoveItem(SelectedItem)
+						RemoveItem(SelectedItem)
+					EndIf
 					;[End Block]
 				Case "veryfinesyringe"
 					;[Block]
-					Select Rand(3)
-						Case 1
-							;[Block]
-							me\HealTimer = Rnd(40.0, 60.0)
-							me\StaminaEffect = 0.1
-							me\StaminaEffectTimer = 30.0
-							CreateMsg("You injected yourself with the syringe and feel a huge adrenaline rush.")
-							;[End Block]
-						Case 2
-							;[Block]
-							chs\SuperMan = True
-							CreateMsg("You injected yourself with the syringe and feel a humongous adrenaline rush.")
-							;[End Block]
-						Case 3
-							;[Block]
-							me\VomitTimer = 30.0
-							CreateMsg("You injected yourself with the syringe and feel a pain in your stomach.")
-							;[End Block]
-					End Select
+					If CanUseItem(True, True) Then
+						Select Rand(3)
+							Case 1
+								;[Block]
+								me\HealTimer = Rnd(40.0, 60.0)
+								me\StaminaEffect = 0.1
+								me\StaminaEffectTimer = 30.0
+								CreateMsg("You injected yourself with the syringe and feel a huge adrenaline rush.")
+								;[End Block]
+							Case 2
+								;[Block]
+								chs\SuperMan = True
+								CreateMsg("You injected yourself with the syringe and feel a humongous adrenaline rush.")
+								;[End Block]
+							Case 3
+								;[Block]
+								me\VomitTimer = 30.0
+								CreateMsg("You injected yourself with the syringe and feel a pain in your stomach.")
+								;[End Block]
+						End Select
 					
-					RemoveItem(SelectedItem)
+						RemoveItem(SelectedItem)
+					EndIf
 					;[End Block]
 				Case "radio", "18vradio", "fineradio", "veryfineradio"
 					;[Block]
@@ -3548,7 +3560,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "cigarette"
 					;[Block]
-					If CanUseItem(False, True) Then
+					If CanUseItem(True) Then
 						Select Rand(6)
 							Case 1
 								;[Block]
@@ -3580,7 +3592,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp420j"
 					;[Block]
-					If CanUseItem(False, True) Then
+					If CanUseItem(True) Then
 						If I_714\Using Lor wi\GasMask = 3 Lor wi\HazmatSuit = 3 Then
 							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
 						Else
@@ -3595,7 +3607,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "joint"
 					;[Block]
-					If CanUseItem(False, True) Then
+					If CanUseItem(True) Then
 						If I_714\Using Lor wi\GasMask = 3 Lor wi\HazmatSuit = 3 Then
 							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
 						Else
@@ -3610,7 +3622,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp420s"
 					;[Block]
-					If CanUseItem(False, True) Then
+					If CanUseItem(True) Then
 						If I_714\Using Lor wi\GasMask = 3 Lor wi\HazmatSuit = 3 Then
 							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
 						Else
@@ -3896,7 +3908,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "pill"
 					;[Block]
-					If CanUseItem(False, True) Then
+					If CanUseItem(True) Then
 						CreateMsg("You swallowed the pill.")
 						
 						RemoveItem(SelectedItem)
@@ -3904,7 +3916,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp500pilldeath"
 					;[Block]
-					If CanUseItem(False, True) Then
+					If CanUseItem(True) Then
 						CreateMsg("You swallowed the pill.")
 						
 						If I_427\Timer < 70.0 * 360.0 Then
@@ -3916,12 +3928,14 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "syringeinf"
 					;[Block]
-					CreateMsg("You injected yourself the syringe.")
+					If CanUseItem(True, True) Then
+						CreateMsg("You injected yourself the syringe.")
 					
-					me\VomitTimer = 70.0 * 1.0
+						me\VomitTimer = 70.0 * 1.0
 					
-					I_008\Timer = I_008\Timer + (1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs))
-					RemoveItem(SelectedItem)
+						I_008\Timer = I_008\Timer + (1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs))
+						RemoveItem(SelectedItem)
+					EndIf
 					;[End Block]
 				Case "helmet"
 					;[Block]
