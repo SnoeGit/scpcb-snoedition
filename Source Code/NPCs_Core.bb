@@ -1154,6 +1154,10 @@ Function UpdateNPCs%()
 								If PlayerRoom\RoomTemplate\Name <> "gate_a" Then
 									If SelectedDifficulty\AggressiveNPCs Then
 										n\State = n\State - (fps\Factor[0] * 2.0)
+									ElseIf PlayerRoom\RoomTemplate\Name = "cont1_035" Then
+										n\State = n\State - (fps\Factor[0] * 0.5)
+									ElseIf PlayerRoom\RoomTemplate\Name = "room2_servers_hcz" Then
+										n\State = n\State - (fps\Factor[0] * 0.75)
 									Else
 										n\State = n\State - fps\Factor[0]
 									EndIf

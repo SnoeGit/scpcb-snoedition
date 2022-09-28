@@ -9080,7 +9080,7 @@ Function UpdateDimension1499%()
 						e\room\NPC.NPCs[0] = CreateNPC(NPCType1499_1, e\room\x - 1917.0 * RoomScale, e\room\y + 1904.0 * RoomScale, e\room\z + 2308.0 * RoomScale)
 						e\room\NPC[0]\PrevState = 2 : e\room\NPC[0]\Angle = 270.0
 						RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\NPC[0]\Angle, 0.0)
-						Tex = LoadTexture_Strict("GFX\npcs\scp_1499_1_king.png")
+						Tex = LoadTexture_Strict("GFX\npcs\scps\scp_1499_1_king.png")
 						If opt\Atmosphere Then TextureBlend(Tex, 5)
 						EntityTexture(e\room\NPC[0]\OBJ, Tex)
 						DeleteSingleTextureEntryFromCache(Tex)

@@ -2913,13 +2913,13 @@ Function UseDoor%(d.Doors, PlaySFX% = True)
 				Return
 			EndIf
 		EndIf
-	ElseIf d\KeyCard > KEY_HAND_BLACK And d\KeyCard < KEY_MISC
+	ElseIf d\KeyCard > KEY_860 And d\KeyCard < KEY_MISC
 		If SelectedItem = Null Then
 			CreateMsg("You placed your palm onto the scanner. The scanner reads: " + Chr(34) + "DNA doesn't match known sample. Access denied." + Chr(34))
 			PlaySound2(ScannerSFX2, Camera, d_I\ClosestButton)
 			Return
 		Else
-			If ((Temp >= KEY_MISC) Lor (Temp < KEY_HAND_BLACK)) And (Temp <> KEY_005) Then
+			If ((Temp >= KEY_MISC) Lor (Temp < KEY_860)) And (Temp <> KEY_005) Then
 				CreateMsg("You placed your palm onto the scanner. The scanner reads: " + Chr(34) + "DNA doesn't match known sample. Access denied." + Chr(34))
 			Else
 				If (d\KeyCard <> Temp) And (Temp <> KEY_005) Then
