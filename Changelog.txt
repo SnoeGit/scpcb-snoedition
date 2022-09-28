@@ -90,6 +90,7 @@ Rooms:
 - SCP-1499 Containment Key Card Door level reduced from 4 to 3.
 - Office in room2_office_3 now has a numpad to access its room like all the other offices.
 - HCZ to EZ Checkpoint Gates Key Card Door level reduced from 5 to 4.
+- Can no longer save your game while in the Pocket Dimension.
 
 v1.0.31
 

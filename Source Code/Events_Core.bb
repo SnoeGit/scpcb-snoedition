@@ -8447,6 +8447,8 @@ Function UpdateDimension106%()
 				CurrStepSFX = 1
 				ShouldPlay = 3
 				
+				CanSave = False
+				
 				InjurePlayer(fps\Factor[0] * 0.00005)
 				PrevSecondaryLightOn = SecondaryLightOn : SecondaryLightOn = True
 				
