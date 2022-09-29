@@ -1150,11 +1150,11 @@ Function UpdateNPCs%()
 							n\DropSpeed = 0.0
 							SetNPCFrame(n, 110.0)
 							
-							If (Not PlayerRoom\RoomTemplate\DisableDecals) Then
+							If (Not PlayerRoom\RoomTemplate\DisableDecals) Lor PlayerRoom\RoomTemplate\Name = "room2_bio" Lor (PlayerRoom\RoomTemplate\Name = "cont1_173" And EntityY(me\Collider) < (100.0) * RoomScale) Lor (PlayerRoom\RoomTemplate\Name = "cont2_012" And EntityY(me\Collider) > (0.0) * RoomScale) Lor (PlayerRoom\RoomTemplate\Name = "room2_test_hcz" And EntityY(me\Collider) > (0.0) * RoomScale) Then
 								If PlayerRoom\RoomTemplate\Name <> "gate_a" Then
 									If SelectedDifficulty\AggressiveNPCs Then
 										n\State = n\State - (fps\Factor[0] * 2.0)
-									ElseIf PlayerRoom\RoomTemplate\Name = "cont1_035" Then
+									ElseIf PlayerRoom\RoomTemplate\Name = "cont1_035" Lor PlayerRoom\RoomTemplate\Name = "cont1_173" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_lcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_hcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_ez" Then
 										n\State = n\State - (fps\Factor[0] * 0.5)
 									ElseIf PlayerRoom\RoomTemplate\Name = "room2_servers_hcz" Then
 										n\State = n\State - (fps\Factor[0] * 0.75)
