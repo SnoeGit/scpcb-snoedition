@@ -1101,7 +1101,7 @@ Function UpdateNPCs%()
 													PositionEntity(me\Head, EntityX(Camera, True), EntityY(Camera, True), EntityZ(Camera, True), True)
 													ResetEntity(me\Head)
 													RotateEntity(me\Head, 0.0, EntityYaw(Camera) + Rnd(-45.0, 45.0), 0.0)
-													InjurePlayer(0.25, 0.0, 0.0)
+													InjurePlayer(0.1, 0.0, 0.0)
 												EndIf
 											EndIf
 										EndIf
@@ -1117,7 +1117,7 @@ Function UpdateNPCs%()
 								EndIf
 							EndIf
 							
-							If me\FallTimer > -250.0 And me\FallTimer < -1.0 Then
+							If me\FallTimer < -1.0 Then
 								CanSave = False
 								Sprint = 0.0
 							ElseIf me\FallTimer < -250.0 Then
