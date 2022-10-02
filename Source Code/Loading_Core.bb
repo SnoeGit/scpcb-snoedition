@@ -715,7 +715,7 @@ Function LoadItems%()
 	
 	CreateItemTemplate("Mobile Task Forces", "paper", ItemsPath + "paper.b3d", INVPath + "INV_paper.png", ItemsPath + "docs\doc_MTF.png", 0.003, 0)
 	
-	CreateItemTemplate("Note from Daniel", "paper", ItemsPath + "notes\note.b3d", INVPath + "INV_note(2).png", ItemsPath + "docs\note_Daniel.png", 0.0025, 0)
+	CreateItemTemplate("Note from Daniel", "paper", ItemsPath + "notes\note.b3d", INVPath + "INV_note(2).png", ItemsPath + "notes\note_Daniel.png", 0.0025, 0)
 	
 	CreateItemTemplate("Nuclear Device Document", "paper", ItemsPath + "paper.b3d", INVPath + "INV_paper.png", ItemsPath + "docs\doc_NDP.png", 0.003, 0)
 	
