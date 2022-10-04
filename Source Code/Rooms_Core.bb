@@ -1739,6 +1739,10 @@ Function FillRoom%(r.Rooms)
 			For i = 6 To 7
 				EntityParent(r\Objects[i], r\OBJ)
 			Next
+			
+			r\Objects[8] = LoadMesh_Strict("GFX\map\hcz\room2_servers_hcz_hb.b3d", r\OBJ)
+			EntityPickMode(r\Objects[8], 2)
+			EntityAlpha(r\Objects[8], 0.0)
 			;[End Block]
 		Case "room3_2_ez"
 			;[Block]
@@ -3598,14 +3602,13 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
 			
-			d.Doors = CreateDoor(r\x - 385.0 * RoomScale, r\y, r\z - 512.0 * RoomScale, 90.0, r, False, DEFAULT_DOOR, KEY_CARD_4)
-			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
-			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
-			
-			de.Decals = CreateDecal(DECAL_BLOOD_2, r\x - 477.0 * RoomScale, r\y + 0.005, r\z - 710.0 * RoomScale, 90.0, Rnd(360.0), 0.0, 0.5)
+			de.Decals = CreateDecal(Rand(DECAL_BLOOD_1, DECAL_BLOOD_2), r\x - 152.0 * RoomScale, r\y + 5.0 * RoomScale + 0.005, r\z - 594.0 * RoomScale, 90.0, Rnd(360.0), 0.0, Rand(0.4, 0.6))
 			EntityParent(de\OBJ, r\OBJ)
 			
-			it.Items = CreateItem("Data Report", "paper", r\x - 477.0 * RoomScale, r\y + 90.0 * RoomScale, r\z - 710.0 * RoomScale)
+			de.Decals = CreateDecal(DECAL_CORROSIVE_1, r\x - 384.0 * RoomScale, r\y + 0.005, r\z - 512.0 * RoomScale, 90.0, Rnd(360.0), 0.0, 0.5, 0.5, 1)
+			EntityParent(de\OBJ, r\OBJ)
+			
+			it.Items = CreateItem("Data Report", "paper", r\x - 152.0 * RoomScale, r\y + 90.0 * RoomScale, r\z - 594.0 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 90.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			
@@ -3657,7 +3660,7 @@ Function FillRoom%(r.Rooms)
 			sc\Angle = 100.0 : sc\Turn = 45.0
 			TurnEntity(sc\CameraOBJ, 20.0, 0.0, 0.0)
 			
-			de.Decals = CreateDecal(DECAL_QUARTZ, r\x - 4858.0 * RoomScale, r\y - 4495.0 * RoomScale, r\z + 1655.0 * RoomScale, 90.0, Rnd(360.0), 0.0, 0.65, 0.8)
+			de.Decals = CreateDecal(DECAL_QUARTZ, r\x - 4858.0 * RoomScale, r\y - 4495.0 * RoomScale, r\z + 1655.0 * RoomScale, 90.0, Rnd(360.0), 0.0, 0.75, 0.8)
 			EntityParent(de\OBJ, r\OBJ)
 			
 			it.Items = CreateItem("Document SCP-409", "paper", r\x - 4105.0 * RoomScale, r\y - 4336.0 * RoomScale, r\z + 2207.0 * RoomScale)

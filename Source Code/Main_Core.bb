@@ -933,7 +933,7 @@ Function UpdateGame%()
 			If SelectedDifficulty\SaveType = SAVE_ANYWHERE Then
 				If (Not CanSave) Lor QuickLoadPercent > -1 Then
 					RN = PlayerRoom\RoomTemplate\Name
-					If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a"
+					If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Lor RN = "dimension_106"
 						CreateHintMsg("You can't save in this location.")
 					Else
 						CreateHintMsg("You can't save at this moment.")
@@ -953,7 +953,7 @@ Function UpdateGame%()
 					CreateHintMsg("Saving is only permitted on clickable monitors scattered throughout the facility.")
 				Else
 					RN = PlayerRoom\RoomTemplate\Name
-					If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a"
+					If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Lor RN = "dimension_106"
 						CreateHintMsg("You can't save in this location.")
 					ElseIf (Not CanSave) Lor QuickLoadPercent > -1
 						CreateHintMsg("You can't save at this moment.")

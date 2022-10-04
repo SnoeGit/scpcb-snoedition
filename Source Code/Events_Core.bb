@@ -8309,7 +8309,7 @@ Function UpdateEvents%()
 							e\EventState = 1.0
 						Else
 							If I_409\Timer = 0.0 Then
-								If EntityDistanceSquared(me\Collider, e\room\NPC[0]\Collider) < 0.575 Then
+								If EntityDistanceSquared(me\Collider, e\room\NPC[0]\Collider) < 0.675 Then
 									I_409\Timer = 0.001
 									GiveAchievement(Achv409)
 								EndIf
@@ -9963,7 +9963,7 @@ Function UpdateEndings%()
 									
 									If Abs(EntityY(me\Collider) - EntityY(e\room\Objects[11], True)) < 1.0 Then
 										If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[11], True), EntityZ(me\Collider), EntityZ(e\room\Objects[11], True)) < 49.0 Then
-											e\room\Objects[12] = LoadAnimMesh_Strict("GFX\npcs\CI.b3d")
+											e\room\Objects[12] = LoadAnimMesh_Strict("GFX\npcs\humans\CI.b3d")
 											
 											Local Temp2# = 0.55 / MeshWidth(e\room\Objects[12])
 											
