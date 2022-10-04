@@ -1443,13 +1443,13 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\RoomDoors[3]\ElevatorPanel[1], EntityX(r\RoomDoors[3]\ElevatorPanel[1], True), EntityY(r\RoomDoors[3]\ElevatorPanel[1], True) + 0.05, EntityZ(r\RoomDoors[3]\ElevatorPanel[1], True), True)
 			
 			; ~ Storage room doors
-			r\RoomDoors.Doors[4] = CreateDoor(r\x + 272.0 * RoomScale, r\y - 3552.0 * RoomScale, r\z + 104.0 * RoomScale, 90.0, r, True)
+			r\RoomDoors.Doors[4] = CreateDoor(r\x + 272.0 * RoomScale, r\y - 3552.0 * RoomScale, r\z + 104.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_1)
 			r\RoomDoors[4]\Locked = 1
 			
-			r\RoomDoors.Doors[5] = CreateDoor(r\x + 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z - 1824.0 * RoomScale, 90.0, r, True)
+			r\RoomDoors.Doors[5] = CreateDoor(r\x + 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z - 1824.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_1)
 			r\RoomDoors[5]\Locked = 1
 			
-			r\RoomDoors.Doors[6] = CreateDoor(r\x - 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z + 1824.0 * RoomScale, 90.0, r, True)
+			r\RoomDoors.Doors[6] = CreateDoor(r\x - 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z + 1824.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_1)
 			r\RoomDoors[6]\Locked = 1
 			
 			; ~ DNA door
@@ -1890,11 +1890,10 @@ Function FillRoom%(r.Rooms)
 			
 			If Rand(2) = 1 Then
 				it.Items = CreateItem("9V Battery", "bat", r\x + 730.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 580.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)
 			Else
 				it.Items = CreateItem("4.5V Battery", "badbat", r\x + 730.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 580.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)
 			EndIf
+			EntityParent(it\Collider, r\OBJ)
 			
 			If Rand(2) = 1 Then
 				it.Items = CreateItem("4.5V Battery", "badbat", r\x + 740.0 * RoomScale, r\y + 240.0 * RoomScale, r\z - 750.0 * RoomScale)
@@ -2009,13 +2008,13 @@ Function FillRoom%(r.Rooms)
 			
 			If Rand(2) = 1 Then
 				it.Items = CreateItem("9V Battery", "bat", r\x - 1540.0 * RoomScale, r\y + 495.0 * RoomScale, r\z - 320.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)
+			Else
+				it.Items = CreateItem("18V Battery", "finebat", r\x - 1540.0 * RoomScale, r\y + 495.0 * RoomScale, r\z - 320.0 * RoomScale)
 			EndIf
+			EntityParent(it\Collider, r\OBJ)
 			
-			If Rand(2) = 1 Then
-				it.Items = CreateItem("9V Battery", "bat", r\x - 1529.0 * RoomScale, r\y + 605.0 * RoomScale, r\z - 308.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)
-			EndIf
+			it.Items = CreateItem("18V Battery", "finebat", r\x - 1529.0 * RoomScale, r\y + 605.0 * RoomScale, r\z - 308.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "cont1_173"
 			;[Block]
@@ -2755,7 +2754,7 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case "room1_archive"
 			;[Block]
-			d.Doors = CreateDoor(r\x, r\y, r\z - 512.0 * RoomScale, 0.0, r, False, DEFAULT_DOOR, Rnd(KEY_CARD_1, KEY_CARD_2))
+			d.Doors = CreateDoor(r\x, r\y, r\z - 512.0 * RoomScale, 0.0, r, False, DEFAULT_DOOR, Rand(KEY_CARD_1, KEY_CARD_2))
 			
 			sc.SecurityCams = CreateSecurityCam(r\x - 256.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 640.0 * RoomScale, r)
 			sc\Angle = 180.0 : sc\Turn = 45.0

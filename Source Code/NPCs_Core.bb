@@ -7175,7 +7175,7 @@ End Function
 
 Function NPCSpeedChange%(n.NPCs)
 	Select n\NPCType
-		Case NPCType173, NPCType106, NPCType096, NPCType049, NPCType049_2, NPCType939, NPCTypeMTF
+		Case NPCType173, NPCType106, NPCType096, NPCType049, NPCType049_2, NPCType939
 			Select SelectedDifficulty\OtherFactors
 				Case NORMAL
 					;[Block]
