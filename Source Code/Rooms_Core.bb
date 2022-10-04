@@ -1775,11 +1775,6 @@ Function FillRoom%(r.Rooms)
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			
-			If Rand(2) = 1 Then
-				it.Items = CreateItem("9V Battery", "bat", r\x - 196.0 * RoomScale, r\y - 368.0 * RoomScale, r\z - 658.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)
-			EndIf
-			
 			it.Items = CreateItem("S-NAV 310 Navigator", "nav310", r\x + 58.0 * RoomScale, r\y - 504.0 * RoomScale, r\z - 658.0 * RoomScale)
 			it\State = Rnd(10.0, 100.0)
 			EntityParent(it\Collider, r\OBJ)
@@ -1903,11 +1898,6 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Level 0 Key Card", "key0", r\x + 736.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 752.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it2.Items = CreateItem("Document SCP-1048", "paper", 1.0, 1.0, 1.0)
-			it2\Picked = True : it2\Dropped = -1 : it\SecondInv[0] = it2
-			HideEntity(it2\Collider)
-			EntityParent(it2\Collider, r\OBJ)
-			
 			it.Items = CreateItem("Incident Report SCP-1048-A", "paper", r\x + 736.0 * RoomScale, r\y + 224.0 * RoomScale, r\z - 480.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
@@ -2008,13 +1998,13 @@ Function FillRoom%(r.Rooms)
 			
 			If Rand(2) = 1 Then
 				it.Items = CreateItem("9V Battery", "bat", r\x - 1540.0 * RoomScale, r\y + 495.0 * RoomScale, r\z - 320.0 * RoomScale)
-			Else
-				it.Items = CreateItem("18V Battery", "finebat", r\x - 1540.0 * RoomScale, r\y + 495.0 * RoomScale, r\z - 320.0 * RoomScale)
+				EntityParent(it\Collider, r\OBJ)
 			EndIf
-			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("18V Battery", "finebat", r\x - 1529.0 * RoomScale, r\y + 605.0 * RoomScale, r\z - 308.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
+			If Rand(2) = 1 Then
+				it.Items = CreateItem("9V Battery", "bat", r\x - 1529.0 * RoomScale, r\y + 605.0 * RoomScale, r\z - 308.0 * RoomScale)
+				EntityParent(it\Collider, r\OBJ)
+			EndIf
 			;[End Block]
 		Case "cont1_173"
 			;[Block]
@@ -2302,6 +2292,9 @@ Function FillRoom%(r.Rooms)
 			r\Objects[1] = sc\ScrOBJ
 			
 			it.Items = CreateItem("Document SCP-205", "paper", r\x - 357.0 * RoomScale, r\y + 115.0 * RoomScale, r\z + 50.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("9V Battery", "bat", r\x - 357.0 * RoomScale, r\y + 115.0 * RoomScale, r\z - 80.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Level 3 Key Card", "key3", r\x - 975.0 * RoomScale, r\y - 5.0 * RoomScale, r\z + 650.0 * RoomScale)
@@ -3532,6 +3525,11 @@ Function FillRoom%(r.Rooms)
 			it\InvImg = it\ItemTemplate\InvImg
 			SetAnimTime(it\Model, 0.0)
 			EntityParent(it\Collider, r\OBJ)
+			
+			it2.Items = CreateItem("Document SCP-1048", "paper", 1.0, 1.0, 1.0)
+			it2\Picked = True : it2\Dropped = -1 : it\SecondInv[0] = it2
+			HideEntity(it2\Collider)
+			EntityParent(it2\Collider, r\OBJ)
 
 			it.Items = CreateItem("4.5V Battery", "badbat", r\x + 922.0 * RoomScale, r\y + 210.0 * RoomScale, r\z - 922.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
