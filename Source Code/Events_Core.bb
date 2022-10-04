@@ -5983,7 +5983,7 @@ Function UpdateEvents%()
 					Else
 						ShouldPlay = 16
 						If e\EventState < 65.0 Then
-							If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[0], True), EntityZ(me\Collider), EntityZ(e\room\Objects[0], True)) < 4.0 And (Not chs\NoTarget) Then
+							If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[0], True), EntityZ(me\Collider), EntityZ(e\room\Objects[0], True)) < 3.9 And (Not chs\NoTarget) Then
 								PlaySound_Strict(LoadTempSound("SFX\SCP\205\Enter.ogg"))
 								
 								e\EventState = Max(e\EventState, 65.0)
@@ -6136,7 +6136,7 @@ Function UpdateEvents%()
 								;[End Block]
 							Case 67.0
 								;[Block]
-								If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[0], True), EntityZ(me\Collider), EntityZ(e\room\Objects[0], True)) < 4.0 And (Not chs\NoTarget) Then
+								If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[0], True), EntityZ(me\Collider), EntityZ(e\room\Objects[0], True)) < 8.0 And (Not chs\NoTarget) Then
 									If Rand(150) = 1 Then
 										msg\DeathMsg = "The SCP-205 cycle seems to have resumed its normal course after the anomalies observed during "
 										msg\DeathMsg = msg\DeathMsg + "[DATA REDACTED]. The body of " + SubjectName + " was discovered inside the chamber. "
