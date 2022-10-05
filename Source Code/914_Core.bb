@@ -340,13 +340,18 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					de.Decals = CreateDecal(DECAL_BLOOD_2, x, 8.0 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.12)
 					EntityParent(de\OBJ, PlayerRoom\OBJ)
 					;[End Block]
-				Case ONETOONE, FINE, VERYFINE
+				Case ONETOONE, FINE
 					;[Block]
 					If item\ItemTemplate\TempName = "hand" Then
 						it2.Items = CreateItem("Black Severed Hand", "hand2", x, y, z)
 					Else
 						it2.Items = CreateItem("Severed Hand", "hand", x, y, z)
 					EndIf
+					;[End Block]
+				Case VERYFINE
+					;[Block]
+					n.NPCs = CreateNPC(NPCTypeGuard, x, y, z)
+					n\State = 11.0 : n\State3 = 1.0
 					;[End Block]
 			End Select
 			;[End Block]
@@ -391,6 +396,8 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					If Level = 0 Then
 						de.Decals = CreateDecal(DECAL_CORROSIVE_1, x, 8.0 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.07)
 						EntityParent(de\OBJ, PlayerRoom\OBJ)
+					ElseIf Level = 6 Then
+						it2.Items = CreateItem("Level 0 Key Card", "key0", x, y, z)
 					Else
 						it2.Items = CreateItem("Level " + (Level - 1) + " Key Card", "key" + (Level - 1), x, y, z)
 					EndIf
