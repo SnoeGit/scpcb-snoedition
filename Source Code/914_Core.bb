@@ -14,7 +14,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 	Local Remove% = True, i%
 	
 	Select item\ItemTemplate\TempName
-		Case "gasmask", "supergasmask", "gasmask3"
+		Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -30,7 +30,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						Remove = False
 					EndIf
 					;[End Block]
-				Case FINE, VERYFINE
+				Case FINE
+					;[Block]
+					it2.Items = CreateItem("Gas Mask", "finegasmask", x, y, z)
+					;[End Block]
+				Case VERYFINE
 					;[Block]
 					it2.Items = CreateItem("Gas Mask", "supergasmask", x, y, z)
 					;[End Block]
@@ -990,7 +994,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "badbat"
+		Case "coarsebat"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -1022,7 +1026,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("4.5V Battery", "badbat", x, y, z)
+					it2.Items = CreateItem("4.5V Battery", "coarsebat", x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
@@ -1047,7 +1051,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 			Select Setting
 				Case ROUGH
 					;[Block]
-					it2.Items = CreateItem("4.5V Battery", "badbat", x, y, z)
+					it2.Items = CreateItem("4.5V Battery", "coarsebat", x, y, z)
 					;[End Block]
 				Case COARSE
 					;[Block]
@@ -1076,7 +1080,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 			Select Setting
 				Case ROUGH
 					;[Block]
-					it2.Items = CreateItem("4.5V Battery", "badbat", x, y, z)
+					it2.Items = CreateItem("4.5V Battery", "coarsebat", x, y, z)
 					;[End Block]
 				Case COARSE
 					;[Block]

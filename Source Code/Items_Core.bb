@@ -319,11 +319,11 @@ Function RemoveWearableItems%(item.Items)
 	CatchErrors("Uncaught (RemoveWearableItems)")
 	
 	Select item\ItemTemplate\TempName
-		Case "gasmask", "supergasmask", "gasmask3"
+		Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
 			;[Block]
 			wi\GasMask = 0
 			;[End Block]
-		Case "hazmatsuit",  "hazmatsuit2", "hazmatsuit3"
+		Case "hazmatsuit",  "superhazmatsuit", "heavyhazmatsuit"
 			;[Block]
 			wi\HazmatSuit = 0
 			SetAnimTime(item\Model, 4.0)
@@ -565,12 +565,12 @@ Function PickItem%(item.Items)
 						;[Block]
 						GiveAchievement(AchvSNAV)
 						;[End Block]
-					Case "hazmatsuit", "hazmatsuit2", "hazmatsuit3"
+					Case "hazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 						;[Block]
 						CanPickItem = True
 						For z = 0 To MaxItemAmount - 1
 							If Inventory(z) <> Null Then
-								If Inventory(z)\ItemTemplate\TempName = "hazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "hazmatsuit2" Lor Inventory(z)\ItemTemplate\TempName = "hazmatsuit3" Then
+								If Inventory(z)\ItemTemplate\TempName = "hazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "superhazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "heavyhazmatsuit" Then
 									CanPickItem = 0
 									Return
 								ElseIf Inventory(z)\ItemTemplate\TempName = "vest" Lor Inventory(z)\ItemTemplate\TempName = "finevest"
@@ -598,7 +598,7 @@ Function PickItem%(item.Items)
 								If Inventory(z)\ItemTemplate\TempName = "vest" Lor Inventory(z)\ItemTemplate\TempName = "finevest" Then
 									CanPickItem = 0
 									Return
-								ElseIf Inventory(z)\ItemTemplate\TempName = "hazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "hazmatsuit2" Lor Inventory(z)\ItemTemplate\TempName = "hazmatsuit3"
+								ElseIf Inventory(z)\ItemTemplate\TempName = "hazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "superhazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "heavyhazmatsuit"
 									CanPickItem = 2
 									Return
 								EndIf
@@ -760,15 +760,6 @@ Function PreventItemOverlapping%(GasMask% = False, NVG% = False, SCP1499% = Fals
 		Return(True)
 	ElseIf (Not HAZMAT) and wi\HazmatSuit > 0 Then
 		CreateMsg("You need to take off the hazmat suit in order to use that item.")
-		SelectedItem = Null
-		Return(True)
-	EndIf
-	Return(False)
-End Function
-
-Function IsDoubleItem%(Variable, ID, Msg$)
-	If Variable > 0 And Variable <> ID Then
-		CreateMsg("You are not able to wear two " + Msg + " at the same time.")
 		SelectedItem = Null
 		Return(True)
 	EndIf

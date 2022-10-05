@@ -655,7 +655,7 @@ Function FillRoom%(r.Rooms)
 			RotateEntity(it\Collider, 0.0, r\Angle + 4.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("4.5V Battery", "badbat", r\x + 352.0 * RoomScale, r\y + 112.0 * RoomScale, r\z + 448.0 * RoomScale)
+			it.Items = CreateItem("4.5V Battery", "coarsebat", r\x + 352.0 * RoomScale, r\y + 112.0 * RoomScale, r\z + 448.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Empty Cup", "emptycup", r\x - 672.0 * RoomScale, 240.0 * RoomScale, r\z + 288.0 * RoomScale)
@@ -1886,12 +1886,12 @@ Function FillRoom%(r.Rooms)
 			If Rand(2) = 1 Then
 				it.Items = CreateItem("9V Battery", "bat", r\x + 730.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 580.0 * RoomScale)
 			Else
-				it.Items = CreateItem("4.5V Battery", "badbat", r\x + 730.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 580.0 * RoomScale)
+				it.Items = CreateItem("4.5V Battery", "coarsebat", r\x + 730.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 580.0 * RoomScale)
 			EndIf
 			EntityParent(it\Collider, r\OBJ)
 			
 			If Rand(2) = 1 Then
-				it.Items = CreateItem("4.5V Battery", "badbat", r\x + 740.0 * RoomScale, r\y + 240.0 * RoomScale, r\z - 750.0 * RoomScale)
+				it.Items = CreateItem("4.5V Battery", "coarsebat", r\x + 740.0 * RoomScale, r\y + 240.0 * RoomScale, r\z - 750.0 * RoomScale)
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			
@@ -3531,7 +3531,7 @@ Function FillRoom%(r.Rooms)
 			HideEntity(it2\Collider)
 			EntityParent(it2\Collider, r\OBJ)
 
-			it.Items = CreateItem("4.5V Battery", "badbat", r\x + 922.0 * RoomScale, r\y + 210.0 * RoomScale, r\z - 922.0 * RoomScale)
+			it.Items = CreateItem("4.5V Battery", "coarsebat", r\x + 922.0 * RoomScale, r\y + 210.0 * RoomScale, r\z - 922.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "room2_bio"
