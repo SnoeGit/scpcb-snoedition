@@ -1,4 +1,4 @@
-Snoedition
+v1.0 (Gameplay Overhaul by Snoe)
 
 General:
 - Optimized the games textures to take up less filesize.
@@ -96,7 +96,7 @@ Rooms:
 - HCZ to EZ Checkpoint Gates Key Card Door level reduced from 5 to 4.
 - Can no longer save your game while in the Pocket Dimension.
 
-v1.0.31
+v1.0.31 (by Ultimate Edition Reborn)
 
 General:
 - Added a new feature that allows the player name a savegame with non-latin characters, like chinese, russian and etc.
