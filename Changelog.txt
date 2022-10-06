@@ -13,7 +13,6 @@ General:
 - Compact First Aid Kit use time is quicker.
 - Adjusted how Key Cards were obtained in SCP-914 from Mastercards and Playing Cards.
 - Blue Night Vision Goggles now display names of SCP-860-2, SCP-1499-1, and Tentacle instead of unknown.
-- Blue Night Vision Goggles now require 18V batteries.
 - Fine Scramble Gear has been added to the game.
 - Super Battery have reduced charge 10000 -> 5000/ 1000 -> 500
 - Rework how battery drains.
@@ -52,6 +51,8 @@ NPCs:
 - SCP-106: 1.3 -> 1.24
 - SCP-860-2: 8.0 -> 6.5
 
+- New Thaumiel difficulty reduces NPC speed by 20%.
+
 - Edited Mutliple SCP's damage.
 - SCP-008-1: (0.4 Min, 1.0 Max) -> (0.45 Min, 0.75 Max)
 - SCP-049-2: (0.5 Min, 1.0 Max) -> (0.6 Min, 0.9 Max)
@@ -59,12 +60,12 @@ NPCs:
 - SCP-1499-1: (0.75 Min, 1.5 Max) -> (0.7 Min, 1.15 Max)
 - Tentacle: (1.0 Min, 1.5 Max) -> (0.8 Min, 1.2 Max)
 
-- Enemy attacks scale with difficulty. +15% On Euclid, +30% on Keter, +45% On Apollyon.
+- Enemy attacks scale with difficulty. +15% On Euclid, +30% on Keter, +45% On Apollyon, -25% on Thaumiel.
 - SCP-049 Can unlock Key card doors based on progression. Level 1 at Surveillance room event; Level 3 after SCP-049's chamber event.
 - SCP-096 will no longer attack if SCP-106 is actively chasing. Idea from https://www.youtube.com/watch?v=pG-VCQ7_MR8
 - SCP-106 will get faster as he is getting closer to the player.
 - SCP-173-J has been added as an April Fools event.
-- SCP-106 now watches the player get sucked in the SCP-005's event sinkhole.
+- SCP-106 now watches the player get sucked into sinkholes.
 
 Rooms:
 - Made the entrance to SCP-173 containment a keypad door.
@@ -78,6 +79,7 @@ Rooms:
 - Removed Night Vision Goggles and added a Level 1 Key Card into room3_storage(Storage Area 6).
 - S-Nav 310 added to Maynard's office.
 - 18V Radio added to room3_gw (Entrance Zone decontamination room)
+- Cafeteria's quarter at desk replaced with a different coin.
 - New HCZ styled rooms from the Nine-Tailed-Fox mod.
 - New Rocky room for the EZ from Nine-Tailed-Fox mod.
 - Added back SCP-066 Containment room from the older Ultimate Editions.

@@ -3265,7 +3265,7 @@ Function CreateSecurityCam.SecurityCams(x1#, y1#, z1#, r.Rooms, Screen% = False,
 	If Screen Then
 		sc\AllowSaving = True
 		
-		sc\RenderInterval = 12.0
+		sc\RenderInterval = 10.0
 		
 		Local Scale# = RoomScale * 4.5 * 0.4
 		

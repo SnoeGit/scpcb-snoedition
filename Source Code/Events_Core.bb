@@ -6967,6 +6967,15 @@ Function UpdateEvents%()
 						EndIf
 						me\BlurTimer = e\EventState2 * 500.0
 						
+						If e\EventState2 > 0.2 And n_I\Curr106\State <= 0.0 Then
+							n_I\Curr106\CurrSpeed = 0.0
+							If e\EventState2 > 1.0 Then
+								n_I\Curr106\State = 11000.0
+								PositionEntity(n_I\Curr106\Collider, 0.0, 500.0, 0.0)
+								ResetEntity(n_I\Curr106\Collider)
+							EndIf
+						EndIf
+						
 						If e\EventState2 = 2.0 Then MoveToPocketDimension()
 					EndIf
 				Else
@@ -8390,7 +8399,7 @@ Function UpdateEvents%()
 									EndIf
 									me\BlurTimer = e\EventState2 * 500.0
 									
-									If e\EventState2 > 0.3 And n_I\Curr106\State <= 0.0 Then
+									If e\EventState2 > 0.2 And n_I\Curr106\State <= 0.0 Then
 										n_I\Curr106\CurrSpeed = 0.0
 										If e\EventState2 > 1.0 Then
 											n_I\Curr106\State = 11000.0
