@@ -39,6 +39,7 @@ General:
 - Removed the third hand from the game.
 - The Hazmat suit has been completely redesigned to no longer prevent you from dropping items, picking up items, or using all items. The only items you cannot use are similar to the gas mask(No using eye drops, drinking liquids, or smoking.) Including First Aid Kits and Syringes now.
 - Refining the hands on Very Fine creates a guard that shoots the player down quickly.
+- The Camera rendering intervals are faster.
 
 Mechanics and effects:
 - Nerfed Blinking reducing blur and buffed the minimum it can reduce.
@@ -93,6 +94,7 @@ Rooms:
 - SCP-1123 Pre-Containment now requires Level 0 Key Card.
 - SCP-1499 Containment Key Card Door level reduced from 4 to 3.
 - Office in room2_office_3 now has a numpad to access its room like all the other offices.
+- Maintenance tunnel's generator room now has a keycard door.
 - HCZ to EZ Checkpoint Gates Key Card Door level reduced from 5 to 4.
 - Can no longer save your game while in the Pocket Dimension.
 
