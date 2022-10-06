@@ -3475,6 +3475,9 @@ Function UpdateEvents%()
 											;[End Block]
 										Case MT_ROOM4 + 3
 											;[Block]
+											d.Doors = CreateDoor(e\room\x + (iX * 2.0) + (Cos(EntityYaw(TempInt, True)) * -208.0 * RoomScale) - (Sin(EntityYaw(TempInt, True)) * -240.0 * RoomScale), e\room\y + MTGridY + (0.1 * RoomScale), e\room\z + (iY * 2.0) + (Sin(EntityYaw(TempInt, True)) * 0.0 * RoomScale) + (Cos(EntityYaw(TempInt, True)) * 1226.0 * RoomScale), 90.0, r, False, HEAVY_DOOR, KEY_CARD_1)
+											PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.048, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
+											PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.048, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
 											AddLight(Null, e\room\x + (iX * 2.0) - (Sin(EntityYaw(TempInt, True)) * 504.0 * RoomScale) + (Cos(EntityYaw(TempInt, True)) * 16.0 * RoomScale), e\room\y + MTGridY + (396.0 * RoomScale), e\room\z + (iY * 2.0) + (Cos(EntityYaw(TempInt, True)) * 504.0 * RoomScale) + (Sin(EntityYaw(TempInt, True)) * 16.0 * RoomScale), 2, 500.0 * RoomScale, 255, 200, 200)
 											it.Items = CreateItem("SCP-500-01", "scp500pill", e\room\x + (iX * 2.0) + (Cos(EntityYaw(TempInt, True)) * (-208.0) * RoomScale) - (Sin(EntityYaw(TempInt, True)) * 1226.0 * RoomScale), e\room\y + MTGridY + (90.0 * RoomScale), e\room\z + (iY * 2.0) + (Sin(EntityYaw(TempInt, True)) * (-208.0) * RoomScale) + (Cos(EntityYaw(TempInt, True)) * 1226.0 * RoomScale))
 											EntityType(it\Collider, HIT_ITEM)
