@@ -18,7 +18,6 @@ General:
 - Rework how battery drains.
 - Strange bottle can now infect you with either 008 or 409.
 - SCP-427's ability to cure SCP-008 is now faster.
-- Cups from SCP-294 have been nerfed.
 - SCP-714 and Heavy equipement protects you from the bird planes in pocket dimension.
 - SCP-714 resists the poisonous gas in room3_storage(Storage Area 6).
 - Monitors displaying SCP-895 will kill you quicker.
@@ -28,7 +27,7 @@ General:
 - Achievements are only obtainable in Safe, Euclid, Keter, and Apollyon.
 - Apollyon difficulty no longer gives you the intro papers.
 - Apollyon difficulty no longer allow you to open up the console.
-- Euclid difficulty gives you 8 slots instead of just 6.
+- Euclid difficulty gives you 8 inventory slots instead of just 6.
 - New casual difficulty for players called Thaumiel.
 - Added Cake as a difficulty factor for Esoteric.
 - End Screen now tells you what difficulty you beat that save in.
@@ -37,9 +36,24 @@ General:
 - Max brightness setting is now 175% instead of 200%
 - Higher quality textures for cards and coins from Graphics Overhaul mod by Placeholder Studios. (HD Playing card and Mastercard by Snoe)
 - Removed the third hand from the game.
-- The Hazmat suit has been completely redesigned to no longer prevent you from dropping items, picking up items, or using all items. The only items you cannot use are similar to the gas mask(No using eye drops, drinking liquids, or smoking.) Including First Aid Kits and Syringes now.
+- The Hazmat Suit has been completely redesigned
 - Refining the hands on Very Fine creates a guard that shoots the player down quickly.
 - The Camera rendering intervals are faster.
+
+- The Hazmat Suit has been completely redesigned:
+- No longer preventing you from dropping and picking up items.
+- The only items you cannot use are similar to the gas mask(No using eye drops, drinking liquids, or smoking.) Including First Aid Kits and Syringes now.
+- SCP-049 resistance from Normal and Super variant nerfed from 12 seconds to 5 seconds.
+- SCP-049 is no longer incapable of taking away the Heavy Hazmat Suit and instead you will have 12 seconds of resistance.
+
+- Cups from SCP-294 have been changed:
+
+[Life|SCP-545-B|545-B]: Damage: -10 -> -6 Blood Loss: -100 -> -80
+[SCP-006|006]: Damage: -5 -> -4, has been given the ability to cure any disease from 1025(except 008).
+[Estus|Ambrosia Of The Gods]: Damage: -2 -> -1.75 Blood Loss: -50 -> -30
+[SCP-109|109]: Damage -6 -> -1 Blood Loss: -75 -> -85
+[Endgame|End|Ultimate|Determination]: Damage: -8 -> -5 Blood Loss: -100 -> -70 Stamina Effect: 0.3 -> 0.4
+
 
 Mechanics and effects:
 - Nerfed Blinking reducing blur and buffed the minimum it can reduce.
