@@ -47,7 +47,6 @@ General:
 - SCP-049 is no longer incapable of taking away the Heavy Hazmat Suit and instead you will have 12 seconds of resistance.
 
 - Cups from SCP-294 have been changed:
-
 [Life|SCP-545-B|545-B]: Damage: -10 -> -6 Blood Loss: -100 -> -80
 [SCP-006|006]: Damage: -5 -> -4, has been given the ability to cure any disease from 1025(except 008).
 [Estus|Ambrosia Of The Gods]: Damage: -2 -> -1.75 Blood Loss: -50 -> -30
