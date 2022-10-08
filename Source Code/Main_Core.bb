@@ -1226,7 +1226,7 @@ Function UpdateMoving%()
 		
 		chs\SuperManTimer = chs\SuperManTimer + fps\Factor[0]
 		
-		me\CameraShake = Sin(chs\SuperManTimer / 5.0) * (chs\SuperManTimer / 1500.0)
+		If (Not chs\GodMode) Then me\CameraShake = Sin(chs\SuperManTimer / 5.0) * (chs\SuperManTimer / 1500.0)
 		
 		If chs\SuperManTimer > 70.0 * 50.0 Then
 			msg\DeathMsg = "A Class D jumpsuit found in [DATA REDACTED]. Upon further examination, the jumpsuit was found to be filled with 12.5 kilograms of blue ash-like substance. "
@@ -3631,15 +3631,17 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp714"
 					;[Block]
-					If I_714\Using Then
-						CreateMsg("You removed the ring.")
-						I_714\Using = False
-					Else
-						CreateMsg("You put on the ring.")
-						GiveAchievement(Achv714)
-						I_714\Using = True
+					If CanUseItem(True, True)
+						If I_714\Using Then
+							CreateMsg("You removed the ring.")
+							I_714\Using = False
+						Else
+							CreateMsg("You put on the ring.")
+							GiveAchievement(Achv714)
+							I_714\Using = True
+						EndIf
+						SelectedItem = Null	
 					EndIf
-					SelectedItem = Null	
 					;[End Block]
 				Case "hazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 					;[Block]
@@ -3882,15 +3884,17 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp427"
 					;[Block]
-					If I_427\Using Then
-						CreateMsg("You closed the locket.")
-						I_427\Using = False
-					Else
-						GiveAchievement(Achv427)
-						CreateMsg("You opened the locket.")
-						I_427\Using = True
+					If CanUseItem(True, True) Then
+						If I_427\Using Then
+							CreateMsg("You closed the locket.")
+							I_427\Using = False
+						Else
+							GiveAchievement(Achv427)
+							CreateMsg("You opened the locket.")
+							I_427\Using = True
+						EndIf
+						SelectedItem = Null
 					EndIf
-					SelectedItem = Null
 					;[End Block]
 				Case "pill"
 					;[Block]
@@ -3927,7 +3931,7 @@ Function UpdateGUI%()
 					;[Block]
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 6.0)
 						
-						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.2), 100.0)
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.1), 100.0)
 						
 						If SelectedItem\State = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
@@ -4106,7 +4110,10 @@ Function RenderHUD%()
 	Color(0, 0, 0)
 	Rect(x - (50 * MenuScale), y, 30 * MenuScale, 30 * MenuScale)
 	
-	If me\BlurTimer > 550.0 Lor me\BlinkEffect > 1.0 Lor me\LightFlash > 0.0 Lor (((me\LightBlink > 0.0 And (Not chs\NoBlink)) Lor me\EyeIrritation > 0.0) And wi\NightVision = 0) Then
+	If me\BlinkTimer <= 0.0 Then
+		Color(150, 150, 0)
+		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
+	ElseIf me\BlurTimer > 550.0 Lor me\BlinkEffect > 1.0 Lor me\LightFlash > 0.0 Lor (((me\LightBlink > 0.0 And (Not chs\NoBlink)) Lor me\EyeIrritation > 0.0) And wi\NightVision = 0) Then
 		Color(200, 0, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
 	ElseIf me\BlinkEffect < 1.0 Lor chs\NoBlink
@@ -4134,10 +4141,13 @@ Function RenderHUD%()
 	Color(0, 0, 0)
 	Rect(x - (50 * MenuScale), y, 30 * MenuScale, 30 * MenuScale)
 	
-	If PlayerRoom\RoomTemplate\Name = "dimension_106" Lor I_714\Using Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor wi\HazmatSuit = 1 Lor wi\BallisticVest = 2 Lor I_409\Timer >= 55.0 Then
+	If me\Stamina <= 0.0 And PlayerRoom\RoomTemplate\Name <> "dimension_106" Then
+		Color(150, 150, 0)
+		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
+	ElseIf PlayerRoom\RoomTemplate\Name = "dimension_106" Lor I_714\Using Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor wi\HazmatSuit = 1 Lor wi\BallisticVest = 2 Lor I_409\Timer >= 55.0 Then
 		Color(200, 0, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask = 3 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 2
+	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask = 3 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 2 Lor (wi\GasMask = 2 And me\StaminaEffect = 1.0)
 		Color(0, 200, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
 	EndIf

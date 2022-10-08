@@ -42,7 +42,7 @@ General:
 
 - The Hazmat Suit has been completely redesigned:
 - No longer preventing you from dropping and picking up items.
-- The only items you cannot use are similar to the gas mask(No using eye drops, drinking liquids, or smoking.) Including First Aid Kits and Syringes now.
+- The only items you cannot use are similar to the gas mask(No using eye drops, drinking liquids, or smoking.) Including First Aid Kits, Syringes, SCP-714, and SCP-427 now.
 - SCP-049 resistance from Normal and Super variant nerfed from 12 seconds to 5 seconds.
 - SCP-049 is no longer incapable of taking away the Heavy Hazmat Suit and instead you will have 12 seconds of resistance.
 
