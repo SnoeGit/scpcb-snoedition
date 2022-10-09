@@ -1446,7 +1446,7 @@ Function FillRoom%(r.Rooms)
 			r\RoomDoors.Doors[4] = CreateDoor(r\x + 272.0 * RoomScale, r\y - 3552.0 * RoomScale, r\z + 104.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_2)
 			r\RoomDoors[4]\Locked = 1
 			
-			r\RoomDoors.Doors[5] = CreateDoor(r\x + 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z - 1824.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_2)
+			r\RoomDoors.Doors[5] = CreateDoor(r\x + 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z - 1824.0 * RoomScale, 90.0, r, False, DEFAULT_DOOR, KEY_CARD_2)
 			r\RoomDoors[5]\Locked = 1
 			
 			r\RoomDoors.Doors[6] = CreateDoor(r\x - 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z + 1824.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_2)
