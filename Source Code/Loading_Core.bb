@@ -1657,7 +1657,7 @@ Function InitNewGame%()
 			EntityType(it\Collider, HIT_ITEM)
 			EntityParent(it\Collider, 0)
 			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("S-NAV 300 Navigator", "nav300", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("S-NAV Navigator", "nav", 1.0, 1.0, 1.0)
 			it\State = 100.0
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(1) = it
@@ -1694,7 +1694,7 @@ Function InitNewGame%()
 			EntityType(it\Collider, HIT_ITEM)
 			EntityParent(it\Collider, 0)
 			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Eyedrops", "eyedrops", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("ReVision Eyedrops", "eyedrops", 1.0, 1.0, 1.0)
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(6) = it
 			HideEntity(it\Collider)
