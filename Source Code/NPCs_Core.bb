@@ -1563,10 +1563,10 @@ Function UpdateNPCs%()
 					EndIf
 					n\DropSpeed = 0.0
 					If n\SoundCHN <> 0 Then
-						If ChannelPlaying(n\SoundCHN) Then StopChannel(n\SoundCHN)
+						StopChannel(n\SoundCHN) : n\SoundCHN = 0
 					EndIf
 					If n\SoundCHN2 <> 0 Then
-						If ChannelPlaying(n\SoundCHN2) Then StopChannel(n\SoundCHN2)
+						StopChannel(n\SoundCHN) : n\SoundCHN = 0
 					EndIf
 					PositionEntity(n\Collider, 0.0, -500.0, 0.0)
 					ResetEntity(n\Collider)
@@ -1577,8 +1577,10 @@ Function UpdateNPCs%()
 								If PlayerRoom\Adjacent[i] <> Null Then
 									For j = 0 To MaxRoomAdjacents - 1
 										If PlayerRoom\Adjacent[i]\Adjacent[j] <> Null Then
-											TeleportEntity(n\Collider, PlayerRoom\Adjacent[i]\Adjacent[j]\x, 0.5, PlayerRoom\Adjacent[i]\Adjacent[j]\z, n\CollRadius, True)
-											Exit
+											If PlayerRoom\Adjacent[i]\Adjacent[j] <> PlayerRoom Then
+												TeleportEntity(n\Collider, PlayerRoom\Adjacent[i]\Adjacent[j]\x, 0.5, PlayerRoom\Adjacent[i]\Adjacent[j]\z, n\CollRadius, True)
+												Exit
+											EndIf
 										EndIf
 									Next
 									Exit
@@ -1882,9 +1884,7 @@ Function UpdateNPCs%()
 								UpdateSoundOrigin(n\SoundCHN2, Camera, n\OBJ)
 							ElseIf n\Idle = 0
 								If n\SoundCHN <> 0 Then
-									If ChannelPlaying(n\SoundCHN) Then
-										StopChannel(n\SoundCHN)
-									EndIf
+									StopChannel(n\SoundCHN) : n\SoundCHN = 0
 								EndIf
 								If PlayerInReachableRoom(True) And InFacility = 1 Then ; ~ Player is in a room where SCP-049 can teleport to
 									If Rand(1, 3 - SelectedDifficulty\OtherFactors) = 1 Then

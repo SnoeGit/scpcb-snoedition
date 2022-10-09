@@ -2924,7 +2924,7 @@ Function UseDoor%(d.Doors, PlaySFX% = True)
 						If Temp = KEY_005 Then
 							CreateMsg("You hold the key onto the scanner, but nothing happened.")
 						Else
-							CreateMsg("You placed the palm of the hand onto the scanner, but nothing happened")
+							CreateMsg("You placed the palm of the hand onto the scanner, but nothing happened.")
 						EndIf
 					Else
 						If Temp = KEY_005 Then
