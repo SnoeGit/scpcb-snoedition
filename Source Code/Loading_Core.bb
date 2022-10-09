@@ -1650,7 +1650,7 @@ Function InitNewGame%()
 		ElseIf r\RoomTemplate\Name = "cont1_173" And SelectedDifficulty\Name = "Thaumiel" Then
 			PositionEntity(me\Collider, EntityX(r\OBJ) + 3584.0 * RoomScale, r\y + 704.0 * RoomScale, EntityZ(r\OBJ) + 1024.0 * RoomScale)
 			PlayerRoom = r
-			it.Items = CreateItem("Level 0 Key Card", "key0", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("Level 3 Key Card", "key3", 1.0, 1.0, 1.0)
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(0) = it
 			HideEntity(it\Collider)
@@ -1687,7 +1687,7 @@ Function InitNewGame%()
 			EntityType(it\Collider, HIT_ITEM)
 			EntityParent(it\Collider, 0)
 			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Compact First Aid Kit", "firstaid", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("First Aid Kit", "firstaid", 1.0, 1.0, 1.0)
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(5) = it
 			HideEntity(it\Collider)
