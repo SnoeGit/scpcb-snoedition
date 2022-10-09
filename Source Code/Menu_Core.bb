@@ -1956,7 +1956,7 @@ Function UpdateLauncher%(lnchr.Launcher)
 		EndIf
 	Next
 	
-	AppTitle("SCP - Containment Breach Ultimate Edition Launcher")
+	AppTitle("SCP - Containment Breach Gameplay Overhaul Launcher")
 	
 	Local Quit% = False
 	
@@ -2030,22 +2030,22 @@ Function UpdateLauncher%(lnchr.Launcher)
 		
 		If MouseOn(LauncherWidth - 620, LauncherHeight - 86, 64, 64) Then
 			Rect(LauncherWidth - 621, LauncherHeight - 87, 66, 66, False)
-			If mo\MouseHit1 Then ExecFile("https://discord.gg/n7KdW4u")
+			If mo\MouseHit1 Then ExecFile("https://discord.gg/82arztEq6N")
 		EndIf
 		DrawImage(LauncherIMG[2], LauncherWidth - 620, LauncherHeight - 86, 0)
 		If MouseOn(LauncherWidth - 510, LauncherHeight - 86, 64, 64) Then
 			Rect(LauncherWidth - 511, LauncherHeight - 87, 66, 66, False)
-			If mo\MouseHit1 Then ExecFile("https://www.moddb.com/mods/scp-containment-breach-ultimate-edition")
+			If mo\MouseHit1 Then ExecFile("https://www.moddb.com/mods/scp-containment-breach-gameplay-overhaul")
 		EndIf
 		DrawImage(LauncherIMG[2], LauncherWidth - 510, LauncherHeight - 86, 1)
 		If MouseOn(LauncherWidth - 400, LauncherHeight - 86, 64, 64) Then
 			Rect(LauncherWidth - 401, LauncherHeight - 87, 66, 66, False)
-			If mo\MouseHit1 Then ExecFile("https://www.youtube.com/channel/UCPqWOCPfKooDnrLNzA67Acw")
+			If mo\MouseHit1 Then ExecFile("https://www.youtube.com/channel/UCDmovAsy7I_GJ4MvC_KlPEA")
 		EndIf
 		DrawImage(LauncherIMG[2], LauncherWidth - 400, LauncherHeight - 86, 2)
 		
 		If UpdateLauncherButton(LauncherWidth - 300, LauncherHeight - 105, 150, 30, "REPORT A BUG!", False, False) Then
-			ExecFile("https://www.moddb.com/mods/scp-containment-breach-ultimate-edition/news/bug-reports1")
+			ExecFile("https://github.com/SnoeGit/scpcb-snoedition/issues")
 		EndIf
 		
 		If UpdateLauncherButton(LauncherWidth - 300, LauncherHeight - 50, 150, 30, "SEE CHANGELOG", False, False) Then

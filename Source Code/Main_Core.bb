@@ -74,9 +74,9 @@ Else
 	Graphics3DExt(opt\GraphicWidth, opt\GraphicHeight, 0, (opt\DisplayMode = 2) + 1)
 EndIf
 
-Const VersionNumber$ = "1.0.3"
+Const VersionNumber$ = "1.0"
 
-AppTitle("SCP - Containment Breach Ultimate Edition v" + VersionNumber)
+AppTitle("SCP - Containment Breach Gameplay Overhaul v" + VersionNumber)
 
 Global MenuScale# = opt\GraphicHeight / 1024.0
 
@@ -514,7 +514,7 @@ End Type
 Global I_Zone.MapZones = New MapZones
 
 InitErrorMsgs(11)
-SetErrorMsg(0, "An error occured in SCP - Containment Breach Ultimate Edition v" + VersionNumber)
+SetErrorMsg(0, "An error occured in SCP - Containment Breach Gameplay Overhaul v" + VersionNumber)
 
 SetErrorMsg(1, "Date and time: " + CurrentDate() + " at " + CurrentTime())
 SetErrorMsg(2, "OS: " + SystemProperty("os") + " " + SystemProperty("os") + " " + (32 + (GetEnv("ProgramFiles(X86)") <> 0) * 32) + " bit (Build: " + SystemProperty("osbuild") + ")")
