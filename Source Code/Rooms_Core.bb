@@ -1443,13 +1443,13 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\RoomDoors[3]\ElevatorPanel[1], EntityX(r\RoomDoors[3]\ElevatorPanel[1], True), EntityY(r\RoomDoors[3]\ElevatorPanel[1], True) + 0.05, EntityZ(r\RoomDoors[3]\ElevatorPanel[1], True), True)
 			
 			; ~ Storage room doors
-			r\RoomDoors.Doors[4] = CreateDoor(r\x + 272.0 * RoomScale, r\y - 3552.0 * RoomScale, r\z + 104.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_1)
+			r\RoomDoors.Doors[4] = CreateDoor(r\x + 272.0 * RoomScale, r\y - 3552.0 * RoomScale, r\z + 104.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_2)
 			r\RoomDoors[4]\Locked = 1
 			
-			r\RoomDoors.Doors[5] = CreateDoor(r\x + 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z - 1824.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_1)
+			r\RoomDoors.Doors[5] = CreateDoor(r\x + 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z - 1824.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_2)
 			r\RoomDoors[5]\Locked = 1
 			
-			r\RoomDoors.Doors[6] = CreateDoor(r\x - 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z + 1824.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_1)
+			r\RoomDoors.Doors[6] = CreateDoor(r\x - 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z + 1824.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_2)
 			r\RoomDoors[6]\Locked = 1
 			
 			; ~ DNA door
