@@ -87,8 +87,8 @@ SetDifficultyColor(APOLLYON, 150, 150, 150)
 
 difficulties[THAUMIEL] = New Difficulty
 difficulties[THAUMIEL]\Name = "Thaumiel"
-difficulties[THAUMIEL]\Description = "This difficulty is designed around allowing you to lay back and have a good time without having to worry about constantly dying."
-difficulties[THAUMIEL]\Description = difficulties[THAUMIEL]\Description + " Achievements are disabled when playing on this difficulty."
+difficulties[THAUMIEL]\Description = "Thaumiel-class SCPs are anomalies that the Foundation uses to contain or counteract other SCPs or anomalous phenomena."
+difficulties[THAUMIEL]\Description = difficulties[THAUMIEL]\Description + " This difficulty is designed around allowing you to lay back and have a good time without having to worry about constantly dying. Achievements are disabled when playing on this difficulty."
 difficulties[THAUMIEL]\AggressiveNPCs = False
 difficulties[THAUMIEL]\InventorySlots = 16
 difficulties[THAUMIEL]\SaveType = SAVE_ANYWHERE

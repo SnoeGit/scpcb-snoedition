@@ -1650,14 +1650,14 @@ Function InitNewGame%()
 		ElseIf r\RoomTemplate\Name = "cont1_173" And SelectedDifficulty\Name = "Thaumiel" Then
 			PositionEntity(me\Collider, EntityX(r\OBJ) + 3584.0 * RoomScale, r\y + 704.0 * RoomScale, EntityZ(r\OBJ) + 1024.0 * RoomScale)
 			PlayerRoom = r
-			it.Items = CreateItem("Level 5 Key Card", "key5", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("Level 0 Key Card", "key0", 1.0, 1.0, 1.0)
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(0) = it
 			HideEntity(it\Collider)
 			EntityType(it\Collider, HIT_ITEM)
 			EntityParent(it\Collider, 0)
 			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("S-NAV 310 Navigator", "nav310", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("S-NAV 300 Navigator", "nav300", 1.0, 1.0, 1.0)
 			it\State = 100.0
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(1) = it
@@ -1665,42 +1665,43 @@ Function InitNewGame%()
 			EntityType(it\Collider, HIT_ITEM)
 			EntityParent(it\Collider, 0)
 			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Gas Mask", "finegasmask", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("Gas Mask", "gasmask", 1.0, 1.0, 1.0)
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(2) = it
 			HideEntity(it\Collider)
 			EntityType(it\Collider, HIT_ITEM)
 			EntityParent(it\Collider, 0)
 			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Night Vision Goggles", "finenvg", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("Night Vision Goggles", "nvg", 1.0, 1.0, 1.0)
+			it\State = 1000.0
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(3) = it
 			HideEntity(it\Collider)
 			EntityType(it\Collider, HIT_ITEM)
 			EntityParent(it\Collider, 0)
 			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Radio Transceiver", "fineradio", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("Radio Transceiver", "radio", 1.0, 1.0, 1.0)
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(4) = it
 			HideEntity(it\Collider)
 			EntityType(it\Collider, HIT_ITEM)
 			EntityParent(it\Collider, 0)
 			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Compact First Aid Kit", "finefirstaid", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("Compact First Aid Kit", "firstaid", 1.0, 1.0, 1.0)
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(5) = it
 			HideEntity(it\Collider)
 			EntityType(it\Collider, HIT_ITEM)
 			EntityParent(it\Collider, 0)
 			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Eyedrops", "fineeyedrops", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("Eyedrops", "eyedrops", 1.0, 1.0, 1.0)
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(6) = it
 			HideEntity(it\Collider)
 			EntityType(it\Collider, HIT_ITEM)
 			EntityParent(it\Collider, 0)
 			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("SCRAMBLE Gear", "finescramble", 1.0, 1.0, 1.0)
+			it.Items = CreateItem("SCRAMBLE Gear", "scramble", 1.0, 1.0, 1.0)
 			it\State = 1000.0
 			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 			Inventory(7) = it

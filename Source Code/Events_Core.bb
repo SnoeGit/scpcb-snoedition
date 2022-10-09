@@ -8705,6 +8705,8 @@ Function UpdateDimension106%()
 								RotateEntity(me\Collider, EntityPitch(me\Collider), CurveAngle(EntityYaw(Pvt), EntityYaw(me\Collider), 10.0), 0.0)
 								FreeEntity(Pvt)
 							EndIf
+						ElseIf Dist < 64.0 Then
+							InjurePlayer((8.0 - Sqr(Dist)) * (fps\Factor[0] * 0.0001))
 						EndIf
 						
 						me\CameraShake = Max(4.0 + ((Not Safe) * 4.0) - Sqr(Dist), 0.0)
