@@ -764,6 +764,7 @@ Function UpdateGame%()
 			EndIf
 			
 			If me\BlinkTimer < 0.0 Then
+				If me\BlinkTimer <= -10.0 And (PlayerRoom\RoomTemplate\Name = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor PlayerRoom\RoomTemplate\Name <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - (fps\Factor[0] / 2.0), 0.0)
 				If me\BlinkTimer > -5.0 Then
 					DarkAlpha = Max(DarkAlpha, Sin(Abs(me\BlinkTimer * 18.0)))
 				ElseIf me\BlinkTimer > -15.0
@@ -797,7 +798,7 @@ Function UpdateGame%()
 							;[End Block]
 					End Select 
 					me\BlinkTimer = me\BLINKFREQ
-					If (PlayerRoom\RoomTemplate\Name = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor PlayerRoom\RoomTemplate\Name <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - Rnd(30.0, 80.0), 0.0)
+					If (PlayerRoom\RoomTemplate\Name = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor PlayerRoom\RoomTemplate\Name <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - Rnd(40.0, 90.0), 0.0)
 				EndIf
 				me\BlinkTimer = me\BlinkTimer - fps\Factor[0]
 			Else
