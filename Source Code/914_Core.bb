@@ -318,7 +318,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									Case "hazmatsuit", "superhazmatsuit"
 										;[Block]
 										RemoveItem(it)
-										it2.Items = CreateItem("Heavy Hazmat Suit", "hazmatsuit3", x, y, z)
+										it2.Items = CreateItem("Heavy Hazmat Suit", "heavyhazmatsuit", x, y, z)
 										Exit
 										;[End Block]
 								End Select
