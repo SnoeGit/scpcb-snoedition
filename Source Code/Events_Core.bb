@@ -2574,7 +2574,7 @@ Function UpdateEvents%()
 						
 						If e\EventState2 < 2.0 Then
 							If SelectedItem <> Null Then
-								If SelectedItem\ItemTemplate\TempName = "25ct" Lor SelectedItem\ItemTemplate\TempName = "coin" Then
+								If SelectedItem\ItemTemplate\TempName = "25ct" Lor SelectedItem\ItemTemplate\TempName = "coin" Lor SelectedItem\ItemTemplate\TempName = "scp588" Then
 									RemoveItem(SelectedItem)
 									e\EventState2 = e\EventState2 + 1.0
 									PlaySound_Strict(LoadTempSound("SFX\SCP\294\CoinDrop.ogg"))
@@ -7127,7 +7127,7 @@ Function UpdateEvents%()
 					
 					If e\EventState > 0.0 Then
 						e\EventState = e\EventState + fps\Factor[0]
-						
+						CanSave = False
 						e\room\RoomDoors[1]\Open = False
 						If e\EventState > 70.0 * 2.0 Then
 							If e\room\RoomDoors[0]\Open Then
@@ -7142,6 +7142,7 @@ Function UpdateEvents%()
 							EndIf
 							
 							If e\EventState > 70.0 * 3.0 Then
+							CanSave = True
 								Select Setting
 									Case ROUGH
 										;[Block]

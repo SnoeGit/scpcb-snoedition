@@ -902,6 +902,7 @@ Function LoadItems%()
 	
 	CreateItemTemplate("Quarter", "25ct", ItemsPath + "coin.b3d", INVPath + "INV_coin.png", "", 0.0005, 3)
 	CreateItemTemplate("Coin", "coin", ItemsPath + "coin.b3d", INVPath + "INV_coin_rusty.png", "", 0.0005, 3, ItemsPath + "coin_rusty.png")
+	CreateItemTemplate("SCP-588", "scp588", ItemsPath + "coin.b3d", INVPath + "INV_coin.png", "", 0.0005, 3)
 	
 	For it.ItemTemplates = Each ItemTemplates
 		If it\Tex <> 0 Then

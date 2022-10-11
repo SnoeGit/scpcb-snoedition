@@ -1,9 +1,34 @@
+v1.1
+
+General:
+
+- Smoke irritation radius is slightly bigger.
+- Pocket Dimension disables Blue Night Vision Goggle's data refresh.
+- Heavy Hazmat Suit can allow picking up Strange Batteries.
+- Using the Strange Battery now shocks you.
+- Can't save while SCP-914 is active. Sorry speedrunners, I love abusing this too but it has to go.
+- Fix upgrading to Super Hazmat crashing the game.
+- Make SCP-588 a unique item seperate from the rusty coin.
+
+- Properly credit Placeholder's Studio in Credits.txt. oops
+
+- Fruit Punch added as a drink to SCP-294
+
+Bug Fixes:
+
+- SCP-096 no longer loops his standing scream animation when SCP-106 is captured.
+- Fixed SCP-106 not taking you to his pocket dimension. lmao
+- SCP-895's coffin if approached when the room spawned next to Entrance zone no longer spawns the MTF.
+- SCP-409's chamber no longer has dark grey fog if the room spawned next to Light Containment Zone.
+- Only Cake or having more than 10 inventory slots prevents the user from having achievements in Esoteric.
+
+
 v1.0 (Gameplay Overhaul by Snoe)
 
 General:
 - Optimized the games textures to take up less filesize.
 - Reorganized a large portion of the files into folders for better organization.
-- Allowed swapping between headgear. (unfinished)
+- Allowed swapping between headgear.
 - Equipping headgear is slightly faster.
 - Batteries in equipment should no longer randomly spawn in with no battery at all.
 - 18V batteries now spawn around naturally if a bit rarer than 9V batteries.

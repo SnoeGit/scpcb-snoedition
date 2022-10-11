@@ -315,7 +315,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Heavy Gas Mask", "gasmask3", x, y, z)
 										Exit
 										;[End Block]
-									Case "hazmatsuit", "hazmatsuit2"
+									Case "hazmatsuit", "superhazmatsuit"
 										;[Block]
 										RemoveItem(it)
 										it2.Items = CreateItem("Heavy Hazmat Suit", "hazmatsuit3", x, y, z)
@@ -819,7 +819,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "coin", "25ct"
+		Case "coin", "25ct", "scp588"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -1068,11 +1068,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[Block]
 					Remove = False
 					;[End Block]
-				Case FINE
-					;[Block]
-					it2.Items = CreateItem("18V Battery", "finebat", x, y, z)
-					;[End Block]
-				Case VERYFINE
+				Case FINE, VERYFINE
 					;[Block]
 					If Rand(3) = 1 Then
 						it2.Items = CreateItem("999V Battery", "superbat", x, y, z)
@@ -1125,7 +1121,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "hazmatsuit", "hazmatsuit3"
+		Case "hazmatsuit", "heavyhazmatsuit"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -1139,11 +1135,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Hazmat Suit", "hazmatsuit2", x, y, z)
+					it2.Items = CreateItem("Hazmat Suit", "superhazmatsuit", x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "hazmatsuit2"
+		Case "superhazmatsuit"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE

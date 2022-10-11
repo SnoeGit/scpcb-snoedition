@@ -76,6 +76,7 @@
 		Shadowscale48
 		Shaun Gaylard ("ENDSHN")
 		Vladislav Borisevich ("Vane Brain")
+		Placeholder Studios
 
 *Writers
 
@@ -231,6 +232,9 @@ by "far2"
 
 		SCP-513-1 is based on "SCP-513 - A Cowbell",
 by "beefwit"
+
+		SCP-588 is based on "SCP-588 - A Voracious Coin",
+by "Dr Grangan"
 
 		SCP-682 is based on "SCP-682 - Hard-to-Destroy Reptile",
 by "Dr. Gears"

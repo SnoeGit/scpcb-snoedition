@@ -515,13 +515,15 @@ Function PickItem%(item.Items)
 						;[End Block]
 					Case "killbat"
 						;[Block]
-						me\LightFlash = 1.0
-						PlaySound_Strict(IntroSFX[Rand(8, 10)])
-						msg\DeathMsg = SubjectName + " found dead inside SCP-914's output booth next to what appears to be an ordinary nine-volt battery. The subject is covered in severe "
-						msg\DeathMsg = msg\DeathMsg + "electrical burns, and assumed to be killed via an electrical shock caused by the battery. The battery has been stored for further study."
-						Kill()
+						If wi\HazmatSuit <> 3 Then
+							me\LightFlash = 1.0
+							PlaySound_Strict(IntroSFX[Rand(8, 10)])
+							msg\DeathMsg = SubjectName + " found dead inside SCP-914's output booth next to what appears to be an ordinary nine-volt battery. The subject is covered in severe "
+							msg\DeathMsg = msg\DeathMsg + "electrical burns, and assumed to be killed via an electrical shock caused by the battery. The battery has been stored for further study."
+							Kill()
+						EndIf
 						;[End Block]
-					Case "coin"
+					Case "scp588"
 						;[Block]
 						InjurePlayer(0.1)
 						me\CameraShake = 0.5

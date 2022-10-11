@@ -220,11 +220,13 @@ Function UpdateWorld2%()
 		
 		If wi\NightVision = 2 Then
 			If wi\NVGTimer <= 0.0 Then
-				For np.NPCs = Each NPCs
-					np\NVGX = EntityX(np\Collider, True)
-					np\NVGY = EntityY(np\Collider, True)
-					np\NVGZ = EntityZ(np\Collider, True)
-				Next
+				If PlayerRoom\RoomTemplate\Name <> "dimension_106" Then
+					For np.NPCs = Each NPCs
+						np\NVGX = EntityX(np\Collider, True)
+						np\NVGY = EntityY(np\Collider, True)
+						np\NVGZ = EntityZ(np\Collider, True)
+					Next
+				EndIf
 				If wi\NVGTimer <= -10.0 Then wi\NVGTimer = 600.0
 				wi\IsNVGBlinking = True
 			EndIf
