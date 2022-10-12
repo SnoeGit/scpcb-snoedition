@@ -323,7 +323,7 @@ Function RemoveWearableItems%(item.Items)
 			;[Block]
 			wi\GasMask = 0
 			;[End Block]
-		Case "hazmatsuit",  "superhazmatsuit", "heavyhazmatsuit"
+		Case "hazmatsuit", "finehazmatsuit",  "superhazmatsuit", "heavyhazmatsuit"
 			;[Block]
 			wi\HazmatSuit = 0
 			SetAnimTime(item\Model, 4.0)
@@ -511,11 +511,11 @@ Function PickItem%(item.Items)
 					Case "scp1123"
 						;[Block]
 						Use1123()
-						If (Not I_714\Using) And wi\GasMask <> 3 And wi\HazmatSuit <> 3 Then Return
+						If (Not I_714\Using) And wi\GasMask <> 3 And wi\HazmatSuit <> 4 Then Return
 						;[End Block]
 					Case "killbat"
 						;[Block]
-						If wi\HazmatSuit <> 3 Then
+						If wi\HazmatSuit <> 4 Then
 							me\LightFlash = 1.0
 							PlaySound_Strict(IntroSFX[Rand(8, 10)])
 							msg\DeathMsg = SubjectName + " found dead inside SCP-914's output booth next to what appears to be an ordinary nine-volt battery. The subject is covered in severe "
@@ -525,9 +525,11 @@ Function PickItem%(item.Items)
 						;[End Block]
 					Case "scp588"
 						;[Block]
-						InjurePlayer(0.1)
-						me\CameraShake = 0.5
-						CreateMsg("Ouch! The coin bit your finger.")
+						If wi\HazmatSuit = 0 Then
+							InjurePlayer(0.1)
+							me\CameraShake = 0.5
+							CreateMsg("Ouch! The coin bit your finger.")
+						EndIf
 						;[End Block]
 					Case "scp148"
 						;[Block]
@@ -567,12 +569,12 @@ Function PickItem%(item.Items)
 						;[Block]
 						GiveAchievement(AchvSNAV)
 						;[End Block]
-					Case "hazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
+					Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 						;[Block]
 						CanPickItem = True
 						For z = 0 To MaxItemAmount - 1
 							If Inventory(z) <> Null Then
-								If Inventory(z)\ItemTemplate\TempName = "hazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "superhazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "heavyhazmatsuit" Then
+								If Inventory(z)\ItemTemplate\TempName = "hazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "finehazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "superhazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "heavyhazmatsuit" Then
 									CanPickItem = 0
 									Return
 								ElseIf Inventory(z)\ItemTemplate\TempName = "vest" Lor Inventory(z)\ItemTemplate\TempName = "finevest"
@@ -600,7 +602,7 @@ Function PickItem%(item.Items)
 								If Inventory(z)\ItemTemplate\TempName = "vest" Lor Inventory(z)\ItemTemplate\TempName = "finevest" Then
 									CanPickItem = 0
 									Return
-								ElseIf Inventory(z)\ItemTemplate\TempName = "hazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "superhazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "heavyhazmatsuit"
+								ElseIf Inventory(z)\ItemTemplate\TempName = "hazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "finehazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "superhazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "heavyhazmatsuit"
 									CanPickItem = 2
 									Return
 								EndIf
@@ -780,7 +782,7 @@ Function Use1123%()
 	Local e.Events
 	Local Temp%
 	
-	If (Not I_714\Using) And wi\GasMask <> 3 And wi\HazmatSuit <> 3 Then
+	If (Not I_714\Using) And wi\GasMask <> 3 And wi\HazmatSuit <> 4 Then
 		me\LightFlash = 3.0
 		PlaySound_Strict(LoadTempSound("SFX\SCP\1123\Touch.ogg"))
 		

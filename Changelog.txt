@@ -1,3 +1,9 @@
+v1.2
+
+- Added Fine Hazmat Suit to the game. Does not fog up or have the stamina cap.
+- Super SCP-1499 Gas Mask does not fog up anymore.
+- 999v Battery has nerfed charge but Strange Battery is unchanged.
+
 v1.1
 
 General:

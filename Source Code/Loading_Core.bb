@@ -845,6 +845,7 @@ Function LoadItems%()
 	CreateItemTemplate("Heavy Gas Mask", "heavygasmask", ItemsPath + "gas_mask.b3d", INVPath + "INV_gas_mask.png", "", 0.02, 2)
 	
 	CreateItemTemplate("Hazmat Suit", "hazmatsuit", ItemsPath + "hazmat_suit.b3d", INVPath + "INV_hazmat_suit.png", "", 0.013, 2, "", "", 1)
+	CreateItemTemplate("Hazmat Suit", "finehazmatsuit", ItemsPath + "hazmat_suit.b3d", INVPath + "INV_hazmat_suit.png", "", 0.013, 2, "", "", 1)
 	CreateItemTemplate("Hazmat Suit", "superhazmatsuit", ItemsPath + "hazmat_suit.b3d", INVPath + "INV_hazmat_suit.png", "", 0.013, 2, "", "", 1)
 	CreateItemTemplate("Heavy Hazmat Suit", "heavyhazmatsuit", ItemsPath + "hazmat_suit.b3d", INVPath + "INV_hazmat_suit.png", "", 0.013, 2, "", "", 1)
 	

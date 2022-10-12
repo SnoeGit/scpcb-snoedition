@@ -901,7 +901,7 @@ Function UpdateGame%()
 						EndIf
 					EndIf
 				EndIf
-				If (W <> "vest" And W <> "finevest" And W <> "hazmatsuit" And W <> "superhazmatsuit" And W <> "heavyhazmatsuit") Lor V = 0.0 Lor V = 100.0
+				If (W <> "vest" And W <> "finevest" And W <> "hazmatsuit" And W <> "finehazmatsuit" And W <> "superhazmatsuit" And W <> "heavyhazmatsuit") Lor V = 0.0 Lor V = 100.0
 					If InvOpen Then
 						StopMouseMovement()
 					Else
@@ -1706,7 +1706,7 @@ Function UpdateMouseLook%()
 	
 	If wi\GasMask > 0 Lor I_1499\Using > 0 Lor wi\HazmatSuit > 0 Then
 		If (Not I_714\Using) And PlayerRoom\RoomTemplate\Name <> "dimension_106" Then
-			If wi\GasMask = 3 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.005 * fps\Factor[0])
+			If wi\GasMask = 3 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 3 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.005 * fps\Factor[0])
 			If wi\GasMask = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.002 * fps\Factor[0])
 		EndIf
 		If (Not me\Terminated) Then
@@ -1719,11 +1719,11 @@ Function UpdateMouseLook%()
 		
 		If EntityHidden(t\OverlayID[1]) Then ShowEntity(t\OverlayID[1])
 		
-		If wi\GasMask <> 2 Then
+		If wi\GasMask <> 2 And wi\HazmatSuit <> 2 And I_1499\Using <> 2 Then
 			If ChannelPlaying(BreathCHN) Then
 				wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * 2.0), 100.0)
 			Else
-				If wi\GasMask = 3 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 2 Then
+				If wi\GasMask = 3 Lor wi\HazmatSuit = 3 Then
 					If me\CurrSpeed > 0.0 And (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) Then
 						wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * 0.2), 100.0)
 					Else
@@ -2295,7 +2295,7 @@ Function UpdateGUI%()
 			If (Not mo\MouseDown1) Then
 				If MouseSlot = 66 Then
 					Select SelectedItem\ItemTemplate\TempName
-						Case "vest", "finevest", "hazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
+						Case "vest", "finevest", "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 							;[Block]
 							CreateHintMsg("Double click on this item to take it off.")
 							;[End Block]
@@ -2669,16 +2669,76 @@ Function UpdateGUI%()
 										;[End Block]
 								End Select
 								;[End Block]
-							Case "superbat", "killbat"
+							Case "superbat"
 								;[Block]
-								If SelectedItem\ItemTemplate\TempName = "killbat" Then
-									If wi\HazmatSuit <> 3 Then
-										me\LightFlash = 1.0
-										PlaySound_Strict(IntroSFX[Rand(8, 10)])
-										msg\DeathMsg = SubjectName + " found dead inside SCP-914's output booth next to what appears to be an ordinary nine-volt battery. The subject is covered in severe "
-										msg\DeathMsg = msg\DeathMsg + "electrical burns, and assumed to be killed via an electrical shock caused by the battery. The battery has been stored for further study."
-										Kill()
-									EndIf
+								Select Inventory(MouseSlot)\ItemTemplate\TempName
+									Case "nav", "nav310"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Rnd(25.0, 250.0)
+										CreateMsg("You replaced the navigator's battery.")
+										;[End Block]
+									Case "navulti", "nav300"
+										;[Block]
+										CreateMsg("There seems to be no place for batteries in this navigator.")
+										;[End Block]
+									Case "radio"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Rnd(25.0, 250.0)
+										CreateMsg("You replaced the radio's battery.")
+										;[End Block]
+									Case "18vradio"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Rnd(25.0, 250.0)
+										CreateMsg("You replaced the radio's battery.")
+										;[End Block]
+									Case "fineradio", "veryfineradio"
+										;[Block]
+										CreateMsg("There seems to be no place for batteries in this radio.")
+										;[End Block]
+									Case "nvg", "supernvg"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Rnd(250.0, 2500.0)
+										CreateMsg("You replaced the goggles' battery.")
+										;[End Block]
+									Case "finenvg"
+										;[Block]
+										CreateMsg("There seems to be no place for batteries in these goggles.")
+										;[End Block]
+									Case "scramble", "finescramble"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Rnd(250.0, 2500.0)
+										CreateMsg("You replaced the gear's battery.")
+										;[End Block]
+									Default
+										;[Block]
+										For z = 0 To MaxItemAmount - 1
+											If Inventory(z) = SelectedItem Then
+												Inventory(z) = PrevItem
+												Exit
+											EndIf
+										Next
+										Inventory(MouseSlot) = SelectedItem
+										SelectedItem = Null
+										;[End Block]
+								End Select
+								Case "killbat"
+								;[Block]
+								If wi\HazmatSuit <> 4 Then
+									me\LightFlash = 1.0
+									PlaySound_Strict(IntroSFX[Rand(8, 10)])
+									msg\DeathMsg = SubjectName + " found dead inside SCP-914's output booth next to what appears to be an ordinary nine-volt battery. The subject is covered in severe "
+									msg\DeathMsg = msg\DeathMsg + "electrical burns, and assumed to be killed via an electrical shock caused by the battery. The battery has been stored for further study."
+									Kill()
 								EndIf
 								Select Inventory(MouseSlot)\ItemTemplate\TempName
 									Case "nav", "nav310"
@@ -2767,7 +2827,7 @@ Function UpdateGUI%()
 			Select SelectedItem\ItemTemplate\TempName
 				Case "killbat"
 					;[Block]
-					If wi\HazmatSuit <> 3 Then
+					If wi\HazmatSuit <> 4 Then
 						me\LightFlash = 1.0
 						PlaySound_Strict(IntroSFX[Rand(8, 10)])
 						msg\DeathMsg = SubjectName + " found dead inside SCP-914's output booth next to what appears to be an ordinary nine-volt battery. The subject is covered in severe "
@@ -3091,7 +3151,7 @@ Function UpdateGUI%()
 					If SelectedItem\State3 = 0.0 Then
 						If SelectedItem\State = 7.0 Then
 							If I_008\Timer = 0.0 Then I_008\Timer = 1.0
-						ElseIf (Not I_714\Using) And wi\GasMask <> 3 And wi\HazmatSuit <> 3 Then
+						ElseIf (Not I_714\Using) And wi\GasMask <> 3 And wi\HazmatSuit <> 4 Then
 							I_1025\State[SelectedItem\State] = Max(1.0, I_1025\State[SelectedItem\State])
 							I_1025\State[7] = 1 + (SelectedItem\State2 = 2.0) * 2.0 ; ~ 3x as fast if VERYFINE
 						EndIf
@@ -3608,7 +3668,7 @@ Function UpdateGUI%()
 				Case "scp420j"
 					;[Block]
 					If CanUseItem(True) Then
-						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 3 Then
+						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 4 Then
 							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
 						Else
 							CreateMsg(Chr(34) + "MAN DATS SUM GOOD ASS SHIT." + Chr(34))
@@ -3623,7 +3683,7 @@ Function UpdateGUI%()
 				Case "joint"
 					;[Block]
 					If CanUseItem(True) Then
-						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 3 Then
+						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 4 Then
 							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
 						Else
 							CreateMsg(Chr(34) + "UH WHERE... WHAT WAS I DOING AGAIN... MAN I NEED TO TAKE A NAP..." + Chr(34))
@@ -3638,7 +3698,7 @@ Function UpdateGUI%()
 				Case "scp420s"
 					;[Block]
 					If CanUseItem(True) Then
-						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 3 Then
+						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 4 Then
 							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
 						Else
 							CreateMsg(Chr(34) + "UUUUUUUUUUUUHHHHHHHHHHHH..." + Chr(34))
@@ -3664,7 +3724,7 @@ Function UpdateGUI%()
 						SelectedItem = Null	
 					EndIf
 					;[End Block]
-				Case "hazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
+				Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 					;[Block]
 					If wi\BallisticVest = 0 Then
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 6.0)
@@ -3681,10 +3741,12 @@ Function UpdateGUI%()
 								If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 								If SelectedItem\ItemTemplate\TempName = "hazmatsuit" Then
 									wi\HazmatSuit = 1
-								ElseIf SelectedItem\ItemTemplate\TempName = "superhazmatsuit"
+								ElseIf SelectedItem\ItemTemplate\TempName = "finehazmatsuit"
 									wi\HazmatSuit = 2
-								Else
+								ElseIf SelectedItem\ItemTemplate\TempName = "superhazmatsuit"
 									wi\HazmatSuit = 3
+								Else 
+									wi\HazmatSuit = 4
 								EndIf
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								wi\GasMask = 0
@@ -4064,7 +4126,7 @@ Function UpdateGUI%()
 							DropItem(SelectedItem, False)
 						EndIf
 						;[End Block]
-					Case "hazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
+					Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 						;[Block]
 						SelectedItem\State = 0.0
 						If wi\HazmatSuit = 0 Then
@@ -4095,7 +4157,7 @@ Function UpdateGUI%()
 	For it.Items = Each Items
 		If it <> SelectedItem Then
 			Select it\ItemTemplate\TempName
-				Case "firstaid", "finefirstaid", "firstaid2", "vest", "finevest", "hazmatsuit", "superhazmatsuit", "heavyhazmatsuit", "scp1499", "super1499", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
+				Case "firstaid", "finefirstaid", "firstaid2", "vest", "finevest", "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit", "scp1499", "super1499", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
 					;[Block]
 					it\State = 0.0
 					;[End Block]
@@ -4168,7 +4230,7 @@ Function RenderHUD%()
 	ElseIf PlayerRoom\RoomTemplate\Name = "dimension_106" Lor I_714\Using Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor wi\HazmatSuit = 1 Lor wi\BallisticVest = 2 Lor I_409\Timer >= 55.0 Then
 		Color(200, 0, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask = 3 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 2 Lor wi\GasMask = 2
+	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask = 3 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 3 Lor wi\GasMask = 2
 		Color(0, 200, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
 	EndIf
@@ -4444,13 +4506,17 @@ Function RenderGUI%()
 						;[Block]
 						If wi\HazmatSuit = 1 Then ShouldDrawRect = True
 						;[End Block]
-					Case "superhazmatsuit"
+					Case "finehazmatsuit"
 						;[Block]
 						If wi\HazmatSuit = 2 Then ShouldDrawRect = True
 						;[End Block]
+					Case "superhazmatsuit"
+						;[Block]
+						If wi\HazmatSuit = 3 Then ShouldDrawRect = True
+						;[End Block]
 					Case "heavyhazmatsuit"
 						;[Block]"
-						If wi\HazmatSuit = 3 Then ShouldDrawRect = True	
+						If wi\HazmatSuit = 4 Then ShouldDrawRect = True	
 						;[End Block]
 					Case "vest"
 						;[Block]
@@ -4746,7 +4812,7 @@ Function RenderGUI%()
 						EndIf
 					EndIf
 					;[End Block]
-				Case "hazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
+				Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 					;[Block]
 					If wi\BallisticVest = 0 Then
 						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))

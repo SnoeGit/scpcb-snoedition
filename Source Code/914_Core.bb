@@ -315,7 +315,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Heavy Gas Mask", "gasmask3", x, y, z)
 										Exit
 										;[End Block]
-									Case "hazmatsuit", "superhazmatsuit"
+									Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit"
 										;[Block]
 										RemoveItem(it)
 										it2.Items = CreateItem("Heavy Hazmat Suit", "heavyhazmatsuit", x, y, z)
@@ -1121,7 +1121,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "hazmatsuit", "heavyhazmatsuit"
+		Case "hazmatsuit", "finehazmatsuit", "heavyhazmatsuit"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -1133,7 +1133,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[Block]
 					it2.Items = CreateItem("Hazmat Suit", "hazmatsuit", x, y, z)
 					;[End Block]
-				Case FINE, VERYFINE
+				Case FINE
+					;[Block]
+					it2.Items = CreateItem("Hazmat Suit", "finehazmatsuit", x, y, z)
+					;[End Block]
+				Case VERYFINE
 					;[Block]
 					it2.Items = CreateItem("Hazmat Suit", "superhazmatsuit", x, y, z)
 					;[End Block]

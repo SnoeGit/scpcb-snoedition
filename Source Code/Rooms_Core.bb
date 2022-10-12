@@ -3782,6 +3782,9 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\Objects[0], r\x - 1200.0 * RoomScale, r\y + 240.0 * RoomScale, r\z, True)
 			EntityParent(r\Objects[0], r\OBJ)
 			
+			it.Items = CreateItem("Level 0 Key Card", "key0", r\x - 1000.0 * RoomScale, r\y + 140.0 * RoomScale, r\z + 165.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
 			de.Decals = CreateDecal(DECAL_WATER, r\x - 711.0 * RoomScale, r\y + 0.005, r\z + 140.0 * RoomScale, 90.0, Rnd(360.0), 0.0, Rnd(0.8, 1.0), 1.0)
 			EntityParent(de\OBJ, r\OBJ)
 			

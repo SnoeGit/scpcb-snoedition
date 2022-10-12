@@ -1639,7 +1639,7 @@ Function UpdateNPCs%()
 												For i = 0 To MaxItemAmount - 1
 													If Inventory(i) <> Null Then
 														If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") Then
-															If Inventory(i)\State2 < 3.0 And wi\HazmatSuit = 3 Then
+															If Inventory(i)\State2 < 3.0 And wi\HazmatSuit = 4 Then
 																Inventory(i)\State2 = Inventory(i)\State2 + 1.0
 																TakeOffTimer = 170.0
 																me\CameraShake = 2.0
@@ -4112,7 +4112,7 @@ Function UpdateNPCs%()
 									If n\State3 < 900.0 Then
 										me\BlurTimer = Float(((Sin(MilliSecs2() / 50.0) + 1.0) * 200.0) / Sqr(Dist))
 										
-										If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 3 And Dist < 256.0 Then
+										If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 And Dist < 256.0 Then
 											If me\StaminaEffect < 1.5 Then
 												Select Rand(4)
 													Case 1
