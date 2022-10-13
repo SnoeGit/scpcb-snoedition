@@ -74,7 +74,7 @@ Else
 	Graphics3DExt(opt\GraphicWidth, opt\GraphicHeight, 0, (opt\DisplayMode = 2) + 1)
 EndIf
 
-Const VersionNumber$ = "1.1"
+Const VersionNumber$ = "1.2"
 
 AppTitle("SCP - Containment Breach Gameplay Overhaul v" + VersionNumber)
 
@@ -2782,9 +2782,7 @@ Function UpdateGUI%()
 								opt\CameraFogFar = opt\StoredCameraFogFar
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[1])
 							Else
-								wi\GasMask = 0
-								wi\SCRAMBLE = 0
-								wi\BallisticHelmet = False
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
 								CreateMsg("You put on the goggles.")
 								Select SelectedItem\ItemTemplate\TempName
 									Case "nvg"
@@ -3679,10 +3677,8 @@ Function UpdateGUI%()
 								Else 
 									wi\HazmatSuit = 4
 								EndIf
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
-								wi\GasMask = 0
-								wi\BallisticHelmet = False
-								wi\SCRAMBLE = 0
 							EndIf
 							SelectedItem\State = 0.0
 							SelectedItem = Null
@@ -3732,9 +3728,8 @@ Function UpdateGUI%()
 								CreateMsg("You removed the gas mask.")
 								wi\GasMask = 0
 							Else
-								wi\NightVision = 0
-								wi\SCRAMBLE = 0
-								wi\BallisticHelmet = False
+								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								Select SelectedItem\ItemTemplate\TempName
 									Case "gasmask"
 										;[Block]
@@ -3954,11 +3949,9 @@ Function UpdateGUI%()
 								CreateMsg("You removed the helmet.")
 								wi\BallisticHelmet = False
 							Else
-								wi\GasMask = 0
-								wi\NightVision = 0
-								wi\SCRAMBLE = 0
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = True
+								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								CreateMsg("You put on the helmet.")
-								wi\BallisticHelmet = True
 							EndIf
 							SelectedItem\State = 0.0
 							SelectedItem = Null
@@ -3977,9 +3970,8 @@ Function UpdateGUI%()
 								CreateMsg("You removed the gear.")
 								wi\SCRAMBLE = 0
 							Else
-								wi\GasMask = 0
-								wi\NightVision = 0
-								wi\BallisticHelmet = False
+								wi\GasMask = 0 : wi\BallisticHelmet = False
+								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								CreateMsg("You put on the gear.")
 								Select SelectedItem\ItemTemplate\TempName
 									Case "scramble"
