@@ -2769,7 +2769,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "nvg", "supernvg", "finenvg"
 					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 6.0)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
 						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.5), 100.0)
 						
@@ -3656,7 +3656,7 @@ Function UpdateGUI%()
 				Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 					;[Block]
 					If wi\BallisticVest = 0 Then
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 6.0)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
 						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 3.5), 100.0)
 						
@@ -3687,7 +3687,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "vest", "finevest"
 					;[Block]
-					me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 6.0)
+					me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 					
 					SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / (2.0 + (0.5 * (SelectedItem\ItemTemplate\TempName = "finevest")))), 100)
 					
@@ -3717,7 +3717,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
 					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 6.0)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
 						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0]) / 1.5, 100.0)
 						
@@ -3776,7 +3776,7 @@ Function UpdateGUI%()
 					;[Block]
 					If (Not PreventItemOverlapping(False, False, True)) Then
 						
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 6.0)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
 						SelectedItem\State = Min(SelectedItem\State + fps\Factor[0] / 1.5, 100.0)
 						
@@ -3938,7 +3938,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "helmet"
 					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 6.0)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
 						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.1), 100.0)
 						
@@ -3959,7 +3959,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scramble", "finescramble"
 					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 6.0)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
 						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.5), 100.0)
 						
@@ -4559,7 +4559,7 @@ Function RenderGUI%()
 					;[End Block]
 				Case "firstaid", "finefirstaid", "firstaid2"
 					;[Block]
-					If me\Bloodloss <> 0.0 Lor me\Injuries <> 0.0 Then
+					If me\Bloodloss <> 0.0 Lor me\Injuries <> 0.0 And wi\HazmatSuit = 0 Then
 						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
 						
 						Width = 300 * MenuScale
