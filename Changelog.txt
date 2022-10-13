@@ -5,6 +5,7 @@ General:
 - Added Fine Hazmat Suit to the game. Does not fog up and does not have the stamina cap.
 - Super SCP-1499 Gas Mask does not fog up anymore.
 - Tesla Gates do not activate on the Player if they are using No Target.
+- Partially unbuff speed buff while equipping gear.
 
 Rooms:
 
@@ -13,6 +14,7 @@ Rooms:
 Bug Fixes:
 
 - Fixed quick loading at Gate A causing a crash.
+- Fixed Camerafogfar not updating when you swapped from Night Vision Goggles.
 
 v1.1
 
