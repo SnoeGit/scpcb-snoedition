@@ -6,6 +6,10 @@ General:
 - Super SCP-1499 Gas Mask does not fog up anymore.
 - Tesla Gates do not activate on the Player if they are using No Target.
 
+Rooms:
+
+- Added a Level 0 Key Card to room2_ic(the Jim elevator)
+
 Bug Fixes:
 
 - Fixed quick loading at Gate A causing a crash.
