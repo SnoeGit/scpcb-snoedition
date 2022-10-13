@@ -2669,71 +2669,9 @@ Function UpdateGUI%()
 										;[End Block]
 								End Select
 								;[End Block]
-							Case "superbat"
+							Case "superbat", "killbat"
 								;[Block]
-								Select Inventory(MouseSlot)\ItemTemplate\TempName
-									Case "nav", "nav310"
-										;[Block]
-										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
-										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(25.0, 250.0)
-										CreateMsg("You replaced the navigator's battery.")
-										;[End Block]
-									Case "navulti", "nav300"
-										;[Block]
-										CreateMsg("There seems to be no place for batteries in this navigator.")
-										;[End Block]
-									Case "radio"
-										;[Block]
-										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
-										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(25.0, 250.0)
-										CreateMsg("You replaced the radio's battery.")
-										;[End Block]
-									Case "18vradio"
-										;[Block]
-										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
-										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(25.0, 250.0)
-										CreateMsg("You replaced the radio's battery.")
-										;[End Block]
-									Case "fineradio", "veryfineradio"
-										;[Block]
-										CreateMsg("There seems to be no place for batteries in this radio.")
-										;[End Block]
-									Case "nvg", "supernvg"
-										;[Block]
-										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
-										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(250.0, 2500.0)
-										CreateMsg("You replaced the goggles' battery.")
-										;[End Block]
-									Case "finenvg"
-										;[Block]
-										CreateMsg("There seems to be no place for batteries in these goggles.")
-										;[End Block]
-									Case "scramble", "finescramble"
-										;[Block]
-										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
-										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(250.0, 2500.0)
-										CreateMsg("You replaced the gear's battery.")
-										;[End Block]
-									Default
-										;[Block]
-										For z = 0 To MaxItemAmount - 1
-											If Inventory(z) = SelectedItem Then
-												Inventory(z) = PrevItem
-												Exit
-											EndIf
-										Next
-										Inventory(MouseSlot) = SelectedItem
-										SelectedItem = Null
-										;[End Block]
-								End Select
-								Case "killbat"
-								;[Block]
-								If wi\HazmatSuit <> 4 Then
+								If SelectedItem\ItemTemplate\TempName = "killbat" And wi\HazmatSuit <> 4 Then
 									me\LightFlash = 1.0
 									PlaySound_Strict(IntroSFX[Rand(8, 10)])
 									msg\DeathMsg = SubjectName + " found dead inside SCP-914's output booth next to what appears to be an ordinary nine-volt battery. The subject is covered in severe "
@@ -2752,14 +2690,7 @@ Function UpdateGUI%()
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in this navigator.")
 										;[End Block]
-									Case "radio"
-										;[Block]
-										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
-										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(50.0, 500.0)
-										CreateMsg("You replaced the radio's battery.")
-										;[End Block]
-									Case "18vradio"
+									Case "radio", "18vradio"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)

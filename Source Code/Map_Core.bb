@@ -1286,7 +1286,7 @@ Function PlaceMapCreatorForest%(fr.Forest, x#, y#, z#, r.Rooms)
 	fr\DetailMesh[0] = LoadMesh_Strict("GFX\map\Props\tree1.b3d")
 	fr\DetailMesh[1] = LoadMesh_Strict("GFX\map\Props\rock.b3d")
 	fr\DetailMesh[2] = LoadMesh_Strict("GFX\map\Props\tree2.b3d")
-	fr\DetailMesh[3] = LoadRMesh("GFX\map\scp_860_1_wall.rmesh", Null)
+	fr\DetailMesh[3] = LoadRMesh("GFX\map\forest\scp_860_1_wall.rmesh", Null)
 	
 	For i = ROOM1 To ROOM4
 		HideEntity(fr\TileMesh[i])

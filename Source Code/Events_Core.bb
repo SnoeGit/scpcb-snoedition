@@ -2957,7 +2957,7 @@ Function UpdateEvents%()
 							For i = 0 To 2
 								If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[i], True), EntityZ(me\Collider), EntityZ(e\room\Objects[i], True)) < PowTwo(300.0 * RoomScale) Then
 									; ~ Play the activation sound
-									If (Not me\Terminated) Then
+									If (Not me\Terminated) And (Not chs\NoTarget) Then
 										ActivateTesla = True
 										Exit
 									EndIf

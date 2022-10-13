@@ -1,8 +1,14 @@
 v1.2
 
-- Added Fine Hazmat Suit to the game. Does not fog up or have the stamina cap.
+General:
+
+- Added Fine Hazmat Suit to the game. Does not fog up and does not have the stamina cap.
 - Super SCP-1499 Gas Mask does not fog up anymore.
-- 999v Battery has nerfed charge but Strange Battery is unchanged.
+- Tesla Gates do not activate on the Player if they are using No Target.
+
+Bug Fixes:
+
+- Fixed quick loading at Gate A causing a crash.
 
 v1.1
 
@@ -24,7 +30,7 @@ Bug Fixes:
 
 - SCP-096 no longer loops his standing scream animation when SCP-106 is captured.
 - Fixed SCP-106 not taking you to his pocket dimension. lmao
-- SCP-895's coffin if approached when the room spawned next to Entrance zone no longer spawns the MTF.
+- SCP-895's coffin if approached when the room spawned next to Entrance Zone no longer spawns the MTF.
 - SCP-409's chamber no longer has dark grey fog if the room spawned next to Light Containment Zone.
 - Only Cake or having more than 10 inventory slots prevents the user from having achievements in Esoteric.
 
