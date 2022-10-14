@@ -2461,8 +2461,8 @@ Function UpdateEvents%()
 							RemoveEvent(e)
 						EndIf						
 					EndIf
+					If	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then CanSave = False
 				EndIf
-				If	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then CanSave = False
 				;[End Block]
 			Case e_gate_a_entrance
 				;[Block]
@@ -2515,8 +2515,8 @@ Function UpdateEvents%()
 							RemoveEvent(e)
 						EndIf						
 					EndIf
+					If	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then CanSave = False
 				EndIf
-				If	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then CanSave = False
 				;[End Block]
 			Case e_room2c_gw_lcz_173
 				;[Block]
