@@ -1858,6 +1858,7 @@ Function UpdateFog%()
 				If forest_event\room\NPC[0] <> Null Then
 					If forest_event\room\NPC[0]\State >= 2.0 Then
 						CurrFogColor = FogColorForestChase
+						CanSave = False
 					Else
 						CurrFogColor = FogColorForest
 					EndIf

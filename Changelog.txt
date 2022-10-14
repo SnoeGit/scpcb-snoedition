@@ -6,6 +6,7 @@ General:
 - Super SCP-1499 Gas Mask does not fog up anymore.
 - Tesla Gates do not activate on the Player if they are using No Target.
 - Partially unbuff speed buff while equipping gear.
+- Can no longer save inside the gate elevators to prevent people from locking a save to an ending.
 
 Rooms:
 

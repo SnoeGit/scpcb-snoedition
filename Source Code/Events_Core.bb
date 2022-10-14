@@ -2462,6 +2462,7 @@ Function UpdateEvents%()
 						EndIf						
 					EndIf
 				EndIf
+				If	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then CanSave = False
 				;[End Block]
 			Case e_gate_a_entrance
 				;[Block]
@@ -2515,6 +2516,7 @@ Function UpdateEvents%()
 						EndIf						
 					EndIf
 				EndIf
+				If	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then CanSave = False
 				;[End Block]
 			Case e_room2c_gw_lcz_173
 				;[Block]
@@ -7142,7 +7144,6 @@ Function UpdateEvents%()
 							EndIf
 							
 							If e\EventState > 70.0 * 3.0 Then
-							CanSave = True
 								Select Setting
 									Case ROUGH
 										;[Block]
@@ -7172,13 +7173,13 @@ Function UpdateEvents%()
 							EndIf
 						EndIf
 						
-						If e\EventState > 70.0 * 6.0 Then	
+						If e\EventState > 70.0 * 6.0 Then
 							RotateEntity(e\room\Objects[0], EntityPitch(e\room\Objects[0]), EntityYaw(e\room\Objects[0]), CurveAngle(0.0, EntityRoll(e\room\Objects[0]), 10.0))
 						Else
 							RotateEntity(e\room\Objects[0], EntityPitch(e\room\Objects[0]), EntityYaw(e\room\Objects[0]), 180.0)
 						EndIf
 						
-						If e\EventState > 70.0 * 12.0 Then							
+						If e\EventState > 70.0 * 12.0 Then
 							For it.Items = Each Items
 								If it\Collider <> 0 And (Not it\Picked) Then
 									If DistanceSquared(EntityX(it\Collider), EntityX(e\room\Objects[2], True), EntityZ(it\Collider), EntityZ(e\room\Objects[2], True)) < PowTwo(180.0 * RoomScale) Then
