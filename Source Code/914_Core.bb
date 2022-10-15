@@ -355,7 +355,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "firstaid", "firstaid2", "finefirstaid", "veryfinefirstaid"
+		Case "firstaid", "bluefirstaid", "finefirstaid", "veryfinefirstaid"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -366,7 +366,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case ONETOONE
 					;[Block]
 					If Rand(2) = 1 Then
-						it2.Items = CreateItem("Blue First Aid Kit", "firstaid2", x, y, z)
+						it2.Items = CreateItem("Blue First Aid Kit", "bluefirstaid", x, y, z)
 					Else
 						it2.Items = CreateItem("First Aid Kit", "firstaid", x, y, z)
 					EndIf
@@ -1095,7 +1095,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "eyedrops", "eyedrops2", "fineeyedrops", "supereyedrops"
+		Case "eyedrops", "redeyedrops", "fineeyedrops", "supereyedrops"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -1105,10 +1105,10 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					If Rand(2) = 1 Then
+					If SelectedItem\ItemTemplate\TempName <> "eyedrops" Then
 						it2.Items = CreateItem("ReVision Eyedrops", "eyedrops", x, y, z)
 					Else
-						it2.Items = CreateItem("RedVision Eyedrops", "eyedrops2", x, y, z)
+						it2.Items = CreateItem("RedVision Eyedrops", "redeyedrops", x, y, z)
 					EndIf
 					;[End Block]
 				Case FINE
@@ -1201,7 +1201,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Blue First Aid Kit", "firstaid2", x, y, z)
+					it2.Items = CreateItem("Blue First Aid Kit", "bluefirstaid", x, y, z)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
@@ -1218,7 +1218,8 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 			Select Setting
 				Case ROUGH, COARSE
 					;[Block]
-					it2.Items = CreateItem("Electronical Components", "electronics", x, y, z)	
+					de.Decals = CreateDecal(DECAL_CORROSIVE_1, x, 8.0 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.07)
+					EntityParent(de\OBJ, PlayerRoom\OBJ)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
@@ -1258,7 +1259,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case VERYFINE
 					;[Block]
 					If Rand(4) = 1 Then
-						it2.Items = CreateItem("Blue First Aid Kit", "firstaid2", x, y, z)
+						it2.Items = CreateItem("Blue First Aid Kit", "bluefirstaid", x, y, z)
 					Else
 						it2.Items = CreateItem("Syringe", "finesyringe", x, y, z)
 					EndIf

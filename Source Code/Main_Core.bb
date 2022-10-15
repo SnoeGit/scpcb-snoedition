@@ -1332,7 +1332,7 @@ Function UpdateMoving%()
 				If me\ForceMove > 0.0 Then Speed = Speed * me\ForceMove
 				
 				If SelectedItem <> Null Then
-					If (SelectedItem\ItemTemplate\TempName = "firstaid" Lor SelectedItem\ItemTemplate\TempName = "finefirstaid" Lor SelectedItem\ItemTemplate\TempName = "firstaid2") And wi\HazmatSuit = 0 Then
+					If (SelectedItem\ItemTemplate\TempName = "firstaid" Lor SelectedItem\ItemTemplate\TempName = "finefirstaid" Lor SelectedItem\ItemTemplate\TempName = "bluefirstaid") And wi\HazmatSuit = 0 Then
 						Sprint = 0.0
 					EndIf
 				EndIf
@@ -1379,7 +1379,7 @@ Function UpdateMoving%()
 				Sprint = 0.5
 			EndIf
 		EndIf
-		If KeyHit(key\CROUCH) And me\Playable And (Not me\Zombie) And me\Bloodloss < 60.0 And I_427\Timer < 70.0 * 390.0 And (Not chs\NoClip) And (SelectedItem = Null Lor (SelectedItem\ItemTemplate\TempName <> "firstaid" And SelectedItem\ItemTemplate\TempName <> "finefirstaid" And SelectedItem\ItemTemplate\TempName <> "firstaid2")) Then 
+		If KeyHit(key\CROUCH) And me\Playable And (Not me\Zombie) And me\Bloodloss < 60.0 And I_427\Timer < 70.0 * 390.0 And (Not chs\NoClip) And (SelectedItem = Null Lor (SelectedItem\ItemTemplate\TempName <> "firstaid" And SelectedItem\ItemTemplate\TempName <> "finefirstaid" And SelectedItem\ItemTemplate\TempName <> "bluefirstaid")) Then 
 			SetCrouch((Not me\Crouch))
 		EndIf
 		
@@ -2799,7 +2799,6 @@ Function UpdateGUI%()
 										wi\NightVision = 3
 										;[End Block]
 								End Select
-								opt\StoredCameraFogFar = opt\CameraFogFar
 								opt\CameraFogFar = 30.0
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[0])
 							EndIf
@@ -2937,7 +2936,7 @@ Function UpdateGUI%()
 						RemoveItem(SelectedItem)
 					EndIf
 					;[End Block]
-				Case "firstaid", "finefirstaid", "firstaid2"
+				Case "firstaid", "finefirstaid", "bluefirstaid"
 					;[Block]
 					If CanUseItem(True, True) Then
 					If me\Bloodloss = 0.0 And me\Injuries = 0.0 Then
@@ -2988,7 +2987,7 @@ Function UpdateGUI%()
 									EndIf
 								EndIf
 								
-								If SelectedItem\ItemTemplate\TempName = "firstaid2" Then 
+								If SelectedItem\ItemTemplate\TempName = "bluefirstaid" Then 
 									Select Rand(6)
 										Case 1
 											;[Block]
@@ -3030,12 +3029,13 @@ Function UpdateGUI%()
 					EndIf
 					EndIf
 					;[End Block]
-				Case "eyedrops", "eyedrops2"
+				Case "eyedrops", "redeyedrops"
 					;[Block]
-					If CanUseItem(False) Then
+					If CanUseItem() Then
 						me\BlinkEffect = 0.6
 						me\BlinkEffectTimer = Rnd(20.0, 30.0)
 						me\BlurTimer = 200.0
+						If SelectedItem\ItemTemplate\TempName = "redeyedrops" Then me\Bloodloss = Max(me\Bloodloss - 10.0, 0.0)
 						
 						CreateMsg("You used the eyedrops. Your eyes feel moisturized.")
 						
@@ -3044,7 +3044,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "fineeyedrops"
 					;[Block]
-					If CanUseItem(False) Then
+					If CanUseItem() Then
 						me\BlinkEffect = 0.4
 						me\BlinkEffectTimer = Rnd(30.0, 40.0)
 						me\Bloodloss = Max(me\Bloodloss - 1.0, 0.0)
@@ -3057,7 +3057,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "supereyedrops"
 					;[Block]
-					If CanUseItem(False) Then
+					If CanUseItem() Then
 						me\BlinkEffect = 0.0
 						me\BlinkEffectTimer = 60.0
 						me\EyeStuck = 10000.0
@@ -3911,6 +3911,8 @@ Function UpdateGUI%()
 					If CanUseItem(True) Then
 						CreateMsg("You swallowed the pill.")
 						
+						I_1025\State[0] = 0.0
+						
 						RemoveItem(SelectedItem)
 					EndIf	
 					;[End Block]
@@ -4039,7 +4041,7 @@ Function UpdateGUI%()
 			
 			If mo\MouseHit2 Then
 				Select SelectedItem\ItemTemplate\TempName
-					Case "firstaid", "finefirstaid", "firstaid2", "scp1499", "super1499", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
+					Case "firstaid", "finefirstaid", "bluefirstaid", "scp1499", "super1499", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
 						;[Block]
 						SelectedItem\State = 0.0
 						;[End Block]
@@ -4081,7 +4083,7 @@ Function UpdateGUI%()
 	For it.Items = Each Items
 		If it <> SelectedItem Then
 			Select it\ItemTemplate\TempName
-				Case "firstaid", "finefirstaid", "firstaid2", "vest", "finevest", "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit", "scp1499", "super1499", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
+				Case "firstaid", "finefirstaid", "bluefirstaid", "vest", "finevest", "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit", "scp1499", "super1499", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
 					;[Block]
 					it\State = 0.0
 					;[End Block]
@@ -4558,7 +4560,7 @@ Function RenderGUI%()
 					;[Block]
 					DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
 					;[End Block]
-				Case "firstaid", "finefirstaid", "firstaid2"
+				Case "firstaid", "finefirstaid", "bluefirstaid"
 					;[Block]
 					If me\Bloodloss <> 0.0 Lor me\Injuries <> 0.0 And wi\HazmatSuit = 0 Then
 						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))

@@ -1,3 +1,14 @@
+v1.3
+
+General:
+
+- Pill can cure the Common Cold.
+- Redvision Eyedrops restore Blood Loss.
+
+Bug Fixes:
+
+- Fixed Night Vision Goggles Camerafogfar being permenant when swapping between different Night Vision Goggles. ~ Thanks Yomama
+
 v1.2
 
 General:

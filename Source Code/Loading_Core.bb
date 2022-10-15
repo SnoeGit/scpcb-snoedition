@@ -832,11 +832,11 @@ Function LoadItems%()
 	CreateItemTemplate("ReVision Eyedrops", "eyedrops", ItemsPath + "eye_drops.b3d", INVPath + "INV_eye_drops.png", "", 0.0012, 1)
 	CreateItemTemplate("Eyedrops", "fineeyedrops", ItemsPath + "eye_drops.b3d", INVPath + "INV_eye_drops.png", "", 0.0012, 1)
 	CreateItemTemplate("Eyedrops", "supereyedrops", ItemsPath + "eye_drops.b3d", INVPath + "INV_eye_drops.png", "", 0.0012, 1)
-	CreateItemTemplate("RedVision Eyedrops", "eyedrops2", ItemsPath + "eye_drops.b3d", INVPath + "INV_eye_drops_red.png", "", 0.0012, 1, ItemsPath + "eye_drops_red.png")
+	CreateItemTemplate("RedVision Eyedrops", "redeyedrops", ItemsPath + "eye_drops.b3d", INVPath + "INV_eye_drops_red.png", "", 0.0012, 1, ItemsPath + "eye_drops_red.png")
 	
 	CreateItemTemplate("First Aid Kit", "firstaid", ItemsPath + "first_aid_kit.b3d", INVPath + "INV_first_aid_kit.png", "", 0.05, 1)
 	CreateItemTemplate("Compact First Aid Kit", "finefirstaid", ItemsPath + "first_aid_kit.b3d", INVPath + "INV_first_aid_kit.png", "", 0.03, 1)
-	CreateItemTemplate("Blue First Aid Kit", "firstaid2", ItemsPath + "first_aid_kit.b3d", INVPath + "INV_first_aid_kit(2).png", "", 0.03, 1, ItemsPath + "first_aid_kit(2).png")
+	CreateItemTemplate("Blue First Aid Kit", "bluefirstaid", ItemsPath + "first_aid_kit.b3d", INVPath + "INV_first_aid_kit(2).png", "", 0.03, 1, ItemsPath + "first_aid_kit(2).png")
 	CreateItemTemplate("Strange Bottle", "veryfinefirstaid", ItemsPath + "eye_drops.b3d", INVPath + "INV_strange_bottle.png", "", 0.002, 1, ItemsPath + "strange_bottle.png")	
 	
 	CreateItemTemplate("Gas Mask", "gasmask", ItemsPath + "gas_mask.b3d", INVPath + "INV_gas_mask.png", "", 0.019, 2)
