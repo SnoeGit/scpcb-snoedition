@@ -7074,6 +7074,9 @@ Function MoveToPocketDimension%()
 			me\BlinkTimer = -10.0 : me\FallTimer = 0.0 : me\DropSpeed = 0.0
 			InjurePlayer(0.5, 0.0, 1600.0)
 			
+			wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+			If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
+			
 			Exit
 		EndIf
 	Next		

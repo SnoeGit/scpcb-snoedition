@@ -8755,7 +8755,7 @@ Function UpdateDimension106%()
 										TeleportEntity(me\Collider, EntityX(r\Objects[0], True), 0.6, EntityZ(r\Objects[0], True), 0.3, True)
 										TeleportToRoom(r)
 										
-										n_I\Curr106\State = 10000.0 : n_I\Curr106\Idle = 0
+										n_I\Curr106\State = 12000.0 : n_I\Curr106\Idle = 0
 										
 										de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(r\Objects[0], True), EntityY(r\Objects[0], True), EntityZ(r\Objects[0], True), 270.0, Rnd(360.0), 0.0)
 										EntityParent(de\OBJ, e\room\OBJ)
