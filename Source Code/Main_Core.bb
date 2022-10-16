@@ -2780,6 +2780,7 @@ Function UpdateGUI%()
 								If (wi\NightVision = 1 And SelectedItem\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And SelectedItem\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And SelectedItem\ItemTemplate\TempName = "finenvg") Then
 								CreateMsg("You removed the goggles.")
 								wi\NightVision = 0
+								wi\NVGTimer = 600.0
 								opt\CameraFogFar = opt\StoredCameraFogFar
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[1])
 							Else
