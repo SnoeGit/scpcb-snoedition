@@ -2,12 +2,14 @@ v1.3
 
 General:
 
-- Pill can cure the Common Cold.
-- Redvision Eyedrops restore Blood Loss.
+- Pill can now cure the Common Cold.
+- Redvision Eyedrops restore 10.0 units of Blood Loss.
+- NVG Timer resets when NVG's are not worn.
 
 Bug Fixes:
 
-- Fixed Night Vision Goggles Camerafogfar being permenant when swapping between different Night Vision Goggles. ~ Thanks Yomama
+- Fixed Night Vision Goggles Camerafogfar being permenant when swapping between different Night Vision Goggles. - Thanks Yomama for the fix
+- Fixed Gates crashing again. - Thanks TheHappyHammer for the crash reports
 
 v1.2
 

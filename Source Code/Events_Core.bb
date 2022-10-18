@@ -2459,9 +2459,10 @@ Function UpdateEvents%()
 							gateb\RoomDoors[1]\Locked = 1
 							PlayerRoom = gateb
 							RemoveEvent(e)
+						ElseIf	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then
+							CanSave = False
 						EndIf						
 					EndIf
-					If	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then CanSave = False
 				EndIf
 				;[End Block]
 			Case e_gate_a_entrance
@@ -2513,9 +2514,10 @@ Function UpdateEvents%()
 							gatea\RoomDoors[1]\Locked = 1
 							PlayerRoom = gatea
 							RemoveEvent(e)
+						ElseIf	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then
+							CanSave = False
 						EndIf						
 					EndIf
-					If	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then CanSave = False
 				EndIf
 				;[End Block]
 			Case e_room2c_gw_lcz_173
@@ -8749,7 +8751,7 @@ Function UpdateDimension106%()
 										PrevSecondaryLightOn = 0.0
 										
 										me\BlinkTimer = -10.0 : me\LightBlink = 5.0 : me\BlurTimer = 1500.0
-										If wi\NightVision > 0 Then opt\CameraFogFar = 29.0
+										If wi\NightVision > 0 Then opt\CameraFogFar = 28.0
 										
 										PlaySound_Strict(LoadTempSound("SFX\Room\PocketDimension\Exit.ogg"))
 										

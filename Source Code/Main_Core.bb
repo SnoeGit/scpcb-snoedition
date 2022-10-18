@@ -2800,7 +2800,7 @@ Function UpdateGUI%()
 										wi\NightVision = 3
 										;[End Block]
 								End Select
-								If PlayerRoom\RoomTemplate\Name <> "dimension_106" Then opt\CameraFogFar = 29.0
+								If PlayerRoom\RoomTemplate\Name <> "dimension_106" Then opt\CameraFogFar = 28.0
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[0])
 							EndIf
 							SelectedItem\State3 = 0.0
