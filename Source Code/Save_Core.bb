@@ -167,6 +167,8 @@ Function SaveGame%(File$)
 	
 	WriteFloat(f, MTFTimer)
 	
+	WriteFloat(f, PostChamber)
+	
 	WriteFloat(f, TakeOffTimer)
 	
 	For x = 0 To MapGridSize
@@ -656,6 +658,8 @@ Function LoadGame%(File$)
 	I_294\Using = ReadByte(f)
 	
 	MTFTimer = ReadFloat(f)
+	
+	PostChamber = ReadFloat(f)
 	
 	TakeOffTimer = ReadFloat(f)
 	
@@ -1540,6 +1544,8 @@ Function LoadGameQuick%(File$)
 	I_294\Using = ReadByte(f)
 	
 	MTFTimer = ReadFloat(f)
+	
+	PostChamber = ReadFloat(f)
 	
 	TakeOffTimer = ReadFloat(f)
 	

@@ -459,26 +459,30 @@ Function LoadOptionsINI%()
 	
 	opt\ParticleAmount = GetINIInt(OptionFile, "Graphics", "Particle Amount", 2)
 	
-	opt\TextureDetails = GetINIInt(OptionFile, "Graphics", "Texture Details", 4)
+	opt\TextureDetails = GetINIInt(OptionFile, "Graphics", "Texture Details", 5)
 	
 	Select opt\TextureDetails
 		Case 0
 			;[Block]
-			opt\TextureDetailsLevel = 0.8
+			opt\TextureDetailsLevel = 1.2
 			;[End Block]
 		Case 1
 			;[Block]
-			opt\TextureDetailsLevel = 0.4
+			opt\TextureDetailsLevel = 0.8
 			;[End Block]
 		Case 2
 			;[Block]
-			opt\TextureDetailsLevel = 0.0
+			opt\TextureDetailsLevel = 0.4
 			;[End Block]
 		Case 3
 			;[Block]
-			opt\TextureDetailsLevel = -0.4
+			opt\TextureDetailsLevel = 0.0
 			;[End Block]
 		Case 4
+			;[Block]
+			opt\TextureDetailsLevel = -0.4
+			;[End Block]
+		Case 5
 			;[Block]
 			opt\TextureDetailsLevel = -0.8
 			;[End Block]
@@ -745,7 +749,7 @@ Function ResetOptionsINI%()
 	
 	opt\ParticleAmount = 2
 	
-	opt\TextureDetails = 4
+	opt\TextureDetails = 5
 	
 	opt\SaveTexturesInVRAM = True
 	

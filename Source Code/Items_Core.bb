@@ -741,7 +741,7 @@ Function CanUseItem%(CanUseWithEyewear% = False, CanUseWithGasMask% = False, Can
 End Function
 
 ; ~ Maybe re-work?
-Function PreventItemOverlapping%(GasMask% = False, NVG% = False, SCP1499% = False, Helmet% = False, SCRAMBLE% = False, HAZMAT% = False)
+Function PreventItemOverlapping%(SCP1499% = False, HAZMAT% = False)
 	If SCP1499 And wi\GasMask > 0 Then
 		CreateMsg("You need to take off the gas mask in order to use SCP-1499.")
 		SelectedItem = Null

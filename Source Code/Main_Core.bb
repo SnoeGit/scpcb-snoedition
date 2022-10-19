@@ -628,6 +628,8 @@ Function UpdateGame%()
 			me\RestoreSanity = True
 			ShouldEntitiesFall = True
 			
+			If n_I\Curr049 <> Null Then PostChamber = False
+			
 			If PlayerRoom\RoomTemplate\Name <> "dimension_1499" Then UpdateSecurityCams()
 			ShouldPlay = Min(me\Zone, 2.0)
 		If PlayerRoom\RoomTemplate\Name <> "dimension_106" And PlayerRoom\RoomTemplate\Name <> "gate_b" And PlayerRoom\RoomTemplate\Name <> "gate_a" Then 
@@ -1851,7 +1853,7 @@ Function UpdateFog%()
 					Exit
 				EndIf
 			Next
-		ElseIf PlayerRoom\RoomTemplate\Name = "room2_mt" And (EntityY(me\Collider, True) >= 8.0 And EntityY(me\Collider, True) <= 12.0) Lor (PlayerRoom\RoomTemplate\Name = "cont2_409" And EntityY(me\Collider) < -3728.0 * RoomScale) Lor (PlayerRoom\RoomTemplate\Name = "cont1_895" And EntityY(me\Collider) < -1200.0 * RoomScale) Then
+		ElseIf (PlayerRoom\RoomTemplate\Name = "room2_mt" And (EntityY(me\Collider, True) >= 8.0 And EntityY(me\Collider, True) <= 12.0)) Lor (PlayerRoom\RoomTemplate\Name = "cont2_409" And EntityY(me\Collider) < -3728.0 * RoomScale) Lor (PlayerRoom\RoomTemplate\Name = "cont1_895" And EntityY(me\Collider) < -1200.0 * RoomScale) Then
 			CurrFogColor = FogColorHCZ
 		ElseIf forest_event <> Null
 			If forest_event\EventState = 1.0 Then
@@ -3776,7 +3778,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp1499", "super1499"
 					;[Block]
-					If (Not PreventItemOverlapping(False, False, True)) Then
+					If (Not PreventItemOverlapping(True)) Then
 						
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
@@ -4545,7 +4547,7 @@ Function RenderGUI%()
 			Select SelectedItem\ItemTemplate\TempName
 				Case "nvg", "supernvg", "finenvg"
 					;[Block]
-					If (Not PreventItemOverlapping(False, True)) Then
+					If (Not PreventItemOverlapping()) Then
 						
 						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
 						
@@ -4765,7 +4767,7 @@ Function RenderGUI%()
 					;[End Block]
 				Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
 					;[Block]
-					If (Not PreventItemOverlapping(True)) Then
+					If (Not PreventItemOverlapping()) Then
 						
 						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
 						
@@ -4954,7 +4956,7 @@ Function RenderGUI%()
 					;[End Block]
 				Case "scp1499", "super1499"
 					;[Block]
-					If (Not PreventItemOverlapping(False, False, True)) Then
+					If (Not PreventItemOverlapping(True)) Then
 						
 						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
 						
@@ -4979,7 +4981,7 @@ Function RenderGUI%()
 					;[End Block]
 				Case "helmet"
 					;[Block]
-					If (Not PreventItemOverlapping(False, False, False, True)) Then
+					If (Not PreventItemOverlapping()) Then
 						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
 						
 						Width = 300 * MenuScale
@@ -4992,7 +4994,7 @@ Function RenderGUI%()
 					;[End Block]
 				Case "scramble", "finescramble"
 					;[Block]
-					If (Not PreventItemOverlapping(False, False, False, False, True)) Then
+					If (Not PreventItemOverlapping()) Then
 						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
 						
 						Width = 300 * MenuScale

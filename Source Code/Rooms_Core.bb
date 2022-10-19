@@ -1743,6 +1743,7 @@ Function FillRoom%(r.Rooms)
 			r\Objects[8] = LoadMesh_Strict("GFX\map\hcz\room2_servers_hcz_hb.b3d", r\OBJ)
 			EntityPickMode(r\Objects[8], 2)
 			EntityAlpha(r\Objects[8], 0.0)
+			HideEntity(r\Objects[8])
 			;[End Block]
 		Case "room3_2_ez"
 			;[Block]
