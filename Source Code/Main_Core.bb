@@ -2525,6 +2525,10 @@ Function UpdateGUI%()
 										Inventory(MouseSlot)\State = Rnd(500.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
+									Case "finescramble"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside this gear.")
+										;[End Block]
 									Default
 										;[Block]
 										For z = 0 To MaxItemAmount - 1
@@ -2588,6 +2592,10 @@ Function UpdateGUI%()
 										RemoveItem(SelectedItem)
 										Inventory(MouseSlot)\State = Rnd(100.0, 1000.0)
 										CreateMsg("You replaced the gear's battery.")
+										;[End Block]
+									Case "finescramble"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside this gear.")
 										;[End Block]
 									Default
 										;[Block]
