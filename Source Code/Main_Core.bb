@@ -3670,18 +3670,30 @@ Function UpdateGUI%()
 								wi\HazmatSuit = 0
 								DropItem(SelectedItem)
 							Else
-								CreateMsg("You put on the hazmat suit.")
 								If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
-								If SelectedItem\ItemTemplate\TempName = "hazmatsuit" Then
-									wi\HazmatSuit = 1
-								ElseIf SelectedItem\ItemTemplate\TempName = "finehazmatsuit"
-									wi\HazmatSuit = 2
-								ElseIf SelectedItem\ItemTemplate\TempName = "superhazmatsuit"
-									wi\HazmatSuit = 3
-								Else 
-									wi\HazmatSuit = 4
-								EndIf
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+								Select SelectedItem\ItemTemplate\TempName
+									Case "hazmatsuit"
+										;[Block]
+										wi\HazmatSuit = 1
+										CreateMsg("You put on the hazmat suit.")
+										;[End Block]
+									Case "finehazmatsuit"
+										;[Block]
+										wi\HazmatSuit = 2
+										CreateMsg("You put on the hazmat suit. The air feels dry to breathe.")
+										;[End Block]
+									Case "superhazmatsuit"
+										;[Block]
+										wi\HazmatSuit = 3
+										CreateMsg("You put on the hazmat suit and you can breathe easier.")
+										;[End Block]
+									Case "heavyhazmatsuit"
+										;[Block]
+										wi\HazmatSuit = 4
+										CreateMsg("You put on the hazmat suit.")
+										;[End Block]
+								End Select
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_427\Using = False : I_714\Using = False
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 							EndIf
 							SelectedItem\State = 0.0

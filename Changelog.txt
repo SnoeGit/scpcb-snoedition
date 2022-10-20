@@ -5,11 +5,17 @@ General:
 - Pill can now cure the Common Cold.
 - Redvision Eyedrops restore 10.0 units of Blood Loss.
 - NVG Timer resets when NVG's are not worn.
+- Wearing NVGs now points the player's screen to the coffin and not a random point of the room.
+- Radio Static is quieter.
+- You can no longer have SCP-714 and SCP-427 equipped with the Hazmat Suit if you wore them before putting on the Hazmat Suit.
+- Unique message for each Hazmat Suit like the Gas Mask.
 
 Bug Fixes:
 
 - Fixed Night Vision Goggles Camerafogfar being permenant when swapping between different Night Vision Goggles. - Thanks Yomama for the fix
 - Fixed Gates crashing again. - Thanks TheHappyHammer for the crash reports
+- SCP-049 can no longer transfer his ability to open Level 3 Key Card doors through saves. If only his teleport behind you bullshit could be fixed :(
+- Default and resetting LOD levels should be correct now.
 
 v1.2
 
@@ -167,13 +173,15 @@ Rooms:
 - HCZ to EZ Checkpoint Gates Key Card Door level reduced from 5 to 4.
 - Can no longer save your game while in the Pocket Dimension.
 
-v1.0.31 (by Ultimate Edition Reborn)
+Some changes from the 1.0.4 update may be missing in the Gameplay Overhaul mod.
+v1.0.4 (Ultimate Edition Reborn)
 
 General:
 - Added a new feature that allows the player name a savegame with non-latin characters, like chinese, russian and etc.
 - Added «Home» key, «End» key, «Delete» key and «Insert» key to switch insert mode. Abilty to hold left/right arrow to fast move cursor. Implement of Ctrl+C and Ctrl+V.
 - Added a hitbox in "room2_servers_hcz" preventing SCP-096 to be triggered through the bloody windows.
 - Added some folders organization.
+- Added language selection.
 
 - Finally made the «Bright mode» similar to original game.
 
@@ -196,6 +204,9 @@ Menu:
 
 - Removed extra spacing in credits.
 
+NPCs:
+- Hazmat suit and SCP-714 now fall to the ground when removed by SCP-049.
+
 Map Creator:
 - Made the Map Creator to be compatible with latest BlitzPlus version.
 
@@ -209,9 +220,13 @@ Bug fixes:
 - Fixed non-latin characters in loading screens not showing correctly.
 - Fixed checkpoint monitors not turning at all.
 - Fixed wrong textures for Class-D model in «room2_nuke» and «room3_2_hcz».
+- Fixed grammar a little bit.
+- Fixed an ability to pick up items when you died.
+- Fixed SCP-049 removing a hazmat suit and SCP-714 at the same time.
 
 - Tiny fix for dead guard position in the starting location.
 - Tiny fix for map generation.
+- Tiny fix for keypad slots.
 
 v1.0.3
 
