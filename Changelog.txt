@@ -9,6 +9,8 @@ General:
 - Radio Static is quieter.
 - You can no longer have SCP-714 and SCP-427 equipped with the Hazmat Suit if you wore them before putting on the Hazmat Suit.
 - Unique message for each Hazmat Suit like the Gas Mask.
+- Fine SCRAMBLE now has a message for the 9V + 4.5V batteries not fitting in them.
+- Added another SCRAMBLE gear upgrade from SCP-914.
 
 Bug Fixes:
 
@@ -77,7 +79,7 @@ General:
 - Compact First Aid Kit use time is quicker.
 - Adjusted how Key Cards were obtained in SCP-914 from Mastercards and Playing Cards.
 - Blue Night Vision Goggles now display names of SCP-860-2, SCP-1499-1, and Tentacle instead of unknown.
-- Fine Scramble Gear has been added to the game.
+- Fine SCRAMBLE Gear has been added to the game.
 - Super Battery have reduced charge 10000 -> 5000/ 1000 -> 500
 - Rework how battery drains.
 - Strange bottle can now infect you with either 008 or 409.
