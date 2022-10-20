@@ -16,6 +16,7 @@ Bug Fixes:
 - Fixed Gates crashing again. - Thanks TheHappyHammer for the crash reports
 - SCP-049 can no longer transfer his ability to open Level 3 Key Card doors through saves. If only his teleport behind you bullshit could be fixed :(
 - Default and resetting LOD levels should be correct now.
+- Fixed an FOV related graphical bug involving the access codes for doors. - Fix from TheHappyJammer's FOV mod
 
 v1.2
 
