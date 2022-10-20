@@ -2339,7 +2339,7 @@ Function UpdateGUI%()
 								InvOpen = False
 							EndIf
 							;[End Block]
-						Case "scramble", "finescramble", "killscramble"
+						Case "scramble", "finescramble"
 							;[Block]
 							If wi\SCRAMBLE > 0 Then
 								CreateHintMsg("Double click on this item to take it off.")
@@ -2525,10 +2525,6 @@ Function UpdateGUI%()
 										Inventory(MouseSlot)\State = Rnd(500.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
-									Case "finescramble", "killscramble"
-										;[Block]
-										CreateMsg("The battery doesn't fit inside this gear.")
-										;[End Block]
 									Default
 										;[Block]
 										For z = 0 To MaxItemAmount - 1
@@ -2593,10 +2589,6 @@ Function UpdateGUI%()
 										Inventory(MouseSlot)\State = Rnd(100.0, 1000.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
-									Case "finescramble", "killscramble"
-										;[Block]
-										CreateMsg("The battery doesn't fit inside this gear.")
-										;[End Block]
 									Default
 										;[Block]
 										For z = 0 To MaxItemAmount - 1
@@ -2657,7 +2649,7 @@ Function UpdateGUI%()
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in these goggles.")
 										;[End Block]
-									Case "scramble", "killscramble"
+									Case "scramble"
 										;[Block]
 										CreateMsg("The battery doesn't fit inside this gear.")
 										;[End Block]
@@ -2730,10 +2722,6 @@ Function UpdateGUI%()
 										RemoveItem(SelectedItem)
 										Inventory(MouseSlot)\State = Rnd(500.0, 5000.0)
 										CreateMsg("You replaced the gear's battery.")
-										;[End Block]
-									Case "killscramble"
-										;[Block]
-										CreateMsg("The battery doesn't fit inside this gear.")
 										;[End Block]
 									Default
 										;[Block]
@@ -3988,7 +3976,7 @@ Function UpdateGUI%()
 							SelectedItem = Null
 						EndIf
 					;[End Block]
-				Case "scramble", "finescramble", "killscramble"
+				Case "scramble", "finescramble"
 					;[Block]
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
@@ -4012,13 +4000,6 @@ Function UpdateGUI%()
 									Case "finescramble"
 										;[Block]
 										wi\SCRAMBLE = 2
-										;[End Block]
-									Case "killscramble"
-										;[Block]
-										wi\SCRAMBLE = 3
-										Kill()
-										PlaySound_Strict(LoadTempSound("SFX\SCP\294\Burn.ogg"))
-										DeathMsg = SubjectName + " found dead wearing SCRAMBLE gear which was hot to the touch. Suspected to have overheated from attempting to block all cognitohazards at once in the facility. Body disposed."
 										;[End Block]
 								End Select
 							EndIf
@@ -4094,7 +4075,7 @@ Function UpdateGUI%()
 							DropItem(SelectedItem, False)
 						EndIf
 						;[End Block]
-					Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "killscramble", "scp1025"
+					Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "scp1025"
 						;[Block]
 						SelectedItem\State3 = 0.0
 						;[End Block]
@@ -4122,7 +4103,7 @@ Function UpdateGUI%()
 					;[Block]
 					it\State = 0.0
 					;[End Block]
-				Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "killscramble", "scp1025"
+				Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "scp1025"
 					;[Block]
 					it\State3 = 0.0
 					;[End Block]
@@ -4514,10 +4495,6 @@ Function RenderGUI%()
 					Case "finescramble"
 						;[Block]
 						If wi\SCRAMBLE = 2 Then ShouldDrawRect = True
-						;[End Block]
-					Case "killscramble"
-						;[Block]
-						If wi\SCRAMBLE = 3 Then ShouldDrawRect = True
 						;[End Block]
 					Case "scp1499"
 						;[Block]
@@ -5028,7 +5005,7 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					EndIf
 					;[End Block]
-				Case "scramble", "finescramble", "killscramble"
+				Case "scramble", "finescramble"
 					;[Block]
 					If (Not PreventItemOverlapping()) Then
 						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))

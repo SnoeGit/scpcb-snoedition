@@ -185,7 +185,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "scramble", "finescramble", "killscramble"
+		Case "scramble", "finescramble"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -198,14 +198,9 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					it2.Items = CreateItem("Night Vision Goggles", "nvg", x, y, z)
 					it2\State = Rnd(100.0, 1000.0)
 					;[End Block]
-				Case FINE
+				Case FINE, VERYFINE
 					;[Block]
 					it2.Items = CreateItem("SCRAMBLE Gear", "finescramble", x, y, z)
-					it2\State = Rnd(100.0, 1000.0)
-					;[End Block]
-				Case VERYFINE
-					;[Block]
-					it2.Items = CreateItem("SCRAMBLE Gear", "killscramble", x, y, z)
 					it2\State = Rnd(100.0, 1000.0)
 					;[End Block]
 			End Select
