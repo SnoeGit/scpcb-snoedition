@@ -234,12 +234,8 @@ Function UpdateWorld2%()
 		EndIf
 	EndIf
 	
-	If wi\SCRAMBLE > 0 Then
-		If HasBattery = 0 Then
-			If ChannelPlaying(SCRAMBLECHN) Then StopChannel(SCRAMBLECHN)
-		Else
-			SCRAMBLECHN = LoopSound2(SCRAMBLESFX, SCRAMBLECHN, Camera, Camera)
-		EndIf
+	If wi\SCRAMBLE > 0 And HasBattery > 0 Then
+		SCRAMBLECHN = LoopSound2(SCRAMBLESFX, SCRAMBLECHN, Camera, Camera)
 	Else
 		If ChannelPlaying(SCRAMBLECHN) Then StopChannel(SCRAMBLECHN)
 	EndIf
