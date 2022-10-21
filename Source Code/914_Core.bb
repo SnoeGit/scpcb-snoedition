@@ -549,33 +549,33 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							;[Block]
 							Select SelectedDifficulty\OtherFactors
 								Case EASY
-									If Rand(4) = 1 Then
-										it2.Items = CreateItem("Playing Card", "playcard", x, y, z)
-									Else
+									If Rand(10) = 1 Then
 										it2.Items = CreateItem("Level 5 Key Card", "key5", x, y, z)
+									Else
+										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 									EndIf
 								Case NORMAL
 									;[Block]
-									If Rand(3) = 1 Then
-										it2.Items = CreateItem("Playing Card", "playcard", x, y, z)
-									Else
+									If Rand(15) = 1 Then
 										it2.Items = CreateItem("Level 5 Key Card", "key5", x, y, z)
+									Else
+										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 									EndIf
 									;[End Block]
 								Case HARD
 									;[Block]
-									If Rand(2) = 1 Then
-										it2.Items = CreateItem("Playing Card", "playcard", x, y, z)
-									Else
+									If Rand(20) = 1 Then
 										it2.Items = CreateItem("Level 5 Key Card", "key5", x, y, z)
+									Else
+										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 									EndIf
 									;[End Block]
 								Case EXTREME
 									;[Block]
-									If Rand(3) = 1 Then
+									If Rand(25) = 1 Then
 										it2.Items = CreateItem("Level 5 Key Card", "key5", x, y, z)
 									Else
-										it2.Items = CreateItem("Playing Card", "playcard", x, y, z)
+										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 									EndIf
 									;[End Block]
 							End Select
