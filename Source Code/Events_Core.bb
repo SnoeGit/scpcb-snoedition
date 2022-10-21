@@ -2230,7 +2230,7 @@ Function UpdateEvents%()
 						
 						For i = 0 To MaxItemAmount - 1
 							If Inventory(i) <> Null Then
-								If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
+								If wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "supernvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg") Lor wi\SCRAMBLE > 0 And (Inventory(i)\ItemTemplate\TempName = "scramble" Lor Inventory(i)\ItemTemplate\TempName = "finescramble") Then
 									If Inventory(i)\State > 0.0 Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Then
 										HasBatteryFor895 = True
 										Exit
@@ -2271,7 +2271,7 @@ Function UpdateEvents%()
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
 									For i = 0 To MaxItemAmount - 1
 										If Inventory(i) <> Null Then
-											If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
+											If wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "supernvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg") Lor wi\SCRAMBLE > 0 And (Inventory(i)\ItemTemplate\TempName = "scramble" Lor Inventory(i)\ItemTemplate\TempName = "finescramble") Then
 												If Inventory(i)\State2 = 1.0 Then PlaySound_Strict(HorrorSFX[1])
 												Inventory(i)\State2 = 2.0
 												Exit
@@ -2287,7 +2287,7 @@ Function UpdateEvents%()
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
 									For i = 0 To MaxItemAmount - 1
 										If Inventory(i) <> Null Then
-											If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
+											If wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "supernvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg") Lor wi\SCRAMBLE > 0 And (Inventory(i)\ItemTemplate\TempName = "scramble" Lor Inventory(i)\ItemTemplate\TempName = "finescramble") Then
 												If Inventory(i)\State2 = 0.0 Then PlaySound_Strict(HorrorSFX[0])
 												Inventory(i)\State2 = 1.0
 												Exit
@@ -2299,7 +2299,7 @@ Function UpdateEvents%()
 								EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								For i = 0 To MaxItemAmount - 1
 									If Inventory(i) <> Null Then
-										If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
+										If wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "supernvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg") Lor wi\SCRAMBLE > 0 And (Inventory(i)\ItemTemplate\TempName = "scramble" Lor Inventory(i)\ItemTemplate\TempName = "finescramble") Then
 											Inventory(i)\State2 = 0.0
 											Exit
 										EndIf
@@ -6971,9 +6971,7 @@ Function UpdateEvents%()
 						e\EventState2 = Min(e\EventState2 + fps\Factor[0] / 200.0, 2.0)
 						
 						me\LightBlink = Min(e\EventState2 * 5.0, 10.0)
-						If wi\NightVision > 0 Then
-							If e\EventState2 >= 0.2 Then me\BlinkTimer = -10.0
-						EndIf
+						If wi\NightVision > 0 And e\EventState2 >= 0.2 Then me\BlinkTimer = -10.0
 						me\BlurTimer = e\EventState2 * 500.0
 						
 						If e\EventState2 > 0.2 And n_I\Curr106\State <= 0.0 Then
@@ -8403,9 +8401,7 @@ Function UpdateEvents%()
 									e\EventState2 = Min(e\EventState2 + fps\Factor[0] / 200.0, 2.0)
 									
 									me\LightBlink = Min(e\EventState2 * 5.0, 10.0)
-									If wi\NightVision > 0 Then
-										If e\EventState2 >= 0.2 Then me\BlinkTimer = -10.0
-									EndIf
+									If wi\NightVision > 0 And e\EventState2 >= 0.2 Then me\BlinkTimer = -10.0
 									me\BlurTimer = e\EventState2 * 500.0
 									
 									If e\EventState2 > 0.2 And n_I\Curr106\State <= 0.0 Then
@@ -8978,7 +8974,7 @@ Function UpdateDimension106%()
 										PrevSecondaryLightOn = 0.0
 										
 										me\LightBlink = 5.0
-										If wi\NightVision > 0 Then opt\CameraFogFar = 29.0
+										If wi\NightVision > 0 Then opt\CameraFogFar = 28.0
 										
 										If RoomName = "cont1_106" Then
 											TeleportEntity(me\Collider, EntityX(r\Objects[10], True), 0.4, EntityZ(r\Objects[10], True), 0.3, True)
