@@ -3688,22 +3688,22 @@ Function TurnCheckpointMonitorsOff%(LCZ% = True)
 		mon_I\MonitorTimer2 = 0.0
 	EndIf
 	
-	;For i = 2 To CountSurfaces(Entity)
-	;	SF = GetSurface(Entity, i)
-	;	b = GetSurfaceBrush(SF)
-	;	If b <> 0 Then
-	;		t1 = GetBrushTexture(b, 0)
-	;		If t1 <> 0 Then
-	;			Name = StripPath(TextureName(t1))
-	;			If Lower(Name) <> "monitor_overlay.png"
-	;				BrushTexture(b, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_4_OVERLAY], 0, 0)
-	;				PaintSurface(SF, b)
-	;			EndIf
-	;			If Name <> "" Then DeleteSingleTextureEntryFromCache(t1)
-	;		EndIf
-	;		FreeBrush(b)
-	;	EndIf
-	;Next
+	For i = 2 To CountSurfaces(Entity)
+		SF = GetSurface(Entity, i)
+		b = GetSurfaceBrush(SF)
+		If b <> 0 Then
+			t1 = GetBrushTexture(b, 0)
+			If t1 <> 0 Then
+				Name = StripPath(TextureName(t1))
+				If Lower(Name) <> "monitor_overlay.png"
+					BrushTexture(b, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_4_OVERLAY], 0, 0)
+					PaintSurface(SF, b)
+				EndIf
+				If Name <> "" Then DeleteSingleTextureEntryFromCache(t1)
+			EndIf
+			FreeBrush(b)
+		EndIf
+	Next
 End Function
 
 Function TimeCheckpointMonitors%()

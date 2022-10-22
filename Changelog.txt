@@ -2,6 +2,7 @@ v1.3
 
 General:
 
+- Remove artifacting from multiple textures(Strange Bottle, Lockdown Screens, Chat Screens, Batteries, and Night Vision Goggles Fog Overlay, Eyedrops, and Badges).
 - Pill can now cure the Common Cold.
 - Redvision Eyedrops restore 10.0 units of Blood Loss.
 - NVG Timer resets when NVG's are not worn.
