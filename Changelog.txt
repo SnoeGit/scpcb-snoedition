@@ -14,7 +14,7 @@ General:
 
 Bug Fixes:
 
-- Fixed Night Vision Goggles Camerafogfar being permenant when swapping between different Night Vision Goggles. - Thanks Yomama for the fix
+- Fixed Night Vision Goggles Camerafogfar being permanent when swapping between different Night Vision Goggles. - Thanks Yomama for the fix
 - Fixed Gates crashing again. - Thanks TheHappyHammer for the crash reports
 - SCP-049 can no longer transfer his ability to open Level 3 Key Card doors through saves. If only his teleport behind you bullshit could be fixed :(
 - Default and resetting LOD levels should be correct now.
