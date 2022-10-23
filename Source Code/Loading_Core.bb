@@ -854,6 +854,7 @@ Function LoadItems%()
 	CreateItemTemplate("Night Vision Goggles", "supernvg", ItemsPath + "night_vision_goggles.b3d", INVPath + "INV_night_vision_goggles(3).png", "", 0.02, 2)
 	CreateItemTemplate("SCRAMBLE Gear", "scramble", ItemsPath + "SCRAMBLE_gear.b3d", INVPath + "INV_SCRAMBLE_gear.png", "", 0.02, 2)
 	CreateItemTemplate("SCRAMBLE Gear", "finescramble", ItemsPath + "SCRAMBLE_gear.b3d", INVPath + "INV_SCRAMBLE_gear.png", "", 0.02, 2)
+	CreateItemTemplate("SCRAMBLE Gear", "killscramble", ItemsPath + "SCRAMBLE_gear.b3d", INVPath + "INV_SCRAMBLE_gear.png", "", 0.02, 2)
 	
 	it.ItemTemplates = CreateItemTemplate("Pill", "pill", ItemsPath + "scps\pill.b3d", INVPath + "INV_pill.png", "", 0.0001, 2)
 	EntityColor(it\OBJ, 255.0, 255.0, 255.0)
@@ -1372,7 +1373,7 @@ Function LoadEntities%()
 	EntityOrder(t\OverlayID[3], -1003)
 	MoveEntity(t\OverlayID[3], 0.0, 0.0, 1.0)
 	
-	t\OverlayTextureID[4] = LoadTexture_Strict("GFX\gui\night_vision_goggles_overlay.png", 1, DeleteAllTextures) ; ~ NIGHT VISION GOGGLES
+	t\OverlayTextureID[4] = LoadTexture_Strict("GFX\gui\goggles_overlay.png", 1, DeleteAllTextures) ; ~ NIGHT VISION GOGGLES ~ SCRAMBLE Gear
 	t\OverlayID[4] = CreateSprite(ArkBlurCam)
 	ScaleSprite(t\OverlayID[4], 1.0, Float(opt\GraphicHeight) / Float(opt\GraphicWidth))
 	EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
@@ -1446,7 +1447,7 @@ Function LoadEntities%()
 		HideEntity(t\OverlayID[i])
 	Next
 	t\OverlayTextureID[11] = LoadTexture_Strict("GFX\tesla_overlay.png", 1 + 2, DeleteAllTextures)
-	t\OverlayTextureID[12] = LoadTexture_Strict("GFX\gui\fog_night_vision_goggles.png", 1, DeleteAllTextures)
+	t\OverlayTextureID[12] = LoadTexture_Strict("GFX\gui\fog_goggles.png", 1, DeleteAllTextures)
 	
 	LoadDecals()
 	

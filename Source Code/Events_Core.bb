@@ -8749,7 +8749,7 @@ Function UpdateDimension106%()
 										PrevSecondaryLightOn = 0.0
 										
 										me\BlinkTimer = -10.0 : me\LightBlink = 5.0 : me\BlurTimer = 1500.0
-										If wi\NightVision > 0 Then opt\CameraFogFar = 28.0
+										If wi\NightVision > 0 Then opt\CameraFogFar = 27.0
 										
 										PlaySound_Strict(LoadTempSound("SFX\Room\PocketDimension\Exit.ogg"))
 										
@@ -8974,7 +8974,7 @@ Function UpdateDimension106%()
 										PrevSecondaryLightOn = 0.0
 										
 										me\LightBlink = 5.0
-										If wi\NightVision > 0 Then opt\CameraFogFar = 28.0
+										If wi\NightVision > 0 Then opt\CameraFogFar = 27.0
 										
 										If RoomName = "cont1_106" Then
 											TeleportEntity(me\Collider, EntityX(r\Objects[10], True), 0.4, EntityZ(r\Objects[10], True), 0.3, True)

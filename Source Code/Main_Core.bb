@@ -1818,7 +1818,7 @@ Function UpdateFog%()
 	Else
 		CameraFogMode(Camera, 1)
 		CameraFogRange(Camera, opt\CameraFogNear * LightVolume, opt\CameraFogFar * LightVolume)
-		CameraRange(Camera, 0.05, Min(opt\CameraFogFar * LightVolume * 1.5, 28.0))
+		CameraRange(Camera, 0.05, Min(opt\CameraFogFar * LightVolume * 1.5, 27.0))
 		If EntityHidden(t\OverlayID[0]) Then ShowEntity(t\OverlayID[0])
 	EndIf
 	For r.Rooms = Each Rooms
@@ -2339,7 +2339,7 @@ Function UpdateGUI%()
 								InvOpen = False
 							EndIf
 							;[End Block]
-						Case "scramble", "finescramble"
+						Case "scramble", "finescramble", "killscramble"
 							;[Block]
 							If wi\SCRAMBLE > 0 Then
 								CreateHintMsg("Double click on this item to take it off.")
@@ -2525,7 +2525,7 @@ Function UpdateGUI%()
 										Inventory(MouseSlot)\State = Rnd(500.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
-									Case "finescramble"
+									Case "finescramble", "killscramble"
 										;[Block]
 										CreateMsg("The battery doesn't fit inside this gear.")
 										;[End Block]
@@ -2593,7 +2593,7 @@ Function UpdateGUI%()
 										Inventory(MouseSlot)\State = Rnd(100.0, 1000.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
-									Case "finescramble"
+									Case "finescramble", "killscramble"
 										;[Block]
 										CreateMsg("The battery doesn't fit inside this gear.")
 										;[End Block]
@@ -2657,7 +2657,7 @@ Function UpdateGUI%()
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in these goggles.")
 										;[End Block]
-									Case "scramble"
+									Case "scramble", "killscramble"
 										;[Block]
 										CreateMsg("The battery doesn't fit inside this gear.")
 										;[End Block]
@@ -2730,6 +2730,10 @@ Function UpdateGUI%()
 										RemoveItem(SelectedItem)
 										Inventory(MouseSlot)\State = Rnd(500.0, 5000.0)
 										CreateMsg("You replaced the gear's battery.")
+										;[End Block]
+									Case "killscramble"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside this gear.")
 										;[End Block]
 									Default
 										;[Block]
@@ -2811,7 +2815,7 @@ Function UpdateGUI%()
 										wi\NightVision = 3
 										;[End Block]
 								End Select
-								If PlayerRoom\RoomTemplate\Name <> "dimension_106" Then opt\CameraFogFar = 28.0
+								If PlayerRoom\RoomTemplate\Name <> "dimension_106" Then opt\CameraFogFar = 27.0
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[0])
 							EndIf
 							SelectedItem\State3 = 0.0
@@ -3984,7 +3988,7 @@ Function UpdateGUI%()
 							SelectedItem = Null
 						EndIf
 					;[End Block]
-				Case "scramble", "finescramble"
+				Case "scramble", "finescramble", "killscramble"
 					;[Block]
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
@@ -3993,7 +3997,7 @@ Function UpdateGUI%()
 						If SelectedItem\State3 = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 							
-								If (wi\SCRAMBLE = 1 And SelectedItem\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And SelectedItem\ItemTemplate\TempName = "finescramble") Then
+								If (wi\SCRAMBLE = 1 And SelectedItem\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And SelectedItem\ItemTemplate\TempName = "finescramble") Lor (wi\SCRAMBLE = 3 And SelectedItem\ItemTemplate\TempName = "killscramble") Then
 								CreateMsg("You removed the gear.")
 								wi\SCRAMBLE = 0
 							Else
@@ -4008,6 +4012,12 @@ Function UpdateGUI%()
 									Case "finescramble"
 										;[Block]
 										wi\SCRAMBLE = 2
+										;[End Block]
+									Case "killscramble"
+										;[Block]
+										wi\SCRAMBLE = 3
+										If (Not chs\GodMode) Then PlaySound_Strict(LoadTempSound("SFX\SCP\294\Burn.ogg"))
+										Kill()
 										;[End Block]
 								End Select
 							EndIf
@@ -4083,7 +4093,7 @@ Function UpdateGUI%()
 							DropItem(SelectedItem, False)
 						EndIf
 						;[End Block]
-					Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "scp1025"
+					Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "killscramble", "scp1025"
 						;[Block]
 						SelectedItem\State3 = 0.0
 						;[End Block]
@@ -4111,7 +4121,7 @@ Function UpdateGUI%()
 					;[Block]
 					it\State = 0.0
 					;[End Block]
-				Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "scp1025"
+				Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "killscramble", "scp1025"
 					;[Block]
 					it\State3 = 0.0
 					;[End Block]
@@ -4503,6 +4513,10 @@ Function RenderGUI%()
 					Case "finescramble"
 						;[Block]
 						If wi\SCRAMBLE = 2 Then ShouldDrawRect = True
+						;[End Block]
+					Case "killscramble"
+						;[Block]
+						If wi\SCRAMBLE = 3 Then ShouldDrawRect = True
 						;[End Block]
 					Case "scp1499"
 						;[Block]
@@ -5013,7 +5027,7 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					EndIf
 					;[End Block]
-				Case "scramble", "finescramble"
+				Case "scramble", "finescramble", "killscramble"
 					;[Block]
 					If (Not PreventItemOverlapping()) Then
 						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))

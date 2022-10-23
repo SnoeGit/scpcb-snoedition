@@ -185,7 +185,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "scramble", "finescramble"
+		Case "scramble", "finescramble", "killscramble"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -198,10 +198,14 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					it2.Items = CreateItem("Night Vision Goggles", "nvg", x, y, z)
 					it2\State = Rnd(100.0, 1000.0)
 					;[End Block]
-				Case FINE, VERYFINE
+				Case FINE
 					;[Block]
 					it2.Items = CreateItem("SCRAMBLE Gear", "finescramble", x, y, z)
 					it2\State = Rnd(100.0, 1000.0)
+					;[End Block]
+				Case VERYFINE
+					;[Block]
+					it2.Items = CreateItem("SCRAMBLE Gear", "killscramble", x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -365,7 +369,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					If Rand(2) = 1 Then
+					If item\ItemTemplate\TempName <> "bluefirstaid" Then
 						it2.Items = CreateItem("Blue First Aid Kit", "bluefirstaid", x, y, z)
 					Else
 						it2.Items = CreateItem("First Aid Kit", "firstaid", x, y, z)
