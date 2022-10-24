@@ -511,7 +511,7 @@ Function PickItem%(item.Items)
 					Case "scp1123"
 						;[Block]
 						Use1123()
-						If (Not I_714\Using) And wi\GasMask <> 3 And wi\HazmatSuit <> 4 Then Return
+						If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then Return
 						;[End Block]
 					Case "killbat"
 						;[Block]
@@ -782,7 +782,7 @@ Function Use1123%()
 	Local e.Events
 	Local Temp%
 	
-	If (Not I_714\Using) And wi\GasMask <> 3 And wi\HazmatSuit <> 4 Then
+	If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
 		me\LightFlash = 3.0
 		PlaySound_Strict(LoadTempSound("SFX\SCP\1123\Touch.ogg"))
 		

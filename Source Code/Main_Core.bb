@@ -3097,7 +3097,7 @@ Function UpdateGUI%()
 					If SelectedItem\State3 = 0.0 Then
 						If SelectedItem\State = 7.0 Then
 							If I_008\Timer = 0.0 Then I_008\Timer = 1.0
-						ElseIf (Not I_714\Using) And wi\GasMask <> 3 And wi\HazmatSuit <> 4 Then
+						ElseIf (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
 							I_1025\State[SelectedItem\State] = Max(1.0, I_1025\State[SelectedItem\State])
 							I_1025\State[7] = 1 + (SelectedItem\State2 = 2.0) * 2.0 ; ~ 3x as fast if VERYFINE
 						EndIf
