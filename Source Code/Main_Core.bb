@@ -74,7 +74,7 @@ Else
 	Graphics3DExt(opt\GraphicWidth, opt\GraphicHeight, 0, (opt\DisplayMode = 2) + 1)
 EndIf
 
-Const VersionNumber$ = "1.3"
+Const VersionNumber$ = "1.4"
 
 AppTitle("SCP - Containment Breach Gameplay Overhaul v" + VersionNumber)
 
@@ -746,6 +746,7 @@ Function UpdateGame%()
 			If me\Sanity < 0.0 Then
 				If me\RestoreSanity Then me\Sanity = Min(me\Sanity + fps\Factor[0], 0.0)
 				If me\Sanity < -200.0 Then
+					If PlayerRoom\RoomTemplate\Name <> "cont1_035" Then CanSave = False
 					DarkAlpha = Max(Min((-me\Sanity - 200.0) / 700.0, 0.6), DarkAlpha)
 					If (Not me\Terminated) Then 
 						me\HeartBeatVolume = Min(Abs(me\Sanity + 20.00) / 500.0, 1.0)
@@ -862,9 +863,7 @@ Function UpdateGame%()
 			EndIf
 			
 			If SelectedItem <> Null And (Not InvOpen) And OtherOpen = Null Then
-				If IsItemInFocus() Then
-					DarkAlpha = Max(DarkAlpha, 0.5)
-				EndIf
+				If IsItemInFocus() Then DarkAlpha = Max(DarkAlpha, 0.5)
 			EndIf
 			
 			If SelectedScreen <> Null Lor d_I\SelectedDoor <> Null Then DarkAlpha = Max(DarkAlpha, 0.5)
@@ -1367,9 +1366,9 @@ Function UpdateMoving%()
 						TempCHN = PlaySound_Strict(Step2SFX[Rand(13, 14)])
 					EndIf
 					If Sprint = 2.5 Then
-						me\SndVolume = Max(4.0, me\SndVolume)
+						me\SndVolume = Max(5.0, me\SndVolume)
 					Else
-						me\SndVolume = Max(2.5 - (me\Crouch * 0.6), me\SndVolume)
+						me\SndVolume = Max(3.0 - (me\Crouch * 0.6), me\SndVolume)
 					EndIf
 					ChannelVolume(TempCHN, (1.0 - (me\Crouch * 0.6)) * opt\SFXVolume * opt\MasterVolume)
 				EndIf	
@@ -1706,9 +1705,9 @@ Function UpdateMouseLook%()
 		EndIf
 	EndIf
 	
-	If wi\GasMask > 0 Lor I_1499\Using > 0 Lor wi\HazmatSuit > 0 Then
+	If wi\GasMask > 0 Lor wi\HazmatSuit > 0 Lor I_1499\Using > 0 Then
 		If (Not I_714\Using) And PlayerRoom\RoomTemplate\Name <> "dimension_106" Then
-			If wi\GasMask = 3 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 3 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.005 * fps\Factor[0])
+			If wi\GasMask = 3 Lor wi\HazmatSuit = 3 Lor I_1499\Using = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.005 * fps\Factor[0])
 			If wi\GasMask = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.002 * fps\Factor[0])
 		EndIf
 		If (Not me\Terminated) Then
@@ -1748,9 +1747,7 @@ Function UpdateMouseLook%()
 	EndIf
 	
 	If wi\HazmatSuit > 0 Then
-		If wi\HazmatSuit = 1 Then
-			me\Stamina = Min(60.0, me\Stamina)
-		EndIf
+		If wi\HazmatSuit = 1 Then me\Stamina = Min(60.0, me\Stamina)
 		If EntityHidden(t\OverlayID[2]) Then ShowEntity(t\OverlayID[2])
 	Else
 		If (Not EntityHidden(t\OverlayID[2])) Then HideEntity(t\OverlayID[2])
@@ -3192,13 +3189,17 @@ Function UpdateGUI%()
 						SelectedItem = Null
 					EndIf
 					;[End Block]
-				Case "syringe"
+				Case "syringe", "syringeinf"
 					;[Block]
 					If CanUseItem(True, True) Then
 						me\HealTimer = 30.0
 						me\StaminaEffect = 0.5
 						me\StaminaEffectTimer = 20.0
-					
+						
+						If SelectedItem\ItemTemplate\TempName = "syringeinf" Then
+							I_008\Timer = I_008\Timer + (1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs))
+							me\VomitTimer = 70.0 * 1.0
+						EndIf
 						CreateMsg("You injected yourself with the syringe and feel a slight adrenaline rush.")
 					
 						RemoveItem(SelectedItem)
@@ -3208,7 +3209,7 @@ Function UpdateGUI%()
 					;[Block]
 					If CanUseItem(True, True) Then
 						me\HealTimer = Rnd(20.0, 40.0)
-						me\StaminaEffect = Rnd(0.5, 0.8)
+						me\StaminaEffect = Rnd(0.4, 0.7)
 						me\StaminaEffectTimer = Rnd(20.0, 30.0)
 					
 						CreateMsg("You injected yourself with the syringe and feel an adrenaline rush.")
@@ -3614,7 +3615,7 @@ Function UpdateGUI%()
 				Case "scp420j"
 					;[Block]
 					If CanUseItem(True) Then
-						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 4 Then
+						If I_714\Using Then
 							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
 						Else
 							CreateMsg(Chr(34) + "MAN DATS SUM GOOD ASS SHIT." + Chr(34))
@@ -3626,28 +3627,13 @@ Function UpdateGUI%()
 						RemoveItem(SelectedItem)
 					EndIf
 					;[End Block]
-				Case "joint"
+				Case "joint", "scp420s"
 					;[Block]
 					If CanUseItem(True) Then
-						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 4 Then
+						If I_714\Using Then
 							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
 						Else
 							CreateMsg(Chr(34) + "UH WHERE... WHAT WAS I DOING AGAIN... MAN I NEED TO TAKE A NAP..." + Chr(34))
-							msg\DeathMsg = SubjectName + " found in a comatose state in [DATA REDACTED]. The subject was holding what appears to be a cigarette while smiling widely. "
-							msg\DeathMsg = msg\DeathMsg + "Chemical analysis of the cigarette has been inconclusive, although it seems to contain a high concentration of an unidentified chemical "
-							msg\DeathMsg = msg\DeathMsg + "whose molecular structure is remarkably similar to that of tetrahydrocannabinol."
-							Kill()						
-						EndIf
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
-				Case "scp420s"
-					;[Block]
-					If CanUseItem(True) Then
-						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 4 Then
-							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
-						Else
-							CreateMsg(Chr(34) + "UUUUUUUUUUUUHHHHHHHHHHHH..." + Chr(34))
 							msg\DeathMsg = SubjectName + " found in a comatose state in [DATA REDACTED]. The subject was holding what appears to be a cigarette while smiling widely. "
 							msg\DeathMsg = msg\DeathMsg + "Chemical analysis of the cigarette has been inconclusive, although it seems to contain a high concentration of an unidentified chemical "
 							msg\DeathMsg = msg\DeathMsg + "whose molecular structure is remarkably similar to that of tetrahydrocannabinol."
@@ -3953,17 +3939,6 @@ Function UpdateGUI%()
 							I_427\Timer = 70.0 * 360.0
 						EndIf
 						
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
-				Case "syringeinf"
-					;[Block]
-					If CanUseItem(True, True) Then
-						CreateMsg("You injected yourself the syringe.")
-					
-						me\VomitTimer = 70.0 * 1.0
-					
-						I_008\Timer = I_008\Timer + (1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs))
 						RemoveItem(SelectedItem)
 					EndIf
 					;[End Block]
@@ -4580,7 +4555,7 @@ Function RenderGUI%()
 	Else
 		If SelectedItem <> Null Then
 			Select SelectedItem\ItemTemplate\TempName
-				Case "nvg", "supernvg", "finenvg"
+				Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "killscramble"
 					;[Block]
 					If (Not PreventItemOverlapping()) Then
 						
@@ -4789,18 +4764,7 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					EndIf
 					;[End Block]
-				Case "vest", "finevest"
-					;[Block]
-					DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
-					
-					Width = 300 * MenuScale
-					Height = 20 * MenuScale
-					x = mo\Viewport_Center_X - (Width / 2)
-					y = mo\Viewport_Center_Y + (80 * MenuScale)
-					
-					RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
-					;[End Block]
-				Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
+				Case "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet", "vest", "finevest"
 					;[Block]
 					If (Not PreventItemOverlapping()) Then
 						
@@ -5013,32 +4977,6 @@ Function RenderGUI%()
 					EndIf
 					
 					DrawImage(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\Img) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\Img) / 2))
-					;[End Block]
-				Case "helmet"
-					;[Block]
-					If (Not PreventItemOverlapping()) Then
-						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
-						
-						Width = 300 * MenuScale
-						Height = 20 * MenuScale
-						x = mo\Viewport_Center_X - (Width / 2)
-						y = mo\Viewport_Center_Y + (80 * MenuScale)
-						
-						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
-					EndIf
-					;[End Block]
-				Case "scramble", "finescramble", "killscramble"
-					;[Block]
-					If (Not PreventItemOverlapping()) Then
-						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
-						
-						Width = 300 * MenuScale
-						Height = 20 * MenuScale
-						x = mo\Viewport_Center_X - (Width / 2)
-						y = mo\Viewport_Center_Y + (80 * MenuScale)
-						
-						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State3)
-					EndIf
 					;[End Block]
 			End Select
 			
@@ -7531,9 +7469,7 @@ Function Update1025%()
 					If fps\Factor[0] > 0.0 Then 
 						UpdateCough(800)
 					EndIf
-					if me\CurrSpeed > 0 Then
-					me\Stamina = me\Stamina - (Factor1025 * 0.3)
-					EndIf
+					If me\CurrSpeed > 0 Then me\Stamina = me\Stamina - (Factor1025 * 0.3)
 					;[End Block]
 				Case 3 ; ~ Appendicitis
 					; ~ 0.035 / sec = 2.1 / min

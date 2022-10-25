@@ -1303,18 +1303,13 @@ Function UpdateConsole%()
 					Else
 						For e.Events = Each Events
 							If PlayerRoom = e\room
-								If Lower(StrTemp) <> "keep" Then
-									e\EventState = Float(StrTemp)
-								EndIf
-								If Lower(StrTemp2) <> "keep" Then
-									e\EventState2 = Float(StrTemp2)
-								EndIf
-								If Lower(StrTemp3) <> "keep" Then
-									e\EventState3 = Float(StrTemp3)
-								EndIf
-								If Lower(StrTemp4) <> "keep" Then
-									e\EventState4 = Float(StrTemp4)
-								EndIf
+								If Lower(StrTemp) <> "keep" Then e\EventState = Float(StrTemp)
+								
+								If Lower(StrTemp2) <> "keep" Then e\EventState2 = Float(StrTemp2)
+								
+								If Lower(StrTemp3) <> "keep" Then e\EventState3 = Float(StrTemp3)
+								
+								If Lower(StrTemp4) <> "keep" Then e\EventState4 = Float(StrTemp4)
 								CreateConsoleMsg("Changed event states from current player room to: " + e\EventState + "|" + e\EventState2 + "|" + e\EventState3 + "|" + e\EventState4)
 								PL_Room_Found = True
 								Exit
@@ -1566,6 +1561,7 @@ Function RenderDebugHUD%()
 			Text(x, y + (380 * MenuScale), "Stamina Effect Timer: " + me\StaminaEffectTimer)
 			
 			Text(x, y + (420 * MenuScale), "Deaf Timer: " + me\DeafTimer)
+			Text(x, y + (460 * MenuScale), "Sanity Timer: " + me\Sanity)
 			
 			If me\Terminated Then
 				Text(x + (380 * MenuScale), y, "Terminated: True")

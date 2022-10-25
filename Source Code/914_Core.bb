@@ -834,11 +834,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case ONETOONE
 					;[Block]
 					If Rand(2) = 1 Then
-					it3.Items = CreateItem("Quarter", "25ct", x, y, z)
-					EntityType(it3\Collider, HIT_ITEM)
+						it3.Items = CreateItem("Quarter", "25ct", x, y, z)
+						EntityType(it3\Collider, HIT_ITEM)
 					Else
-					it3.Items = CreateItem("Coin", "coin", x, y, z)
-					EntityType(it3\Collider, HIT_ITEM)
+						it3.Items = CreateItem("Coin", "coin", x, y, z)
+						EntityType(it3\Collider, HIT_ITEM)
 					EndIf
 					;[End Block]
 				Case FINE

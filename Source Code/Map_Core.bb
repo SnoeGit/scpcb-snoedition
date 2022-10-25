@@ -3199,9 +3199,7 @@ Function UpdateDecals%()
 				EntityAlpha(de\OBJ, de\Alpha)
 			EndIf
 			
-			If de\LifeTime > 0.0 Then
-				de\LifeTime = Max(de\LifeTime - fps\Factor[0], 5.0)
-			EndIf
+			If de\LifeTime > 0.0 Then de\LifeTime = Max(de\LifeTime - fps\Factor[0], 5.0)
 			
 			Local Dist# = DistanceSquared(EntityX(me\Collider), EntityX(de\OBJ, True), EntityZ(me\Collider), EntityZ(de\OBJ, True))
 			Local ActualSize# = PowTwo(de\Size * 0.8)
@@ -3402,10 +3400,8 @@ Function UpdateSecurityCams%()
 						If me\BlinkTimer > -5.0 And EntityInView(sc\ScrOBJ, Camera) Then
 							If EntityVisible(Camera, sc\ScrOBJ) Then
 								If (sc\CoffinEffect = 1 Lor sc\CoffinEffect = 3) And (Not I_714\Using) And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then
-									If me\BlinkTimer > -5.0 Then
-										me\Sanity = me\Sanity - fps\Factor[0]
-										me\RestoreSanity = False
-									EndIf
+									me\Sanity = me\Sanity - fps\Factor[0]
+									me\RestoreSanity = False
 								EndIf
 							EndIf
 						EndIf
@@ -3442,39 +3438,35 @@ Function UpdateSecurityCams%()
 								CameraPitch = CameraPitch - 90.0
 								
 								FreeEntity(Pvt)
-								If (sc\CoffinEffect = 1 Lor sc\CoffinEffect = 3) And ((Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4) Then
-									If me\Sanity < -720.0 Then
-										If Rand(3) = 1 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
-										If Rand(6) < 5 Then
-											EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
-											If sc\PlayerState = 1 Then PlaySound_Strict(HorrorSFX[1])
-											sc\PlayerState = 2
-											If (Not sc\SoundCHN) Then
-												sc\SoundCHN = PlaySound_Strict(HorrorSFX[4])
-											Else
-												If (Not ChannelPlaying(sc\SoundCHN)) Then sc\SoundCHN = PlaySound_Strict(HorrorSFX[4])
-											EndIf
-											If sc\CoffinEffect = 3 And Rand(200) = 1 Then sc\CoffinEffect = 2 : sc\PlayerState = Rand(10000, 20000)
-										EndIf	
-										me\BlurTimer = 1000.0
-										If me\VomitTimer = 0.0 Then me\VomitTimer = 1.0
-									ElseIf me\Sanity < -450.0
-										If Rand(7) = 1 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
-										If Rand(50) = 1 Then
-											EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
-											If sc\PlayerState = 0 Then PlaySound_Strict(HorrorSFX[0])
-											sc\PlayerState = Max(sc\PlayerState, 1)
-											If sc\CoffinEffect = 3 And Rand(100) = 1 Then sc\CoffinEffect = 2 : sc\PlayerState = Rand(10000, 20000)
+								If me\Sanity < -720.0 Then
+									If Rand(3) = 1 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
+									If Rand(6) < 5 Then
+										EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
+										If sc\PlayerState = 1 Then PlaySound_Strict(HorrorSFX[1])
+										sc\PlayerState = 2
+										If (Not sc\SoundCHN) Then
+											sc\SoundCHN = PlaySound_Strict(HorrorSFX[4])
+										Else
+											If (Not ChannelPlaying(sc\SoundCHN)) Then sc\SoundCHN = PlaySound_Strict(HorrorSFX[4])
 										EndIf
-									Else
-										EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
+										If sc\CoffinEffect = 3 And Rand(200) = 1 Then sc\CoffinEffect = 2 : sc\PlayerState = Rand(10000, 20000)
+									EndIf	
+									me\BlurTimer = 1000.0
+									If me\VomitTimer = 0.0 Then me\VomitTimer = 1.0
+								ElseIf me\Sanity < -450.0
+									If Rand(7) = 1 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
+									If Rand(50) = 1 Then
+										EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
+										If sc\PlayerState = 0 Then PlaySound_Strict(HorrorSFX[0])
+										sc\PlayerState = Max(sc\PlayerState, 1)
+										If sc\CoffinEffect = 3 And Rand(100) = 1 Then sc\CoffinEffect = 2 : sc\PlayerState = Rand(10000, 20000)
 									EndIf
+								Else
+									EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
 								EndIf
 							EndIf
-						Else
-							If sc\InSight Then
-								If I_714\Using Lor wi\HazmatSuit = 3 Lor wi\GasMask = 4 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
-							EndIf
+						ElseIf sc\InSight Then
+							If I_714\Using Lor wi\HazmatSuit = 4 Lor wi\GasMask = 4 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
 						EndIf
 						
 						If sc\InSight And sc\CoffinEffect = 0 Lor sc\CoffinEffect = 2 Then
@@ -3939,9 +3931,7 @@ Function UpdateRooms%()
 		If x < 16 And z < 16 Then
 			For i = 0 To MaxRoomEmitters - 1
 				If r\SoundEmitter[i] <> 0 Then 
-					If EntityDistanceSquared(r\SoundEmitterOBJ[i], me\Collider) < PowTwo(r\SoundEmitterRange[i]) Then
-						r\SoundEmitterCHN[i] = LoopSound2(RoomAmbience[r\SoundEmitter[i] - 1], r\SoundEmitterCHN[i], Camera, r\SoundEmitterOBJ[i], r\SoundEmitterRange[i])
-					EndIf
+					If EntityDistanceSquared(r\SoundEmitterOBJ[i], me\Collider) < PowTwo(r\SoundEmitterRange[i]) Then r\SoundEmitterCHN[i] = LoopSound2(RoomAmbience[r\SoundEmitter[i] - 1], r\SoundEmitterCHN[i], Camera, r\SoundEmitterOBJ[i], r\SoundEmitterRange[i])
 				EndIf
 			Next
 			
@@ -3979,9 +3969,7 @@ Function UpdateRooms%()
 			For i = 0 To MaxRoomLights - 1
 				If r\Lights[i] <> 0 Then
 					Dist = EntityDistanceSquared(Camera, r\Lights[i])
-					If Dist < PowTwo(HideDistance) Then
-						TempLightVolume = TempLightVolume + r\LightIntensity[i] * r\LightIntensity[i] * ((HideDistance - Sqr(Dist)) / HideDistance)						
-					EndIf
+					If Dist < PowTwo(HideDistance) Then TempLightVolume = TempLightVolume + r\LightIntensity[i] * r\LightIntensity[i] * ((HideDistance - Sqr(Dist)) / HideDistance)
 				Else
 					Exit
 				EndIf

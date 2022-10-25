@@ -1,3 +1,23 @@
+v1.4
+
+General:
+
+- Optimize many lines of code.
+- Can no longer save at monitors if your sanity is too low.
+- Running alerts the SCP-939 instances further away now.
+
+Rooms:
+
+- SCP-106 spawns further away from SCP-895's Coffin.
+- SCP-106 spawns sooner every time SCP-914 is being used.
+
+
+v1.31
+
+Bug Fixes:
+
+- Fix Heavy Hazmat Suit not working against memetic SCPs.
+
 v1.3
 
 General:
