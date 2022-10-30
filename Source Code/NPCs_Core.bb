@@ -993,9 +993,9 @@ Function UpdateNPCs%()
 										If (Dist > 1600.0 Lor PlayerRoom\RoomTemplate\Name = "dimension_106") Then
 											TranslateEntity(n\Collider, 0.0, ((EntityY(me\Collider) - 0.14) - EntityY(n\Collider)) / 50.0, 0.0)
 										EndIf
-										If Dist < 4.5 Then
+										If Dist <= 4.5 Then
 											n\CurrSpeed = CurveValue(n\Speed * 1.16, n\CurrSpeed, 10.0)
-										ElseIf Dist > 4.5 And Dist < 9.0 Then
+										ElseIf Dist < 9.0 Then
 											n\CurrSpeed = CurveValue(n\Speed * 1.08, n\CurrSpeed, 10.0)
 										Else
 											n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)

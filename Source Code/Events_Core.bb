@@ -4654,7 +4654,7 @@ Function UpdateEvents%()
 							me\BlurTimer = Min(me\BlurTimer + (fps\Factor[0] * 1.035), 1500.0)
 							EndIf
 							If me\BlurTimer >= 500.0 Then UpdateCough(1000)
-							If me\BlurTimer >= 1500.0 Then
+							If me\BlurTimer >= 1500.0 And me\FallTimer = 0.0 Then
 								Kill(False)
 								msg\DeathMsg = SubjectName + " found dead in Storage Area 6 having suffocated on the gas leak that happened during the breach. A repair team has been sent after recontainment of all four (4) SCP-939 specimens was completed."
 							EndIf
@@ -4752,9 +4752,9 @@ Function UpdateEvents%()
 							
 							PlayerFallingPickDistance = 0.0
 							
-							If EntityY(me\Collider) < -6400.0 * RoomScale And (Not me\Terminated) And me\FallTimer >= 0.0 Then
+							If EntityY(me\Collider) < -6400.0 * RoomScale And (Not me\Terminated) And me\FallTimer >= 0.0 And (Not chs\GodMode) Then
 								PlaySound_Strict(LoadTempSound("SFX\Room\PocketDimension\Impact.ogg"))
-								me\Terminated = True
+								Kill(False)
 							EndIf
 						EndIf
 					Else
