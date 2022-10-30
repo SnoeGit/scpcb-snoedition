@@ -973,9 +973,7 @@ Function UpdateEvents%()
 									Exit
 								EndIf
 							EndIf
-							If SelectedItem <> Null Then
-								e\EventState3 = e\EventState3 + fps\Factor[0] / 5.0
-							EndIf							
+							If SelectedItem <> Null Then e\EventState3 = e\EventState3 + fps\Factor[0] / 5.0						
 						ElseIf e\EventState3 >= 150.0 And e\EventState3 < 700.0
 							If e\room\NPC[3]\State = 7.0 Then
 								If (Not e\room\NPC[3]\Sound2) Then
@@ -2690,9 +2688,7 @@ Function UpdateEvents%()
 							Next
 						EndIf
 						
-						If e\EventState > 70.0 * 10.0 Then
-							RemoveEvent(e)
-						EndIf
+						If e\EventState > 70.0 * 10.0 Then RemoveEvent(e)
 					EndIf
 				EndIf
 				;[End Block]
@@ -3111,10 +3107,8 @@ Function UpdateEvents%()
 			Case e_room2_mt
 				;[Block]
 				If EntityY(me\Collider, True) >= 8.0 And EntityY(me\Collider, True) <= 12.0 Then
-					If (EntityX(me\Collider, True) >= e\room\x - 6.0) And (EntityX(me\Collider, True) <= (e\room\x + 2.0 * MTGridSize + 6.0)) Then
-						If (EntityZ(me\Collider, True) >= e\room\z - 6.0) And (EntityZ(me\Collider, True) <= (e\room\z + 2.0 * MTGridSize + 6.0)) Then
-							PlayerRoom = e\room
-						EndIf
+					If (EntityX(me\Collider, True) >= e\room\x - 6.0) And (EntityX(me\Collider, True) <= (e\room\x + 2.0 * MTGridSize + 6.0)) And (EntityZ(me\Collider, True) >= e\room\z - 6.0) And (EntityZ(me\Collider, True) <= (e\room\z + 2.0 * MTGridSize + 6.0)) Then
+						PlayerRoom = e\room
 					EndIf
 				EndIf
 				
@@ -3127,9 +3121,7 @@ Function UpdateEvents%()
 					Local iX%, iY%
 					
 					If I_Zone\HasCustomMT Then
-						If (Not e\room\mt\Meshes[MT_ROOM1]) Then
-							PlaceMapCreatorMT(e\room)
-						EndIf
+						If (Not e\room\mt\Meshes[MT_ROOM1]) Then PlaceMapCreatorMT(e\room)
 					EndIf
 					
 					If e\room\mt = Null Then
@@ -3825,19 +3817,17 @@ Function UpdateEvents%()
 								n_I\Curr106\PrevY = EntityY(me\Collider)
 							EndIf
 							
-							For i = 0 To 1
 								Local spawnPoint.WayPoints = Null
 								
-								For x = i * ((MTGridSize ^ 2) / 5.0) To ((MTGridSize ^ 2) - 1)
+								For x = 0 * ((MTGridSize ^ 2) / 5.0) To ((MTGridSize ^ 2) - 1)
 									If Rand(2) = 1 And e\room\mt\waypoints[x] <> Null Then 
 										spawnPoint = e\room\mt\waypoints[x]
 										x = MTGridSize ^ 2
 									EndIf
 								Next 
 								If spawnPoint <> Null Then
-									e\room\NPC[i] = CreateNPC(NPCType966, EntityX(spawnPoint\OBJ, True), EntityY(spawnPoint\OBJ, True), EntityZ(spawnPoint\OBJ, True))
+									e\room\NPC[0] = CreateNPC(NPCType966, EntityX(spawnPoint\OBJ, True), EntityY(spawnPoint\OBJ, True), EntityZ(spawnPoint\OBJ, True))
 								EndIf
-							Next
 						EndIf
 					Else
 						For iY = 0 To MTGridSize - 1
@@ -4253,16 +4243,12 @@ Function UpdateEvents%()
 							If e\room\Angle = 0.0 Lor e\room\Angle = 180.0 Then ; ~ Lock the player inside
 								If Abs(EntityX(me\Collider) - EntityX(e\room\OBJ, True)) > 1.3 Then 
 									e\EventState = 70.0 * 50.0
-									If e\Sound <> 0 Then
-										FreeSound_Strict(e\Sound) : e\Sound = 0
-									EndIf
+									If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
 								EndIf
 							Else
 								If Abs(EntityZ(me\Collider) - EntityZ(e\room\OBJ, True)) > 1.3 Then 
 									e\EventState = 70.0 * 50.0
-									If e\Sound <> 0 Then
-										FreeSound_Strict(e\Sound) : e\Sound = 0
-									EndIf
+									If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
 								EndIf
 							EndIf	
 						EndIf
@@ -5518,9 +5504,7 @@ Function UpdateEvents%()
 								ResetEntity(e\room\NPC[0]\Collider)
 								
 								For n.NPCs = Each NPCs
-									If n\NPCType = NPCType049_2 Then
-										RemoveNPC(n)
-									EndIf
+									If n\NPCType = NPCType049_2 Then RemoveNPC(n)
 								Next
 								
 								n.NPCs = CreateNPC(NPCTypeMTF, EntityX(e\room\Objects[5], True), EntityY(e\room\Objects[5], True) + 0.2, EntityZ(e\room\Objects[5], True))
@@ -5656,9 +5640,7 @@ Function UpdateEvents%()
 						e\SoundCHN3_IsStream = True
 						
 						For e2.Events = Each Events
-							If e2\EventID = e_gate_b_entrance Lor e2\EventID = e_gate_a_entrance Then
-								e2\EventState3 = 1.0
-							EndIf
+							If e2\EventID = e_gate_b_entrance Lor e2\EventID = e_gate_a_entrance Then e2\EventState3 = 1.0
 						Next
 						
 						e\EventState2 = 2.0
@@ -6792,9 +6774,7 @@ Function UpdateEvents%()
 								EndIf
 								
 								If e\EventState > 400.0 Then
-									If e\Sound <> 0 Then 
-										FreeSound_Strict(e\Sound) : e\Sound = 0
-									EndIf
+									If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
 									RemoveEvent(e)
 								EndIf								
 							EndIf
@@ -7514,9 +7494,9 @@ Function UpdateEvents%()
 												ShouldCreateItem = True
 											EndIf
 											;[End Block]
-										Case "gasmask", "gasmask3", "supergasmask", "hazmatsuit", "hazmatsuit2", "hazmatsuit3"
+										Case "gasmask", "heavygasmask", "supergasmask", "hazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 											;[Block]
-											If itt\TempName = "gasmask" Lor itt\TempName = "gasmask3" Lor itt\TempName = "supergasmask" Lor itt\TempName = "hazmatsuit" Lor itt\TempName = "hazmatsuit2" Lor itt\TempName = "hazmatsuit3" And Rand(2) = 1 Then
+											If itt\TempName = "gasmask" Lor itt\TempName = "heavygasmask" Lor itt\TempName = "supergasmask" Lor itt\TempName = "hazmatsuit" Lor itt\TempName = "superhazmatsuit" Lor itt\TempName = "heavyhazmatsuit" And Rand(2) = 1 Then
 												ShouldCreateItem = True
 											EndIf
 											;[End Block]
@@ -9407,9 +9387,7 @@ Function UpdateEndings%()
 											me\BlinkTimer = -10.0
 											
 											For n.NPCs = Each NPCs
-												If n\NPCType = NPCTypeMTF
-													RemoveNPC(n)
-												EndIf
+												If n\NPCType = NPCTypeMTF Then RemoveNPC(n)
 											Next
 											
 											RemoveEvent(e)

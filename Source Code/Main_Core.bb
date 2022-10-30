@@ -1922,6 +1922,27 @@ Function UpdateGUI%()
 		EndIf
 	EndIf
 	
+	For n = 0 To 19
+		If SelectedDifficulty\InventorySlots > 3 And (Not InvOpen) And (Not I_294\Using) And (Not MenuOpen) And (Not ConsoleOpen) Then
+			If KeyHit(2) Then
+				If SelectedItem = Inventory(n) Then SelectedItem = Null
+				SelectedItem = Inventory(0)
+			ElseIf KeyHit(3)
+				If SelectedItem = Inventory(n) Then SelectedItem = Null
+				SelectedItem = Inventory(1)
+			ElseIf KeyHit(4) And SelectedDifficulty\InventorySlots > 5
+				If SelectedItem = Inventory(n) Then SelectedItem = Null
+				SelectedItem = Inventory(2)
+			ElseIf KeyHit(5) And SelectedDifficulty\InventorySlots > 7
+				If SelectedItem = Inventory(n) Then SelectedItem = Null
+				SelectedItem = Inventory(3)
+			ElseIf KeyHit(6) And SelectedDifficulty\InventorySlots > 9
+				If SelectedItem = Inventory(n) Then SelectedItem = Null
+				SelectedItem = Inventory(4)
+			EndIf
+		EndIf
+	Next
+	
 	Local PrevInvOpen% = InvOpen, MouseSlot% = 66
 	Local ShouldDrawHUD% = True
 	
@@ -4933,7 +4954,7 @@ Function RenderGUI%()
 							EndIf
 							
 							Color(30, 30, 30)
-							If Offline Then
+							If Offline Lor SelectedItem\ItemTemplate\TempName = "nav310" Then
 								Color(100, 0, 0)
 								xTemp = x - (NAV_WIDTH / 2) + (196 * MenuScale)
 								yTemp = y - (NAV_HEIGHT / 2) + (10 * MenuScale)

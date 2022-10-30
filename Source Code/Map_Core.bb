@@ -3397,15 +3397,6 @@ Function UpdateSecurityCams%()
 							sc\State = 0.0
 						EndIf
 						
-						If me\BlinkTimer > -5.0 And EntityInView(sc\ScrOBJ, Camera) Then
-							If EntityVisible(Camera, sc\ScrOBJ) Then
-								If (sc\CoffinEffect = 1 Lor sc\CoffinEffect = 3) And (Not I_714\Using) And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then
-									me\Sanity = me\Sanity - fps\Factor[0]
-									me\RestoreSanity = False
-								EndIf
-							EndIf
-						EndIf
-						
 						If me\Sanity < -900.0 Then 
 							msg\DeathMsg = Chr(34) + "What we know is that he died of cardiac arrest. My guess is that it was caused by SCP-895, although it has never been observed affecting video equipment from this far before. "
 							msg\DeathMsg = msg\DeathMsg + "Further testing is needed to determine whether SCP-895's " + Chr(34) + "Red Zone" + Chr(34) + " is increasing." + Chr(34)
@@ -3427,6 +3418,9 @@ Function UpdateSecurityCams%()
 						If (sc\CoffinEffect = 1 Lor sc\CoffinEffect = 3) And (Not I_714\Using) And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then
 							If sc\InSight Then
 								Local Pvt% = CreatePivot()
+								
+								me\Sanity = me\Sanity - fps\Factor[0]
+								me\RestoreSanity = False
 								
 								PositionEntity(Pvt, EntityX(Camera), EntityY(Camera), EntityZ(Camera))
 								PointEntity(Pvt, sc\ScrOBJ)

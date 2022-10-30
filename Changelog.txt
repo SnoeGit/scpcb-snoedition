@@ -5,11 +5,18 @@ General:
 - Optimize many lines of code.
 - Can no longer save at monitors if your sanity is too low.
 - Running alerts the SCP-939 instances further away now.
+- Adjust the chances of obtaining Level 5 Key Card. 1/4 on Safe, 1/6 on Euclid. 1/8 on Keter. 1/10 on Apollyon.
+
 
 Rooms:
 
 - SCP-106 spawns further away from SCP-895's Coffin.
 - SCP-106 spawns sooner every time SCP-914 is being used.
+- Removed an instance of SCP-966 from the Maintenance tunnels.
+
+Bug Fixes:
+
+- S-NAV 310 Navigator shows the battery icon properly.
 
 
 v1.31

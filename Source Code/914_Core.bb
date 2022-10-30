@@ -223,25 +223,20 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					Select Rand(3)
+					Select Rand(2)
 						Case 1
 							;[Block]
-							it2.Items = CreateItem("Radio Transceiver", "radio", x, y, z)
+							If Rand(2) = 1 Then
+								it2.Items = CreateItem("Radio Transceiver", "radio", x, y, z)
+							Else
+								it2.Items = CreateItem("Radio Transceiver", "18vradio", x, y, z)
+							EndIf
 							it2\State = Rnd(10.0, 100.0)
 							;[End Block]
 						Case 2
 							;[Block]
-							If Rand(3) = 1 Then
-								it2.Items = CreateItem("S-NAV 300 Navigator", "nav300", x, y, z)
-							Else
-								it2.Items = CreateItem("S-NAV Navigator", "nav", x, y, z)
-								it2\State = Rnd(10.0, 100.0)
-							EndIf
-							;[End Block]
-						Case 3
-							;[Block]
-							it2.Items = CreateItem("Night Vision Goggles", "nvg", x, y, z)
-							it2\State = Rnd(100.0, 1000.0)
+							it2.Items = CreateItem("S-NAV Navigator", "nav", x, y, z)
+							it2\State = Rnd(10.0, 100.0)
 							;[End Block]
 					End Select
 					;[End Block]
@@ -259,7 +254,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						Case 2
 							;[Block]
 							If Rand(2) = 1 Then
-								it2.Items = CreateItem("S-NAV Navigator Ultimate", "navulti", x, y, z)
+								it2.Items = CreateItem("S-NAV 300 Navigator", "nav300", x, y, z)
 							Else
 								it2.Items = CreateItem("S-NAV 310 Navigator", "nav310", x, y, z)
 								it2\State = Rnd(10.0, 100.0)
@@ -267,17 +262,13 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							;[End Block]
 						Case 3
 							;[Block]
-							Select Rand(3)
+							Select Rand(2)
 								Case 1
 									;[Block]
-									it2.Items = CreateItem("Night Vision Goggles", "finenvg", x, y, z)
-									;[End Block]
-								Case 2
-									;[Block]
-									it2.Items = CreateItem("Night Vision Goggles", "supernvg", x, y, z)
+									it2.Items = CreateItem("Night Vision Goggles", "nvg", x, y, z)
 									it2\State = Rnd(100.0, 1000.0)
 									;[End Block]
-								Case 3
+								Case 2
 									;[Block]
 									it2.Items = CreateItem("SCRAMBLE Gear", "scramble", x, y, z)
 									it2\State = Rnd(100.0, 1000.0)
@@ -313,7 +304,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						If it <> item And it\Collider <> 0 And (Not it\Picked) Then
 							If DistanceSquared(EntityX(it\Collider, True), x, EntityZ(it\Collider, True), z) < PowTwo(180.0 * RoomScale)
 								Select it\ItemTemplate\TempName
-									Case "gasmask", "supergasmask"
+									Case "gasmask", "finegasmask", "supergasmask"
 										;[Block]
 										RemoveItem(it)
 										it2.Items = CreateItem("Heavy Gas Mask", "gasmask3", x, y, z)
@@ -553,14 +544,14 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							;[Block]
 							Select SelectedDifficulty\OtherFactors
 								Case EASY
-									If Rand(10) = 1 Then
+									If Rand(4) = 1 Then
 										it2.Items = CreateItem("Level 5 Key Card", "key5", x, y, z)
 									Else
 										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 									EndIf
 								Case NORMAL
 									;[Block]
-									If Rand(15) = 1 Then
+									If Rand(6) = 1 Then
 										it2.Items = CreateItem("Level 5 Key Card", "key5", x, y, z)
 									Else
 										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
@@ -568,7 +559,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									;[End Block]
 								Case HARD
 									;[Block]
-									If Rand(20) = 1 Then
+									If Rand(8) = 1 Then
 										it2.Items = CreateItem("Level 5 Key Card", "key5", x, y, z)
 									Else
 										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
@@ -576,7 +567,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									;[End Block]
 								Case EXTREME
 									;[Block]
-									If Rand(25) = 1 Then
+									If Rand(10) = 1 Then
 										it2.Items = CreateItem("Level 5 Key Card", "key5", x, y, z)
 									Else
 										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
@@ -599,48 +590,40 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									;[Block]
 									If Rand(0, ((MAXACHIEVEMENTS - 1) * 3) - ((CurrAchvAmount - 1) * 3)) = 0 Then
 										it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
+									ElseIf Rand(10) = 1 Then
+										it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
 									Else
-										If Rand(10) = 1 Then
-											it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
-										Else
-											it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
-										EndIf
+										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 									EndIf
 									;[End Block]
 								Case NORMAL
 									;[Block]
 									If Rand(0, ((MAXACHIEVEMENTS - 1) * 4) - ((CurrAchvAmount - 1) * 3)) = 0 Then
 										it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
+									ElseIf Rand(15) = 1 Then
+										it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
 									Else
-										If Rand(15) = 1 Then
-											it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
-										Else
-											it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
-										EndIf
+										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 									EndIf
 									;[End Block]
 								Case HARD
 									;[Block]
 									If Rand(0, ((MAXACHIEVEMENTS - 1) * 5) - ((CurrAchvAmount - 1) * 3)) = 0 Then
 										it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
+									ElseIf Rand(20) = 1 Then
+										it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
 									Else
-										If Rand(20) = 1 Then
-											it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
-										Else
-											it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
-										EndIf
+										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 									EndIf
 									;[End Block]
 								Case EXTREME
 									;[Block]
 									If Rand(0, ((MAXACHIEVEMENTS - 1) * 6) - ((CurrAchvAmount - 1) * 3)) = 0 Then
 										it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
+									ElseIf Rand(25) = 1 Then
+										it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
 									Else
-										If Rand(25) = 1 Then
-											it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
-										Else
-											it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
-										EndIf
+										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 									EndIf
 									;[End Block]
 							End Select
@@ -658,7 +641,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									;[End Block]
 								Case NORMAL
 									;[Block]
-									If Rand(5) = 1 Then
+									If Rand(6) = 1 Then
 										it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
 									Else
 										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
@@ -666,7 +649,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									;[End Block]
 								Case HARD
 									;[Block]
-									If Rand(6) = 1 Then
+									If Rand(8) = 1 Then
 										it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
 									Else
 										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
@@ -674,7 +657,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									;[End Block]
 								Case EXTREME
 									;[Block]
-									If Rand(7) = 1 Then
+									If Rand(10) = 1 Then
 										it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
 									Else
 										it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
@@ -698,48 +681,40 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							;[Block]
 							If Rand(0, ((MAXACHIEVEMENTS - 1) * 3) - ((CurrAchvAmount - 1) * 3)) = 0
 								it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
+							ElseIf Rand(20) = 1 Then
+								it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
 							Else
-								If Rand(20) = 1 Then
-									it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
-								Else
-									it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
-								EndIf
+								it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 							EndIf
 							;[End Block]
 						Case NORMAL
 							;[Block]
 							If Rand(0, ((MAXACHIEVEMENTS - 1) * 4) - ((CurrAchvAmount - 1) * 3)) = 0
 								it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
+							ElseIf Rand(25) = 1 Then
+								it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
 							Else
-								If Rand(25) = 1 Then
-									it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
-								Else
-									it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
-								EndIf
+								it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 							EndIf
 							;[End Block]
 						Case HARD
 							;[Block]
 							If Rand(0, ((MAXACHIEVEMENTS - 1) * 5) - ((CurrAchvAmount - 1) * 3)) = 0
 								it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
+							ElseIf Rand(30) = 1 Then
+								it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
 							Else
-								If Rand(30) = 1 Then
-									it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
-								Else
-									it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
-								EndIf
+								it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 							EndIf
 							;[End Block]
 						Case EXTREME
 							;[Block]
 							If Rand(0, ((MAXACHIEVEMENTS - 1) * 6) - ((CurrAchvAmount - 1) * 3)) = 0
 								it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
+							ElseIf Rand(35) = 1 Then
+								it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
 							Else
-								If Rand(35) = 1 Then
-									it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
-								Else
-									it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
-								EndIf
+								it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
 							EndIf
 							;[End Block]
 					End Select
@@ -775,7 +750,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							;[End Block]
 						Case NORMAL
 							;[Block]
-							If Rand(5) = 1 Then
+							If Rand(6) = 1 Then
 								it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
 							Else
 								it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
@@ -783,7 +758,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							;[End Block]
 						Case HARD
 							;[Block]
-							If Rand(6) = 1 Then
+							If Rand(8) = 1 Then
 								it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
 							Else
 								it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
@@ -791,7 +766,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							;[End Block]
 						Case EXTREME
 							;[Block]
-							If Rand(7) = 1 Then
+							If Rand(10) = 1 Then
 								it2.Items = CreateItem("Level 6 Key Card", "key6", x, y, z)
 							Else
 								it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
@@ -843,11 +818,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
+					it2.Items = CreateItem("Level 0 Key Card", "key0", x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Level 0 Key Card", "key0", x, y, z)
+					it2.Items = CreateItem("SCP-588", "scp588", x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -925,16 +900,12 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					If Rand(3) = 1 Then
-						it2.Items = CreateItem("S-NAV 300 Navigator", "nav300", x, y, z)
-					Else
-						it2.Items = CreateItem("S-NAV 310 Navigator", "nav310", x, y, z)
-						it2\State = Rnd(10.0, 100.0)
-					EndIf
+					it2.Items = CreateItem("S-NAV 310 Navigator", "nav310", x, y, z)
+					it2\State = Rnd(10.0, 100.0)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("S-NAV Navigator Ultimate", "navulti", x, y, z)
+					it2.Items = CreateItem("S-NAV 300 Navigator", "nav300", x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
