@@ -1922,8 +1922,8 @@ Function UpdateGUI%()
 		EndIf
 	EndIf
 	
-	For n = 0 To 19
-		If SelectedDifficulty\InventorySlots > 3 Then
+	If SelectedDifficulty\InventorySlots > 3 Then
+		For n = 0 To 19
 			If OtherOpen = Null And (Not InvOpen) And (Not I_294\Using) And (Not MenuOpen) And (Not ConsoleOpen) Then
 				If KeyHit(2) Then
 					If SelectedItem = Inventory(0) Then
@@ -2037,8 +2037,8 @@ Function UpdateGUI%()
 					If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 				EndIf
 			EndIf
-		EndIf
-	Next
+		Next
+	EndIf
 	
 	Local PrevInvOpen% = InvOpen, MouseSlot% = 66
 	Local ShouldDrawHUD% = True
@@ -4364,7 +4364,7 @@ Function RenderGUI%()
 		PitchValue = -DeltaPitch(Camera, ClosestItem\Collider)
 		If PitchValue > 90.0 And PitchValue <= 180.0 Then PitchValue = 90.0
 		If PitchValue > 180.0 And PitchValue < 270.0 Then PitchValue = 270.0
-		
+		Text(mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (64 * MenuScale), ClosestItem\ItemTemplate\Name, True, False)
 		DrawImage(t\IconID[6], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
 	EndIf
 	

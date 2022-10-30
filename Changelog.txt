@@ -4,9 +4,10 @@ General:
 
 - Optimize many lines of code.
 - Can no longer save at monitors if your sanity is too low.
-- Running alerts the SCP-939 instances further away now.
+- Sprinting alerts the SCP-939 instances further away now.
 - Adjust the chances of obtaining Level 5 Key Card from SCP-914. 1/4 on Safe, 1/6 on Euclid. 1/8 on Keter. 1/10 on Apollyon.
 - Quick slots feature from Multiplayer Edition has been added. The whole top row can be selected with 1 - 5 on Safe, 1 - 4 on Euclid, 1 - 2 on Keter, but none on Apollyon.
+- Items' names now display right above the grab icon.
 
 
 Rooms:
