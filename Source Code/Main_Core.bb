@@ -1923,22 +1923,119 @@ Function UpdateGUI%()
 	EndIf
 	
 	For n = 0 To 19
-		If SelectedDifficulty\InventorySlots > 3 And (Not InvOpen) And (Not I_294\Using) And (Not MenuOpen) And (Not ConsoleOpen) Then
-			If KeyHit(2) Then
-				If SelectedItem = Inventory(n) Then SelectedItem = Null
-				SelectedItem = Inventory(0)
-			ElseIf KeyHit(3)
-				If SelectedItem = Inventory(n) Then SelectedItem = Null
-				SelectedItem = Inventory(1)
-			ElseIf KeyHit(4) And SelectedDifficulty\InventorySlots > 5
-				If SelectedItem = Inventory(n) Then SelectedItem = Null
-				SelectedItem = Inventory(2)
-			ElseIf KeyHit(5) And SelectedDifficulty\InventorySlots > 7
-				If SelectedItem = Inventory(n) Then SelectedItem = Null
-				SelectedItem = Inventory(3)
-			ElseIf KeyHit(6) And SelectedDifficulty\InventorySlots > 9
-				If SelectedItem = Inventory(n) Then SelectedItem = Null
-				SelectedItem = Inventory(4)
+		If SelectedDifficulty\InventorySlots > 3 Then
+			If OtherOpen = Null And (Not InvOpen) And (Not I_294\Using) And (Not MenuOpen) And (Not ConsoleOpen) Then
+				If KeyHit(2) Then
+					If SelectedItem = Inventory(0) Then
+						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						SelectedItem = Null
+					ElseIf SelectedItem = Inventory(n)
+						SelectedItem = Null
+						SelectedItem = Inventory(0)
+					Else
+						SelectedItem = Inventory(0)
+					EndIf
+					If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+				ElseIf KeyHit(3)
+					If SelectedItem = Inventory(1) Then
+						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						SelectedItem = Null
+					ElseIf SelectedItem = Inventory(n)
+						SelectedItem = Null
+						SelectedItem = Inventory(1)
+					Else
+						SelectedItem = Inventory(1)
+					EndIf
+					If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+				ElseIf KeyHit(4) And SelectedDifficulty\InventorySlots > 5
+					If SelectedItem = Inventory(2) Then
+						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						SelectedItem = Null
+					ElseIf SelectedItem = Inventory(n)
+						SelectedItem = Null
+						SelectedItem = Inventory(2)
+					Else
+						SelectedItem = Inventory(2)
+					EndIf
+					If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+				ElseIf KeyHit(5) And SelectedDifficulty\InventorySlots > 7
+					If SelectedItem = Inventory(3) Then
+						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						SelectedItem = Null
+					ElseIf SelectedItem = Inventory(n)
+						SelectedItem = Null
+						SelectedItem = Inventory(3)
+					Else
+						SelectedItem = Inventory(3)
+					EndIf
+					If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+				ElseIf KeyHit(6) And SelectedDifficulty\InventorySlots > 9
+					If SelectedItem = Inventory(4) Then
+						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						SelectedItem = Null
+					ElseIf SelectedItem = Inventory(n)
+						SelectedItem = Null
+						SelectedItem = Inventory(4)
+					Else
+						SelectedItem = Inventory(4)
+					EndIf
+					If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+				ElseIf KeyHit(7) And SelectedDifficulty\InventorySlots > 11
+					If SelectedItem = Inventory(5) Then
+						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						SelectedItem = Null
+					ElseIf SelectedItem = Inventory(n)
+						SelectedItem = Null
+						SelectedItem = Inventory(5)
+					Else
+						SelectedItem = Inventory(5)
+					EndIf
+					If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+				ElseIf KeyHit(8) And SelectedDifficulty\InventorySlots > 13
+					If SelectedItem = Inventory(6) Then
+						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						SelectedItem = Null
+					ElseIf SelectedItem = Inventory(n)
+						SelectedItem = Null
+						SelectedItem = Inventory(6)
+					Else
+						SelectedItem = Inventory(6)
+					EndIf
+					If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+				ElseIf KeyHit(9) And SelectedDifficulty\InventorySlots > 15
+					If SelectedItem = Inventory(7) Then
+						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						SelectedItem = Null
+					ElseIf SelectedItem = Inventory(n)
+						SelectedItem = Null
+						SelectedItem = Inventory(7)
+					Else
+						SelectedItem = Inventory(7)
+					EndIf
+					If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+				ElseIf KeyHit(10) And SelectedDifficulty\InventorySlots > 17
+					If SelectedItem = Inventory(8) Then
+						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						SelectedItem = Null
+					ElseIf SelectedItem = Inventory(n)
+						SelectedItem = Null
+						SelectedItem = Inventory(8)
+					Else
+						SelectedItem = Inventory(8)
+					EndIf
+					If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+				ElseIf KeyHit(11) And SelectedDifficulty\InventorySlots > 19
+					If SelectedItem = Inventory(9) Then
+						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						SelectedItem = Null
+					ElseIf SelectedItem = Inventory(n)
+						SelectedItem = Null
+						SelectedItem = Inventory(9)
+					Else
+						SelectedItem = Inventory(9)
+					EndIf
+					If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+				EndIf
 			EndIf
 		EndIf
 	Next
