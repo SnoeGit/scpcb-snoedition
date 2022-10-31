@@ -15,12 +15,17 @@ Rooms:
 - SCP-106 spawns further away from SCP-895's Coffin.
 - SCP-106 spawns sooner every time SCP-914 is being used.
 - Removed an instance of SCP-966 from the Maintenance tunnels.
+- SCP-860-1 Observation Room doors are now Key Card doors.
 
 Bug Fixes:
 
 - S-NAV 310 Navigator shows the battery icon properly.
 - Storage Area 6(room3_storage) elevator shaft does not kill the player in GodMode anymore.
 - Being caught by SCP-106 in Storage Area 6(room3_storage) no longer instantly kills the player.
+
+Known Issues:
+
+- Radio does not work due to the Quick Slots feature at the moment.
 
 
 v1.31
