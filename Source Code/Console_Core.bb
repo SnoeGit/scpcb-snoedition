@@ -743,6 +743,8 @@ Function UpdateConsole%()
 					n_I\Curr106\Idle = 1
 					n_I\Curr106\State = 100000.0
 					n_I\Curr106\Contained = True
+					HideEntity(n_I\Curr106\Collider)
+					HideEntity(n_I\Curr106\OBJ)
 					CreateConsoleMsg("SCP-106 disabled.")
 					;[End Block]
 				Case "enable106", "e106"

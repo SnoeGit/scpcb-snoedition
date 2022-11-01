@@ -22,6 +22,7 @@ Bug Fixes:
 - S-NAV 310 Navigator shows the battery icon properly.
 - Storage Area 6(room3_storage) elevator shaft does not kill the player in GodMode anymore.
 - Being caught by SCP-106 in Storage Area 6(room3_storage) no longer instantly kills the player.
+- Fixed SCP-106's collider lingering when they are disabled with console.
 
 Known Issues:
 
