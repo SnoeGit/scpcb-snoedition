@@ -606,6 +606,7 @@ Function UpdateConsole%()
 					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					me\Injuries = Float(StrTemp)
+					CreateConsoleMsg("Player's injuries set to " + Float(StrTemp))
 					;[End Block]
 				Case "cls", "clear"
 					;[Block]
@@ -616,16 +617,19 @@ Function UpdateConsole%()
 					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					I_008\Timer = Float(StrTemp)
+					CreateConsoleMsg("SCP-008 infection stage set to " + Float(StrTemp))
 					;[End Block]
 				Case "crystal"
 					;[Block]
 					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					I_409\Timer = Float(StrTemp)
+					CreateConsoleMsg("SCP-409 crystallization stage set to " + Float(StrTemp))
 					;[End Block]
 				Case "heal"
 					;[Block]
 					ResetNegativeStats()
+					CreateConsoleMsg("Healed the player")
 					;[End Block]
 				Case "teleport", "tp", "goto"
 					;[Block]
@@ -703,6 +707,8 @@ Function UpdateConsole%()
 							Exit
 						EndIf
 					Next
+					
+					CreateConsoleMsg("SCP-096 has been reset.")
 					;[End Block]
 				Case "reset372", "r372"
 					;[Block]				
@@ -713,6 +719,8 @@ Function UpdateConsole%()
 							Exit
 						EndIf
 					Next
+					
+					CreateConsoleMsg("SCP-372 has been reset.")
 					;[End Block]
 				Case "disable173", "d173"
 					;[Block]
@@ -720,6 +728,7 @@ Function UpdateConsole%()
 					HideEntity(n_I\Curr173\OBJ)
 					HideEntity(n_I\Curr173\OBJ2)
 					HideEntity(n_I\Curr173\Collider)
+					CreateConsoleMsg("SCP-173 disabled.")	
 					;[End Block]
 				Case "enable173", "e173"
 					;[Block]
@@ -727,12 +736,14 @@ Function UpdateConsole%()
 					ShowEntity(n_I\Curr173\OBJ)
 					ShowEntity(n_I\Curr173\OBJ2)
 					ShowEntity(n_I\Curr173\Collider)
+					CreateConsoleMsg("SCP-173 enabled.")
 					;[End Block]
 				Case "disable106", "d106"
 					;[Block]
 					n_I\Curr106\Idle = 1
 					n_I\Curr106\State = 100000.0
 					n_I\Curr106\Contained = True
+					CreateConsoleMsg("SCP-106 disabled.")
 					;[End Block]
 				Case "enable106", "e106"
 					;[Block]
@@ -740,6 +751,7 @@ Function UpdateConsole%()
 					n_I\Curr106\Contained = False
 					ShowEntity(n_I\Curr106\Collider)
 					ShowEntity(n_I\Curr106\OBJ)
+					CreateConsoleMsg("SCP-106 enabled.")
 					;[End Block]
 				Case "disable966", "d966"
 					;[Block]
@@ -769,6 +781,7 @@ Function UpdateConsole%()
 						n_I\Curr049\Idle = 1
 						HideEntity(n_I\Curr049\Collider)
 						HideEntity(n_I\Curr049\OBJ)
+						CreateConsoleMsg("SCP-049 disabled.")
 					EndIf
 					;[End Block]
 				Case "enable049", "e049"
@@ -777,6 +790,7 @@ Function UpdateConsole%()
 						n_I\Curr049\Idle = 0
 						ShowEntity(n_I\Curr049\Collider)
 						ShowEntity(n_I\Curr049\OBJ)
+						CreateConsoleMsg("SCP-049 enabled.")
 					EndIf
 					;[End Block]
 				Case "106retreat"
@@ -785,6 +799,7 @@ Function UpdateConsole%()
 					n_I\Curr106\State = Rnd(22000.0, 27000.0)
 					PositionEntity(n_I\Curr106\Collider, 0.0, 500.0, 0.0)
 					ResetEntity(n_I\Curr106\Collider)
+					CreateConsoleMsg("SCP-106 has retreated.")
 					Else
 						CreateConsoleMsg("SCP-106 is currently not active, so it cannot retreat.", 255, 150, 0)
 					EndIf
@@ -939,7 +954,7 @@ Function UpdateConsole%()
 					Select StrTemp
 						Case "on", "1", "true"
 							;[Block]
-							chs\NoBlink = True		
+							chs\NoBlink = True
 							;[End Block]
 						Case "off", "0", "false"
 							;[Block]
@@ -1125,6 +1140,8 @@ Function UpdateConsole%()
 							Exit
 						EndIf
 					Next
+					
+					CreateConsoleMsg("Remote Alpha Warheads disabled.")
 					;[End Block]
 				Case "unlockexits"
 					;[Block]
@@ -1360,6 +1377,7 @@ Function UpdateConsole%()
 				Case "resetfunds"
 					;[Block]
 					me\Funds = Rand(2, 6)
+					CreateConsoleMsg("Funds have reset.")
 					;[End Block]
 				Case "codes"
 					;[Block]
