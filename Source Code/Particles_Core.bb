@@ -165,7 +165,7 @@ Function UpdateEmitters%()
 			
 			If (Not InSmoke) Then
 				If wi\GasMask = 0 And wi\HazmatSuit = 0 Then
-					If DistanceSquared(EntityX(Camera, True), EntityX(e\OBJ, True), EntityZ(Camera, True), EntityZ(e\OBJ, True)) < 0.96 Then
+					If DistanceSquared(EntityX(Camera, True), EntityX(e\OBJ, True), EntityZ(Camera, True), EntityZ(e\OBJ, True)) < 0.75 Then
 						If Abs(EntityY(Camera, True) - EntityY(e\OBJ, True)) < 5.0 Then InSmoke = True
 					EndIf
 				EndIf					
