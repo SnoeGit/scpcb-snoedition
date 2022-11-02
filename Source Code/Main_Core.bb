@@ -1951,7 +1951,7 @@ Function UpdateGUI%()
 			EndIf
 		EndIf
 		If ShouldDrawHUD Then
-			CameraZoom(Camera, Min(1.0 + (me\CurrCameraZoom / 400.0), 1.1) / Tan((2.0 * ATan(Tan((50) / 2.0) * opt\RealGraphicWidth / opt\RealGraphicHeight)) / 2.0))
+			CameraZoom(Camera, Min(1.0 + (me\CurrCameraZoom / 400.0), 1.1) / Tan((2.0 * ATan(Tan((55) / 2.0) * opt\RealGraphicWidth / opt\RealGraphicHeight)) / 2.0))
 			Pvt = CreatePivot()
 			PositionEntity(Pvt, EntityX(d_I\ClosestButton, True), EntityY(d_I\ClosestButton, True), EntityZ(d_I\ClosestButton, True))
 			RotateEntity(Pvt, 0.0, EntityYaw(d_I\ClosestButton, True) - 180.0, 0.0)
@@ -3750,7 +3750,7 @@ Function UpdateGUI%()
 					;[Block]
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
-						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0]) / 1.5, 100.0)
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.5), 100.0)
 						
 						If SelectedItem\State = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])

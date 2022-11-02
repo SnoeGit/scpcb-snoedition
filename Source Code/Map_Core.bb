@@ -3051,7 +3051,7 @@ Function UseDoor%(d.Doors, PlaySFX% = True)
 				If d\Open Then
 					CreateMsg("You pushed the button but nothing happened.")
 				Else
-					CreateMsg("The door appears to be locked.")
+					CreateMsg("The door appears to be jammed.")
 				EndIf
 				PlaySound2(ButtonSFX2, Camera, d_I\ClosestButton)
 				Return
