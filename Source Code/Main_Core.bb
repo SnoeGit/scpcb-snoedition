@@ -4820,7 +4820,7 @@ Function RenderGUI%()
 					
 					Local NavWorks% = True
 					
-					If PlayerRoom\RoomTemplate\Name = "dimension_106" Lor PlayerRoom\RoomTemplate\Name = "dimension_1499" Then
+					If PlayerRoom\RoomTemplate\Name = "dimension_106" Lor PlayerRoom\RoomTemplate\Name = "dimension_1499" Lor (PlayerRoom\RoomTemplate\Name = "room2_mt" And (EntityY(me\Collider, True) >= 8.0 And EntityY(me\Collider, True) <= 12.0)) Then
 						NavWorks = False
 					ElseIf forest_event <> Null
 						If forest_event\EventState = 1.0 Then NavWorks = False

@@ -2401,9 +2401,8 @@ Function UpdateEvents%()
 							gateb\RoomDoors[1]\Locked = 1
 							PlayerRoom = gateb
 							RemoveEvent(e)
-						ElseIf	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then
-							CanSave = False
-						EndIf						
+						EndIf
+						If PlayerInsideElevator Then CanSave = False
 					EndIf
 				EndIf
 				;[End Block]
@@ -2456,9 +2455,8 @@ Function UpdateEvents%()
 							gatea\RoomDoors[1]\Locked = 1
 							PlayerRoom = gatea
 							RemoveEvent(e)
-						ElseIf	EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.0 Then
-							CanSave = False
-						EndIf						
+						EndIf
+						If PlayerInsideElevator Then CanSave = False
 					EndIf
 				EndIf
 				;[End Block]
