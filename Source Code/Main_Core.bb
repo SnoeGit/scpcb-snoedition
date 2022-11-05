@@ -1924,7 +1924,7 @@ Function UpdateGUI%()
 	
 	If SelectedDifficulty\InventorySlots > 3 Then
 		For i = 2 To (MaxItemAmount / 2) + 1
-			If OtherOpen = Null And (Not InvOpen) And (Not I_294\Using) And (Not MenuOpen) And (Not ConsoleOpen) Then
+			If OtherOpen = Null And SelectedScreen = Null And (Not InvOpen) And (Not I_294\Using) And (Not MenuOpen) And (Not ConsoleOpen) Then
 				If KeyHit(i) Then
 					If SelectedItem = Inventory(i - 2) Then
 						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
@@ -4926,16 +4926,14 @@ Function RenderGUI%()
 										SCPs_Found = SCPs_Found + 1
 									EndIf
 								EndIf
-								If n_I\Curr049 <> Null Then
-								If (Not n_I\Curr049\HideFromNVG) Then
+								If n_I\Curr049 <> Null And (Not n_I\Curr049\HideFromNVG) Then
 									Dist = EntityDistanceSquared(Camera, n_I\Curr049\OBJ)
-										If Dist < 900.0 Then
-											Dist = Sqr(Dist)
-											Color(100, 0, 0)
-											Oval(x - (Dist * (1.5 * MenuScale)), y - (7 * MenuScale) - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
-											Text(x - (NAV_WIDTH / 2) + (10 * MenuScale), y - (NAV_HEIGHT / 2) + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-049")
-											SCPs_Found = SCPs_Found + 1
-										EndIf
+									If Dist < 900.0 Then
+										Dist = Sqr(Dist)
+										Color(100, 0, 0)
+										Oval(x - (Dist * (1.5 * MenuScale)), y - (7 * MenuScale) - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
+										Text(x - (NAV_WIDTH / 2) + (10 * MenuScale), y - (NAV_HEIGHT / 2) + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-049")
+										SCPs_Found = SCPs_Found + 1
 									EndIf
 								EndIf
 								If PlayerRoom\RoomTemplate\Name = "cont1_895" Then
