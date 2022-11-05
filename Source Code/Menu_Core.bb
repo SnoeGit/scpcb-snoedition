@@ -128,7 +128,7 @@ Function UpdateMainMenu%()
 			ShouldPlay = 66
 		ElseIf ShouldPlay = 66
 			If (Not ChannelPlaying(EndBreathCHN)) Then
-				FreeSound_Strict(EndBreathSFX)
+				FreeSound_Strict(EndBreathSFX) : EndBreathSFX = 0
 				ShouldPlay = 11
 			EndIf
 		Else

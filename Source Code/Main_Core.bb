@@ -682,7 +682,7 @@ Function UpdateGame%()
 					
 					If RN <> "cont2_860_1" And RN <> "cont2_1123" And RN <> "cont1_173_intro" And RN <> "dimension_1499" And RN <> "dimension_106" Then
 						me\LightBlink = Rnd(1.0, 2.0)
-						PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(1, 8) + ".ogg"))
+						PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(8) + ".ogg"))
 					EndIf 
 				EndIf
 			EndIf
@@ -1271,13 +1271,13 @@ Function UpdateMoving%()
 			If (Not BreathCHN) Then
 				Temp = 0.0
 				If wi\GasMask > 0 Lor I_1499\Using > 0 Then Temp = 1
-				BreathCHN = PlaySound_Strict(BreathSFX((Temp), Rand(1, 3)))
+				BreathCHN = PlaySound_Strict(BreathSFX((Temp), Rand(3)))
 				ChannelVolume(BreathCHN, Min((70.0 - me\Stamina) / 70.0, 1.0) * opt\SFXVolume * opt\MasterVolume)
 			Else
 				If (Not ChannelPlaying(BreathCHN)) Then
 					Temp = 0.0
 					If wi\GasMask > 0 Lor I_1499\Using > 0 Then Temp = 1
-					BreathCHN = PlaySound_Strict(BreathSFX((Temp), Rand(1, 3)))
+					BreathCHN = PlaySound_Strict(BreathSFX((Temp), Rand(3)))
 					ChannelVolume(BreathCHN, Min((70.0 - me\Stamina) / 70.0, 1.0) * opt\SFXVolume * opt\MasterVolume)		
 				EndIf
 			EndIf
@@ -3101,7 +3101,7 @@ Function UpdateGUI%()
 					;[Block]
 					If SelectedItem\State = 0.0 Then
 						CreateMsg(Chr(34) + "Hey, I remember this movie!" + Chr(34))
-						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(1, 5) + ".ogg"))
+						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5) + ".ogg"))
 						SelectedItem\State = 1.0
 					EndIf
 					;[End Block]
@@ -3917,7 +3917,7 @@ Function UpdateGUI%()
 				Case "coin"
 					;[Block]
 					If SelectedItem\State = 0.0 Then
-						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(1, 5) + ".ogg"))
+						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5) + ".ogg"))
 						
 						SelectedItem\State = 1.0
 					EndIf
@@ -4748,7 +4748,7 @@ Function RenderGUI%()
 							If SelectedItem\ItemTemplate\TempName = "veryfineradio" Then
 								StrTemp = ""
 								For i = 0 To Rand(5, 30)
-									StrTemp = StrTemp + Chr(Rand(1, 100))
+									StrTemp = StrTemp + Chr(Rand(100))
 								Next
 								
 								SetFont(fo\FontID[Font_Digital_Big])
@@ -6177,7 +6177,7 @@ Function RenderEnding%()
 	
 	If me\EndingTimer < -200.0 Then
 		If me\EndingTimer > -700.0 Then 
-			If Rand(1, 150) < Min((Abs(me\EndingTimer) - 200.0), 155.0) Then
+			If Rand(150) < Min((Abs(me\EndingTimer) - 200.0), 155.0) Then
 				DrawImage(me\EndingScreen, mo\Viewport_Center_X - (400 * MenuScale), mo\Viewport_Center_Y - (400 * MenuScale))
 			Else
 				Color(0, 0, 0)
@@ -6340,7 +6340,7 @@ Function RenderCredits%()
 	
 	Cls()
 	
-	If Rand(1, 300) > 1 Then
+	If Rand(300) > 1 Then
 		DrawImage(me\CreditsScreen, mo\Viewport_Center_X - (400 * MenuScale), mo\Viewport_Center_Y - (400 * MenuScale))
 	EndIf
 	
@@ -7076,7 +7076,7 @@ Function UpdateMTF%()
 						EndIf
 					EndIf
 				Next
-				PlayAnnouncement("SFX\Character\MTF\ThreatAnnounc" + Rand(1, 3) + ".ogg")
+				PlayAnnouncement("SFX\Character\MTF\ThreatAnnounc" + Rand(3) + ".ogg")
 			EndIf
 			MTFTimer = 25000.0
 		ElseIf MTFTimer >= 25000.0 And MTFTimer <= 25000.0 + (70.0 * 60.0)
@@ -7095,7 +7095,7 @@ Function UpdateCameraCheck%()
 		MTFCameraCheckTimer = 0.0
 		If (Not me\Detected) Then
 			If MTFCameraCheckDetected Then
-				PlayAnnouncement("SFX\Character\MTF\AnnouncCameraFound" + Rand(1, 2) + ".ogg")
+				PlayAnnouncement("SFX\Character\MTF\AnnouncCameraFound" + Rand(2) + ".ogg")
 				me\Detected = True
 				MTFCameraCheckTimer = 70.0 * 60.0
 			Else
@@ -7169,7 +7169,7 @@ Function UpdateVomit%()
 		; ~ Regurgitate when timer is below 10 seconds
 		If me\VomitTimer < 10.0 And Rnd(0.0, 500.0 * me\VomitTimer) < 2.0 Then
 			If (Not ChannelPlaying(VomitCHN)) And (Not me\Regurgitate) Then
-				VomitCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\294\Retch" + Rand(1, 2) + ".ogg"))
+				VomitCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\294\Retch" + Rand(2) + ".ogg"))
 				me\Regurgitate = MilliSecs2() + 50
 			EndIf
 		EndIf
@@ -7215,7 +7215,7 @@ Function UpdateVomit%()
 		mo\Mouse_Y_Speed_1 = mo\Mouse_Y_Speed_1 + Max((1.0 + me\VomitTimer / 10.0), 0.0)
 		
 		If me\VomitTimer < -15.0 Then
-			FreeSound_Strict(VomitSFX)
+			FreeSound_Strict(VomitSFX) : VomitSFX = 0
 			me\VomitTimer = 0.0
 			If (Not me\Terminated) Then PlaySound_Strict(BreathSFX(0, 0))
 			me\Injuries = me\PrevInjuries

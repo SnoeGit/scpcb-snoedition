@@ -1231,7 +1231,7 @@ Function UpdateNPCs%()
 								If n\State3 < 70.0 * 6.0
 									n\State3 = n\State3 + fps\Factor[0]
 								Else
-									If Rand(1, 5) = 1
+									If Rand(5) = 1
 										n\State3 = -1.0
 									Else
 										n\State3 = 70.0 * Rand(0, 3)
@@ -1605,7 +1605,7 @@ Function UpdateNPCs%()
 									; ~ Playing a sound after detecting the player
 									If n\PrevState <= 1 And (Not ChannelPlaying(n\SoundCHN2)) Then
 										If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2)
-										n\Sound2 = LoadSound_Strict("SFX\SCP\049\Spotted" + Rand(1, 7) + ".ogg")
+										n\Sound2 = LoadSound_Strict("SFX\SCP\049\Spotted" + Rand(7) + ".ogg")
 										n\SoundCHN2 = LoopSound2(n\Sound2, n\SoundCHN2, Camera, n\OBJ)
 										n\PrevState = 2
 									EndIf
@@ -1618,18 +1618,18 @@ Function UpdateNPCs%()
 									RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 10.0), 0.0)
 									
 									If Dist < 0.25 Then
-										TakeOffTimer = Min(TakeOffTimer + fps\Factor[0], 340.0)
+										TakeOffTimer = Min(TakeOffTimer + (fps\Factor[0] * 1.2), 400.0)
 										If wi\HazmatSuit > 0 Lor I_714\Using Then
-											If TakeOffTimer > 100.0 And TakeOffTimer - fps\Factor[0] <= 100.0 And (Not ChannelPlaying(n\SoundCHN2)) Then
+											If TakeOffTimer > 90.0 And TakeOffTimer - (fps\Factor[0] * 1.2) <= 90.0 And (Not ChannelPlaying(n\SoundCHN2)) Then
 												If wi\HazmatSuit > 0 Then n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\TakeOffHazmat.ogg"))
 												If I_714\Using Then	n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\714Equipped.ogg"))
-											ElseIf TakeOffTimer >= 340.0
+											ElseIf TakeOffTimer >= 400.0
 												For i = 0 To MaxItemAmount - 1
 													If Inventory(i) <> Null Then
 														If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") Then
 															If Inventory(i)\State2 < 3.0 And wi\HazmatSuit = 4 Then
 																Inventory(i)\State2 = Inventory(i)\State2 + 1.0
-																TakeOffTimer = 170.0
+																TakeOffTimer = 195.0
 																me\CameraShake = 2.0
 															Else
 																RemoveItem(Inventory(i))
@@ -1666,7 +1666,7 @@ Function UpdateNPCs%()
 												EndIf
 												PlaySound_Strict(HorrorSFX[13])
 												If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2) : n\Sound2 = 0
-												n\Sound2 = LoadSound_Strict("SFX\SCP\049\Kidnap" + Rand(1, 2) + ".ogg")
+												n\Sound2 = LoadSound_Strict("SFX\SCP\049\Kidnap" + Rand(2) + ".ogg")
 												n\SoundCHN2 = LoopSound2(n\Sound2, n\SoundCHN2, Camera, n\OBJ)
 												n\State = 3.0
 											EndIf										
@@ -1751,7 +1751,7 @@ Function UpdateNPCs%()
 												If Rand(30) = 1 Then
 													n\Sound2 = LoadSound_Strict("SFX\SCP\049\Searching7.ogg")
 												Else
-													n\Sound2 = LoadSound_Strict("SFX\SCP\049\Searching" + Rand(1, 6) + ".ogg")
+													n\Sound2 = LoadSound_Strict("SFX\SCP\049\Searching" + Rand(6) + ".ogg")
 												EndIf
 												n\SoundCHN2 = LoopSound2(n\Sound2, n\SoundCHN2, Camera, n\OBJ)
 												n\PrevState = 1
@@ -1871,11 +1871,9 @@ Function UpdateNPCs%()
 								
 								UpdateSoundOrigin(n\SoundCHN2, Camera, n\OBJ)
 							ElseIf n\Idle = 0
-								If n\SoundCHN <> 0 Then
-									StopChannel(n\SoundCHN) : n\SoundCHN = 0
-								EndIf
+								If n\SoundCHN <> 0 Then StopChannel(n\SoundCHN) : n\SoundCHN = 0
 								If PlayerInReachableRoom(True) And InFacility = 1 Then ; ~ Player is in a room where SCP-049 can teleport to
-									If Rand(1, 3 - SelectedDifficulty\OtherFactors) = 1 Then
+									If Rand(3 - SelectedDifficulty\AggressiveNPCs) = 1 Then
 										TeleportCloser(n)
 									Else
 										n\Idle = 70.0 * 60.0
@@ -2244,7 +2242,7 @@ Function UpdateNPCs%()
 							If PlayerRoom\RoomTemplate\Name = "gate_b" Then
 								DetectDistance = 441.0
 								ShootAccuracy = 0.0
-								If Rand(1, 8 - SelectedDifficulty\AggressiveNPCs * 4) < 2 Then ShootAccuracy = 0.03
+								If Rand(8 - SelectedDifficulty\AggressiveNPCs * 4) < 2 Then ShootAccuracy = 0.03
 								
 								; ~ Increase accuracy if the player is going slow
 								ShootAccuracy = ShootAccuracy + (0.5 - me\CurrSpeed * 20.0)
@@ -2810,7 +2808,7 @@ Function UpdateNPCs%()
 									If EntityInView(n\Collider, Camera) Then
 										If EntityVisible(me\Collider, n\Collider) Then
 											n\LastSeen = 1
-											PlaySound_Strict(LoadTempSound("SFX\SCP\513_1\Bell" + Rand(1, 3) + ".ogg"))
+											PlaySound_Strict(LoadTempSound("SFX\SCP\513_1\Bell" + Rand(3) + ".ogg"))
 										EndIf
 									EndIf
 								EndIf								
@@ -2854,7 +2852,7 @@ Function UpdateNPCs%()
 													If EntityInView(n\Collider, Camera) Then
 														If EntityVisible(me\Collider, n\Collider) Then
 															n\LastSeen = 1
-															PlaySound_Strict(LoadTempSound("SFX\SCP\513_1\Bell" + Rand(1, 3) + ".ogg"))
+															PlaySound_Strict(LoadTempSound("SFX\SCP\513_1\Bell" + Rand(3) + ".ogg"))
 														EndIf
 													EndIf
 												EndIf
@@ -3089,7 +3087,7 @@ Function UpdateNPCs%()
 							
 							If EntityDistanceSquared(n\OBJ, Target) < 0.09 Then
 								me\CameraShake = Max(me\CameraShake, 3.0)
-								PlaySound_Strict(LoadTempSound("SFX\Character\Apache\Crash" + Rand(1, 2) + ".ogg"))
+								PlaySound_Strict(LoadTempSound("SFX\Character\Apache\Crash" + Rand(2) + ".ogg"))
 								n\State = 5.0
 							EndIf
 							FreeEntity(Target)
@@ -3357,7 +3355,7 @@ Function UpdateNPCs%()
 												EndIf
 											Next
 											
-											If Rand(1, 860 - DocChance) = 1 Then
+											If Rand(860 - DocChance) = 1 Then
 												If EntityHidden(ForestNPC) Then ShowEntity(ForestNPC)
 												ForestNPCData[2] = 1.0
 												If Rand(2) = 1
@@ -3464,9 +3462,9 @@ Function UpdateNPCs%()
 										If Dist < 64.0 Then
 											If EntityInView(n\Collider, Camera) Then
 												If Rand(8) = 1 Then
-													PlaySound_Strict(LoadTempSound("SFX\SCP\860\Chase" + Rand(1, 2) + ".ogg"))
+													PlaySound_Strict(LoadTempSound("SFX\SCP\860\Chase" + Rand(2) + ".ogg"))
 													
-													PlaySound2(LoadTempSound("SFX\SCP\860\Cancer" + Rand(0, 2) + ".ogg"), Camera, n\Collider)
+													PlaySound2(LoadTempSound("SFX\SCP\860\Cancer" + Rand(2) + ".ogg"), Camera, n\Collider)
 												EndIf
 												n\State2 = 1.0
 											EndIf										
@@ -3645,7 +3643,7 @@ Function UpdateNPCs%()
 										If n\Sound <> 0 Then 
 											FreeSound_Strict(n\Sound) : n\Sound = 0
 										EndIf
-										n\Sound = LoadSound_Strict("SFX\SCP\939\" + (n\ID Mod 3) + "Lure" + Rand(1, 10) + ".ogg")
+										n\Sound = LoadSound_Strict("SFX\SCP\939\" + (n\ID Mod 3) + "Lure" + Rand(10) + ".ogg")
 										n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider)
 									EndIf
 								EndIf
@@ -3744,7 +3742,7 @@ Function UpdateNPCs%()
 						If PowTwo(me\SndVolume) > Dist Lor Dist < 2.25 Then
 							If n\State3 = 0.0 Then
 								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\SCP\939\" + (n\ID Mod 3) + "Attack" + Rand(1, 3) + ".ogg")
+								n\Sound = LoadSound_Strict("SFX\SCP\939\" + (n\ID Mod 3) + "Attack" + Rand(3) + ".ogg")
 								n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider)										
 								
 								PlaySound_Strict(LoadTempSound("SFX\SCP\939\Attack.ogg"))
@@ -3757,7 +3755,7 @@ Function UpdateNPCs%()
 						ElseIf PowTwo(me\SndVolume * 1.4) > Dist
 							If n\State <> 1 And n\Reload <= 0.0 Then
 								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\SCP\939\" + (n\ID Mod 3) + "Alert" + Rand(1, 3) + ".ogg")
+								n\Sound = LoadSound_Strict("SFX\SCP\939\" + (n\ID Mod 3) + "Alert" + Rand(3) + ".ogg")
 								n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider)	
 								
 								SetNPCFrame(n, 175.0)
@@ -3821,7 +3819,7 @@ Function UpdateNPCs%()
 						EndIf
 						Dist = DistanceSquared(EntityX(me\Collider), EntityX(n\Collider), EntityZ(me\Collider), EntityZ(n\Collider))
 						
-						If Rand(700) = 1 Then PlaySound2(LoadTempSound("SFX\SCP\066\Eric" + Rand(1, 3) + ".ogg"), Camera, n\Collider, 8.0)
+						If Rand(700) = 1 Then PlaySound2(LoadTempSound("SFX\SCP\066\Eric" + Rand(3) + ".ogg"), Camera, n\Collider, 8.0)
 						
 						If Dist < 1.0 + PowTwo(n\LastDist) Then n\State = Rand(2.0, 3.0)
 						;[End Block]
@@ -3839,13 +3837,13 @@ Function UpdateNPCs%()
 							If n\Frame = 683.0 Then 
 								If n\State2 = 0.0 Then
 									If Rand(2) = 1 Then
-										PlaySound2(LoadTempSound("SFX\SCP\066\Eric" + Rand(1, 3) + ".ogg"), Camera, n\Collider, 8.0)
+										PlaySound2(LoadTempSound("SFX\SCP\066\Eric" + Rand(3) + ".ogg"), Camera, n\Collider, 8.0)
 									Else
-										PlaySound2(LoadTempSound("SFX\SCP\066\Notes" + Rand(1, 6) + ".ogg"), Camera, n\Collider, 8.0)
+										PlaySound2(LoadTempSound("SFX\SCP\066\Notes" + Rand(6) + ".ogg"), Camera, n\Collider, 8.0)
 									EndIf									
 									
 									If (Not chs\NoTarget) Then
-										Select Rand(1, 6)
+										Select Rand(6)
 											Case 1
 												;[Block]
 												If (Not n\Sound2) Then n\Sound2 = LoadSound_Strict("SFX\SCP\066\Beethoven.ogg")
@@ -4052,7 +4050,7 @@ Function UpdateNPCs%()
 									EndIf
 									
 									; ~ Echo if player gets close
-									If Dist < 4.0 Then n\State = Rand(1, 4)							
+									If Dist < 4.0 Then n\State = Rand(4)							
 								EndIf
 								
 								n\CurrSpeed = CurveValue(0.0, n\CurrSpeed, 10.0)
@@ -4064,7 +4062,7 @@ Function UpdateNPCs%()
 								If n\Frame > 256.0 Then n\State = 0.0
 								
 								If n\Frame > 228.0 And PrevFrame <= 228.0 Then
-									If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\966\Echo" + Rand(1, 3) + ".ogg"), Camera, n\Collider)
+									If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\966\Echo" + Rand(3) + ".ogg"), Camera, n\Collider)
 								EndIf
 								
 								If (Not chs\NoTarget) Then
@@ -4115,7 +4113,7 @@ Function UpdateNPCs%()
 								EndIf
 								
 								If (n\Frame > 271.0 And PrevFrame <= 271.0) Lor (n\Frame > 301.0 And PrevFrame <= 301.0) Lor (n\Frame > 314.0 And PrevFrame <= 314.0) Then
-									If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\966\Idle" + Rand(1, 3) + ".ogg"), Camera, n\Collider)
+									If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\966\Idle" + Rand(3) + ".ogg"), Camera, n\Collider)
 								EndIf
 								
 								If (Not chs\NoTarget) Then
@@ -4193,7 +4191,7 @@ Function UpdateNPCs%()
 								If chs\NoTarget Then n\State = 0.0
 								
 								If n\LastSeen = 0 Then
-									PlaySound2(LoadTempSound("SFX\SCP\966\Echo" + Rand(1, 3) + ".ogg"), Camera, n\Collider)
+									PlaySound2(LoadTempSound("SFX\SCP\966\Echo" + Rand(3) + ".ogg"), Camera, n\Collider)
 									n\LastSeen = 1
 								EndIf
 								
@@ -4421,7 +4419,7 @@ Function UpdateNPCs%()
 								EndIf
 								If n\PrevState = 0 Then
 									If n\Target = Null Then
-										If Rand(1, 1200) = 1 Then
+										If Rand(1200) = 1 Then
 											For n2.NPCs = Each NPCs
 												If n2 <> n Then
 													If n2\NPCType = n\NPCType Then
@@ -4451,7 +4449,7 @@ Function UpdateNPCs%()
 										Dist = EntityDistanceSquared(n\Collider, me\Collider)
 										If Dist < 400.0 Then
 											If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-											n\Sound = LoadSound_Strict("SFX\SCP\1499\Idle" + Rand(1, 4) + ".ogg")
+											n\Sound = LoadSound_Strict("SFX\SCP\1499\Idle" + Rand(4) + ".ogg")
 											n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider, 20.0)
 										EndIf
 									EndIf
@@ -5028,7 +5026,7 @@ Function UpdateMTFUnit%(n.NPCs)
 									Next
 								EndIf
 								For r.Rooms = Each Rooms
-									If ((Abs(r\x - EntityX(n\Collider, True)) > 12.0) Lor (Abs(r\z - EntityZ(n\Collider, True)) > 12.0)) And (Rand(1, Max(4 - Int(Abs(r\z - EntityZ(n\Collider, True) / 8.0)), 2)) = 1) Then
+									If ((Abs(r\x - EntityX(n\Collider, True)) > 12.0) Lor (Abs(r\z - EntityZ(n\Collider, True)) > 12.0)) And (Rand(Max(4 - Int(Abs(r\z - EntityZ(n\Collider, True) / 8.0)), 2)) = 1) Then
 										x = r\x
 										y = 0.1
 										z = r\z
@@ -5073,7 +5071,7 @@ Function UpdateMTFUnit%(n.NPCs)
 												n_I\Curr173\Idle = 3
 												n_I\Curr173\Target = Null
 												If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-												n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Cont" + Rand(1, 4) + ".ogg")
+												n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Cont" + Rand(4) + ".ogg")
 												PlayMTFSound(n\Sound, n)
 												PlayAnnouncement("SFX\Character\MTF\Announc173Contain.ogg")
 												Exit
@@ -5105,7 +5103,7 @@ Function UpdateMTFUnit%(n.NPCs)
 					ElseIf (n\PathTimer <= 70.0 * 2.5) And (n\MTFLeader = Null) Then
 						n\PathTimer = n\PathTimer - fps\Factor[0]
 						n\CurrSpeed = 0.0
-						If Rand(1, 35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
+						If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 						FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 						n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 						RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
@@ -5113,7 +5111,7 @@ Function UpdateMTFUnit%(n.NPCs)
 						If n\PathStatus = 2 Then
 							n\PathTimer = n\PathTimer - (fps\Factor[0] * 2.0) ; ~ Timer goes down fast
 							n\CurrSpeed = 0.0
-							If Rand(1, 35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
+							If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 							FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 							n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 							RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
@@ -5169,7 +5167,7 @@ Function UpdateMTFUnit%(n.NPCs)
 						Else
 							n\PathTimer = n\PathTimer - (fps\Factor[0] * 2.0) ; ~ Timer goes down fast
 							If n\MTFLeader = Null Then
-								If Rand(1, 35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
+								If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 								FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 								n\CurrSpeed = 0.0
 							ElseIf EntityDistanceSquared(n\Collider, n\MTFLeader\Collider) > 1.0 Then
@@ -5180,7 +5178,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								TranslateEntity(n\Collider, Cos(EntityYaw(n\Collider, True) + 90.0) * n\CurrSpeed * fps\Factor[0], 0.0, Sin(EntityYaw(n\Collider, True) + 90.0) * n\CurrSpeed * fps\Factor[0], True)
 								AnimateNPC(n, 488.0, 522.0, n\CurrSpeed * 26.0)
 							Else
-								If Rand(1, 35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
+								If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 								FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 								n\CurrSpeed = 0.0
 							EndIf
@@ -5197,17 +5195,17 @@ Function UpdateMTFUnit%(n.NPCs)
 						If n\LastSeen > 0 And n\LastSeen < 70.0 * 15.0 Then
 							If Temp < 2 Then
 								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\ThereHeIs" + Rand(1, 6) + ".ogg")
+								n\Sound = LoadSound_Strict("SFX\Character\MTF\ThereHeIs" + Rand(6) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						Else
 							If Temp = 1 Then
 								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\Stop" + Rand(1, 6) + ".ogg")
+								n\Sound = LoadSound_Strict("SFX\Character\MTF\Stop" + Rand(6) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							ElseIf Temp = 2
 								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\ClassD" + Rand(1, 4) + ".ogg")
+								n\Sound = LoadSound_Strict("SFX\Character\MTF\ClassD" + Rand(4) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5240,7 +5238,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathTimer = 0.0
 								n\PathStatus = 0
 								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Spotted" + Rand(1, 2) + ".ogg")
+								n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Spotted" + Rand(2) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5259,7 +5257,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n_I\Curr106
 								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\106\Spotted" + Rand(1, 3) + ".ogg")
+								n\Sound = LoadSound_Strict("SFX\Character\MTF\106\Spotted" + Rand(3) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5277,7 +5275,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathTimer = 0.0
 								n\PathStatus = 0
 								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\096\Spotted" + Rand(1, 2) + ".ogg")
+								n\Sound = LoadSound_Strict("SFX\Character\MTF\096\Spotted" + Rand(2) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5296,7 +5294,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n_I\Curr049
 								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted" + Rand(1, 5) + ".ogg")
+								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted" + Rand(5) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5392,7 +5390,7 @@ Function UpdateMTFUnit%(n.NPCs)
 										
 										If (Not PrevTerminated) And me\Terminated Then
 											msg\DeathMsg = SubjectName + ". Terminated by Nine-Tailed Fox."
-											PlayMTFSound(LoadTempSound("SFX\Character\MTF\TargetTerminated" + Rand(1, 4) + ".ogg"), n)
+											PlayMTFSound(LoadTempSound("SFX\Character\MTF\TargetTerminated" + Rand(4) + ".ogg"), n)
 										EndIf
 									EndIf	
 								EndIf
@@ -5464,7 +5462,7 @@ Function UpdateMTFUnit%(n.NPCs)
 						ElseIf n\PathTimer <= 70.0 * 2.5 Then
 							n\PathTimer = n\PathTimer - fps\Factor[0]
 							n\CurrSpeed = 0.0
-							If Rand(1, 35) = 1 Then
+							If Rand(35) = 1 Then
 								RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 							EndIf
 							FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
@@ -5474,7 +5472,7 @@ Function UpdateMTFUnit%(n.NPCs)
 							If n\PathStatus = 2 Then
 								n\PathTimer = n\PathTimer - (fps\Factor[0] * 2.0) ; ~ Timer goes down fast
 								n\CurrSpeed = 0.0
-								If Rand(1, 35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
+								If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 								FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 								n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 								RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
@@ -5508,9 +5506,9 @@ Function UpdateMTFUnit%(n.NPCs)
 							Else
 								PositionEntity(n\OBJ, n\EnemyX, n\EnemyY, n\EnemyZ, True)
 								If DistanceSquared(EntityX(n\Collider, True), n\EnemyX, EntityZ(n\Collider, True), n\EnemyZ) < 0.04 Lor (Not EntityVisible(n\OBJ, n\Collider)) Then
-									If Rand(1, 35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
+									If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 									FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
-									If Rand(1, 35) = 1 Then
+									If Rand(35) = 1 Then
 										For wp.WayPoints = Each WayPoints
 											If Rand(3) = 1 Then
 												If EntityDistanceSquared(wp\OBJ, n\Collider) < 36.0 Then
@@ -5538,13 +5536,13 @@ Function UpdateMTFUnit%(n.NPCs)
 						EndIf
 						
 						If n\MTFLeader = Null And n\LastSeen < 70.0 * 30.0 And n\LastSeen + fps\Factor[0] >= 70.0 * 30.0 Then
-							If Rand(2) = 1 Then PlayMTFSound(LoadTempSound("SFX\Character\MTF\Searching" + Rand(1, 6) + ".ogg"), n)
+							If Rand(2) = 1 Then PlayMTFSound(LoadTempSound("SFX\Character\MTF\Searching" + Rand(6) + ".ogg"), n)
 						EndIf
 					EndIf
 					
 					If n\State2 <= 0.0 And n\State2 + fps\Factor[0] > 0.0 Then
 						If n\MTFLeader = Null Then
-							PlayMTFSound(LoadTempSound("SFX\Character\MTF\Targetlost" + Rand(1, 3) + ".ogg"), n)
+							PlayMTFSound(LoadTempSound("SFX\Character\MTF\Targetlost" + Rand(3) + ".ogg"), n)
 							If MTFCameraCheckTimer = 0.0 Then
 								If Rand(15 - (7 * SelectedDifficulty\AggressiveNPCs)) = 1 ; ~ Maybe change this to another chance -- ENDSHN
 									PlayAnnouncement("SFX\Character\MTF\AnnouncCameraCheck.ogg")
@@ -5609,7 +5607,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathStatus = 0
 								If n\MTFLeader = Null Then
 									If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-									n\Sound = LoadSound_Strict("SFX\Character\MTF\096\Spotted" + Rand(1, 2) + ".ogg")
+									n\Sound = LoadSound_Strict("SFX\Character\MTF\096\Spotted" + Rand(2) + ".ogg")
 									PlayMTFSound(n\Sound, n)
 								EndIf
 							EndIf
@@ -5629,7 +5627,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n_I\Curr049
 								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted" + Rand(1, 5) + ".ogg")
+								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted" + Rand(5) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5718,7 +5716,7 @@ Function UpdateMTFUnit%(n.NPCs)
 										n_I\Curr173\Idle = 2
 										If n\MTFLeader = Null Then n_I\Curr173\Target = n
 										If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-										n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Box" + Rand(1, 3) + ".ogg")
+										n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Box" + Rand(3) + ".ogg")
 										PlayMTFSound(n\Sound, n)
 									EndIf
 								EndIf
@@ -5747,7 +5745,7 @@ Function UpdateMTFUnit%(n.NPCs)
 							ElseIf n\PathTimer <= 70.0 * 2.5 Then
 								n\PathTimer = n\PathTimer - fps\Factor[0]
 								n\CurrSpeed = 0.0
-								If Rand(1, 35) = 1 Then
+								If Rand(35) = 1 Then
 									RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 								EndIf
 								FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
@@ -5757,7 +5755,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								If n\PathStatus = 2 Then
 									n\PathTimer = n\PathTimer - (fps\Factor[0] * 2.0) ; ~ Timer goes down fast
 									n\CurrSpeed = 0.0
-									If Rand(1, 35) = 1 Then
+									If Rand(35) = 1 Then
 										RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 									EndIf
 									FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
@@ -5793,7 +5791,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								Else
 									n\PathTimer = n\PathTimer - (fps\Factor[0] * 2.0) ; ~ Timer goes down fast
 									n\CurrSpeed = 0.0
-									If Rand(1, 35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
+									If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 									FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 									n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 									RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
@@ -5917,7 +5915,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathStatus = FindPath(n, EntityX(n\MTFLeader\Collider, True), EntityY(n\MTFLeader\Collider, True) + 0.1, EntityZ(n\MTFLeader\Collider, True))
 							Else
 								For r.Rooms = Each Rooms
-									If ((Abs(r\x - EntityX(n\Collider, True)) > 12.0) Lor (Abs(r\z - EntityZ(n\Collider, True)) > 12.0)) And (Rand(1, Max(4 - Int(Abs(r\z - EntityZ(n\Collider, True) / 8.0)), 2)) = 1) Then
+									If ((Abs(r\x - EntityX(n\Collider, True)) > 12.0) Lor (Abs(r\z - EntityZ(n\Collider, True)) > 12.0)) And (Rand(Max(4 - Int(Abs(r\z - EntityZ(n\Collider, True) / 8.0)), 2)) = 1) Then
 										If EntityDistanceSquared(r\OBJ, n\Target\Collider) > 36.0 Then
 											x = r\x
 											y = 0.1
@@ -6036,7 +6034,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								
 								If (Not PrevTerminated) And me\Terminated Then
 									msg\DeathMsg = Chr(34) + SubjectName + " was spotted in Gate A area and terminated. Incident needs an investigation." + Chr(34)
-									PlayMTFSound(LoadTempSound("SFX\Character\MTF\Targetterminated" + Rand(1, 4) + ".ogg"), n)
+									PlayMTFSound(LoadTempSound("SFX\Character\MTF\Targetterminated" + Rand(4) + ".ogg"), n)
 								EndIf
 							EndIf
 						EndIf
@@ -6075,7 +6073,7 @@ Function UpdateMTFUnit%(n.NPCs)
 							n\PathStatus = FindPath(n, EntityX(n\MTFLeader\Collider, True), EntityY(n\MTFLeader\Collider, True) + 0.1, EntityZ(n\MTFLeader\Collider, True)) ; ~ Whatever you say boss
 						Else ; ~ I am the leader
 							For r.Rooms = Each Rooms
-								If ((Abs(r\x - EntityX(n\Collider, True)) > 12.0) Lor (Abs(r\z - EntityZ(n\Collider, True)) > 12.0)) And (Rand(1, Max(4 - Int(Abs(r\z - EntityZ(n\Collider, True) / 8.0)), 2)) = 1) Then
+								If ((Abs(r\x - EntityX(n\Collider, True)) > 12.0) Lor (Abs(r\z - EntityZ(n\Collider, True)) > 12.0)) And (Rand(Max(4 - Int(Abs(r\z - EntityZ(n\Collider, True) / 8.0)), 2)) = 1) Then
 									x = r\x
 									y = 0.1
 									z = r\z
@@ -6320,7 +6318,7 @@ Function UpdateMTFUnit%(n.NPCs)
 									
 									If (Not PrevTerminated) And me\Terminated Then
 										msg\DeathMsg = Chr(34) + SubjectName + " was spotted in Gate A area and terminated. Incident needs an investigation." + Chr(34)
-										PlayMTFSound(LoadTempSound("SFX\Character\MTF\Targetterminated" + Rand(1, 4) + ".ogg"), n)
+										PlayMTFSound(LoadTempSound("SFX\Character\MTF\Targetterminated" + Rand(4) + ".ogg"), n)
 									EndIf
 								EndIf
 							EndIf

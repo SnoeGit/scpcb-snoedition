@@ -3086,8 +3086,8 @@ Function OpenCloseDoor%(d.Doors, PlaySFX% = True)
 		DoorType = DEFAULT_DOOR
 	EndIf
 	
-	Local SoundOpen% = OpenDoorSFX(d\DoorType, SoundRand)
-	Local SoundClose% = CloseDoorSFX(d\DoorType, SoundRand)
+	Local SoundOpen% = OpenDoorSFX(DoorType, SoundRand)
+	Local SoundClose% = CloseDoorSFX(DoorType, SoundRand)
 	
 	If d\Locked = 2 Then SoundOpen = BigDoorErrorSFX[Rand(0, 2)]
 	
@@ -3180,7 +3180,7 @@ Function UpdateDecals%()
 							
 							de2.Decals = CreateDecal(DECAL_CORROSIVE_2, EntityX(de\OBJ) + Cos(Angle) * Temp, EntityY(de\OBJ) - 0.0005, EntityZ(de\OBJ) + Sin(Angle) * Temp, EntityPitch(de\OBJ), EntityYaw(de\OBJ), EntityRoll(de\OBJ), Rnd(0.1, 0.5))
 							EntityParent(de2\OBJ, GetParent(de\OBJ))
-							PlaySound2(DecaySFX[Rand(1, 3)], Camera, de2\OBJ, 10.0, Rnd(0.1, 0.5))
+							PlaySound2(DecaySFX[Rand(3)], Camera, de2\OBJ, 10.0, Rnd(0.1, 0.5))
 							de\Timer = Rnd(50.0, 100.0)
 						Else
 							de\Timer = de\Timer - fps\Factor[0]
@@ -3474,10 +3474,10 @@ Function UpdateSecurityCams%()
 								EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
 							Else
 								If (Not sc\SoundCHN) Then
-									sc\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(1, 3) + ".ogg"))
+									sc\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(3) + ".ogg"))
 									If sc\CoffinEffect = 2 Then sc\CoffinEffect = 3 : sc\PlayerState = 0
 								ElseIf (Not ChannelPlaying(sc\SoundCHN))
-									sc\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(1, 3) + ".ogg"))
+									sc\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(3) + ".ogg"))
 									If sc\CoffinEffect = 2 Then sc\CoffinEffect = 3 : sc\PlayerState = 0
 								EndIf
 								EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
@@ -4277,7 +4277,7 @@ Function CreateMap%()
 						x2 = x + Width
 					EndIf
 				Else
-					TempHeight = Rand(1, Height)
+					TempHeight = Rand(Height)
 				EndIf
 				
 				For y2 = y - TempHeight To y
@@ -5239,7 +5239,7 @@ Function UpdateChunks%(r.Rooms, ChunkPartAmount%, SpawnNPCs% = True)
 	Next
 	
 	If CurrNPCNumber < MaxNPCs Then
-		Select Rand(1, 8)
+		Select Rand(8)
 			Case 1
 				;[Block]
 				n.NPCs = CreateNPC(NPCType1499_1, EntityX(me\Collider) + Rnd(40.0, 80.0), EntityY(PlayerRoom\OBJ) + 0.5, EntityZ(me\Collider) + Rnd(40.0, 80.0))

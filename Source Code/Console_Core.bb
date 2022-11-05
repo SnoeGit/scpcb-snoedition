@@ -31,7 +31,7 @@ Function InitCheats%()
 	chs\InfiniteStamina = True
 	chs\SuperMan = False
 	chs\SuperManTimer = 0.0
-	chs\DebugHUD = Rand(1, 3)
+	chs\DebugHUD = Rand(3)
 End Function
 
 Global ConsoleFlush%
@@ -407,28 +407,28 @@ Function UpdateConsole%()
 							CreateConsoleMsg("Returns SCP-106 to inactive state.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "disable106", "d106"
+						Case "disable106", "dis106"
 							;[Block]
 							CreateConsoleMsg("HELP - disable106")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Removes SCP-106 from the map.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "enable106", "e106"
+						Case "enable106", "en106"
 							;[Block]
 							CreateConsoleMsg("HELP - enable106")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Returns SCP-106 to the map.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "disable173", "d173"
+						Case "disable173", "dis173"
 							;[Block]
 							CreateConsoleMsg("HELP - disable173")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Removes SCP-173 from the map.")
 							CreateConsoleMsg("******************************")	
 							;[End Block]
-						Case "enable173", "e173"
+						Case "enable173", "en173"
 							;[Block]
 							CreateConsoleMsg("HELP - enable173")
 							CreateConsoleMsg("******************************")
@@ -463,28 +463,28 @@ Function UpdateConsole%()
 							CreateConsoleMsg("Unlocks all checkpoints.")
 							CreateConsoleMsg("******************************")	
 							;[End Block]
-						Case "disable049", "d049"
+						Case "disable049", "dis049"
 							;[Block]
 							CreateConsoleMsg("HELP - disable049")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Removes SCP-049 from the map.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "enable049", "e049"
+						Case "enable049", "en049"
 							;[Block]
 							CreateConsoleMsg("HELP - enable049")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Returns SCP-049 to the map.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "disable966", "d966"
+						Case "disable966", "dis966"
 							;[Block]
 							CreateConsoleMsg("HELP - disable966")
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Removes SCP-966 from the map.")
 							CreateConsoleMsg("******************************")	
 							;[End Block]
-						Case "enable966", "e966"
+						Case "enable966", "en966"
 							;[Block]
 							CreateConsoleMsg("HELP - enable966")
 							CreateConsoleMsg("******************************")
@@ -722,7 +722,7 @@ Function UpdateConsole%()
 					
 					CreateConsoleMsg("SCP-372 has been reset.")
 					;[End Block]
-				Case "disable173", "d173"
+				Case "disable173", "dis173"
 					;[Block]
 					n_I\Curr173\Idle = 3 ; ~ This phenominal comment is brought to you by PolyFox. His absolute wisdom in this fatigue of knowledge brought about a new era of SCP-173 state checks.
 					HideEntity(n_I\Curr173\OBJ)
@@ -730,7 +730,7 @@ Function UpdateConsole%()
 					HideEntity(n_I\Curr173\Collider)
 					CreateConsoleMsg("SCP-173 disabled.")	
 					;[End Block]
-				Case "enable173", "e173"
+				Case "enable173", "en173"
 					;[Block]
 					n_I\Curr173\Idle = 0
 					ShowEntity(n_I\Curr173\OBJ)
@@ -738,7 +738,7 @@ Function UpdateConsole%()
 					ShowEntity(n_I\Curr173\Collider)
 					CreateConsoleMsg("SCP-173 enabled.")
 					;[End Block]
-				Case "disable106", "d106"
+				Case "disable106", "dis106"
 					;[Block]
 					n_I\Curr106\Idle = 1
 					n_I\Curr106\State = 100000.0
@@ -747,7 +747,7 @@ Function UpdateConsole%()
 					HideEntity(n_I\Curr106\OBJ)
 					CreateConsoleMsg("SCP-106 disabled.")
 					;[End Block]
-				Case "enable106", "e106"
+				Case "enable106", "en106"
 					;[Block]
 					n_I\Curr106\Idle = 0
 					n_I\Curr106\Contained = False
@@ -755,7 +755,7 @@ Function UpdateConsole%()
 					ShowEntity(n_I\Curr106\OBJ)
 					CreateConsoleMsg("SCP-106 enabled.")
 					;[End Block]
-				Case "disable966", "d966"
+				Case "disable966", "dis966"
 					;[Block]
 					For n.NPCs = Each NPCs
 						If n\NPCType = NPCType966 Then
@@ -766,7 +766,7 @@ Function UpdateConsole%()
 						EndIf
 					Next
 					;[End Block]
-				Case "enable966", "e966"
+				Case "enable966", "en966"
 					;[Block]
 					For n.NPCs = Each NPCs
 						If n\NPCType = NPCType966 Then
@@ -777,7 +777,7 @@ Function UpdateConsole%()
 						EndIf
 					Next
 					;[End Block]
-				Case "disable049", "d049"
+				Case "disable049", "dis049"
 					;[Block]
 					If n_I\Curr049 <> Null Then
 						n_I\Curr049\Idle = 1
@@ -786,7 +786,7 @@ Function UpdateConsole%()
 						CreateConsoleMsg("SCP-049 disabled.")
 					EndIf
 					;[End Block]
-				Case "enable049", "e049"
+				Case "enable049", "en049"
 					;[Block]
 					If n_I\Curr049 <> Null Then
 						n_I\Curr049\Idle = 0
