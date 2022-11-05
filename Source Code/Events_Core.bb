@@ -3874,12 +3874,12 @@ Function UpdateEvents%()
 							
 							PositionEntity(n_I\Curr106\Collider, (EntityX(e\room\Objects[0], True) + EntityX(e\room\Objects[1], True)) / 2.0, EntityY(me\Collider) - 0.15, (EntityZ(e\room\Objects[0], True) + EntityZ(e\room\Objects[1], True)) / 2.0)
 							RotateEntity(n_I\Curr106\Collider, 0.0, CurveValue(e\EventState, EntityYaw(n_I\Curr106\Collider), 30.0), 0.0, True)
-							If EntityDistanceSquared(n_I\Curr106\Collider, me\Collider) < 16.0 Then
+							If EntityDistanceSquared(n_I\Curr106\Collider, me\Collider) < 16.0 Lor n_I\Curr106\State < 0.0 Then
 								Pvt = CreatePivot()
 								PositionEntity(Pvt, EntityX(n_I\Curr106\Collider), EntityY(n_I\Curr106\Collider), EntityZ(n_I\Curr106\Collider))
 								PointEntity(Pvt, me\Collider)
 								If WrapAngle(EntityYaw(Pvt) - EntityYaw(n_I\Curr106\Collider)) < 80.0 Then
-									n_I\Curr106\State = -11.0 : n_I\Curr106\Idle = 0
+									If n_I\Curr106\State > 0.0 Then n_I\Curr106\State = -11.0 : n_I\Curr106\Idle = 0
 									PlaySound_Strict(HorrorSFX[10])
 									e\EventState = 260.0
 								EndIf
@@ -6697,7 +6697,7 @@ Function UpdateEvents%()
 								
 								If InteractObject(e\room\Levers[0], 0.81, True, 2, True) Then RotateEntity(e\room\Levers[0], Max(Min(EntityPitch(e\room\Levers[0]) + Max(Min(-mo\Mouse_Y_Speed_1, 10.0), -10.0), 89.0), 35.0), EntityYaw(e\room\Levers[0]), 0.0)
 								
-								If me\Bloodloss > 0.0 And I_008\Timer = 0.0 Then InjurePlayer(0.0, 0.1)
+								If (me\Bloodloss > 0.0 Lor wi\GasMask = 0) And I_008\Timer = 0.0 Then InjurePlayer(0.0, 0.1)
 							EndIf
 							
 							If EntityPitch(e\room\Levers[0], True) < 40.0 Then 
