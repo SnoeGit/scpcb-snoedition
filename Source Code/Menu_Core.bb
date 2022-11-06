@@ -682,21 +682,14 @@ Function UpdateMainMenu%()
 								If opt\EnableSFXRelease Then
 									For snd.Sound = Each Sound
 										For i = 0 To 31
-											If snd\Channels[i] <> 0 Then
-												If ChannelPlaying(snd\Channels[i]) Then
-													StopChannel(snd\Channels[i])
-												EndIf
-											EndIf
+											If snd\Channels[i] <> 0 Then StopChannel(snd\Channels[i])
 										Next
-										If snd\InternalHandle <> 0 Then
-											FreeSound(snd\InternalHandle)
-											snd\InternalHandle = 0
-										EndIf
+										If snd\InternalHandle <> 0 Then FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
 										snd\ReleaseTime = 0
 									Next
 								Else
 									For snd.Sound = Each Sound
-										If snd\InternalHandle = 0 Then snd\InternalHandle = LoadSound(snd\Name)
+										If (Not snd\InternalHandle) Then snd\InternalHandle = LoadSound(snd\Name)
 									Next
 								EndIf
 								opt\PrevEnableSFXRelease = opt\EnableSFXRelease
@@ -1241,7 +1234,7 @@ Function RenderMainMenu%()
 					End Select
 					Text(x + (200 * MenuScale), y + (186 * MenuScale), "Save type: " + TempStr)
 					
-					; ~ Agressive NPCs
+					; ~ Aggressive NPCs
 					Color(255, 255, 255)
 					Text(x + (200 * MenuScale), y + (215 * MenuScale), "Aggressive NPCs")
 					
@@ -1688,7 +1681,7 @@ Function RenderMainMenu%()
 							
 							y = y + (30 * MenuScale)
 							
-							Color(255 - (155 * SelectedDifficulty\SaveType <> SAVE_ANYWHERE), 255 - (155 * SelectedDifficulty\SaveType <> SAVE_ANYWHERE), 255 - (155 * SelectedDifficulty\SaveType <> SAVE_ANYWHERE))
+							Color(255 - (155 * (SelectedDifficulty\SaveType <> SAVE_ANYWHERE)), 255 - (155 * (SelectedDifficulty\SaveType <> SAVE_ANYWHERE)), 255 - (155 * (SelectedDifficulty\SaveType <> SAVE_ANYWHERE)))
 							Text(x, y + (5 * MenuScale), "Enable auto save:")
 							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
 								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_AutoSave)
@@ -2205,7 +2198,7 @@ Function RenderLoading%(Percent%, Assets$ = "")
 		LoadingScreenText = 0
 		InitLoadingTextColor(255, 255, 255)
 		
-		Temp = Rand(1, LoadingScreenAmount)
+		Temp = Rand(LoadingScreenAmount)
 		For ls.LoadingScreens = Each LoadingScreens
 			If ls\ID = Temp Then
 				If (Not ls\Img) Then 
@@ -2351,7 +2344,7 @@ Function RenderLoading%(Percent%, Assets$ = "")
 			StrTemp = SelectedLoadingScreen\Txt[0]
 			Temp = Int(Len(SelectedLoadingScreen\Txt[0]) - Rand(5))
 			For i = 0 To Rand(10, 15)
-				StrTemp = Replace(SelectedLoadingScreen\Txt[0], Mid(SelectedLoadingScreen\Txt[0], Rand(1, Len(StrTemp) - 1), 1), Chr(Rand(130, 250)))
+				StrTemp = Replace(SelectedLoadingScreen\Txt[0], Mid(SelectedLoadingScreen\Txt[0], Rand(Len(StrTemp) - 1), 1), Chr(Rand(130, 250)))
 			Next		
 			SetFont(fo\FontID[Font_Default])
 			RowText(StrTemp, mo\Viewport_Center_X - (200 * MenuScale), mo\Viewport_Center_Y + (250 * MenuScale), 400 * MenuScale, 300 * MenuScale, True)		

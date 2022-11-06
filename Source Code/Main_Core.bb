@@ -1923,14 +1923,14 @@ Function UpdateGUI%()
 	EndIf
 	
 	If SelectedDifficulty\InventorySlots > 3 Then
-		For i = 2 To (MaxItemAmount / 2) + 1
-			If OtherOpen = Null And SelectedScreen = Null And (Not InvOpen) And (Not I_294\Using) And (Not MenuOpen) And (Not ConsoleOpen) Then
-				If KeyHit(i) Then
-					If SelectedItem = Inventory(i - 2) Then
+		For i = 0 To (MaxItemAmount / 2) - 1
+			If KeyHit(i + 2) Then
+				If OtherOpen = Null And SelectedScreen = Null And (Not InvOpen) And (Not I_294\Using) And (Not MenuOpen) And (Not ConsoleOpen) Then
+					If SelectedItem = Inventory(i) Then
 						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 						SelectedItem = Null
-					ElseIf SelectedItem = Null And Inventory(i - 2) <> Null
-						SelectedItem = Inventory(i -2)
+					ElseIf SelectedItem = Null And Inventory(i) <> Null
+						SelectedItem = Inventory(i)
 						PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 					EndIf
 				EndIf

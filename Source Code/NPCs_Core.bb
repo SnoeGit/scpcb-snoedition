@@ -1604,8 +1604,7 @@ Function UpdateNPCs%()
 									
 									; ~ Playing a sound after detecting the player
 									If n\PrevState <= 1 And (Not ChannelPlaying(n\SoundCHN2)) Then
-										If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2)
-										n\Sound2 = LoadSound_Strict("SFX\SCP\049\Spotted" + Rand(7) + ".ogg")
+										LoadNPCSound(n, "SFX\SCP\049\Spotted" + Rand(7) + ".ogg", 1)
 										n\SoundCHN2 = LoopSound2(n\Sound2, n\SoundCHN2, Camera, n\OBJ)
 										n\PrevState = 2
 									EndIf
@@ -1665,8 +1664,7 @@ Function UpdateNPCs%()
 													Kill() : me\KillAnim = 0
 												EndIf
 												PlaySound_Strict(HorrorSFX[13])
-												If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2) : n\Sound2 = 0
-												n\Sound2 = LoadSound_Strict("SFX\SCP\049\Kidnap" + Rand(2) + ".ogg")
+												LoadNPCSound(n, "SFX\SCP\049\Kidnap" + Rand(2) + ".ogg", 1)
 												n\SoundCHN2 = LoopSound2(n\Sound2, n\SoundCHN2, Camera, n\OBJ)
 												n\State = 3.0
 											EndIf										
@@ -1747,11 +1745,10 @@ Function UpdateNPCs%()
 											
 											; ~ Playing a sound if he hears the player
 											If n\PrevState = 0 And (Not ChannelPlaying(n\SoundCHN2)) Then
-												If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2) : n\Sound2 = 0
 												If Rand(30) = 1 Then
-													n\Sound2 = LoadSound_Strict("SFX\SCP\049\Searching7.ogg")
+													LoadNPCSound(n, "SFX\SCP\049\Searching7.ogg", 1)
 												Else
-													n\Sound2 = LoadSound_Strict("SFX\SCP\049\Searching" + Rand(6) + ".ogg")
+													LoadNPCSound(n, "SFX\SCP\049\Searching" + Rand(6) + ".ogg", 1)
 												EndIf
 												n\SoundCHN2 = LoopSound2(n\Sound2, n\SoundCHN2, Camera, n\OBJ)
 												n\PrevState = 1
@@ -3132,8 +3129,7 @@ Function UpdateNPCs%()
 							Case 1.0 ; ~ Idles
 								;[Block]
 								If (Not n\Sound) Then
-									FreeSound_Strict(n\Sound) : n\Sound = 0
-									n\Sound = LoadSound_Strict("SFX\SCP\035_Tentacle\TentacleIdle.ogg")
+									LoadNPCSound(n, "SFX\SCP\035_Tentacle\TentacleIdle.ogg")
 								EndIf
 								n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider)
 								
@@ -3214,8 +3210,10 @@ Function UpdateNPCs%()
 						; ~ The NPC was killed
 						AnimateNPC(n, 515.0, 551.0, 0.15, False)
 						If n\Frame >= 550.0 Then
-							HideEntity(n\OBJ)
-							HideEntity(n\Collider)
+							If (Not EntityHidden(n\OBJ)) Then
+								HideEntity(n\OBJ)
+								HideEntity(n\Collider)
+							EndIf
 							If n\Sound <> 0 Then
 								FreeSound_Strict(n\Sound) : n\Sound = 0
 								StopChannel(n\SoundCHN) : n\SoundCHN = 0
@@ -3640,10 +3638,7 @@ Function UpdateNPCs%()
 										Temp = True
 									EndIf
 									If Temp Then
-										If n\Sound <> 0 Then 
-											FreeSound_Strict(n\Sound) : n\Sound = 0
-										EndIf
-										n\Sound = LoadSound_Strict("SFX\SCP\939\" + (n\ID Mod 3) + "Lure" + Rand(10) + ".ogg")
+										LoadNPCSound(n, "SFX\SCP\939\" + (n\ID Mod 3) + "Lure" + Rand(10) + ".ogg")
 										n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider)
 									EndIf
 								EndIf
@@ -3741,8 +3736,7 @@ Function UpdateNPCs%()
 						If Dist < 16.0 Then Dist = Dist - PowTwo((EntityVisible(me\Collider, n\Collider) + (EntityVisible(me\Collider, n\Collider) * 0.21)))
 						If PowTwo(me\SndVolume) > Dist Lor Dist < 2.25 Then
 							If n\State3 = 0.0 Then
-								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\SCP\939\" + (n\ID Mod 3) + "Attack" + Rand(3) + ".ogg")
+								LoadNPCSound(n, "SFX\SCP\939\" + (n\ID Mod 3) + "Attack" + Rand(3) + ".ogg")
 								n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider)										
 								
 								PlaySound_Strict(LoadTempSound("SFX\SCP\939\Attack.ogg"))
@@ -3754,8 +3748,7 @@ Function UpdateNPCs%()
 							n\State = 3.0
 						ElseIf PowTwo(me\SndVolume * 1.4) > Dist
 							If n\State <> 1 And n\Reload <= 0.0 Then
-								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\SCP\939\" + (n\ID Mod 3) + "Alert" + Rand(3) + ".ogg")
+								LoadNPCSound(n, "SFX\SCP\939\" + (n\ID Mod 3) + "Alert" + Rand(3) + ".ogg")
 								n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider)	
 								
 								SetNPCFrame(n, 175.0)
@@ -4448,8 +4441,7 @@ Function UpdateNPCs%()
 									If (Not ChannelPlaying(n\SoundCHN)) Then
 										Dist = EntityDistanceSquared(n\Collider, me\Collider)
 										If Dist < 400.0 Then
-											If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-											n\Sound = LoadSound_Strict("SFX\SCP\1499\Idle" + Rand(4) + ".ogg")
+											LoadNPCSound(n, "SFX\SCP\1499\Idle" + Rand(4) + ".ogg")
 											n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider, 20.0)
 										EndIf
 									EndIf
@@ -4462,8 +4454,7 @@ Function UpdateNPCs%()
 											; ~ Play the "screaming animation"
 											n\State = 2.0
 											If Dist < 25.0 Then
-												If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-												n\Sound = LoadSound_Strict("SFX\SCP\1499\Triggered.ogg")
+												LoadNPCSound(n, "SFX\SCP\1499\Triggered.ogg")
 												n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider, 20.0)
 												
 												n\State2 = 1.0 ; ~ If player is too close, switch to attack after screaming
@@ -4488,8 +4479,7 @@ Function UpdateNPCs%()
 								If (Not chs\NoTarget) Then
 									If Dist < 16.0 Then
 										If EntityVisible(n\Collider, me\Collider) Then
-											If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-											n\Sound = LoadSound_Strict("SFX\SCP\1499\Triggered.ogg")
+											LoadNPCSound(n, "SFX\SCP\1499\Triggered.ogg")
 											n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider, 20.0)
 											
 											n\State = 1.0
@@ -5070,8 +5060,7 @@ Function UpdateMTFUnit%(n.NPCs)
 											Else
 												n_I\Curr173\Idle = 3
 												n_I\Curr173\Target = Null
-												If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-												n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Cont" + Rand(4) + ".ogg")
+												LoadNPCSound(n, "SFX\Character\MTF\173\Cont" + Rand(4) + ".ogg")
 												PlayMTFSound(n\Sound, n)
 												PlayAnnouncement("SFX\Character\MTF\Announc173Contain.ogg")
 												Exit
@@ -5194,18 +5183,15 @@ Function UpdateMTFUnit%(n.NPCs)
 					If Temp > 0 Then
 						If n\LastSeen > 0 And n\LastSeen < 70.0 * 15.0 Then
 							If Temp < 2 Then
-								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\ThereHeIs" + Rand(6) + ".ogg")
+								LoadNPCSound(n, "SFX\Character\MTF\ThereHeIs" + Rand(6) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						Else
 							If Temp = 1 Then
-								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\Stop" + Rand(6) + ".ogg")
+								LoadNPCSound(n, "SFX\Character\MTF\Stop" + Rand(6) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							ElseIf Temp = 2
-								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\ClassD" + Rand(4) + ".ogg")
+								LoadNPCSound(n, "SFX\Character\MTF\ClassD" + Rand(4) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5237,8 +5223,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\State3 = 0.0
 								n\PathTimer = 0.0
 								n\PathStatus = 0
-								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Spotted" + Rand(2) + ".ogg")
+								LoadNPCSound(n, "SFX\Character\MTF\173\Spotted" + Rand(2) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5256,8 +5241,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathTimer = 0.0
 								n\PathStatus = 0
 								n\Target = n_I\Curr106
-								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\106\Spotted" + Rand(3) + ".ogg")
+								LoadNPCSound(n, "SFX\Character\MTF\106\Spotted" + Rand(2) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5274,8 +5258,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\State3 = 0.0
 								n\PathTimer = 0.0
 								n\PathStatus = 0
-								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\096\Spotted" + Rand(2) + ".ogg")
+								LoadNPCSound(n, "SFX\Character\MTF\096\Spotted" + Rand(2) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5293,8 +5276,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathTimer = 0.0
 								n\PathStatus = 0
 								n\Target = n_I\Curr049
-								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted" + Rand(5) + ".ogg")
+								LoadNPCSound(n, "SFX\Character\MTF\049\Spotted" + Rand(2) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5314,8 +5296,7 @@ Function UpdateMTFUnit%(n.NPCs)
 									n\PathStatus = 0
 									n\Target = n2
 									n\Reload = 70.0 * 5.0
-									If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-									n\Sound = LoadSound_Strict("SFX\Character\MTF\049_2\Spotted.ogg")
+									LoadNPCSound(n, "SFX\Character\MTF\049_2\Spotted" + Rand(2) + ".ogg")
 									PlayMTFSound(n\Sound, n)
 									Exit
 								EndIf
@@ -5563,8 +5544,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\EnemyY = EntityY(n_I\Curr173\Collider, True)
 								n\EnemyZ = EntityZ(n_I\Curr173\Collider, True)
 								n\State2 = 70.0 * 15.0 ; ~ Give up after 15 seconds
-								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Spotted3.ogg")
+								LoadNPCSound(n, "SFX\Character\MTF\173\Spotted3.ogg")
 								PlayMTFSound(n\Sound, n)
 								n\State3 = 0.0
 								n\PathTimer = 0.0
@@ -5586,8 +5566,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n_I\Curr106
 								If n\MTFLeader = Null Then
-									If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-									n\Sound = LoadSound_Strict("SFX\Character\MTF\106\Spotted4.ogg")
+									LoadNPCSound(n, "SFX\Character\MTF\106\Spotted4.ogg")
 									PlayMTFSound(n\Sound, n)
 								EndIf
 							EndIf
@@ -5606,8 +5585,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathTimer = 0.0
 								n\PathStatus = 0
 								If n\MTFLeader = Null Then
-									If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-									n\Sound = LoadSound_Strict("SFX\Character\MTF\096\Spotted" + Rand(2) + ".ogg")
+									LoadNPCSound(n, "SFX\Character\MTF\096\Spotted" + Rand(2) + ".ogg")
 									PlayMTFSound(n\Sound, n)
 								EndIf
 							EndIf
@@ -5626,8 +5604,10 @@ Function UpdateMTFUnit%(n.NPCs)
 								n\PathTimer = 0.0
 								n\PathStatus = 0
 								n\Target = n_I\Curr049
-								If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted" + Rand(5) + ".ogg")
+								If n\MTFLeader = Null Then
+									LoadNPCSound(n, "SFX\Character\MTF\049\Spotted" + Rand(5) + ".ogg")
+									PlayMTFSound(n\Sound, n)
+								EndIf
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -5647,8 +5627,7 @@ Function UpdateMTFUnit%(n.NPCs)
 									n\PathStatus = 0
 									n\Target = n2
 									n\Reload = 70.0 * 5.0
-									If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-									n\Sound = LoadSound_Strict("SFX\Character\MTF\049_2\Spotted.ogg")
+									LoadNPCSound(n, "SFX\Character\MTF\049_2\Spotted.ogg")
 									PlayMTFSound(n\Sound, n)
 									Exit
 								EndIf
@@ -5715,8 +5694,7 @@ Function UpdateMTFUnit%(n.NPCs)
 									If n\State3 >= 70.0 * 15.0 Then
 										n_I\Curr173\Idle = 2
 										If n\MTFLeader = Null Then n_I\Curr173\Target = n
-										If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
-										n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Box" + Rand(3) + ".ogg")
+										LoadNPCSound(n, "SFX\Character\MTF\173\Box" + Rand(3) + ".ogg")
 										PlayMTFSound(n\Sound, n)
 									EndIf
 								EndIf
@@ -6203,9 +6181,8 @@ Function UpdateMTFUnit%(n.NPCs)
 									n\Target\HP = Max(n\Target\HP - Rand(5, 10), 0.0)
 								Else
 									If (Not n\Target\IsDead) Then
-										If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 										If n\Target\NPCType = NPCType049_2
-											n\Sound = LoadSound_Strict("SFX\Character\MTF\049_2\TargetTerminated.ogg")
+											LoadNPCSound(n, "SFX\Character\MTF\049_2\TargetTerminated.ogg")
 											PlayMTFSound(n\Sound, n)
 										EndIf
 									EndIf
