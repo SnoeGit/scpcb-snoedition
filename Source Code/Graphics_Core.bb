@@ -234,7 +234,7 @@ Function UpdateWorld2%()
 	EndIf
 	
 	If (wi\SCRAMBLE > 0 And HasBattery > 0) Lor wi\SCRAMBLE = 3 Then
-		SCRAMBLECHN = LoopSound2(SCRAMBLESFX, SCRAMBLECHN, Camera, Camera)
+		If (Not ChannelPlaying(SCRAMBLECHN)) Then SCRAMBLECHN = PlaySound_Strict(SCRAMBLESFX)
 	Else
 		If ChannelPlaying(SCRAMBLECHN) Then StopChannel(SCRAMBLECHN)
 	EndIf
@@ -243,7 +243,7 @@ Function UpdateWorld2%()
 		If HasBattery = 1 And ((MilliSecs2() Mod 800) < 200) Then
 			If (Not LowBatteryCHN[1]) Then
 				LowBatteryCHN[1] = PlaySound_Strict(LowBatterySFX[1])
-			ElseIf (Not ChannelPlaying(LowBatteryCHN[1])) Then
+			ElseIf (Not ChannelPlaying(LowBatteryCHN[1]))
 				LowBatteryCHN[1] = PlaySound_Strict(LowBatterySFX[1])
 			EndIf
 		EndIf

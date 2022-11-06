@@ -605,7 +605,7 @@ Function LoadGame%(File$)
 	SelectedDifficulty\InventorySlots = ReadByte(f)
 	
 	MaxItemAmount = SelectedDifficulty\InventorySlots
-	Dim Inventory.Items(MaxItemAmount - 1)
+	Dim Inventory.Items(MaxItemAmount)
 	
 	mon_I\MonitorTimer = ReadFloat(f)
 	
@@ -1491,7 +1491,7 @@ Function LoadGameQuick%(File$)
 	SelectedDifficulty\InventorySlots = ReadByte(f)
 	
 	MaxItemAmount = SelectedDifficulty\InventorySlots
-	Dim Inventory.Items(MaxItemAmount - 1)
+	Dim Inventory.Items(MaxItemAmount)
 	
 	mon_I\MonitorTimer = ReadFloat(f)
 	
@@ -2266,13 +2266,16 @@ Function LoadSavedMaps%()
 	
 	Local i%, Dir, File$
 	
-	For i = 0 To SavedMapsAmount
+	For i = 0 To SavedMapsAmount - 1
 		SavedMaps(i) = ""
 		SavedMapsAuthor(i) = ""
 	Next
 	SavedMapsAmount = 0
 	
-	Dir = ReadDir("Map Creator\Maps")
+	If FileType(MapCreatorPath) <> 2 Then
+		CreateDir(MapCreatorPath)
+	EndIf
+	Dir = ReadDir(MapCreatorPath)
 	Repeat
 		File = NextFile(Dir)
 		
@@ -2291,7 +2294,7 @@ Function LoadSavedMaps%()
 	Dim SavedMapsAuthor$(SavedMapsAmount)
 	
 	i = 0
-	Dir = ReadDir("Map Creator\Maps") 
+	Dir = ReadDir(MapCreatorPath) 
 	Repeat
 		File = NextFile(Dir)
 		

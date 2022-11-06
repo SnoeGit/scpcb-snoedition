@@ -2204,8 +2204,8 @@ Function UpdateNPCs%()
 					; ~ The NPC was killed
 					If n\SoundCHN <> 0 Then
 						If ChannelPlaying(n\SoundCHN) Then StopChannel(n\SoundCHN)
-						If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 					EndIf
+						If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 					AnimateNPC(n, 944.0, 982.0, 0.2, False)
 				EndIf
 				
@@ -3922,13 +3922,7 @@ Function UpdateNPCs%()
 				
 				If n\State > 1.0 Then
 					If (Not n\Sound) Then n\Sound = LoadSound_Strict("SFX\SCP\066\Rolling.ogg")
-					If n\SoundCHN <> 0 Then
-						If ChannelPlaying(n\SoundCHN) Then
-							n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider, 20.0)
-						EndIf
-					Else
-						n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider, 20.0)
-					EndIf
+					If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider, 20.0)
 				EndIf
 				
 				If n\State3 > 0.0 Then
@@ -4850,10 +4844,8 @@ Function UpdateNPCs%()
 					; ~ The NPC was killed
 					If n\SoundCHN <> 0 Then
 						If ChannelPlaying(n\SoundCHN) Then StopChannel(n\SoundCHN)
-						If n\Sound <> 0 Then
-							FreeSound_Strict(n\Sound) : n\Sound = 0
-						EndIf
 					EndIf
+					If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 					AnimateNPC(n, 344.0, 363.0, 0.5, False)
 				EndIf
 				

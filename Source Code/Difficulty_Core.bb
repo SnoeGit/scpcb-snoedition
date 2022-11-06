@@ -26,8 +26,8 @@ Const ESOTERIC% = 5
 ; ~ Save Types ID Constants
 ;[Block]
 Const SAVE_ANYWHERE% = 0
-Const SAVE_ON_QUIT% = 1
-Const SAVE_ON_SCREENS% = 2
+Const SAVE_ON_SCREENS% = 1
+Const DELETE_ON_DEATH% = 2
 Const NO_SAVES% = 3
 ;[End Block]
 
@@ -71,7 +71,7 @@ difficulties[KETER]\Description = "Keter-class objects are considered the most d
 difficulties[KETER]\Description = difficulties[KETER]\Description + "The same can be said for this difficulty level: the SCPs are more aggressive, and you have only one life - when you die, the game is over."
 difficulties[KETER]\AggressiveNPCs = True
 difficulties[KETER]\InventorySlots = 4
-difficulties[KETER]\SaveType = SAVE_ON_QUIT
+difficulties[KETER]\SaveType = DELETE_ON_DEATH
 difficulties[KETER]\OtherFactors = HARD
 SetDifficultyColor(KETER, 200, 0, 0)
 

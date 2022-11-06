@@ -74,7 +74,7 @@ Else
 	Graphics3DExt(opt\GraphicWidth, opt\GraphicHeight, 0, (opt\DisplayMode = 2) + 1)
 EndIf
 
-Const VersionNumber$ = "1.4"
+Const VersionNumber$ = "1.5"
 
 AppTitle("SCP - Containment Breach Gameplay Overhaul v" + VersionNumber)
 
@@ -950,7 +950,7 @@ Function UpdateGame%()
 						SaveGame(CurrSave\Name)
 					EndIf
 				EndIf
-			ElseIf SelectedDifficulty\SaveType = SAVE_ON_SCREENS
+			ElseIf SelectedDifficulty\SaveType = SAVE_ON_SCREENS Lor SelectedDifficulty\SaveType = DELETE_ON_DEATH
 				If SelectedScreen = Null And sc_I\SelectedMonitor = Null Then
 					CreateHintMsg("Saving is only permitted on clickable monitors scattered throughout the facility.")
 				Else
@@ -974,7 +974,7 @@ Function UpdateGame%()
 			Else
 				CreateHintMsg("Quick saving is disabled.")
 			EndIf
-		ElseIf SelectedDifficulty\SaveType = SAVE_ON_SCREENS And (SelectedScreen <> Null Lor sc_I\SelectedMonitor <> Null)
+		ElseIf (SelectedDifficulty\SaveType = SAVE_ON_SCREENS Lor SelectedDifficulty\SaveType = DELETE_ON_DEATH) And (SelectedScreen <> Null Lor sc_I\SelectedMonitor <> Null)
 			If (msg\HintTxt <> "Game progress saved." And msg\HintTxt <> "You can't save in this location." And msg\HintTxt <> "You can't save at this moment.") Lor msg\HintTimer <= 0.0 Then
 				CreateHintMsg("Press " + key\Name[key\SAVE] + " to save.")
 			EndIf
@@ -1066,7 +1066,7 @@ Function Kill%(IsBloody% = False)
 		
 		me\KillAnim = Rand(0, 1)
 		PlaySound_Strict(DamageSFX[0])
-		If SelectedDifficulty\SaveType = NO_SAVES Then
+		If SelectedDifficulty\SaveType = NO_SAVES Lor SelectedDifficulty\SaveType = DELETE_ON_DEATH Then
 			DeleteGame(CurrSave)
 			LoadSavedGames()
 		EndIf
@@ -1207,11 +1207,7 @@ End Function
 Function UpdateCough%(Chance_%)
 	If (Not me\Terminated) Then 
 		If Rand(Chance_) = 1 Then
-			If (Not CoughCHN) Then
-				CoughCHN = PlaySound_Strict(CoughSFX[Rand(0, 2)])
-			Else
-				If (Not ChannelPlaying(CoughCHN)) Then CoughCHN = PlaySound_Strict(CoughSFX[Rand(0, 2)])
-			EndIf
+			If (Not ChannelPlaying(CoughCHN)) Then CoughCHN = PlaySound_Strict(CoughSFX[Rand(0, 2)])
 		EndIf
 	EndIf
 End Function
@@ -1297,7 +1293,7 @@ Function UpdateMoving%()
 		me\Stamina = Min(me\Stamina, 10.0)
 		me\Sanity = Max(-720.0, me\Sanity)
 	ElseIf n_I\Curr513_1 <> Null Then
-		me\Sanity = Min(me\Sanity, -200.0)
+		me\Sanity = Min(me\Sanity, -100.5)
 	EndIf
 	
 	If me\Zombie Then 
@@ -1951,7 +1947,7 @@ Function UpdateGUI%()
 			EndIf
 		EndIf
 		If ShouldDrawHUD Then
-			CameraZoom(Camera, Min(1.0 + (me\CurrCameraZoom / 400.0), 1.1) / Tan((2.0 * ATan(Tan((55) / 2.0) * opt\RealGraphicWidth / opt\RealGraphicHeight)) / 2.0))
+			CameraZoom(Camera, Min(1.0 + (me\CurrCameraZoom / 400.0), 1.1) / Tan((2.0 * ATan(Tan((60) / 2.0) * opt\RealGraphicWidth / opt\RealGraphicHeight)) / 2.0))
 			Pvt = CreatePivot()
 			PositionEntity(Pvt, EntityX(d_I\ClosestButton, True), EntityY(d_I\ClosestButton, True), EntityZ(d_I\ClosestButton, True))
 			RotateEntity(Pvt, 0.0, EntityYaw(d_I\ClosestButton, True) - 180.0, 0.0)
@@ -3261,8 +3257,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "radio", "18vradio", "fineradio", "veryfineradio"
 					;[Block]
-					If SelectedItem\ItemTemplate\TempName = "radio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.006)
-					If SelectedItem\ItemTemplate\TempName = "18vradio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.003)
+					If SelectedItem\ItemTemplate\TempName <> "fineradio" And SelectedItem\ItemTemplate\TempName <> "veryfineradio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.004)
 					
 					; ~ RadioState[5] = Has the "use the number keys" -message been shown yet (True / False)
 					; ~ RadioState[6] = A timer for the "code channel"
@@ -3353,11 +3348,11 @@ Function UpdateGUI%()
 									ResumeChannel(RadioCHN[1])
 									If (Not ChannelPlaying(RadioCHN[1])) Then
 										If RadioState[1] >= 5.0 Then
-											RadioCHN[1] = PlaySound_Strict(RadioSFX(1, 1))	
+											RadioCHN[1] = PlaySound_Strict(RadioSFX(0, 1))	
 											RadioState[1] = 0.0
 										Else
 											RadioState[1] = RadioState[1] + 1.0	
-											RadioCHN[1] = PlaySound_Strict(RadioSFX(1, 0))	
+											RadioCHN[1] = PlaySound_Strict(RadioSFX(0, 0))	
 										EndIf
 									EndIf
 									;[End Block]
@@ -3370,9 +3365,9 @@ Function UpdateGUI%()
 										RadioState[2] = RadioState[2] + 1.0
 										If RadioState[2] = 17.0 Then RadioState[2] = 1.0
 										If Floor(RadioState[2] / 2.0) = Ceil(RadioState[2] / 2.0) Then
-											RadioCHN[2] = PlaySound_Strict(RadioSFX(2, Int(RadioState[2] / 2.0)))	
+											RadioCHN[2] = PlaySound_Strict(RadioSFX(1, Int(RadioState[2] / 2.0)))	
 										Else
-											RadioCHN[2] = PlaySound_Strict(RadioSFX(2, 0))
+											RadioCHN[2] = PlaySound_Strict(RadioSFX(1, 0))
 										EndIf
 									EndIf 
 									;[End Block]
@@ -3560,7 +3555,7 @@ Function UpdateGUI%()
 								ResumeChannel(RadioCHN[0])
 								If (Not ChannelPlaying(RadioCHN[0])) Then RadioCHN[0] = PlaySound_Strict(RadioStatic)
 								RadioState[6] = RadioState[6] + fps\Factor[0]
-								Temp = Mid(Str(AccessCode), RadioState[8] + 1.0, 1)
+								Temp = Mid(Str(CODE_DR_MAYNARD), RadioState[8] + 1.0, 1)
 								If RadioState[6] - fps\Factor[0] <= RadioState[7] * 50.0 And RadioState[6] > RadioState[7] * 50.0 Then
 									PlaySound_Strict(RadioBuzz)
 									RadioState[7] = RadioState[7] + 1.0
@@ -4144,10 +4139,7 @@ Function RenderHUD%()
 	Color(0, 0, 0)
 	Rect(x - (50 * MenuScale), y, 30 * MenuScale, 30 * MenuScale)
 	
-	If me\BlinkTimer <= 0.0 Then
-		Color(150, 150, 0)
-		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-	ElseIf me\BlurTimer > 550.0 Lor me\BlinkEffect > 1.0 Lor me\LightFlash > 0.0 Lor (((me\LightBlink > 0.0 And (Not chs\NoBlink)) Lor me\EyeIrritation > 0.0) And wi\NightVision = 0) Then
+	If me\BlurTimer > 550.0 Lor me\BlinkEffect > 1.0 Lor me\LightFlash > 0.0 Lor (((me\LightBlink > 0.0 And (Not chs\NoBlink)) Lor me\EyeIrritation > 0.0) And wi\NightVision = 0) Then
 		Color(200, 0, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
 	ElseIf me\BlinkEffect < 1.0 Lor chs\NoBlink
@@ -5408,7 +5400,7 @@ Function UpdateMenu%()
 		ElseIf mm\AchievementsMenu <= 0 And OptionsMenu <= 0 And QuitMsg > 0
 			Local QuitButton% = 85
 			
-			If SelectedDifficulty\SaveType = SAVE_ON_QUIT Lor SelectedDifficulty\SaveType = SAVE_ANYWHERE Then
+			If SelectedDifficulty\SaveType = SAVE_ANYWHERE Then
 				Local RN$ = PlayerRoom\RoomTemplate\Name
 				Local AbleToSave% = True
 				
@@ -5545,7 +5537,7 @@ Function UpdateMenu%()
 			Else
 				y = y + (75 * MenuScale)
 				
-				If SelectedDifficulty\SaveType <> NO_SAVES Then
+				If SelectedDifficulty\SaveType <> NO_SAVES And SelectedDifficulty\SaveType <> DELETE_ON_DEATH Then
 					If GameSaved Then
 						If UpdateMainMenuButton(x, y, 430 * MenuScale, 60 * MenuScale, "LOAD GAME") Then
 							RenderLoading(0, "GAME FILES")
@@ -6036,7 +6028,7 @@ Function RenderMenu%()
 			Text(x, y + (40 * MenuScale), TempStr)
 			
 			If me\Terminated And me\SelectedEnding = -1 Then
-				If SelectedDifficulty\SaveType <> NO_SAVES Then
+				If SelectedDifficulty\SaveType <> NO_SAVES And SelectedDifficulty\SaveType <> DELETE_ON_DEATH Then
 					y = y + (250 * MenuScale)
 				Else
 					y = y + (175 * MenuScale)

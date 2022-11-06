@@ -27,11 +27,7 @@ Function LoopSound2%(SoundHandle%, SoundCHN%, Cam%, Entity%, Range# = 10.0, Volu
 		Local Dist# = EntityDistance(Cam, Entity) / Range
 		Local PanValue# = Sin(-DeltaYaw(Cam, Entity))
 		
-		If (Not SoundCHN) Then
-			SoundCHN = PlaySound_Strict(SoundHandle)
-		Else
-			If (Not ChannelPlaying(SoundCHN)) Then SoundCHN = PlaySound_Strict(SoundHandle)
-		EndIf
+		If (Not ChannelPlaying(SoundCHN)) Then SoundCHN = PlaySound_Strict(SoundHandle)
 		
 		ChannelVolume(SoundCHN, Volume * (1.0 - Dist) * opt\SFXVolume * opt\MasterVolume)
 		ChannelPan(SoundCHN, PanValue)
@@ -113,7 +109,7 @@ End Function
 Function LoadTempSound%(File$)
 	Local TempSound%
 	
-	If TempSounds[TempSoundIndex] <> 0 Then FreeSound_Strict(TempSounds[TempSoundIndex])
+	If TempSounds[TempSoundIndex] <> 0 Then FreeSound_Strict(TempSounds[TempSoundIndex]) : TempSounds[TempSoundIndex] = 0
 	TempSound = LoadSound_Strict(File)
 	TempSounds[TempSoundIndex] = TempSound
 	TempSoundIndex = ((TempSoundIndex + 1) Mod 10)
@@ -399,7 +395,8 @@ Function KillSounds%()
 	
 	If opt\EnableSFXRelease Then
 		For snd.Sound = Each Sound
-			If snd\InternalHandle <> 0 Then FreeSound(snd\InternalHandle) : snd\InternalHandle = 0 : snd\ReleaseTime = 0
+			If snd\InternalHandle <> 0 Then FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
+			snd\ReleaseTime = 0
 		Next
 	EndIf
 	

@@ -1,6 +1,6 @@
 ; ~ The main file of the game
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
-; ~ Gameplay Overhaul v1.4 : Based off SCP - Containment Breach Ultimate Edition v1.0.4
+; ~ Gameplay Overhaul v1.5 : Based off SCP - Containment Breach Ultimate Edition v1.0.4
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
 ; ~ This is a modification of the game "SCP - Containment Breach"
 ; ~ The mod is built on top of Ultimate Edition which is developed by the "Ultimate Edition Team" (https://www.moddb.com/company/ultimate-edition-team) Thank you for everything, Jabka!

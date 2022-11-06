@@ -107,7 +107,7 @@ Function UpdateMainMenu%()
 	
 	Local sv.Save, snd.Sound
 	Local x%, y%, Width%, Height%, Temp%, i%, n%, j%, g%
-	Local Dir%, File$, Test%
+	Local File$, Test%
 	
 	While fps\Accumulator > 0.0
 		fps\Accumulator = fps\Accumulator - TICK_DURATION
@@ -716,13 +716,19 @@ Function UpdateMainMenu%()
 									UserTrackCheck = 0
 									UserTrackCheck2 = 0
 									
-									Dir = ReadDir("SFX\Radio\UserTracks\")
+									Local DirPath$ = "SFX\Radio\UserTracks\"
+
+									If FileType(DirPath) <> 2 Then
+										CreateDir(DirPath)
+									EndIf
+
+									Local Dir% = ReadDir(DirPath)
 									Repeat
 										File = NextFile(Dir)
 										If File = "" Then Exit
-										If FileType("SFX\Radio\UserTracks\" + File) = 1 Then
+										If FileType(DirPath + File) = 1 Then
 											UserTrackCheck = UserTrackCheck + 1
-											Test = LoadSound("SFX\Radio\UserTracks\" + File)
+											Test = LoadSound(DirPath + File)
 											If Test <> 0 Then
 												UserTrackCheck2 = UserTrackCheck2 + 1
 											EndIf
@@ -1223,9 +1229,9 @@ Function RenderMainMenu%()
 							;[Block]
 							TempStr = "Save on screens"
 							;[End Block]
-						Case SAVE_ON_QUIT
+						Case DELETE_ON_DEATH
 							;[Block]
-							TempStr = "Save on quit"
+							TempStr = "Delete on death"
 							;[End Block]
 						Case NO_SAVES
 							;[Block]
