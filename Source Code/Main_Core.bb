@@ -746,7 +746,12 @@ Function UpdateGame%()
 			If me\Sanity < 0.0 Then
 				If me\RestoreSanity Then me\Sanity = Min(me\Sanity + fps\Factor[0], 0.0)
 				If me\Sanity < -200.0 Then
-					If PlayerRoom\RoomTemplate\Name <> "cont1_035" Then CanSave = False
+					If SelectedDifficulty\SaveType <> SAVE_ANYWHERE Then
+						CanSave = False
+					ElseIf me\Sanity < -450.0
+						CanSave = False
+					EndIf
+						
 					DarkAlpha = Max(Min((-me\Sanity - 200.0) / 700.0, 0.6), DarkAlpha)
 					If (Not me\Terminated) Then 
 						me\HeartBeatVolume = Min(Abs(me\Sanity + 20.00) / 500.0, 1.0)
@@ -1074,7 +1079,7 @@ Function Kill%(IsBloody% = False)
 		ShowEntity(me\Head)
 		PositionEntity(me\Head, EntityX(Camera, True), EntityY(Camera, True), EntityZ(Camera, True), True)
 		ResetEntity(me\Head)
-		RotateEntity(me\Head, 0.0, EntityYaw(Camera), 0.0)		
+		RotateEntity(me\Head, 0.0, EntityYaw(Camera), 0.0)
 	EndIf
 End Function
 
@@ -1309,7 +1314,7 @@ Function UpdateMoving%()
 	If d_I\SelectedDoor = Null And SelectedScreen = Null And (Not I_294\Using) Then
 		If (Not chs\NoClip) Then 
 			If (me\Playable And (KeyDown(key\MOVEMENT_DOWN) Xor KeyDown(key\MOVEMENT_UP)) Lor (KeyDown(key\MOVEMENT_RIGHT) Xor KeyDown(key\MOVEMENT_LEFT))) Lor me\ForceMove > 0.0 Then
-				If (Not me\Crouch) And (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) And me\Stamina > 0.0 And (Not me\Zombie) Then
+				If (Not me\Crouch) And (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) And me\Stamina > 0.0 And (Not me\Zombie) And (me\Sanity > -510 And (PlayerRoom\RoomTemplate\Name = "cont2_012" Lor PlayerRoom\RoomTemplate\Name <> "cont2_012") Lor I_714\Using) Then
 					Sprint = 2.5
 					me\Stamina = me\Stamina - (fps\Factor[0] * 0.4 * me\StaminaEffect)
 					If me\Stamina <= 0.0 Then me\Stamina = -20.0
@@ -1376,7 +1381,7 @@ Function UpdateMoving%()
 				Sprint = 0.5
 			EndIf
 		EndIf
-		If KeyHit(key\CROUCH) And me\Playable And (Not me\Zombie) And me\Bloodloss < 60.0 And I_427\Timer < 70.0 * 390.0 And (Not chs\NoClip) And (SelectedItem = Null Lor (SelectedItem\ItemTemplate\TempName <> "firstaid" And SelectedItem\ItemTemplate\TempName <> "finefirstaid" And SelectedItem\ItemTemplate\TempName <> "bluefirstaid")) Then 
+		If KeyHit(key\CROUCH) And me\Playable And (Not me\Zombie) And (me\Sanity > -510 And (PlayerRoom\RoomTemplate\Name = "cont2_012" Lor PlayerRoom\RoomTemplate\Name <> "cont2_012") Lor I_714\Using) And me\Bloodloss < 60.0 And I_427\Timer < 70.0 * 390.0 And (Not chs\NoClip) And (SelectedItem = Null Lor (SelectedItem\ItemTemplate\TempName <> "firstaid" And SelectedItem\ItemTemplate\TempName <> "finefirstaid" And SelectedItem\ItemTemplate\TempName <> "bluefirstaid")) Then 
 			SetCrouch((Not me\Crouch))
 		EndIf
 		
@@ -1402,7 +1407,7 @@ Function UpdateMoving%()
 			Temp2 = Temp2 / Max((me\Injuries + 3.0) / 3.0, 1.0)
 			If me\Injuries > 0.5 Then Temp2 = Temp2 * Min((Sin(me\Shake / 2.0) + 1.2), 1.0)
 			Temp = False
-			If (Not me\Zombie) Then
+			If (Not me\Zombie) And (me\Sanity > -510 And (PlayerRoom\RoomTemplate\Name = "cont2_012" Lor PlayerRoom\RoomTemplate\Name <> "cont2_012") Lor I_714\Using) Then
 				If KeyDown(key\MOVEMENT_DOWN) And me\Playable Then
 					If (Not KeyDown(key\MOVEMENT_UP)) Then
 						Temp = True
@@ -1645,7 +1650,7 @@ Function UpdateMouseLook%()
 		EndIf
 		If IsNaN(mo\Mouse_Y_Speed_1) Then mo\Mouse_Y_Speed_1 = 0.0
 		
-		If InvOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Then StopMouseMovement()
+		If InvOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Lor (me\Sanity < -510 And PlayerRoom\RoomTemplate\Name = "cont2_012" And (Not I_714\Using)) Then StopMouseMovement()
 		
 		Local The_Yaw# = ((mo\Mouse_X_Speed_1)) * mo\Mouselook_X_Inc / (1.0 + wi\BallisticVest)
 		Local The_Pitch# = ((mo\Mouse_Y_Speed_1)) * mo\Mouselook_Y_Inc / (1.0 + wi\BallisticVest)

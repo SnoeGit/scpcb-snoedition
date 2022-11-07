@@ -4768,8 +4768,11 @@ Function UpdateEvents%()
 							UpdateRedLight(e\room\Objects[3], 100, 50)
 							
 							If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
-								If SelectedDifficulty\SaveType > SAVE_ANYWHERE Then CanSave = False
-								If EntityVisible(e\room\Objects[2], Camera) Then 							
+								If EntityVisible(e\room\Objects[2], Camera) Then 
+									
+									me\Sanity = Max(-600.0, me\Sanity - fps\Factor[0] * (0.45 + (0.45 * SelectedDifficulty\AggressiveNPCs)))
+									me\RestoreSanity = False
+									
 									e\SoundCHN2 = LoopSound2(e\Sound2, e\SoundCHN2, Camera, e\room\Objects[3], 10.0, e\EventState3 / (86.0 * 70.0))
 									
 									Pvt = CreatePivot()
@@ -4790,7 +4793,10 @@ Function UpdateEvents%()
 									
 									StopBreathSound()
 									
+									If Dist < 1.25 And me\Sanity <= -520.0 Then me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
+									
 									If Dist < 0.36 Then
+										If me\Sanity <= -520.0 Then me\CurrSpeed = 0.0
 										e\EventState3 = Min(e\EventState3 + fps\Factor[0], 70.0 * 82.0)
 										If e\EventState3 > 70.0 * 1.0 And e\EventState3 - fps\Factor[0] <= 70.0 * 1.0 Then
 											PlaySound_Strict(LoadTempSound("SFX\SCP\012\Speech1.ogg"))
@@ -4838,7 +4844,6 @@ Function UpdateEvents%()
 											msg\DeathMsg = msg\DeathMsg + "lines to the composition before dying of blood loss."
 											Kill(True)
 										EndIf
-										
 										RotateEntity(me\Collider, EntityPitch(me\Collider), CurveAngle(EntityYaw(me\Collider) + Sin(e\EventState3 * (e\EventState3 / 2000.0)) * (e\EventState3 / 300.0), EntityYaw(me\Collider), 80.0), 0.0)
 									Else
 										Angle = WrapAngle(EntityYaw(Pvt) - EntityYaw(me\Collider))
@@ -4851,7 +4856,10 @@ Function UpdateEvents%()
 									
 									FreeEntity(Pvt)							
 								Else
+									If SelectedDifficulty\SaveType <> SAVE_ANYWHERE Then CanSave = False
 									If DistanceSquared(EntityX(me\Collider), EntityX(e\room\RoomDoors[0]\FrameOBJ), EntityZ(me\Collider), EntityZ(e\room\RoomDoors[0]\FrameOBJ)) < 20.25 And EntityY(me\Collider) < -2.5 Then
+										If me\Sanity > -500.0 Then me\Sanity = me\Sanity - fps\Factor[0] * (0.25 + (0.25 * SelectedDifficulty\AggressiveNPCs))
+										me\RestoreSanity = False
 										Pvt = CreatePivot()
 										PositionEntity(Pvt, EntityX(Camera), EntityY(me\Collider), EntityZ(Camera))
 										PointEntity(Pvt, e\room\RoomDoors[0]\FrameOBJ)

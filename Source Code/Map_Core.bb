@@ -3398,7 +3398,7 @@ Function UpdateSecurityCams%()
 							If me\VomitTimer < -10.0 Then Kill()
 						EndIf
 						
-						If me\VomitTimer < 0.0 And me\Sanity < -800.0 Then
+						If me\VomitTimer < 0.0 And me\Sanity < -790.0 Then
 							me\RestoreSanity = False
 							me\Sanity = -910.0
 						EndIf
