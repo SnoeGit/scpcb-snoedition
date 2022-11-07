@@ -4,7 +4,6 @@ General:
 
 - Hazmat Suit takes slightly longer to wear and take off.
 - SCP-895 kills faster with AggressiveNPCs turned on.
-- SCP-895 can affect the SCP-106 Observation room monitor.
 - SCP-513's sanity debuff nerfed from 20% to 10%
 - Keter's saving system SAVE_ON_QUIT has been changed to be similar to that of Euclid's saving system SAVE_ON_SCREENS but death will still delete your save. SAVE_ON_QUIT renamed to DELETE_ON_DEATH.
 - Removed yellow rectangle around blinking icon as it is already telling the player they are blinking without it.
@@ -13,6 +12,8 @@ Rooms:
 
 - SCP-008's Chamber requires a Level 4 Key Card to enter.
 - Entering SCP-008's Chamber now infects players who do not wear a gasmask.
+- SCP-012 now has a Sanity system that once the player runs out of sanity will no longer be able to resist SCP-012.
+- SCP-895 can affect the SCP-106 Observation room monitor.
 - Can no longer save at chat screen in SCP-012's room if the event is activated and one is not wearing SCP-714 or Heavy gear.
 
 Bug Fixes:
