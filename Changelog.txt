@@ -7,6 +7,7 @@ General:
 - SCP-513's sanity debuff nerfed from 20% to 10%
 - Keter's saving system SAVE_ON_QUIT has been changed to be similar to that of Euclid's saving system SAVE_ON_SCREENS but death will still delete your save. SAVE_ON_QUIT renamed to DELETE_ON_DEATH.
 - Removed yellow rectangle around blinking icon as it is already telling the player they are blinking without it.
+- Add numbers to inventory slots.
 
 Rooms:
 

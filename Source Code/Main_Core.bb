@@ -4534,6 +4534,8 @@ Function RenderGUI%()
 			If Inventory(n) <> Null Then
 				If IsMouseOn = n Lor SelectedItem <> Inventory(n) Then 
 					DrawImage(Inventory(n)\InvImg, x + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale), y + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale))
+					SetFont(fo\FontID[Font_Default])
+					Text(x + (32 * MenuScale), y - (8 * MenuScale), n + 1, True, True)
 				EndIf
 			EndIf
 			
