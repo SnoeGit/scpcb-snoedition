@@ -4858,7 +4858,7 @@ Function UpdateEvents%()
 								Else
 									If SelectedDifficulty\SaveType <> SAVE_ANYWHERE Then CanSave = False
 									If DistanceSquared(EntityX(me\Collider), EntityX(e\room\RoomDoors[0]\FrameOBJ), EntityZ(me\Collider), EntityZ(e\room\RoomDoors[0]\FrameOBJ)) < 20.25 And EntityY(me\Collider) < -2.5 Then
-										If me\Sanity > -500.0 Then me\Sanity = me\Sanity - fps\Factor[0] * (0.25 + (0.25 * SelectedDifficulty\AggressiveNPCs))
+										If me\Sanity > -500.0 Then me\Sanity = me\Sanity - fps\Factor[0] * (0.2 + (0.2 * SelectedDifficulty\AggressiveNPCs))
 										me\RestoreSanity = False
 										Pvt = CreatePivot()
 										PositionEntity(Pvt, EntityX(Camera), EntityY(me\Collider), EntityZ(Camera))
