@@ -1297,7 +1297,7 @@ Function UpdateMoving%()
 	If I_714\Using Then
 		me\Stamina = Min(me\Stamina, 10.0)
 		me\Sanity = Max(-720.0, me\Sanity)
-	ElseIf n_I\Curr513_1 <> Null Then
+	ElseIf n_I\Curr513_1 <> Null Lor I_035\Sad Then
 		me\Sanity = Min(me\Sanity, -100.5)
 	EndIf
 	
