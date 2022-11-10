@@ -1,10 +1,27 @@
+v1.6
+
+General:
+
+- Heavy Gas Mask now has no fogging effect and is given double stamina when worn.
+- Heavy Hazmat Suit no longer fogs.
+- Extreme difficulty factor does not force you to play with no UI. Apollyon still has no UI forced upon the user. Allowing for more creative liberties to use extreme difficulty factor in Esoteric without UI missing.
+- Swap the names of the S-NAV 300 and non-numbered S-NAV.
+
+Rooms:
+
+- Reduced the speed of which SCP-106 spawns at when SCP-914 is refining. +50% -> +25%
+
+Bug Fixes:
+
+- SCP-106 does not instantly spawn inside the player when SCP-914 is currently refining. - Thank you Sticxs for suffering Keter to help me discover this bug lmao
+
 v1.5
 
 General:
 
 - Hazmat Suit takes slightly longer to wear and take off.
 - SCP-895 kills faster with AggressiveNPCs turned on.
-- SCP-513's sanity debuff nerfed from 20% to 10%
+- SCP-513's sanity decrease nerfed from 20% to 10%
 - Keter's saving system SAVE_ON_QUIT has been changed to be similar to that of Euclid's saving system SAVE_ON_SCREENS but death will still delete your save. SAVE_ON_QUIT renamed to DELETE_ON_DEATH.
 - Removed yellow rectangle around blinking icon as it is already telling the player they are blinking without it.
 - Add numbers to inventory slots.

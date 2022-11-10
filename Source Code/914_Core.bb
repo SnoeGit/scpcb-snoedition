@@ -235,7 +235,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							;[End Block]
 						Case 2
 							;[Block]
-							it2.Items = CreateItem("S-NAV Navigator", "nav", x, y, z)
+							it2.Items = CreateItem("S-NAV 300 Navigator", "nav300", x, y, z)
 							it2\State = Rnd(10.0, 100.0)
 							;[End Block]
 					End Select
@@ -254,7 +254,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						Case 2
 							;[Block]
 							If Rand(2) = 1 Then
-								it2.Items = CreateItem("S-NAV 300 Navigator", "nav300", x, y, z)
+								it2.Items = CreateItem("S-NAV Navigator", "nav", x, y, z)
 							Else
 								it2.Items = CreateItem("S-NAV 310 Navigator", "nav310", x, y, z)
 								it2\State = Rnd(10.0, 100.0)
@@ -285,6 +285,8 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case ROUGH, COARSE
 					;[Block]
 					it2.Items = CreateItem("SCP-148 Ingot", "scp148ingot", x, y, z)
+					it3.Items = CreateItem("SCP-148 Ingot", "scp148ingot", x, y, z)
+					EntityType(it3\Collider, HIT_ITEM)
 				Case ONETOONE, FINE, VERYFINE
 					;[Block]
 					Remove = False
@@ -307,7 +309,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									Case "gasmask", "finegasmask", "supergasmask"
 										;[Block]
 										RemoveItem(it)
-										it2.Items = CreateItem("Heavy Gas Mask", "gasmask3", x, y, z)
+										it2.Items = CreateItem("Heavy Gas Mask", "heavygasmask", x, y, z)
 										Exit
 										;[End Block]
 									Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit"
@@ -321,9 +323,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						EndIf
 					Next
 					
-					If it2 = Null Then
-						it2.Items = CreateItem("Metal Panel", "scp148", x, y, z)
-					EndIf
+					If it2 = Null Then Remove = False
 					;[End Block]
 			End Select
 			;[End Block]
@@ -895,7 +895,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("S-NAV Navigator", "nav", x, y, z)
+					it2.Items = CreateItem("S-NAV 300 Navigator", "nav300", x, y, z)
 					it2\State = Rnd(10.0, 100.0)
 					;[End Block]
 				Case FINE
@@ -905,7 +905,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("S-NAV 300 Navigator", "nav300", x, y, z)
+					it2.Items = CreateItem("S-NAV Navigator", "nav", x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]

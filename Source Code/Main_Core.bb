@@ -250,14 +250,14 @@ End Type
 Global msg.Messages = New Messages
 
 Function CreateMsg%(Txt$, Sec# = 6.0)
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	msg\Txt = Txt
 	msg\Timer = 70.0 * Sec
 End Function
 
 Function UpdateMessages%()
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	If msg\Timer > 0.0 Then
 		msg\Timer = msg\Timer - fps\Factor[0]
@@ -267,7 +267,7 @@ Function UpdateMessages%()
 End Function
 
 Function RenderMessages%()
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	If msg\Timer > 0.0 Then
 		Local Temp% = False
@@ -302,14 +302,14 @@ Function RenderMessages%()
 End Function
 
 Function CreateHintMsg%(Txt$, Sec# = 6.0)
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	msg\HintTxt = Txt
 	msg\HintTimer = 70.0 * Sec
 End Function
 
 Function UpdateHintMessages%()
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	Local Scale# = opt\GraphicHeight / 768.0
 	Local Width = StringWidth(msg\HintTxt) + (20 * Scale)
@@ -337,7 +337,7 @@ Function UpdateHintMessages%()
 End Function
 
 Function RenderHintMessages%()
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	Local Scale# = opt\GraphicHeight / 768.0
 	Local Width = StringWidth(msg\HintTxt) + (20 * Scale)
@@ -937,9 +937,9 @@ Function UpdateGame%()
 		EndIf
 		
 		If KeyHit(key\SAVE) Then
+			RN = PlayerRoom\RoomTemplate\Name
 			If SelectedDifficulty\SaveType = SAVE_ANYWHERE Then
 				If (Not CanSave) Lor QuickLoadPercent > -1 Then
-					RN = PlayerRoom\RoomTemplate\Name
 					If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Lor RN = "dimension_106"
 						CreateHintMsg("You can't save in this location.")
 					Else
@@ -959,7 +959,6 @@ Function UpdateGame%()
 				If SelectedScreen = Null And sc_I\SelectedMonitor = Null Then
 					CreateHintMsg("Saving is only permitted on clickable monitors scattered throughout the facility.")
 				Else
-					RN = PlayerRoom\RoomTemplate\Name
 					If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Lor RN = "dimension_106"
 						CreateHintMsg("You can't save in this location.")
 					ElseIf (Not CanSave) Lor QuickLoadPercent > -1
@@ -1709,7 +1708,7 @@ Function UpdateMouseLook%()
 	If wi\GasMask > 0 Lor wi\HazmatSuit > 0 Lor I_1499\Using > 0 Then
 		If (Not I_714\Using) And PlayerRoom\RoomTemplate\Name <> "dimension_106" Then
 			If wi\GasMask = 3 Lor wi\HazmatSuit = 3 Lor I_1499\Using = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.005 * fps\Factor[0])
-			If wi\GasMask = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.002 * fps\Factor[0])
+			If wi\GasMask = 2 Lor wi\GasMask = 4 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.002 * fps\Factor[0])
 		EndIf
 		If (Not me\Terminated) Then
 			If (Not ChannelPlaying(BreathCHN)) Then
@@ -1721,7 +1720,7 @@ Function UpdateMouseLook%()
 		
 		If EntityHidden(t\OverlayID[1]) Then ShowEntity(t\OverlayID[1])
 		
-		If wi\GasMask <> 2 And wi\HazmatSuit <> 2 And I_1499\Using <> 2 Then
+		If wi\GasMask <> 2 And wi\GasMask <> 4 And wi\HazmatSuit <> 2 And wi\HazmatSuit <> 4 And I_1499\Using <> 2 Then
 			If ChannelPlaying(BreathCHN) Then
 				wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * 2.0), 100.0)
 			Else
@@ -2491,14 +2490,14 @@ Function UpdateGUI%()
 							Case "coarsebat"
 								;[Block]
 								Select Inventory(MouseSlot)\ItemTemplate\TempName
-									Case "nav"
+									Case "nav300"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
 										Inventory(MouseSlot)\State = Rnd(50.0)
 										CreateMsg("You replaced the navigator's battery.")
 										;[End Block]
-									Case "navulti", "nav300"
+									Case "navulti", "nav"
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in this navigator.")
 										;[End Block]
@@ -2559,14 +2558,14 @@ Function UpdateGUI%()
 							Case "bat"
 								;[Block]
 								Select Inventory(MouseSlot)\ItemTemplate\TempName
-									Case "nav"
+									Case "nav300"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
 										Inventory(MouseSlot)\State = Rnd(10.0, 100.0)
 										CreateMsg("You replaced the navigator's battery.")
 										;[End Block]
-									Case "navulti", "nav300"
+									Case "navulti", "nav"
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in this navigator.")
 										;[End Block]
@@ -2627,7 +2626,7 @@ Function UpdateGUI%()
 							Case "finebat"
 								;[Block]
 								Select Inventory(MouseSlot)\ItemTemplate\TempName
-									Case "nav"
+									Case "nav300"
 										;[Block]
 										CreateMsg("The battery doesn't fit inside this navigator.")
 										;[End Block]
@@ -2638,7 +2637,7 @@ Function UpdateGUI%()
 										Inventory(MouseSlot)\State = Rnd(10.0, 100.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
-									Case "navulti", "nav300"
+									Case "navulti", "nav"
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in this navigator.")
 										;[End Block]
@@ -2705,14 +2704,14 @@ Function UpdateGUI%()
 									Kill()
 								EndIf
 								Select Inventory(MouseSlot)\ItemTemplate\TempName
-									Case "nav", "nav310"
+									Case "nav300", "nav310"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
 										Inventory(MouseSlot)\State = Rnd(50.0, 500.0)
 										CreateMsg("You replaced the navigator's battery.")
 										;[End Block]
-									Case "navulti", "nav300"
+									Case "navulti", "nav"
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in this navigator.")
 										;[End Block]
@@ -3788,9 +3787,9 @@ Function UpdateGUI%()
 							SelectedItem = Null
 						EndIf
 					;[End Block]
-				Case "nav", "nav310"
+				Case "nav300", "nav310"
 					;[Block]
-					If SelectedItem\ItemTemplate\TempName = "nav" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.008)
+					If SelectedItem\ItemTemplate\TempName = "nav300" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.008)
 					If SelectedItem\ItemTemplate\TempName = "nav310" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.004)
 					
 					If SelectedItem\State > 0.0 Then
@@ -4048,7 +4047,7 @@ Function UpdateGUI%()
 					Use1123()
 					SelectedItem = Null
 					;[End Block]
-				Case "nav300", "navulti", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "scp860", "hand", "hand2", "25ct", "scp005", "key", "coin", "scp588", "mastercard", "paper"
+				Case "nav", "navulti", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "scp860", "hand", "hand2", "25ct", "scp005", "key", "coin", "scp588", "mastercard", "paper"
 					;[Block]
 					; ~ Skip this line
 					;[End Block]
@@ -4178,7 +4177,7 @@ Function RenderHUD%()
 	ElseIf PlayerRoom\RoomTemplate\Name = "dimension_106" Lor I_714\Using Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor wi\HazmatSuit = 1 Lor wi\BallisticVest = 2 Lor I_409\Timer >= 55.0 Then
 		Color(200, 0, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask = 3 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 3 Lor wi\GasMask = 2
+	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask > 1 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 3
 		Color(0, 200, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
 	EndIf
@@ -4236,67 +4235,71 @@ Function RenderGUI%()
 	
 	If I_294\Using Then Render294()
 	
-	If d_I\ClosestButton <> 0 And (Not InvOpen) And (Not I_294\Using) And OtherOpen = Null And d_I\SelectedDoor = Null And SelectedScreen = Null And (Not MenuOpen) And (Not ConsoleOpen) And SelectedDifficulty\OtherFactors <> EXTREME Then
-		Temp = CreatePivot()
-		PositionEntity(Temp, EntityX(Camera), EntityY(Camera), EntityZ(Camera))
-		PointEntity(Temp, d_I\ClosestButton)
-		YawValue = WrapAngle(EntityYaw(Camera) - EntityYaw(Temp))
-		If YawValue > 90.0 And YawValue <= 180.0 Then YawValue = 90.0
-		If YawValue > 180.0 And YawValue < 270.0 Then YawValue = 270.0
-		PitchValue = WrapAngle(EntityPitch(Camera) - EntityPitch(Temp))
-		If PitchValue > 90.0 And PitchValue <= 180.0 Then PitchValue = 90.0
-		If PitchValue > 180.0 And PitchValue < 270.0 Then PitchValue = 270.0
-		
-		FreeEntity(Temp)
-		
-		DrawImage(t\IconID[5], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
-	EndIf
 	
-	If ClosestItem <> Null And (Not me\Terminated) And (Not InvOpen) And (Not I_294\Using) And OtherOpen = Null And d_I\SelectedDoor = Null And SelectedScreen = Null And (Not MenuOpen) And (Not ConsoleOpen) And SelectedDifficulty\OtherFactors <> EXTREME Then
-		YawValue = -DeltaYaw(Camera, ClosestItem\Collider)
-		If YawValue > 90.0 And YawValue <= 180.0 Then YawValue = 90.0
-		If YawValue > 180.0 And YawValue < 270.0 Then YawValue = 270.0
-		PitchValue = -DeltaPitch(Camera, ClosestItem\Collider)
-		If PitchValue > 90.0 And PitchValue <= 180.0 Then PitchValue = 90.0
-		If PitchValue > 180.0 And PitchValue < 270.0 Then PitchValue = 270.0
-		Text(mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (64 * MenuScale), ClosestItem\ItemTemplate\Name, True, False)
-		DrawImage(t\IconID[6], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
-	EndIf
-	
-	If (Not InvOpen) And (Not I_294\Using) And OtherOpen = Null And d_I\SelectedDoor = Null And SelectedScreen = Null And (Not MenuOpen) And (Not ConsoleOpen) And SelectedDifficulty\OtherFactors <> EXTREME Then
-		If ga\DrawHandIcon Then DrawImage(t\IconID[5], mo\Viewport_Center_X - (32 * MenuScale), mo\Viewport_Center_Y - (32 * MenuScale))
-		For i = 0 To 3
-			If ga\DrawArrowIcon[i] Then
-				x = mo\Viewport_Center_X - (32 * MenuScale)
-				y = mo\Viewport_Center_Y - (32 * MenuScale)
-				Select i
-					Case 0
-						;[Block]
-						y = y - (69 * MenuScale)
-						;[End Block]
-					Case 1
-						;[Block]
-						x = x + (69 * MenuScale)
-						;[End Block]
-					Case 2
-						;[Block]
-						y = y + (69 * MenuScale)
-						;[End Block]
-					Case 3
-						;[Block]
-						x = x - (69 * MenuScale)
-						;[End Block]
-				End Select
-				DrawImage(t\IconID[5], x, y)
-				Color(0, 0, 0)
-				Rect(x + (4 * MenuScale), y + (4 * MenuScale), 56 * MenuScale, 56 * MenuScale)
-				DrawImage(ga\ArrowIMG[i], x + (21 * MenuScale), y + (21 * MenuScale))
+	If SelectedDifficulty\Name <> "Apollyon" And opt\HUDEnabled Then
+		If (Not InvOpen) And (Not I_294\Using) And OtherOpen = Null And d_I\SelectedDoor = Null And SelectedScreen = Null And (Not MenuOpen) And (Not ConsoleOpen) Then
+			
+			If d_I\ClosestButton <> 0 Then
+				Temp = CreatePivot()
+				PositionEntity(Temp, EntityX(Camera), EntityY(Camera), EntityZ(Camera))
+				PointEntity(Temp, d_I\ClosestButton)
+				YawValue = WrapAngle(EntityYaw(Camera) - EntityYaw(Temp))
+				If YawValue > 90.0 And YawValue <= 180.0 Then YawValue = 90.0
+				If YawValue > 180.0 And YawValue < 270.0 Then YawValue = 270.0
+				PitchValue = WrapAngle(EntityPitch(Camera) - EntityPitch(Temp))
+				If PitchValue > 90.0 And PitchValue <= 180.0 Then PitchValue = 90.0
+				If PitchValue > 180.0 And PitchValue < 270.0 Then PitchValue = 270.0
+				
+				FreeEntity(Temp)
+				
+				DrawImage(t\IconID[5], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
 			EndIf
-		Next
-	EndIf
 	
-	If opt\HUDEnabled And SelectedDifficulty\OtherFactors <> EXTREME Then 
+			If ClosestItem <> Null And (Not me\Terminated) Then
+				YawValue = -DeltaYaw(Camera, ClosestItem\Collider)
+				If YawValue > 90.0 And YawValue <= 180.0 Then YawValue = 90.0
+				If YawValue > 180.0 And YawValue < 270.0 Then YawValue = 270.0
+				PitchValue = -DeltaPitch(Camera, ClosestItem\Collider)
+				If PitchValue > 90.0 And PitchValue <= 180.0 Then PitchValue = 90.0
+				If PitchValue > 180.0 And PitchValue < 270.0 Then PitchValue = 270.0
+				Text(mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (64 * MenuScale), ClosestItem\ItemTemplate\Name, True, False)
+				DrawImage(t\IconID[6], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
+			EndIf
+			
+			If ga\DrawHandIcon Then DrawImage(t\IconID[5], mo\Viewport_Center_X - (32 * MenuScale), mo\Viewport_Center_Y - (32 * MenuScale))
+			For i = 0 To 3
+				If ga\DrawArrowIcon[i] Then
+					x = mo\Viewport_Center_X - (32 * MenuScale)
+					y = mo\Viewport_Center_Y - (32 * MenuScale)
+					Select i
+						Case 0
+							;[Block]
+							y = y - (69 * MenuScale)
+							;[End Block]
+						Case 1
+							;[Block]
+							x = x + (69 * MenuScale)
+							;[End Block]
+						Case 2
+							;[Block]
+							y = y + (69 * MenuScale)
+							;[End Block]
+						Case 3
+							;[Block]
+							x = x - (69 * MenuScale)
+							;[End Block]
+					End Select
+					DrawImage(t\IconID[5], x, y)
+					Color(0, 0, 0)
+					Rect(x + (4 * MenuScale), y + (4 * MenuScale), 56 * MenuScale, 56 * MenuScale)
+					DrawImage(ga\ArrowIMG[i], x + (21 * MenuScale), y + (21 * MenuScale))
+				EndIf
+			Next
+				
+		EndIf
+	
 		RenderHUD()
+	
 	EndIf
 	
 	If chs\DebugHUD <> 0 Then
@@ -4832,7 +4835,7 @@ Function RenderGUI%()
 							Text(x, y + (NAV_HEIGHT / 2) - (60 * MenuScale), "LOCATION UNKNOWN", True)						
 						EndIf
 					Else
-						If (SelectedItem\State > 0.0 Lor (SelectedItem\ItemTemplate\TempName = "nav300" Lor SelectedItem\ItemTemplate\TempName = "navulti")) And (Rnd(CoffinDistance + 15.0) > 1.0 Lor PlayerRoom\RoomTemplate\Name <> "cont1_895") Then
+						If (SelectedItem\State > 0.0 Lor (SelectedItem\ItemTemplate\TempName = "nav" Lor SelectedItem\ItemTemplate\TempName = "navulti")) And (Rnd(CoffinDistance + 15.0) > 1.0 Lor PlayerRoom\RoomTemplate\Name <> "cont1_895") Then
 							PlayerX = Floor(EntityX(me\Collider) / RoomSpacing + 0.5)
 							PlayerZ = Floor(EntityZ(me\Collider) / RoomSpacing + 0.5)
 							
@@ -5408,12 +5411,7 @@ Function UpdateMenu%()
 			Local QuitButton% = 85
 			
 			If SelectedDifficulty\SaveType = SAVE_ANYWHERE Then
-				Local RN$ = PlayerRoom\RoomTemplate\Name
-				Local AbleToSave% = True
-				
-				If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Then AbleToSave = False
-				If (Not CanSave) Then AbleToSave = False
-				If AbleToSave Then
+				If CanSave Then
 					QuitButton = 160
 					If UpdateMainMenuButton(x, y + (85 * MenuScale), 430 * MenuScale, 60 * MenuScale, "SAVE & QUIT") Then
 						me\DropSpeed = 0.0
@@ -5923,7 +5921,11 @@ Function RenderMenu%()
 					
 					y = y + (50 * MenuScale)
 					
-					Color(255, 255, 255)			
+					If SelectedDifficulty\Name <> "Apollyon" Then
+						Color(255, 255, 255)
+					Else
+						Color(100, 100, 100)
+					EndIf			
 					Text(x, y + (5 * MenuScale), "Show HUD:")	
 					If MouseOn(x + (270 * MenuScale), y, 20 * MenuScale, 20 * MenuScale)
 						RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_HUD)
