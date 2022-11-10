@@ -4020,7 +4020,7 @@ Function UpdateEvents%()
 							me\HeartBeatVolume = CurveValue(0.5, me\HeartBeatVolume, 5.0)
 							me\HeartBeatRate = CurveValue(120.0, me\HeartBeatRate, 150.0) 
 							e\SoundCHN = LoopSound2(OldManSFX[4], e\SoundCHN, Camera, e\room\OBJ, 5.0, 0.3)
-							n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * 3.0)
+							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (2.0 + SelectedDifficulty\AggressiveNPCs))
 						EndIf
 					EndIf
 				EndIf
@@ -4793,8 +4793,6 @@ Function UpdateEvents%()
 									
 									StopBreathSound()
 									
-									If Dist < 1.25 And me\Sanity <= -520.0 Then me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
-									
 									If Dist < 0.36 Then
 										If me\Sanity <= -520.0 Then me\CurrSpeed = 0.0
 										e\EventState3 = Min(e\EventState3 + fps\Factor[0], 70.0 * 82.0)
@@ -4846,6 +4844,7 @@ Function UpdateEvents%()
 										EndIf
 										RotateEntity(me\Collider, EntityPitch(me\Collider), CurveAngle(EntityYaw(me\Collider) + Sin(e\EventState3 * (e\EventState3 / 2000.0)) * (e\EventState3 / 300.0), EntityYaw(me\Collider), 80.0), 0.0)
 									Else
+										If Dist < 1.25 And me\Sanity <= -520.0 Then me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
 										Angle = WrapAngle(EntityYaw(Pvt) - EntityYaw(me\Collider))
 										If Angle < 40.0 Then
 											me\ForceMove = (40.0 - Angle) * 0.02
@@ -4857,7 +4856,7 @@ Function UpdateEvents%()
 									FreeEntity(Pvt)							
 								Else
 									If SelectedDifficulty\SaveType <> SAVE_ANYWHERE Then CanSave = False
-									If DistanceSquared(EntityX(me\Collider), EntityX(e\room\RoomDoors[0]\FrameOBJ), EntityZ(me\Collider), EntityZ(e\room\RoomDoors[0]\FrameOBJ)) < 20.25 And EntityY(me\Collider) < -2.5 Then
+									If DistanceSquared(EntityX(me\Collider), EntityX(e\room\RoomDoors[0]\FrameOBJ), EntityZ(me\Collider), EntityZ(e\room\RoomDoors[0]\FrameOBJ)) < 21.5 And EntityY(me\Collider) < -2.5 Then
 										If me\Sanity > -500.0 Then me\Sanity = me\Sanity - fps\Factor[0] * (0.2 + (0.2 * SelectedDifficulty\AggressiveNPCs))
 										me\RestoreSanity = False
 										Pvt = CreatePivot()
@@ -6882,7 +6881,7 @@ Function UpdateEvents%()
 						CanSave = False
 						e\room\RoomDoors[1]\Open = False
 						If e\EventState > 70.0 * 2.0 Then
-							n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (0.5 * (2 * SelectedDifficulty\AggressiveNPCs)))
+							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (0.25 + (0.25 * SelectedDifficulty\AggressiveNPCs)))
 							If e\room\RoomDoors[0]\Open Then
 								e\room\RoomDoors[0]\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\914\DoorClose.ogg"), Camera, e\room\RoomDoors[0]\OBJ)
 							EndIf

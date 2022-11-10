@@ -2029,10 +2029,7 @@ Function InitNewGame%()
 			EndIf
 		EndIf
 		
-		If r\RoomTemplate\Name = "cont1_173" And (Not opt\IntroEnabled) And SelectedDifficulty\Name = "Apollyon" Then
-			PositionEntity(me\Collider, EntityX(r\OBJ) + 3584.0 * RoomScale, r\y + 704.0 * RoomScale, EntityZ(r\OBJ) + 1024.0 * RoomScale)
-			PlayerRoom = r
-		ElseIf r\RoomTemplate\Name = "cont1_173" And SelectedDifficulty\Name = "Thaumiel" Then
+		If r\RoomTemplate\Name = "cont1_173" And SelectedDifficulty\Name = "Thaumiel" Then
 			PositionEntity(me\Collider, EntityX(r\OBJ) + 3584.0 * RoomScale, r\y + 704.0 * RoomScale, EntityZ(r\OBJ) + 1024.0 * RoomScale)
 			PlayerRoom = r
 			it.Items = CreateItem("Level 3 Key Card", "key3", 1.0, 1.0, 1.0)
@@ -2097,20 +2094,22 @@ Function InitNewGame%()
 		ElseIf r\RoomTemplate\Name = "cont1_173" And (Not opt\IntroEnabled) Then 
 			PositionEntity(me\Collider, EntityX(r\OBJ) + 3584.0 * RoomScale, r\y + 704.0 * RoomScale, EntityZ(r\OBJ) + 1024.0 * RoomScale)
 			PlayerRoom = r
-			it.Items = CreateItem("Class D Orientation Leaflet", "paper", 1.0, 1.0, 1.0)
-			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
-			Inventory(0) = it
-			HideEntity(it\Collider)
-			EntityType(it\Collider, HIT_ITEM)
-			EntityParent(it\Collider, 0)
-			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Janitorial Document SCP-173", "paper", 1.0, 1.0, 1.0)
-			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
-			Inventory(1) = it
-			HideEntity(it\Collider)
-			EntityType(it\Collider, HIT_ITEM)
-			EntityParent(it\Collider, 0)
-			ItemAmount = ItemAmount + 1
+			If SelectedDifficulty\InventorySlots > 3 Then
+				it.Items = CreateItem("Class D Orientation Leaflet", "paper", 1.0, 1.0, 1.0)
+				it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
+				Inventory(0) = it
+				HideEntity(it\Collider)
+				EntityType(it\Collider, HIT_ITEM)
+				EntityParent(it\Collider, 0)
+				ItemAmount = ItemAmount + 1
+				it.Items = CreateItem("Janitorial Document SCP-173", "paper", 1.0, 1.0, 1.0)
+				it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
+				Inventory(1) = it
+				HideEntity(it\Collider)
+				EntityType(it\Collider, HIT_ITEM)
+				EntityParent(it\Collider, 0)
+				ItemAmount = ItemAmount + 1
+			EndIf
 		ElseIf r\RoomTemplate\Name = "cont1_173_intro" And opt\IntroEnabled Then
 			PositionEntity(me\Collider, EntityX(r\OBJ), 1.0, EntityZ(r\OBJ))
 			PlayerRoom = r
