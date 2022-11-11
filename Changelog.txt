@@ -11,6 +11,7 @@ Rooms:
 
 - Reduced the speed of which SCP-106 spawns at when SCP-914 is refining. +50% -> +25%
 - SCP-860-1 Observation Room locked door is unlocked when you turn off Remote Door Control.
+- 4.5v and 18V batteries may spawn in Archive rooms.
 
 Bug Fixes:
 
