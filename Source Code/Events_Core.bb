@@ -5976,6 +5976,13 @@ Function UpdateEvents%()
 				
 				; ~ e\EventState3: SCP-860-2 spawn timer
 				
+				If RemoteDoorOn Then
+					e\room\RoomDoors[1]\Locked = 1
+					e\room\RoomDoors[1]\Open = False
+				Else
+					e\room\RoomDoors[1]\Locked = 0
+				EndIf
+					
 				Local fr.Forest = e\room\fr
 				
 				If PlayerRoom = e\room And fr <> Null Then 

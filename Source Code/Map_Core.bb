@@ -2963,11 +2963,11 @@ Function UseDoor%(d.Doors, PlaySFX% = True)
 			EndIf
 		EndIf
 		
-		If d\Code = Str(CODE_DR_MAYNARD) Then
+		If d\Code = Str(AccessCode) Then
 			GiveAchievement(AchvMaynard)
-		ElseIf d\Code = CODE_DR_HARP
+		ElseIf d\Code = "7816"
 			GiveAchievement(AchvHarp)
-		ElseIf d\Code = CODE_O5_COUNCIL
+		ElseIf d\Code = "2411"
 			GiveAchievement(AchvO5)
 		EndIf	
 	Else

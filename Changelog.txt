@@ -10,10 +10,13 @@ General:
 Rooms:
 
 - Reduced the speed of which SCP-106 spawns at when SCP-914 is refining. +50% -> +25%
+- SCP-860-1 Observation Room locked door is unlocked when you turn off Remote Door Control.
 
 Bug Fixes:
 
-- SCP-106 does not instantly spawn inside the player when SCP-914 is currently refining. - Thank you Sticxs for suffering Keter to help me discover this bug lmao
+- SCP-106 does not instantly spawn inside the player when SCP-914 is currently refining. - Thank you Sticxs for suffering Keter and achievement runs to help me discover these two bug lmao
+- Fixed SCP-005 not giving you the achievements when opening the office doors.
+- Common Cold from SCP-1025 properly displays that your stamina is affected.
 
 v1.5
 
@@ -56,7 +59,7 @@ General:
 Rooms:
 
 - SCP-106 spawns further away from SCP-895's Coffin.
-- SCP-106 spawns sooner every time SCP-914 is being used.
+- SCP-106 spawns sooner every time SCP-914 is being used. +50%
 - Removed an instance of SCP-966 from the Maintenance tunnels.
 - SCP-860-1 Observation Room doors are now Key Card doors.
 

@@ -13,8 +13,7 @@ Function FillRoom%(r.Rooms)
 		Case "cont2_860_1"
 			;[Block]
 			; ~ Doors to observation room
-			d.Doors = CreateDoor(r\x + 928.0 * RoomScale, r\y, r\z + 640.0 * RoomScale, 0.0, r, False, DEFAULT_DOOR, KEY_CARD_3)
-			d\Locked = 1
+			r\RoomDoors.Doors[1] = CreateDoor(r\x + 928.0 * RoomScale, r\y, r\z + 640.0 * RoomScale, 0.0, r, False, DEFAULT_DOOR, KEY_CARD_3)
 			
 			d.Doors = CreateDoor(r\x + 928.0 * RoomScale, r\y, r\z - 640.0 * RoomScale, 0.0, r, True, DEFAULT_DOOR, KEY_CARD_3)
 			d\MTFClose = False
@@ -605,7 +604,7 @@ Function FillRoom%(r.Rooms)
 			RotateEntity(it\Collider, 0.0, 180.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("S-NAV Navigator", "nav", r\x - 930.0 * RoomScale, r\y + 137.0 * RoomScale, r\z + 190.0 * RoomScale)
+			it.Items = CreateItem("S-NAV 300 Navigator", "nav300", r\x - 930.0 * RoomScale, r\y + 137.0 * RoomScale, r\z + 190.0 * RoomScale)
 			it\State = Rnd(10.0, 100.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
@@ -1915,7 +1914,7 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Level 2 Key Card", "key2", r\x - 156.0 * RoomScale, r\y + 151.0 * RoomScale, r\z + 72.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("S-NAV Navigator", "nav", r\x + 305.0 * RoomScale, r\y + 153.0 * RoomScale, r\z + 944.0 * RoomScale)
+			it.Items = CreateItem("S-NAV 300 Navigator", "nav300", r\x + 305.0 * RoomScale, r\y + 153.0 * RoomScale, r\z + 944.0 * RoomScale)
 			it\State = Rnd(10.0, 100.0)
 			EntityParent(it\Collider, r\OBJ)
 			
@@ -1959,7 +1958,7 @@ Function FillRoom%(r.Rooms)
 			EndIf
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("S-NAV Navigator", "nav", r\x - 336.0 * RoomScale, r\y - 48.0 * RoomScale, r\z - 480.0 * RoomScale)
+			it.Items = CreateItem("S-NAV 300 Navigator", "nav300", r\x - 336.0 * RoomScale, r\y - 48.0 * RoomScale, r\z - 480.0 * RoomScale)
 			it\State = Rnd(10.0, 100.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
@@ -2782,24 +2781,29 @@ Function FillRoom%(r.Rooms)
 								;[End Block]
 							Case ItemChance >= 50 And ItemChance < 60 ; ~ 10% chance for a battery
 								;[Block]
-								Temp2 = Rand(2)
+								Temp2 = Rand(3)
 								Select Temp2
-									Case 1 ; ~ 50% chance for 9V Battery
+									Case 1 ; ~ 33% chance for 9V Battery
 										;[Block]
 										ItemName = "9V Battery"
 										ItemTempName = "bat"
 										;[End Block]
-									Case 2 ; ~ 50% chance for 18V Battery
+									Case 2 ; ~ 33% chance for 18V Battery
 										;[Block]
 										ItemName = "18V Battery"
 										ItemTempName = "finebat"
+										;[End Block]
+									Case 2 ; ~ 33% chance for 18V Battery
+										;[Block]
+										ItemName = "4.5V Battery"
+										ItemTempName = "coarsebat"
 										;[End Block]
 								End Select
 								;[End Block]
 							Case ItemChance >= 60 And ItemChance < 70 ; ~ 10% chance for an S-NAV
 								;[Block]
-								ItemName = "S-NAV Navigator"
-								ItemTempName = "nav"
+								ItemName = "S-NAV 300 Navigator"
+								ItemTempName = "nav300"
 								;[End Block]
 							Case ItemChance >= 70 And ItemChance < 85 ; ~ 15% chance for a radio
 								;[Block]
