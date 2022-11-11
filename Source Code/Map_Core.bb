@@ -3413,7 +3413,7 @@ Function UpdateSecurityCams%()
 							If sc\InSight Then
 								Local Pvt% = CreatePivot()
 								
-								me\Sanity = me\Sanity - fps\Factor[0] * (1.0 + (0.4 * SelectedDifficulty\AggressiveNPCs))
+								me\Sanity = me\Sanity - fps\Factor[0] * (1.0 + (0.5 * SelectedDifficulty\AggressiveNPCs))
 								me\RestoreSanity = False
 								
 								PositionEntity(Pvt, EntityX(Camera), EntityY(Camera), EntityZ(Camera))
