@@ -6579,7 +6579,6 @@ Function UpdateEvents%()
 				;[Block]
 				If PlayerRoom = e\room Then	
 					If EntityY(me\Collider) < (-4496.0) * RoomScale Then
-						GiveAchievement(Achv008)
 						If e\EventState = 0.0 Then					
 							If n_I\Curr173\Idle < 2 And EntityDistanceSquared(n_I\Curr173\Collider, me\Collider) > PowTwo(HideDistance) ; ~ Just making sure that SCP-173 is far away enough to spawn him to this room
 								PositionEntity(n_I\Curr173\Collider, EntityX(e\room\Objects[3], True), EntityY(e\room\Objects[3], True), EntityZ(e\room\Objects[3], True), True)
@@ -6596,6 +6595,8 @@ Function UpdateEvents%()
 								For i = 0 To 1
 									e\room\RoomDoors[i]\Locked = 1
 								Next
+								
+								GiveAchievement(Achv008)
 								
 								If e\EventState2 = 0.0 Then
 									If EntityHidden(e\room\Objects[2]) Then ShowEntity(e\room\Objects[2])

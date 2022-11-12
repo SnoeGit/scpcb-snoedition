@@ -3814,7 +3814,10 @@ Function UpdateNPCs%()
 						
 						If Rand(700) = 1 Then PlaySound2(LoadTempSound("SFX\SCP\066\Eric" + Rand(3) + ".ogg"), Camera, n\Collider, 8.0)
 						
-						If Dist < 1.0 + PowTwo(n\LastDist) Then n\State = Rand(2.0, 3.0)
+						If Dist < 1.0 + PowTwo(n\LastDist) Then
+							n\State = Rand(2.0, 3.0)
+							GiveAchievement(Achv066)
+						EndIf
 						;[End Block]
 					Case 2.0 ; ~ Rolls towards the player and make a sound, and then escape	
 						;[Block]
