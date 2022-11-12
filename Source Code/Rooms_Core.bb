@@ -2793,7 +2793,7 @@ Function FillRoom%(r.Rooms)
 										ItemName = "18V Battery"
 										ItemTempName = "finebat"
 										;[End Block]
-									Case 2 ; ~ 33% chance for 18V Battery
+									Case 3 ; ~ 33% chance for 4.5V Battery
 										;[Block]
 										ItemName = "4.5V Battery"
 										ItemTempName = "coarsebat"
