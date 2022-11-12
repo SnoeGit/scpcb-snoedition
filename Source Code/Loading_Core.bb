@@ -1916,7 +1916,7 @@ Function LoadEntities%()
 End Function
 
 Function InitStats%()
-	me\Playable = True : me\SelectedEnding = -1
+	me\Controllable = True: me\Playable = True : me\SelectedEnding = -1
 	
 	HideDistance = 17.0
 	as\Timer = 70.0 * 120.0
@@ -2147,6 +2147,8 @@ Function InitNewGame%()
 			e\EventState3 = 1.0
 		EndIf
 	Next
+	
+	If n_I\Curr049 <> Null Then PostChamber = False
 	
 	RenderLoading(90, "PLAYER POSITION")
 	

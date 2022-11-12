@@ -4740,6 +4740,11 @@ Function UpdateEvents%()
 				;[Block]
 				If PlayerRoom = e\room Then
 					If EntityY(me\Collider) < 0.0 Then
+						If me\Sanity <= -520.0 And (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
+							me\Controllable = False
+						Else
+							me\Controllable = True
+						EndIf
 						If e\EventState = 0.0 Then
 							If EntityDistanceSquared(me\Collider, e\room\RoomDoors[0]\OBJ) < 6.25 And RemoteDoorOn Then
 								GiveAchievement(Achv012)

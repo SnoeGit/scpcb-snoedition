@@ -149,6 +149,7 @@ Type Player
 	Field Sanity#, RestoreSanity%
 	Field ForceMove#, ForceAngle#
 	Field Playable%, PlayTime%
+	Field Controllable%
 	Field BlinkTimer#, BLINKFREQ#, BlinkEffect#, BlinkEffectTimer#, EyeIrritation#, EyeStuck#
 	Field Stamina#, StaminaEffect#, StaminaEffectTimer#
 	Field CameraShakeTimer#, Shake#, CameraShake#, BigCameraShake#
@@ -628,7 +629,7 @@ Function UpdateGame%()
 			me\RestoreSanity = True
 			ShouldEntitiesFall = True
 			
-			If n_I\Curr049 <> Null Then PostChamber = False
+			If PlayerRoom\RoomTemplate\Name <> "cont2_012" Then me\Controllable = True
 			
 			If PlayerRoom\RoomTemplate\Name <> "dimension_1499" Then UpdateSecurityCams()
 			ShouldPlay = Min(me\Zone, 2.0)
@@ -1313,7 +1314,7 @@ Function UpdateMoving%()
 	If d_I\SelectedDoor = Null And SelectedScreen = Null And (Not I_294\Using) Then
 		If (Not chs\NoClip) Then 
 			If (me\Playable And (KeyDown(key\MOVEMENT_DOWN) Xor KeyDown(key\MOVEMENT_UP)) Lor (KeyDown(key\MOVEMENT_RIGHT) Xor KeyDown(key\MOVEMENT_LEFT))) Lor me\ForceMove > 0.0 Then
-				If (Not me\Crouch) And (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) And me\Stamina > 0.0 And (Not me\Zombie) And (me\Sanity > -510 And (PlayerRoom\RoomTemplate\Name = "cont2_012" Lor PlayerRoom\RoomTemplate\Name <> "cont2_012") Lor I_714\Using) Then
+				If (Not me\Crouch) And (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) And me\Stamina > 0.0 And (Not me\Zombie) And me\Controllable = True Then
 					Sprint = 2.5
 					me\Stamina = me\Stamina - (fps\Factor[0] * 0.4 * me\StaminaEffect)
 					If me\Stamina <= 0.0 Then me\Stamina = -20.0
@@ -1380,7 +1381,7 @@ Function UpdateMoving%()
 				Sprint = 0.5
 			EndIf
 		EndIf
-		If KeyHit(key\CROUCH) And me\Playable And (Not me\Zombie) And (me\Sanity > -510 And (PlayerRoom\RoomTemplate\Name = "cont2_012" Lor PlayerRoom\RoomTemplate\Name <> "cont2_012") Lor I_714\Using) And me\Bloodloss < 60.0 And I_427\Timer < 70.0 * 390.0 And (Not chs\NoClip) And (SelectedItem = Null Lor (SelectedItem\ItemTemplate\TempName <> "firstaid" And SelectedItem\ItemTemplate\TempName <> "finefirstaid" And SelectedItem\ItemTemplate\TempName <> "bluefirstaid")) Then 
+		If KeyHit(key\CROUCH) And me\Playable And (Not me\Zombie) And me\Controllable = True And me\Bloodloss < 60.0 And I_427\Timer < 70.0 * 390.0 And (Not chs\NoClip) And (SelectedItem = Null Lor (SelectedItem\ItemTemplate\TempName <> "firstaid" And SelectedItem\ItemTemplate\TempName <> "finefirstaid" And SelectedItem\ItemTemplate\TempName <> "bluefirstaid")) Then 
 			SetCrouch((Not me\Crouch))
 		EndIf
 		
@@ -1406,8 +1407,8 @@ Function UpdateMoving%()
 			Temp2 = Temp2 / Max((me\Injuries + 3.0) / 3.0, 1.0)
 			If me\Injuries > 0.5 Then Temp2 = Temp2 * Min((Sin(me\Shake / 2.0) + 1.2), 1.0)
 			Temp = False
-			If (Not me\Zombie) And (me\Sanity > -510 And (PlayerRoom\RoomTemplate\Name = "cont2_012" Lor PlayerRoom\RoomTemplate\Name <> "cont2_012") Lor I_714\Using) Then
-				If KeyDown(key\MOVEMENT_DOWN) And me\Playable Then
+			If (Not me\Zombie) Then
+				If KeyDown(key\MOVEMENT_DOWN) And me\Playable And me\Controllable = True Then
 					If (Not KeyDown(key\MOVEMENT_UP)) Then
 						Temp = True
 						Angle = 180.0
@@ -1427,7 +1428,7 @@ Function UpdateMoving%()
 							Angle = -90.0
 						EndIf
 					EndIf
-				ElseIf KeyDown(key\MOVEMENT_UP) And me\Playable
+				ElseIf KeyDown(key\MOVEMENT_UP) And me\Playable And me\Controllable = True 
 					Temp = True
 					Angle = 0.0
 					If KeyDown(key\MOVEMENT_LEFT) Then
@@ -1438,7 +1439,7 @@ Function UpdateMoving%()
 				ElseIf me\ForceMove > 0.0
 					Temp = True
 					Angle = me\ForceAngle
-				ElseIf me\Playable
+				ElseIf me\Playable And me\Controllable = True 
 					If KeyDown(key\MOVEMENT_LEFT) Then
 						If (Not KeyDown(key\MOVEMENT_RIGHT)) Then
 							Temp = True
