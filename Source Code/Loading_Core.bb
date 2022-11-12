@@ -2148,7 +2148,7 @@ Function InitNewGame%()
 		EndIf
 	Next
 	
-	If n_I\Curr049 <> Null Then PostChamber = False
+	PostChamber = False
 	
 	RenderLoading(90, "PLAYER POSITION")
 	
