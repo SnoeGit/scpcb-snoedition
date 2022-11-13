@@ -629,8 +629,6 @@ Function UpdateGame%()
 			me\RestoreSanity = True
 			ShouldEntitiesFall = True
 			
-			If PlayerRoom\RoomTemplate\Name <> "cont2_012" Then me\Controllable = True
-			
 			If PlayerRoom\RoomTemplate\Name <> "dimension_1499" Then UpdateSecurityCams()
 			ShouldPlay = Min(me\Zone, 2.0)
 		If PlayerRoom\RoomTemplate\Name <> "dimension_106" And PlayerRoom\RoomTemplate\Name <> "gate_b" And PlayerRoom\RoomTemplate\Name <> "gate_a" Then 
@@ -1650,7 +1648,7 @@ Function UpdateMouseLook%()
 		EndIf
 		If IsNaN(mo\Mouse_Y_Speed_1) Then mo\Mouse_Y_Speed_1 = 0.0
 		
-		If InvOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Lor (me\Sanity < -510 And PlayerRoom\RoomTemplate\Name = "cont2_012" And (Not I_714\Using)) Then StopMouseMovement()
+		If InvOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Lor (Not me\Controllable) Then StopMouseMovement()
 		
 		Local The_Yaw# = ((mo\Mouse_X_Speed_1)) * mo\Mouselook_X_Inc / (1.0 + wi\BallisticVest)
 		Local The_Pitch# = ((mo\Mouse_Y_Speed_1)) * mo\Mouselook_Y_Inc / (1.0 + wi\BallisticVest)
@@ -1927,12 +1925,14 @@ Function UpdateGUI%()
 		For i = 0 To (MaxItemAmount / 2) - 1
 			If KeyHit(i + 2) Then
 				If OtherOpen = Null And SelectedScreen = Null And (Not InvOpen) And (Not I_294\Using) And (Not MenuOpen) And (Not ConsoleOpen) Then
-					If SelectedItem = Inventory(i) Then
-						If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
-						SelectedItem = Null
-					ElseIf SelectedItem = Null And Inventory(i) <> Null
-						SelectedItem = Inventory(i)
-						PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+					If me\Playable And (Not me\Zombie) And (Not me\Terminated) And me\SelectedEnding = -1 Then
+						If SelectedItem = Inventory(i) Then
+							If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+							SelectedItem = Null
+						ElseIf SelectedItem = Null And Inventory(i) <> Null
+							SelectedItem = Inventory(i)
+							PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						EndIf
 					EndIf
 				EndIf
 			EndIf

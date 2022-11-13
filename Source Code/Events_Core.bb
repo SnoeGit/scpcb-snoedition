@@ -4740,11 +4740,6 @@ Function UpdateEvents%()
 				;[Block]
 				If PlayerRoom = e\room Then
 					If EntityY(me\Collider) < 0.0 Then
-						If me\Sanity <= -520.0 And (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
-							me\Controllable = False
-						Else
-							me\Controllable = True
-						EndIf
 						If e\EventState = 0.0 Then
 							If EntityDistanceSquared(me\Collider, e\room\RoomDoors[0]\OBJ) < 6.25 And RemoteDoorOn Then
 								GiveAchievement(Achv012)
@@ -4773,6 +4768,11 @@ Function UpdateEvents%()
 							UpdateRedLight(e\room\Objects[3], 100, 50)
 							
 							If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
+								If me\Sanity <= -520.0 Then
+									me\Controllable = False
+								Else
+									me\Controllable = True
+								EndIf
 								If EntityVisible(e\room\Objects[2], Camera) Then 
 									
 									me\Sanity = Max(-600.0, me\Sanity - fps\Factor[0] * (0.45 + (0.45 * SelectedDifficulty\AggressiveNPCs)))
@@ -4883,11 +4883,14 @@ Function UpdateEvents%()
 							EndIf
 						EndIf
 					Else
+						me\Controllable = True
 						If ChannelPlaying(e\SoundCHN) Then StopChannel(e\SoundCHN)
 						If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
 						If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2)
 						If e\Sound2 <> 0 Then FreeSound_Strict(e\Sound2) : e\Sound2 = 0
 					EndIf
+				Else
+					me\Controllable = True
 				EndIf
 				;[End Block]
 			Case e_cont1_035
