@@ -937,7 +937,7 @@ Function UpdateGame%()
 		
 		If KeyHit(key\SAVE) Then
 			RN = PlayerRoom\RoomTemplate\Name
-			If SelectedDifficulty\SaveType = SAVE_ANYWHERE Then
+			If SelectedDifficulty\SaveType < NO_SAVES Then
 				If (Not CanSave) Lor QuickLoadPercent > -1 Then
 					If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Lor RN = "dimension_106"
 						CreateHintMsg("You can't save in this location.")
@@ -950,27 +950,9 @@ Function UpdateGame%()
 				Else
 					If as\Timer <= 70.0 * 5.0 Then
 						CancelAutoSave()
+					ElseIf SelectedDifficulty\SaveType > SAVE_ANYWHERE And SelectedScreen = Null And sc_I\SelectedMonitor = Null Then
+						CreateHintMsg("Saving is only permitted on clickable monitors scattered throughout the facility.")
 					Else
-						SaveGame(CurrSave\Name)
-					EndIf
-				EndIf
-			ElseIf SelectedDifficulty\SaveType = SAVE_ON_SCREENS Lor SelectedDifficulty\SaveType = DELETE_ON_DEATH
-				If SelectedScreen = Null And sc_I\SelectedMonitor = Null Then
-					CreateHintMsg("Saving is only permitted on clickable monitors scattered throughout the facility.")
-				Else
-					If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Lor RN = "dimension_106"
-						CreateHintMsg("You can't save in this location.")
-					ElseIf (Not CanSave) Lor QuickLoadPercent > -1
-						CreateHintMsg("You can't save at this moment.")
-						If QuickLoadPercent > -1 Then
-							CreateHintMsg(msg\HintTxt + " (game is loading)")
-						EndIf
-					Else
-						If SelectedScreen <> Null Then
-							GameSaved = False
-							me\Playable = True
-							me\DropSpeed = 0.0
-						EndIf
 						SaveGame(CurrSave\Name)
 					EndIf
 				EndIf
