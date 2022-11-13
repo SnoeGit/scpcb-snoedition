@@ -2,9 +2,10 @@ v1.6
 
 General:
 
+- Optimize Code.
 - Heavy Gas Mask now has no fogging effect and is given double stamina when worn.
 - Heavy Hazmat Suit no longer fogs.
-- Extreme difficulty factor does not force you to play with no UI. Apollyon still has no UI forced upon the user. Allowing for more creative liberties to use extreme difficulty factor in Esoteric without UI missing.
+- Extreme difficulty factor does not force you to play with no UI. Apollyon still has no UI forced upon the user. Allowing for more creative liberties to use Extreme Difficulty factor in Esoteric without UI missing.
 - Swap the names of the S-NAV 300 and non-numbered S-NAV.
 
 Rooms:
@@ -18,6 +19,7 @@ Bug Fixes:
 - SCP-106 does not instantly spawn inside the player when SCP-914 is currently refining. - Thank you Sticxs for suffering Keter and achievement runs to help me discover these two bug lmao
 - Fixed SCP-005 not giving you the achievements when opening the office doors.
 - Common Cold from SCP-1025 properly displays that your stamina is affected.
+- Fix Cake Difficulty factor not allowing you to upgrade Key Cards.
 
 v1.5
 

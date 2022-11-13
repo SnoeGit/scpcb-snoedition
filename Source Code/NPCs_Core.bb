@@ -1050,7 +1050,13 @@ Function UpdateNPCs%()
 													Dist2 = EntityDistanceSquared(n\Collider, n\Path[n\PathLocation]\OBJ)
 													
 													RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), Min(20.0, Sqr(Dist2) * 10.0)), 0.0)
-													n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
+													If Dist <= 4.5 Then
+														n\CurrSpeed = CurveValue(n\Speed * 1.16, n\CurrSpeed, 10.0)
+													ElseIf Dist < 9.0 Then
+														n\CurrSpeed = CurveValue(n\Speed * 1.08, n\CurrSpeed, 10.0)
+													Else
+														n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
+													EndIf
 													
 													PrevFrame = AnimTime(n\OBJ)
 													AnimateNPC(n, 284.0, 333.0, n\CurrSpeed * 43.0)
@@ -1157,9 +1163,9 @@ Function UpdateNPCs%()
 								If PlayerRoom\RoomTemplate\Name <> "gate_a" Then
 									If SelectedDifficulty\AggressiveNPCs Then
 										n\State = n\State - (fps\Factor[0] * 2.0)
-									ElseIf PlayerRoom\RoomTemplate\Name = "cont1_035" Lor PlayerRoom\RoomTemplate\Name = "cont1_173" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_lcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_hcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_ez" Then
+									ElseIf PlayerRoom\RoomTemplate\Name = "cont1_035" Lor PlayerRoom\RoomTemplate\Name = "cont1_173" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_lcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_hcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_ez"
 										n\State = n\State - (fps\Factor[0] * 0.5)
-									ElseIf PlayerRoom\RoomTemplate\Name = "room2_servers_hcz" Then
+									ElseIf PlayerRoom\RoomTemplate\Name = "room2_servers_hcz"
 										n\State = n\State - (fps\Factor[0] * 0.75)
 									Else
 										n\State = n\State - fps\Factor[0]
