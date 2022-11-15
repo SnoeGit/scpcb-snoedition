@@ -66,9 +66,7 @@ Function CreateItemTemplate.ItemTemplates(Name$, TempName$, OBJPath$, InvImgPath
 	For it2.ItemTemplates = Each ItemTemplates
 		If it2\InvImgPath = InvImgPath And it2\InvImg <> 0 Then
 			it\InvImg = it2\InvImg
-			If it2\InvImg2 <> 0 Then
-				it\InvImg2 = it2\InvImg2
-			EndIf
+			If it2\InvImg2 <> 0 Then it\InvImg2 = it2\InvImg2
 			Exit
 		EndIf
 	Next
@@ -307,9 +305,7 @@ Function RemoveItem%(i.Items)
 	
 	If SelectedItem = i Then SelectedItem = Null
 	
-	If i\ItemTemplate\Img <> 0 Then
-		FreeImage(i\ItemTemplate\Img) : i\ItemTemplate\Img = 0
-	EndIf
+	If i\ItemTemplate\Img <> 0 Then FreeImage(i\ItemTemplate\Img) : i\ItemTemplate\Img = 0
 	Delete(i)
 	
 	CatchErrors("RemoveItem")
@@ -365,9 +361,7 @@ Function ClearSecondInv%(item.Items, From% = 0)
 	Local i%
 	
 	For i = From To 19
-		If item\SecondInv[i] <> Null Then
-			RemoveItem(item\SecondInv[i]) : item\SecondInv[i] = Null
-		EndIf
+		If item\SecondInv[i] <> Null Then RemoveItem(item\SecondInv[i]) : item\SecondInv[i] = Null
 	Next
 End Function
 
@@ -398,17 +392,9 @@ Function UpdateItems%()
 				If EntityHidden(i\Collider) Then ShowEntity(i\Collider)
 				If i\Dist < 1.44 Then
 					If ClosestItem = Null Then
-						If EntityInView(i\Model, Camera) Then
-							If EntityVisible(i\Collider, Camera) Then
-								ClosestItem = i
-							EndIf
-						EndIf
-					ElseIf ClosestItem = i Lor i\Dist < EntityDistanceSquared(Camera, ClosestItem\Collider) Then 
-						If EntityInView(i\Model, Camera) Then
-							If EntityVisible(i\Collider, Camera) Then
-								ClosestItem = i
-							EndIf
-						EndIf
+						If EntityInView(i\Model, Camera) And EntityVisible(i\Collider, Camera) Then ClosestItem = i
+					ElseIf ClosestItem = i Lor i\Dist < EntityDistanceSquared(Camera, ClosestItem\Collider)
+						If EntityInView(i\Model, Camera) And EntityVisible(i\Collider, Camera) Then ClosestItem = i
 					EndIf
 				EndIf
 				

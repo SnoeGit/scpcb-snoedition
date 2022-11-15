@@ -910,9 +910,7 @@ Function LoadItems%()
 		If it\Tex <> 0 Then
 			If it\TexPath <> "" Then
 				For it2.ItemTemplates = Each ItemTemplates
-					If it2 <> it And it2\Tex = it\Tex Then
-						it2\Tex = 0
-					EndIf
+					If it2 <> it And it2\Tex = it\Tex Then it2\Tex = 0
 				Next
 			EndIf
 			DeleteSingleTextureEntryFromCache(it\Tex) : it\Tex = 0
@@ -1117,9 +1115,9 @@ Function LoadWayPoints%(LoadingStart% = 55)
 	Local Dist#, Dist2#
 	
 	For d.Doors = Each Doors
-		If d\OBJ <> 0 Then HideEntity(d\OBJ)
+		HideEntity(d\OBJ)
 		If d\OBJ2 <> 0 Then HideEntity(d\OBJ2)
-		If d\FrameOBJ <> 0 Then HideEntity(d\FrameOBJ)
+		HideEntity(d\FrameOBJ)
 		
 		If d\room = Null Then
 			ClosestRoom.Rooms = Null
@@ -1168,15 +1166,13 @@ Function LoadWayPoints%(LoadingStart% = 55)
 		Local CanCreateWayPoint% = False
 		
 		While w2 <> Null
-			If w\room = w2\room Lor w\door <> Null Lor w2\door <> Null
+			If w\room = w2\room Lor w\door <> Null Lor w2\door <> Null Then
 				Dist = EntityDistance(w\OBJ, w2\OBJ)
 				
 				If w\room\MaxWayPointY = 0.0 Lor w2\room\MaxWayPointY = 0.0
 					CanCreateWayPoint = True
 				Else
-					If Abs(EntityY(w\OBJ) - EntityY(w2\OBJ)) <= w\room\MaxWayPointY
-						CanCreateWayPoint = True
-					EndIf
+					If Abs(EntityY(w\OBJ) - EntityY(w2\OBJ)) <= w\room\MaxWayPointY Then CanCreateWayPoint = True
 				EndIf
 				
 				If Dist < 7.0 Then
@@ -1206,9 +1202,9 @@ Function LoadWayPoints%(LoadingStart% = 55)
 	Next
 	
 	For d.Doors = Each Doors
-		If d\OBJ <> 0 Then ShowEntity(d\OBJ)
+		ShowEntity(d\OBJ)
 		If d\OBJ2 <> 0 Then ShowEntity(d\OBJ2)
-		If d\FrameOBJ <> 0 Then ShowEntity(d\FrameOBJ)		
+		ShowEntity(d\FrameOBJ)		
 	Next
 	
 	For w.WayPoints = Each WayPoints
@@ -1861,9 +1857,7 @@ Function LoadEntities%()
 	If opt\EnableUserTracks Then
 		Local DirPath$ = "SFX\Radio\UserTracks\"
 		
-		If FileType(DirPath) <> 2 Then
-			CreateDir(DirPath)
-		EndIf
+		If FileType(DirPath) <> 2 Then CreateDir(DirPath)
 		
 		Local Dir% = ReadDir("SFX\Radio\UserTracks\")
 		
@@ -1876,7 +1870,7 @@ Function LoadEntities%()
 					UserTrackName[UserTrackMusicAmount] = File
 					UserTrackMusicAmount = UserTrackMusicAmount + 1
 				EndIf
-				FreeSound(Test)
+				FreeSound(Test) : Test = 0
 			EndIf
 		Forever
 		CloseDir(Dir)
@@ -1987,9 +1981,7 @@ Function InitNewGame%()
 		EndIf
 		If d\OBJ2 <> 0 Then
 			EntityParent(d\OBJ2, 0)
-			If d\DoorType = DEFAULT_DOOR Lor d\DoorType = ONE_SIDED_DOOR Lor d\DoorType = SCP_914_DOOR Then
-				MoveEntity(d\OBJ2, 0.0, 0.0, 8.0 * RoomScale)
-			EndIf
+			If d\DoorType = DEFAULT_DOOR Lor d\DoorType = ONE_SIDED_DOOR Lor d\DoorType = SCP_914_DOOR Then MoveEntity(d\OBJ2, 0.0, 0.0, 8.0 * RoomScale)
 		EndIf
 		If d\FrameOBJ <> 0 Then EntityParent(d\FrameOBJ, 0)
 		For i = 0 To 1
@@ -2137,15 +2129,11 @@ Function InitNewGame%()
 	If SelectedMap = "" Then LoadEvents()
 	
 	For e.Events = Each Events
-		If e\EventID = e_room2_nuke
-			e\EventState = 1.0
-		EndIf
-		If e\EventID = e_cont1_106
-			e\EventState2 = 1.0
-		EndIf	
-		If e\EventID = e_room2_sl
-			e\EventState3 = 1.0
-		EndIf
+		If e\EventID = e_room2_nuke Then e\EventState = 1.0
+		
+		If e\EventID = e_cont1_106 Then e\EventState2 = 1.0
+		
+		If e\EventID = e_room2_sl Then e\EventState3 = 1.0
 	Next
 	
 	PostChamber = False

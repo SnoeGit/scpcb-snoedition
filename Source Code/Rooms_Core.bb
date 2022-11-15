@@ -1775,7 +1775,7 @@ Function FillRoom%(r.Rooms)
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			
-			it.Items = CreateItem("S-NAV 310 Navigator", "nav310", r\x + 58.0 * RoomScale, r\y - 504.0 * RoomScale, r\z - 658.0 * RoomScale)
+			it.Items = CreateItem("S-NAV 300 Navigator", "nav300", r\x + 58.0 * RoomScale, r\y - 504.0 * RoomScale, r\z - 658.0 * RoomScale)
 			it\State = Rnd(10.0, 100.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
@@ -1969,12 +1969,11 @@ Function FillRoom%(r.Rooms)
 			d.Doors = CreateDoor(r\x - 1056.0 * RoomScale, r\y + 384.0 * RoomScale, r\z - 736.0 * RoomScale, 270.0, r, True, ONE_SIDED_DOOR, KEY_CARD_3)
 			
 			If Rand(2) = 1 Then 
-				it.Items = CreateItem("Mobile Task Forces", "paper", r\x + 744.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 944.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)	
+				it.Items = CreateItem("Mobile Task Forces", "paper", r\x + 744.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 944.0 * RoomScale)	
 			Else
-				it.Items = CreateItem("Security Clearance Levels", "paper", r\x + 680.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 944.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)			
+				it.Items = CreateItem("Security Clearance Levels", "paper", r\x + 680.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 944.0 * RoomScale)		
 			EndIf
+			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Object Classes", "paper", r\x + 160.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 568.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)	
@@ -1998,13 +1997,11 @@ Function FillRoom%(r.Rooms)
 			
 			If Rand(2) = 1 Then
 				it.Items = CreateItem("9V Battery", "bat", r\x - 1540.0 * RoomScale, r\y + 495.0 * RoomScale, r\z - 320.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)
+			Else
+				it.Items = CreateItem("4.5V Battery", "coarsebat", r\x - 1540.0 * RoomScale, r\y + 495.0 * RoomScale, r\z - 320.0 * RoomScale)
 			EndIf
+			EntityParent(it\Collider, r\OBJ)
 			
-			If Rand(2) = 1 Then
-				it.Items = CreateItem("9V Battery", "bat", r\x - 1529.0 * RoomScale, r\y + 605.0 * RoomScale, r\z - 308.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)
-			EndIf
 			;[End Block]
 		Case "cont1_173"
 			;[Block]
@@ -2781,19 +2778,19 @@ Function FillRoom%(r.Rooms)
 								;[End Block]
 							Case ItemChance >= 50 And ItemChance < 60 ; ~ 10% chance for a battery
 								;[Block]
-								Temp2 = Rand(3)
+								Temp2 = Rand(4)
 								Select Temp2
-									Case 1 ; ~ 33% chance for 9V Battery
+									Case 1, 2 ; ~ 50% chance for 9V Battery
 										;[Block]
 										ItemName = "9V Battery"
 										ItemTempName = "bat"
 										;[End Block]
-									Case 2 ; ~ 33% chance for 18V Battery
+									Case 3 ; ~ 25% chance for 18V Battery
 										;[Block]
 										ItemName = "18V Battery"
 										ItemTempName = "finebat"
 										;[End Block]
-									Case 3 ; ~ 33% chance for 4.5V Battery
+									Case 4 ; ~ 25% chance for 4.5V Battery
 										;[Block]
 										ItemName = "4.5V Battery"
 										ItemTempName = "coarsebat"
@@ -3133,9 +3130,7 @@ Function FillRoom%(r.Rooms)
 				Local BD_Temp% = False
 				
 				If bk\IsBroken Then
-					If bk\x = r\x And bk\z = r\z Then
-						BD_Temp = True
-					EndIf
+					If bk\x = r\x And bk\z = r\z Then BD_Temp = True
 				EndIf
 				
 				If ((Not bk\IsBroken) And Rand(2) = 1) Lor BD_Temp Then
@@ -3533,9 +3528,6 @@ Function FillRoom%(r.Rooms)
 			it2\Picked = True : it2\Dropped = -1 : it\SecondInv[0] = it2
 			HideEntity(it2\Collider)
 			EntityParent(it2\Collider, r\OBJ)
-
-			it.Items = CreateItem("4.5V Battery", "coarsebat", r\x + 922.0 * RoomScale, r\y + 210.0 * RoomScale, r\z - 922.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "room2_bio"
 			;[Block]
@@ -3563,7 +3555,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ) 
 			
 			If Rand(2) = 1 Then
-				it.Items = CreateItem("9V Battery", "bat", r\x + 435.0 * RoomScale, r\y + 230.0 * RoomScale, r\z + 960.0 * RoomScale)
+				it.Items = CreateItem("4.5V Battery", "coarsebat", r\x + 435.0 * RoomScale, r\y + 230.0 * RoomScale, r\z + 960.0 * RoomScale)
 				EntityParent(it\Collider, r\OBJ) 
 			EndIf
 			;[End Block]
@@ -3583,7 +3575,6 @@ Function FillRoom%(r.Rooms)
 			
 			it.Items = CreateItem("18V Battery", "finebat", r\x - 700.0 * RoomScale, r\y + 210.0 * RoomScale, r\z + 920.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
-			
 			
 			it.Items = CreateItem("Document SCP-006", "paper", r\x - 700.0 * RoomScale, r\y + 210.0 * RoomScale, r\z + 26.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
@@ -3840,29 +3831,21 @@ Function FillRoom%(r.Rooms)
 			Local NewLight% = AddLight(r, r\x + lt\x, r\y + lt\y, r\z + lt\z, lt\lType, lt\Range, lt\R, lt\G, lt\B)
 			
 			If NewLight <> 0 Then 
-				If lt\lType = 3 Then
-					RotateEntity(NewLight, lt\Pitch, lt\Yaw, 0.0)
-				EndIf
+				If lt\lType = 3 Then RotateEntity(NewLight, lt\Pitch, lt\Yaw, 0.0)
 			EndIf
 		EndIf
 	Next
 	
 	For ts.TempScreens = Each TempScreens
-		If ts\RoomTemplate = r\RoomTemplate Then
-			CreateScreen(r\x + ts\x, r\y + ts\y, r\z + ts\z, ts\ImgPath, r)
-		EndIf
+		If ts\RoomTemplate = r\RoomTemplate Then CreateScreen(r\x + ts\x, r\y + ts\y, r\z + ts\z, ts\ImgPath, r)
 	Next
 	
 	For twp.TempWayPoints = Each TempWayPoints
-		If twp\RoomTemplate = r\RoomTemplate Then
-			CreateWaypoint(r\x + twp\x, r\y + twp\y, r\z + twp\z, Null, r)
-		EndIf
+		If twp\RoomTemplate = r\RoomTemplate Then CreateWaypoint(r\x + twp\x, r\y + twp\y, r\z + twp\z, Null, r)
 	Next
 	
 	For tp.TempProps = Each TempProps
-		If tp\RoomTemplate = r\RoomTemplate Then
-			CreateProp(tp\Name, r\x + tp\x, r\y + tp\y, r\z + tp\z, tp\Pitch, tp\Yaw, tp\Roll, tp\ScaleX, tp\ScaleY, tp\ScaleZ, r)
-		EndIf
+		If tp\RoomTemplate = r\RoomTemplate Then CreateProp(tp\Name, r\x + tp\x, r\y + tp\y, r\z + tp\z, tp\Pitch, tp\Yaw, tp\Roll, tp\ScaleX, tp\ScaleY, tp\ScaleZ, r)
 	Next
 	
 	If r\RoomTemplate\TempTriggerBoxAmount > 0 Then

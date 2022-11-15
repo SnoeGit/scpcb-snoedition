@@ -275,9 +275,7 @@ Function RenderMessages%()
 		
 		If (Not (InvOpen Lor OtherOpen <> Null)) Then
 			If SelectedItem <> Null Then
-				If SelectedItem\ItemTemplate\TempName = "paper" Lor SelectedItem\ItemTemplate\TempName = "oldpaper" Then
-					Temp = True
-				EndIf
+				If SelectedItem\ItemTemplate\TempName = "paper" Lor SelectedItem\ItemTemplate\TempName = "oldpaper" Then Temp = True
 			ElseIf I_294\Using Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null
 				Temp = True
 			EndIf
@@ -537,9 +535,7 @@ Repeat
 	fps\CurrTime = MilliSecs2()
 	
 	ElapsedMilliSecs = fps\CurrTime - fps\PrevTime
-	If (ElapsedMilliSecs > 0 And ElapsedMilliSecs < 500) Then
-		fps\Accumulator = fps\Accumulator + Max(0.0, Float(ElapsedMilliSecs) * 70.0 / 1000.0)
-	EndIf
+	If (ElapsedMilliSecs > 0 And ElapsedMilliSecs < 500) Then fps\Accumulator = fps\Accumulator + Max(0.0, Float(ElapsedMilliSecs) * 70.0 / 1000.0)
 	fps\PrevTime = fps\CurrTime
 	
 	If opt\FrameLimit > 0.0 Then
@@ -610,9 +606,7 @@ Function UpdateGame%()
 		
 		If (Not mo\MouseDown1) And (Not mo\MouseHit1) Then GrabbedEntity = 0
 		
-		If mm\ShouldDeleteGadgets Then
-			DeleteMenuGadgets()
-		EndIf
+		If mm\ShouldDeleteGadgets Then DeleteMenuGadgets()
 		mm\ShouldDeleteGadgets = False
 		
 		UpdateMusic()
@@ -692,9 +686,7 @@ Function UpdateGame%()
 		
 			me\SndVolume = CurveValue(0.0, me\SndVolume, 5.0)
 			
-			If PlayerRoom\RoomTemplate\Name <> "gate_b" And PlayerRoom\RoomTemplate\Name <> "gate_a" Then
-				HideDistance = 17.0
-			EndIf
+			If PlayerRoom\RoomTemplate\Name <> "gate_b" And PlayerRoom\RoomTemplate\Name <> "gate_a" Then HideDistance = 17.0
 			CanSave = True
 			UpdateFog()
 			UpdateDistanceTimer()
@@ -765,9 +757,7 @@ Function UpdateGame%()
 				
 				If me\EyeStuck < 9000.0 Then me\BlurTimer = Max(me\BlurTimer, (9000.0 - me\EyeStuck) * 0.5)
 				If me\EyeStuck < 6000.0 Then DarkAlpha = Min(Max(DarkAlpha, (6000.0 - me\EyeStuck) / 5000.0), 1.0)
-				If me\EyeStuck < 9000.0 And me\EyeStuck + fps\Factor[0] >= 9000.0 Then 
-					CreateMsg("The eyedrops are causing your eyes to tear up.")
-				EndIf
+				If me\EyeStuck < 9000.0 And me\EyeStuck + fps\Factor[0] >= 9000.0 Then CreateMsg("The eyedrops are causing your eyes to tear up.")
 			EndIf
 			
 			If me\BlinkTimer < 0.0 Then
@@ -901,9 +891,7 @@ Function UpdateGame%()
 					V = SelectedItem\State
 					; ~ Reset SCP-1025
 					If SelectedItem\ItemTemplate\TempName = "scp1025" Then
-						If SelectedItem\ItemTemplate\Img <> 0 Then
-							FreeImage(SelectedItem\ItemTemplate\Img) : SelectedItem\ItemTemplate\Img = 0
-						EndIf
+						If SelectedItem\ItemTemplate\Img <> 0 Then FreeImage(SelectedItem\ItemTemplate\Img) : SelectedItem\ItemTemplate\Img = 0
 					EndIf
 				EndIf
 				If (W <> "vest" And W <> "finevest" And W <> "hazmatsuit" And W <> "finehazmatsuit" And W <> "superhazmatsuit" And W <> "heavyhazmatsuit") Lor V = 0.0 Lor V = 100.0
@@ -938,23 +926,19 @@ Function UpdateGame%()
 		If KeyHit(key\SAVE) Then
 			RN = PlayerRoom\RoomTemplate\Name
 			If SelectedDifficulty\SaveType < NO_SAVES Then
-				If (Not CanSave) Lor QuickLoadPercent > -1 Then
-					If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Lor RN = "dimension_106"
-						CreateHintMsg("You can't save in this location.")
-					Else
-						CreateHintMsg("You can't save at this moment.")
-						If QuickLoadPercent > -1 Then
-							CreateHintMsg(msg\HintTxt + " (game is loading)")
-						EndIf
+				If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Lor RN = "dimension_106" Then
+					CreateHintMsg("You can't save in this location.")
+				ElseIf (Not CanSave) Lor QuickLoadPercent > -1
+					CreateHintMsg("You can't save at this moment.")
+					If QuickLoadPercent > -1 Then
+						CreateHintMsg(msg\HintTxt + " (game is loading)")
 					EndIf
+				ElseIf as\Timer <= 70.0 * 5.0
+					CancelAutoSave()
+				ElseIf SelectedDifficulty\SaveType > SAVE_ANYWHERE And SelectedScreen = Null And sc_I\SelectedMonitor = Null
+					CreateHintMsg("Saving is only permitted on clickable monitors scattered throughout the facility.")
 				Else
-					If as\Timer <= 70.0 * 5.0 Then
-						CancelAutoSave()
-					ElseIf SelectedDifficulty\SaveType > SAVE_ANYWHERE And SelectedScreen = Null And sc_I\SelectedMonitor = Null Then
-						CreateHintMsg("Saving is only permitted on clickable monitors scattered throughout the facility.")
-					Else
-						SaveGame(CurrSave\Name)
-					EndIf
+					SaveGame(CurrSave\Name)
 				EndIf
 			Else
 				CreateHintMsg("Quick saving is disabled.")
@@ -1277,7 +1261,7 @@ Function UpdateMoving%()
 	If I_714\Using Then
 		me\Stamina = Min(me\Stamina, 10.0)
 		me\Sanity = Max(-720.0, me\Sanity)
-	ElseIf n_I\Curr513_1 <> Null Lor I_035\Sad Then
+	ElseIf n_I\Curr513_1 <> Null Lor I_035\Sad
 		me\Sanity = Min(me\Sanity, -100.5)
 	EndIf
 	
@@ -1314,9 +1298,7 @@ Function UpdateMoving%()
 				If me\ForceMove > 0.0 Then Speed = Speed * me\ForceMove
 				
 				If SelectedItem <> Null Then
-					If (SelectedItem\ItemTemplate\TempName = "firstaid" Lor SelectedItem\ItemTemplate\TempName = "finefirstaid" Lor SelectedItem\ItemTemplate\TempName = "bluefirstaid") And wi\HazmatSuit = 0 Then
-						Sprint = 0.0
-					EndIf
+					If (SelectedItem\ItemTemplate\TempName = "firstaid" Lor SelectedItem\ItemTemplate\TempName = "finefirstaid" Lor SelectedItem\ItemTemplate\TempName = "bluefirstaid") And wi\HazmatSuit = 0 Then Sprint = 0.0
 				EndIf
 				
 				Temp = (me\Shake Mod 360.0)
@@ -1495,12 +1477,8 @@ Function UpdateMoving%()
 	If me\Injuries > 1.0 Then
 		Temp2 = me\Bloodloss
 		me\BlurTimer = Max(Max(Sin(MilliSecs2() / 100.0) * me\Bloodloss * 30.0, me\Bloodloss * 2.0 * (2.0 - me\CrouchState)), me\BlurTimer)
-		If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0 Then
-			me\Bloodloss = Min(me\Bloodloss + (Min(me\Injuries, 3.5) / 300.0) * fps\Factor[0], 100.0)
-		EndIf
-		If Temp2 <= 60.0 And me\Bloodloss > 60.0 Then
-			CreateMsg("You are feeling faint from the amount of blood you have lost.")
-		EndIf
+		If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0 Then me\Bloodloss = Min(me\Bloodloss + (Min(me\Injuries, 3.5) / 300.0) * fps\Factor[0], 100.0)
+		If Temp2 <= 60.0 And me\Bloodloss > 60.0 Then CreateMsg("You are feeling faint from the amount of blood you have lost.")
 	EndIf
 	
 	Update008()
@@ -1695,7 +1673,7 @@ Function UpdateMouseLook%()
 			If (Not ChannelPlaying(BreathCHN)) Then
 				If (Not ChannelPlaying(BreathGasRelaxedCHN)) Then BreathGasRelaxedCHN = PlaySound_Strict(BreathGasRelaxedSFX)
 			Else
-				If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel(BreathGasRelaxedCHN)
+				If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel(BreathGasRelaxedCHN) : BreathGasRelaxedCHN = 0
 			EndIf
 		EndIf
 		
@@ -1721,7 +1699,7 @@ Function UpdateMouseLook%()
 			EndIf
 		EndIf
 	Else
-		If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel(BreathGasRelaxedCHN)
+		If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel(BreathGasRelaxedCHN) : BreathGasRelaxedCHN = 0
 		wi\GasMaskFogTimer = Max(0.0, wi\GasMaskFogTimer - (fps\Factor[0] * 0.32))
 		If (Not EntityHidden(t\OverlayID[1])) Then HideEntity(t\OverlayID[1])
 		If (Not EntityHidden(t\OverlayID[10])) Then HideEntity(t\OverlayID[10])
@@ -3617,7 +3595,7 @@ Function UpdateGUI%()
 							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
 						Else
 							CreateMsg(Chr(34) + "MAN DATS SUM GOOD ASS SHIT." + Chr(34))
-							me\Injuries = Max(me\Injuries - 0.5, 0.0)
+							me\Injuries = Max(me\Injuries - 0.42, 0.0)
 							me\BlurTimer = 500.0
 							GiveAchievement(Achv420J)
 							PlaySound_Strict(LoadTempSound("SFX\Music\Using420J.ogg"))

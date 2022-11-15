@@ -1,6 +1,6 @@
 ; ~ The main file of the game
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
-; ~ Gameplay Overhaul v1.5 : Based off SCP - Containment Breach Ultimate Edition v1.0.4
+; ~ Gameplay Overhaul v1.7 : Based off SCP - Containment Breach Ultimate Edition v1.0.4
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
 ; ~ This is a modification of the game "SCP - Containment Breach"
 ; ~ The mod is built on top of Ultimate Edition which is developed by the "Ultimate Edition Team" (https://www.moddb.com/company/ultimate-edition-team) Thank you for everything, Jabka!
@@ -24,17 +24,11 @@ End Function
 CheckForDlls()
 
 ; ~ First, create a folder inside "AppData" folder
-If FileType(GetEnv("AppData") + "\scpcb-ue\") <> 2 Then
-	CreateDir(GetEnv("AppData") + "\scpcb-ue")
-EndIf
+If FileType(GetEnv("AppData") + "\scpcb-ue\") <> 2 Then CreateDir(GetEnv("AppData") + "\scpcb-ue")
 ; ~ Second, create a folder inside "scpcb-ue" folder
-If FileType(GetEnv("AppData") + "\scpcb-ue\Data\") <> 2 Then
-	CreateDir(GetEnv("AppData") + "\scpcb-ue\Data")
-EndIf
+If FileType(GetEnv("AppData") + "\scpcb-ue\Data\") <> 2 Then CreateDir(GetEnv("AppData") + "\scpcb-ue\Data")
 ; ~ After, put the "options.ini" file to the latest created folder
-If FileType(GetEnv("AppData") + "\scpcb-ue\Data\options.ini") <> 1 Then
-	WriteFile(GetEnv("AppData") + "\scpcb-ue\Data\options.ini")
-EndIf
+If FileType(GetEnv("AppData") + "\scpcb-ue\Data\options.ini") <> 1 Then WriteFile(GetEnv("AppData") + "\scpcb-ue\Data\options.ini")
 
 Include "Source Code\KeyBinds_Core.bb"
 Include "Source Code\INI_Core.bb"

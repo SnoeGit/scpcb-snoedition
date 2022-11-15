@@ -581,8 +581,8 @@ Function RemoveNPC%(n.NPCs)
 		n\SoundCHN2 = 0
 	EndIf
 	
-	If n\Collider <> 0 Then FreeEntity(n\Collider) : n\Collider = 0	
-	If n\OBJ <> 0 Then FreeEntity(n\OBJ) : n\OBJ = 0
+	FreeEntity(n\Collider) : n\Collider = 0	
+	FreeEntity(n\OBJ) : n\OBJ = 0
 	If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 	If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2) : n\Sound2 = 0
 	
@@ -670,9 +670,7 @@ Function UpdateNPCs%()
 								n\PrevX = EntityX(n\Collider)
 								n\PrevZ = EntityZ(n\Collider)				
 								
-								If PlayerSees173(n) Then
-									Move = False
-								EndIf
+								If PlayerSees173(n) Then Move = False
 							EndIf
 							
 							If chs\NoTarget Then Move = True
@@ -852,9 +850,7 @@ Function UpdateNPCs%()
 							Local Tmp% = False
 							
 							If Dist > PowTwo(HideDistance * 0.7) Then
-								If (Not EntityVisible(n\OBJ, me\Collider)) Then
-									Tmp = True
-								EndIf
+								If (Not EntityVisible(n\OBJ, me\Collider)) Then Tmp = True
 							EndIf
 							If (Not Tmp) Then
 								PointEntity(n\OBJ, n\Target\Collider)
@@ -902,9 +898,7 @@ Function UpdateNPCs%()
 					If forest_event <> Null
 						If forest_event\EventState = 1.0 Then Spawn106 = False
 					EndIf
-					If PlayerRoom\RoomTemplate\Name = "cont2_049" And EntityY(me\Collider) <= -2848.0 * RoomScale Then
-						Spawn106 = False
-					EndIf
+					If PlayerRoom\RoomTemplate\Name = "cont2_049" And EntityY(me\Collider) <= -2848.0 * RoomScale Then Spawn106 = False
 					; ~ Gate A event has been triggered. Don't make SCP-106 disappear!
 					; ~ The reason why this is a seperate for loop is because we need to make sure that cont2_860_1 would not be able to overwrite the "Spawn106" variable
 					If PlayerRoom\RoomTemplate\Name = "gate_a" Then
@@ -964,9 +958,7 @@ Function UpdateNPCs%()
 								
 								Local Visible% = False
 								
-								If Dist < 64.0 Then
-									Visible = EntityVisible(n\Collider, me\Collider)
-								EndIf
+								If Dist < 64.0 Then Visible = EntityVisible(n\Collider, me\Collider)
 								
 								If chs\NoTarget Then Visible = False
 								
@@ -990,9 +982,7 @@ Function UpdateNPCs%()
 								
 								If Dist > 0.5 Then
 									If (Dist > 625.0 Lor PlayerRoom\RoomTemplate\Name = "dimension_106" Lor Visible Lor n\PathStatus <> 1) And PlayerRoom\RoomTemplate\Name <> "gate_a" Then 
-										If (Dist > 1600.0 Lor PlayerRoom\RoomTemplate\Name = "dimension_106") Then
-											TranslateEntity(n\Collider, 0.0, ((EntityY(me\Collider) - 0.14) - EntityY(n\Collider)) / 50.0, 0.0)
-										EndIf
+										If (Dist > 1600.0 Lor PlayerRoom\RoomTemplate\Name = "dimension_106") Then TranslateEntity(n\Collider, 0.0, ((EntityY(me\Collider) - 0.14) - EntityY(n\Collider)) / 50.0, 0.0)
 										If Dist <= 4.5 Then
 											n\CurrSpeed = CurveValue(n\Speed * 1.16, n\CurrSpeed, 10.0)
 										ElseIf Dist < 9.0 Then
@@ -1489,10 +1479,10 @@ Function UpdateNPCs%()
 										If EntityVisible(me\Collider, n\Collider) Then 
 											n\LastSeen = 1
 										Else
-											HideEntity(n\Collider)
+											If (Not EntityHidden(n\Collider)) Then HideEntity(n\Collider)
 											EntityPick(n\Collider, 1.5)
 											If PickedEntity() <> 0 Then n\Angle = EntityYaw(n\Collider) + Rnd(80.0, 110.0)
-											ShowEntity(n\Collider)
+											If EntityHidden(n\Collider) Then ShowEntity(n\Collider)
 										EndIf
 										n\State3 = MilliSecs2() + 3000.0
 									EndIf
@@ -1876,7 +1866,7 @@ Function UpdateNPCs%()
 							ElseIf n\Idle = 0
 								If n\SoundCHN <> 0 Then StopChannel(n\SoundCHN) : n\SoundCHN = 0
 								If PlayerInReachableRoom(True) And InFacility = 1 Then ; ~ Player is in a room where SCP-049 can teleport to
-									If Rand(3 - SelectedDifficulty\AggressiveNPCs) = 1 Then
+									If Rand(3 - (SelectedDifficulty\AggressiveNPCs * 2)) = 1 Then
 										TeleportCloser(n)
 									Else
 										n\Idle = 70.0 * 60.0
@@ -2021,9 +2011,7 @@ Function UpdateNPCs%()
 							If n\Frame <> 1.0 Then SetNPCFrame(n, 1.0)
 							
 							If Rand(2000) = 1 Then
-								If Dist < 25.0 Then
-									n\State = 1.0
-								EndIf
+								If Dist < 25.0 Then n\State = 1.0
 							EndIf
 							;[End Block]
 						Case 1.0 ; ~ Stands up
@@ -2208,10 +2196,8 @@ Function UpdateNPCs%()
 					If n\State > 1.0 Then n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider)
 				Else
 					; ~ The NPC was killed
-					If n\SoundCHN <> 0 Then
-						If ChannelPlaying(n\SoundCHN) Then StopChannel(n\SoundCHN)
-					EndIf
-						If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
+					If ChannelPlaying(n\SoundCHN) Then StopChannel(n\SoundCHN)
+					If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 					AnimateNPC(n, 944.0, 982.0, 0.2, False)
 				EndIf
 				
@@ -3103,11 +3089,9 @@ Function UpdateNPCs%()
 				;[End Block]
 			Case NPCType035_Tentacle
 				;[Block]
-				
-				Dist = EntityDistanceSquared(n\Collider, me\Collider)
-				
-				If Dist < PowTwo(HideDistance) Then
-					If (Not n\IsDead) Then
+				If (Not n\IsDead) Then
+					Dist = EntityDistanceSquared(n\Collider, me\Collider)
+					If Dist < PowTwo(HideDistance) Then
 						Select n\State 
 							Case 0.0 ; ~ Spawns
 								;[Block]
@@ -3121,8 +3105,8 @@ Function UpdateNPCs%()
 									AnimateNPC(n, 283.0, 389.0, 0.3, False)
 									
 									If n\Frame > 388.0 Then
+										If e\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 										n\State = 1.0
-										FreeSound_Strict(n\Sound) : n\Sound = 0
 									EndIf
 								Else
 									If Dist < 6.25 Then 
@@ -3134,17 +3118,13 @@ Function UpdateNPCs%()
 								;[End Block]
 							Case 1.0 ; ~ Idles
 								;[Block]
-								If (Not n\Sound) Then
-									LoadNPCSound(n, "SFX\SCP\035_Tentacle\TentacleIdle.ogg")
-								EndIf
+								If (Not n\Sound) Then n\Sound = LoadSound_Strict("SFX\SCP\035_Tentacle\TentacleIdle.ogg")
 								n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider)
 								
 								If Dist < 3.24 And (Not chs\NoTarget) Then
 									If Abs(DeltaYaw(n\Collider, me\Collider)) < 20.0 Then 
+										If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0 
 										n\State = 2.0
-										If n\Sound <> 0 Then 
-											FreeSound_Strict(n\Sound) : n\Sound = 0 
-										EndIf
 									EndIf
 									
 									PointEntity(n\OBJ, me\Collider)
@@ -3179,8 +3159,7 @@ Function UpdateNPCs%()
 													InjurePlayer(Rnd(0.5))
 												Else
 													PlaySound_Strict(DamageSFX[Rand(9, 10)])
-													InjurePlayer(Rnd(0.8 * DifficultyDMGMult, 1.2 * DifficultyDMGMult), 0.0, 100.0, Rnd(0.15, 0.55), 0.2)
-
+													InjurePlayer(Rnd(1.0, 1.5), 0.0, 100.0, Rnd(0.1, 0.55), 0.2)
 													
 													If me\Injuries > 3.0 Then
 														If PlayerRoom\RoomTemplate\Name = "room2_ez" Then
@@ -3212,18 +3191,16 @@ Function UpdateNPCs%()
 								EndIf
 								;[End Block]
 						End Select
-					Else
-						; ~ The NPC was killed
-						AnimateNPC(n, 515.0, 551.0, 0.15, False)
-						If n\Frame >= 550.0 Then
-							If (Not EntityHidden(n\OBJ)) Then
-								HideEntity(n\OBJ)
-								HideEntity(n\Collider)
-							EndIf
-							If n\Sound <> 0 Then
-								FreeSound_Strict(n\Sound) : n\Sound = 0
-								StopChannel(n\SoundCHN) : n\SoundCHN = 0
-							EndIf
+					EndIf
+				Else
+					; ~ The NPC was killed
+					AnimateNPC(n, 515.0, 551.0, 0.15, False)
+					If n\Frame >= 550.0 Then
+						If (Not EntityHidden(n\OBJ)) Then
+							HideEntity(n\OBJ)
+							HideEntity(n\Collider)
+							If ChannelPlaying(n\SoundCHN) Then StopChannel(n\SoundCHN) : n\SoundCHN = 0
+							If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 						EndIf
 					EndIf
 				EndIf
@@ -4162,10 +4139,10 @@ Function UpdateNPCs%()
 										EndIf
 									Else
 										If MilliSecs2() > n\State2 And Dist < 256.0 Then
-											HideEntity(n\Collider) 
+											If (Not EntityHidden(n\Collider)) Then HideEntity(n\Collider)
 											EntityPick(n\Collider, 1.5)
 											If PickedEntity() <> 0 Then n\Angle = EntityYaw(n\Collider) + Rnd(80.0, 110.0)
-											ShowEntity(n\Collider)
+											If EntityHidden(n\Collider) Then ShowEntity(n\Collider)
 											
 											n\State2 = MilliSecs2() + 1000
 											
@@ -4324,12 +4301,12 @@ Function UpdateNPCs%()
 									If n\Target = Null Then
 										If Rand(200) = 1 Then n\Angle = n\Angle + Rnd(-45.0, 45.0)
 										
-										HideEntity(n\Collider)
+										If (Not EntityHidden(n\Collider)) Then HideEntity(n\Collider)
 										EntityPick(n\Collider, 1.5)
 										If PickedEntity() <> 0 Then
 											n\Angle = EntityYaw(n\Collider) + Rnd(80.0, 110.0)
 										EndIf
-										ShowEntity(n\Collider)
+										If EntityHidden(n\Collider) Then ShowEntity(n\Collider)
 									Else
 										n\Angle = EntityYaw(n\Collider) + DeltaYaw(n\Collider, n\Target\Collider)
 										If EntityDistanceSquared(n\Collider, n\Target\Collider) < 2.25 Then
@@ -5879,11 +5856,11 @@ Function UpdateMTFUnit%(n.NPCs)
 							
 							n\State3 = Max(n\State3 - fps\Factor[0], 0.0)
 							
-							HideEntity(n\Collider)
+							If (Not EntityHidden(n\Collider)) Then HideEntity(n\Collider)
 							TurnEntity(n\Collider, 0.0, 180.0, 0.0)
 							EntityPick(n\Collider, 1.0)
 							If PickedEntity() <> 0 Then n\State3 = (-70.0) * 2.0
-							ShowEntity(n\Collider)
+							If EntityHidden(n\Collider) Then ShowEntity(n\Collider)
 							TurnEntity(n\Collider, 0.0, 180.0, 0.0)
 						ElseIf n\State3 < 0.0
 							n\State3 = Min(n\State3 + fps\Factor[0], 0.0)

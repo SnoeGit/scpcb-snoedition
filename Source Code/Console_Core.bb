@@ -101,7 +101,7 @@ Function UpdateConsole%()
 		
 		If (Not mo\MouseDown1) Then
 			ConsoleScrollDragging = False
-		ElseIf ConsoleScrollDragging Then
+		ElseIf ConsoleScrollDragging
 			ConsoleScroll = ConsoleScroll + ((ScaledMouseY() - ConsoleMouseMem) * Height / ScrollBarHeight)
 			ConsoleMouseMem = ScaledMouseY()
 		EndIf
@@ -111,7 +111,7 @@ Function UpdateConsole%()
 				If InBox Then
 					ConsoleScrollDragging = True
 					ConsoleMouseMem = ScaledMouseY()
-				ElseIf InBar Then
+				ElseIf InBar
 					ConsoleScroll = ConsoleScroll + ((ScaledMouseY() - (y + Height)) * ConsoleHeight / Height + (Height / 2))
 					ConsoleScroll = ConsoleScroll / 2
 				EndIf
@@ -121,7 +121,7 @@ Function UpdateConsole%()
 		MouseScroll = MouseZSpeed()
 		If MouseScroll = 1 Then
 			ConsoleScroll = ConsoleScroll - (15 * MenuScale)
-		ElseIf MouseScroll= -1 Then
+		ElseIf MouseScroll= -1
 			ConsoleScroll = ConsoleScroll + (15 * MenuScale)
 		EndIf
 		
@@ -133,9 +133,7 @@ Function UpdateConsole%()
 				ConsoleReissue = First ConsoleMsg
 				
 				While ConsoleReissue <> Null
-					If ConsoleReissue\IsCommand Then
-						Exit
-					EndIf
+					If ConsoleReissue\IsCommand Then Exit
 					ReissuePos = ReissuePos - (15 * MenuScale)
 					ConsoleReissue = After ConsoleReissue
 				Wend
@@ -522,14 +520,6 @@ Function UpdateConsole%()
 							CreateConsoleMsg("Generates dank memes.")
 							CreateConsoleMsg("******************************")
 							;[End Block]
-						Case "playmusic"
-							;[Block]
-							CreateConsoleMsg("HELP - playmusic")
-							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Will play tracks in .ogg / .wav format")
-							CreateConsoleMsg("from " + Chr(34) + "SFX\Music\Custom\" + Chr(34) + ".")
-							CreateConsoleMsg("******************************")
-							;[End Block]
 						Case "infect"
 							;[Block]
 							CreateConsoleMsg("HELP - infect")
@@ -657,7 +647,7 @@ Function UpdateConsole%()
 							it.Items = CreateItem(itt\Name, itt\TempName, EntityX(me\Collider), EntityY(Camera, True), EntityZ(me\Collider))
 							EntityType(it\Collider, HIT_ITEM)
 							Exit
-						ElseIf Lower(itt\TempName) = StrTemp Then
+						ElseIf Lower(itt\TempName) = StrTemp
 							Temp = True
 							CreateConsoleMsg(itt\Name + " spawned.")
 							it.Items = CreateItem(itt\Name, itt\TempName, EntityX(me\Collider), EntityY(Camera, True), EntityZ(me\Collider))
@@ -1210,29 +1200,6 @@ Function UpdateConsole%()
 							msg\DeathMsg = msg\DeathMsg + "No other signs of physical trauma or struggle can be observed. Body was sent for autopsy."
 							;[End Block]
 					End Select
-					;[End Block]
-				Case "playmusic"
-					;[Block]
-					; ~ I think this might be broken since the FMod library streaming was added -- Mark
-					If Instr(ConsoleInput, " ") <> 0 Then
-						StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					Else
-						StrTemp = ""
-					EndIf
-					
-					If StrTemp <> "" Then
-						PlayCustomMusic = True
-						If CustomMusic <> 0 Then FreeSound_Strict(CustomMusic) : CustomMusic = 0
-						If MusicCHN <> 0 Then StopChannel(MusicCHN)
-						CustomMusic = LoadSound_Strict("SFX\Music\Custom\" + StrTemp)
-						If (Not CustomMusic) Then
-							PlayCustomMusic = False
-						EndIf
-					Else
-						PlayCustomMusic = False
-						If CustomMusic <> 0 Then FreeSound_Strict(CustomMusic) : CustomMusic = 0
-						If MusicCHN <> 0 Then StopChannel(MusicCHN)
-					EndIf
 					;[End Block]
 				Case "warp"
 					;[Block]

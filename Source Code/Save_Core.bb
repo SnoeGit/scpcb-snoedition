@@ -838,7 +838,7 @@ Function LoadGame%(File$)
 			ID = ReadByte(f)
 			If ID = 2 Then
 				Exit
-			ElseIf ID = 1 Then
+			ElseIf ID = 1
 				RotateEntity(r\Levers[x], 78.0, EntityYaw(r\Levers[x]), 0.0)
 			Else
 				RotateEntity(r\Levers[x], -78.0, EntityYaw(r\Levers[x]), 0.0)
@@ -901,7 +901,7 @@ Function LoadGame%(File$)
 			Else
 				PlaceMapCreatorForest(r\fr, lX, lY, lZ, r)
 			EndIf
-		ElseIf r\fr <> Null Then ; ~ Remove the old forest
+		ElseIf r\fr <> Null ; ~ Remove the old forest
 			DestroyForest(r\fr)
 			Delete(r\fr) : r\fr = Null
 		EndIf
@@ -1306,7 +1306,7 @@ Function LoadGame%(File$)
 						r\Adjacent[2] = r2
 						If r\AdjDoor[2] = Null Then r\AdjDoor[2] = r2\AdjDoor[0]
 					EndIf
-				ElseIf r2\x = r\x Then
+				ElseIf r2\x = r\x
 					If r2\z = r\z - 8.0 Then
 						r\Adjacent[1] = r2
 						If r\AdjDoor[1] = Null Then r\AdjDoor[1] = r2\AdjDoor[3]
@@ -1324,13 +1324,13 @@ Function LoadGame%(File$)
 				If EntityZ(do\FrameOBJ, True) = r\z Then
 					If EntityX(do\FrameOBJ, True) = r\x + 4.0 Then
 						r\AdjDoor[0] = do
-					ElseIf EntityX(do\FrameOBJ, True) = r\x - 4.0 Then
+					ElseIf EntityX(do\FrameOBJ, True) = r\x - 4.0
 						r\AdjDoor[2] = do
 					EndIf
 				ElseIf EntityX(do\FrameOBJ, True) = r\x Then
 					If EntityZ(do\FrameOBJ, True) = r\z + 4.0 Then
 						r\AdjDoor[3] = do
-					ElseIf EntityZ(do\FrameOBJ, True) = r\z - 4.0 Then
+					ElseIf EntityZ(do\FrameOBJ, True) = r\z - 4.0
 						r\AdjDoor[1] = do
 					EndIf
 				EndIf
@@ -1722,7 +1722,7 @@ Function LoadGameQuick%(File$)
 			ID = ReadByte(f)
 			If ID = 2 Then
 				Exit
-			ElseIf ID = 1 Then
+			ElseIf ID = 1
 				RotateEntity(r\Levers[x], 78.0, EntityYaw(r\Levers[x]), 0.0)
 			Else
 				RotateEntity(r\Levers[x], -78.0, EntityYaw(r\Levers[x]), 0.0)
@@ -1767,7 +1767,7 @@ Function LoadGameQuick%(File$)
 			Local lX# = ReadFloat(f)
 			Local lY# = ReadFloat(f)
 			Local lZ# = ReadFloat(f)
-		ElseIf r\fr <> Null Then ; ~ Remove the old forest
+		ElseIf r\fr <> Null ; ~ Remove the old forest
 			DestroyForest(r\fr)
 			Delete(r\fr) : r\fr = Null
 		EndIf
@@ -1912,7 +1912,7 @@ Function LoadGameQuick%(File$)
 				e\room\Objects[0] = CreatePivot()
 				e\room\Objects[1] = CreatePivot()
 			EndIf
-		ElseIf e\EventID = e_cont2_860_1 Then
+		ElseIf e\EventID = e_cont2_860_1
 			If e\EventState = 1.0 Then
 				ShowEntity(e\room\fr\Forest_Pivot)
 			EndIf
@@ -2103,7 +2103,7 @@ Function LoadGameQuick%(File$)
 				FreeEntity(r\Objects[12]) : r\Objects[12] = 0
 				FreeEntity(r\Objects[17]) : r\Objects[17] = 0
 			EndIf
-		ElseIf r\RoomTemplate\Name = "gate_b" Then
+		ElseIf r\RoomTemplate\Name = "gate_b"
 			If r\Objects[0] <> 0 Then
 				xTemp = EntityX(r\Objects[0], True)
 				zTemp = EntityZ(r\Objects[0], True)
@@ -2385,7 +2385,7 @@ Function LoadMap%(File$)
 						FindForestEvent(e)
 						e\room = r   
 					EndIf
-				ElseIf Prob = 0.0 And Name <> "" Then
+				ElseIf Prob = 0.0 And Name <> ""
 					e.Events = New Events
 					e\EventName = Name
 					e\EventID = FindEventID(Name)
@@ -2570,7 +2570,7 @@ Function LoadMap%(File$)
 						FindForestEvent(e)
 						e\room = r   
 					EndIf
-				ElseIf Prob = 0.0 And Name <> "" Then
+				ElseIf Prob = 0.0 And Name <> ""
 					e.Events = New Events
 					e\EventName = Name
 					e\EventID = FindEventID(Name)

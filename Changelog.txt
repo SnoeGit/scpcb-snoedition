@@ -1,3 +1,16 @@
+v1.7
+
+General:
+
+- Some SCP-420-J healing nerfed from 0.5 to 0.42
+
+Rooms:
+
+- Replace a possible 9V Battery with a 4.5V Battery in room2_office_2.
+- Remove 9V Battery from room2_3_ez and make the second battery always spawn between either a 9V or 4.5V.
+- Maintenance Tunnels'(room2_mt) NVGs have battery.
+
+
 v1.6
 
 General:
@@ -35,7 +48,7 @@ General:
 Rooms:
 
 - SCP-008's Chamber requires a Level 4 Key Card to enter.
-- Entering SCP-008's Chamber now infects players who do not wear a gasmask.
+- Entering SCP-008's Chamber now infects players who do not wear a Gas Mask.
 - SCP-012 now has a Sanity system that once the player runs out of sanity will no longer be able to resist SCP-012.
 - SCP-895 can affect the SCP-106 Observation room monitor.
 - Can no longer save at chat screen in SCP-012's room if the event is activated and one is not wearing SCP-714 or Heavy gear.
