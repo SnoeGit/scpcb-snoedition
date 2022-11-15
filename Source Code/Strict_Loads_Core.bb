@@ -188,7 +188,7 @@ Function StopStream_Strict%(StreamHandle%)
 		CreateConsoleMsg("Failed to stop stream Sound: Return value " + st\CHN)
 		Return
 	EndIf
-	StopChannel(st\CHN)
+	StopChannel(st\CHN) : st\CHN = 0
 	
 	Delete(st)
 End Function

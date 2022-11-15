@@ -1792,7 +1792,7 @@ Function UpdateFog%()
 	If PlayerRoom <> Null Then
 		If PlayerRoom\RoomTemplate\Name = "room3_storage" And EntityY(me\Collider) < (-4100.0) * RoomScale Then
 			CurrFogColor = FogColorStorageTunnels
-		ElseIf PlayerRoom\RoomTemplate\Name = "gate_b" Lor PlayerRoom\RoomTemplate\Name = "gate_a" Then
+		ElseIf PlayerRoom\RoomTemplate\Name = "gate_b" Lor PlayerRoom\RoomTemplate\Name = "gate_a"
 			CurrFogColor = FogColorOutside
 		ElseIf PlayerRoom\RoomTemplate\Name = "dimension_1499"
 			CurrFogColor = FogColorDimension_1499
@@ -1867,7 +1867,7 @@ Function UpdateGUI%()
 			If d_I\ClosestDoor <> Null Then 
 				If d_I\ClosestDoor\Code <> "" Then
 					d_I\SelectedDoor = d_I\ClosestDoor
-				ElseIf me\Playable Then
+				ElseIf me\Playable
 					UseDoor(d_I\ClosestDoor)				
 				EndIf
 			EndIf
@@ -2811,7 +2811,7 @@ Function UpdateGUI%()
 						If I_008\Timer > 0.0 Then
 							CreateMsg("You swallowed the pill. Your nausea is fading.")
 							I_008\Revert = True
-						ElseIf I_409\Timer > 0.0 Then
+						ElseIf I_409\Timer > 0.0
 							CreateMsg("You swallowed the pill. Your body is getting warmer and the crystals are receding.")
 							I_409\Revert = True
 						Else
@@ -3536,10 +3536,10 @@ Function UpdateGUI%()
 									If KeyHit(i) Then
 										If SelectedItem\State2 <> i - 2 Then
 											PlaySound_Strict(RadioSquelch)
-											If RadioCHN[Int(SelectedItem\State2)] <> 0 Then PauseChannel(RadioCHN[Int(SelectedItem\State2)])
+											PauseChannel(RadioCHN[Int(SelectedItem\State2)])
 										EndIf
 										SelectedItem\State2 = i - 2
-										If RadioCHN[SelectedItem\State2] <> 0 Then ResumeChannel(RadioCHN[SelectedItem\State2])
+										ResumeChannel(RadioCHN[SelectedItem\State2])
 									EndIf
 								Next
 							EndIf
@@ -3547,11 +3547,7 @@ Function UpdateGUI%()
 						
 						If SelectedItem\ItemTemplate\TempName = "radio" Lor SelectedItem\ItemTemplate\TempName = "18vradio" Then
 							If SelectedItem\State <= 20.0 And ((MilliSecs2() Mod 800) < 200) Then
-								If (Not LowBatteryCHN[0]) Then
-									LowBatteryCHN[0] = PlaySound_Strict(LowBatterySFX[0])
-								ElseIf (Not ChannelPlaying(LowBatteryCHN[0])) Then
-									LowBatteryCHN[0] = PlaySound_Strict(LowBatterySFX[0])
-								EndIf
+								If (Not LowBatteryCHN[0]) Then LowBatteryCHN[0] = PlaySound_Strict(LowBatterySFX[0])
 							EndIf
 						EndIf
 					EndIf
@@ -3757,7 +3753,7 @@ Function UpdateGUI%()
 						If SelectedItem\State <= 20.0 And ((MilliSecs2() Mod 800) < 200) Then
 							If (Not LowBatteryCHN[0]) Then
 								LowBatteryCHN[0] = PlaySound_Strict(LowBatterySFX[0])
-							ElseIf (Not ChannelPlaying(LowBatteryCHN[0])) Then
+							ElseIf (Not ChannelPlaying(LowBatteryCHN[0]))
 								LowBatteryCHN[0] = PlaySound_Strict(LowBatterySFX[0])
 							EndIf
 						EndIf
@@ -4054,14 +4050,10 @@ Function UpdateGUI%()
 			EndIf
 		Else
 			For i = 0 To 6
-				If RadioCHN[i] <> 0 Then 
-					If ChannelPlaying(RadioCHN[i]) Then PauseChannel(RadioCHN[i])
-				EndIf
+				If ChannelPlaying(RadioCHN[i]) Then PauseChannel(RadioCHN[i])
 			Next
 			
-			If LowBatteryCHN[0] <> 0 Then
-				If ChannelPlaying(LowBatteryCHN[0]) Then StopChannel(LowBatteryCHN[0])
-			EndIf
+			If ChannelPlaying(LowBatteryCHN[0]) Then StopChannel(LowBatteryCHN[0])
 		EndIf		
 	EndIf
 	
@@ -4135,7 +4127,7 @@ Function RenderHUD%()
 	If me\Stamina <= 0.0 And PlayerRoom\RoomTemplate\Name <> "dimension_106" Then
 		Color(150, 150, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-	ElseIf PlayerRoom\RoomTemplate\Name = "dimension_106" Lor I_714\Using Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor wi\HazmatSuit = 1 Lor wi\BallisticVest = 2 Lor I_409\Timer >= 55.0 Lor I_1025\State[0] > 0.0 Then
+	ElseIf PlayerRoom\RoomTemplate\Name = "dimension_106" Lor I_714\Using Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor wi\HazmatSuit = 1 Lor wi\BallisticVest = 2 Lor I_409\Timer >= 55.0 Lor I_1025\State[0] > 0.0
 		Color(200, 0, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
 	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask > 1 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 3
@@ -4147,7 +4139,7 @@ Function RenderHUD%()
 	Rect(x - (51 * MenuScale), y - MenuScale, 32 * MenuScale, 32 * MenuScale, False)
 	If me\Crouch Then
 		WalkIconID = 2
-	ElseIf (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) And me\CurrSpeed > 0.0 And (Not chs\NoClip) And me\Stamina > 0.0 Then
+	ElseIf (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) And me\CurrSpeed > 0.0 And (Not chs\NoClip) And me\Stamina > 0.0
 		WalkIconID = 1
 	Else
 		WalkIconID = 0
@@ -4176,7 +4168,7 @@ Function RenderGUI%()
 				If e\EventState2 = PD_ThroneRoom Then
 					If me\BlinkTimer > -16.0 And me\BlinkTimer < -6.0 Then
 						If (Not e\Img) Then
-							If (ChannelPlaying(e\SoundCHN)) Then StopChannel(e\SoundCHN)
+							StopChannel(e\SoundCHN) : e\SoundCHN = 0
 							If Rand(30) = 1 Then PlaySound_Strict(e\Sound2)
 							e\Img = LoadImage_Strict("GFX\kneel_mortal.png")
 							e\Img = ScaleImage2(e\Img, MenuScale, MenuScale)
@@ -4186,7 +4178,7 @@ Function RenderGUI%()
 						EndIf
 					Else
 						If e\Img <> 0 Then FreeImage(e\Img) : e\Img = 0
-						If ChannelPlaying(e\SoundCHN) Then StopChannel(e\SoundCHN)
+						StopChannel(e\SoundCHN) : e\SoundCHN = 0
 					EndIf
 				EndIf
 				Exit
@@ -6928,7 +6920,7 @@ Function Use427%()
 			EndIf
 		Else
 			For i = 0 To 1
-				If I_427\SoundCHN[i] <> 0 Then If ChannelPlaying(I_427\SoundCHN[i]) Then StopChannel(I_427\SoundCHN[i])
+				If ChannelPlaying(I_427\SoundCHN[i]) Then StopChannel(I_427\SoundCHN[i]) : I_427\SoundCHN[i] = 0
 			Next
 		EndIf
 	Else

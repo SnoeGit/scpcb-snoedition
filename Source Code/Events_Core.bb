@@ -997,9 +997,7 @@ Function UpdateEvents%()
 								; ~ Outside the cell
 								If DistanceSquared(EntityX(me\Collider), PlayerRoom\x - (3072.0 + 1024.0) * RoomScale, EntityZ(me\Collider), PlayerRoom\z + 192.0 * RoomScale) > 2.25 Then
 									If e\EventState3 > 250.0 Then
-										If e\room\NPC[3]\SoundCHN <> 0 Then
-											If ChannelPlaying(e\room\NPC[3]\SoundCHN) Then StopChannel(e\room\NPC[3]\SoundCHN)
-										EndIf
+										StopChannel(e\room\NPC[3]\SoundCHN) : e\room\NPC[3]\SoundCHN = 0
 										LoadNPCSound(e\room\NPC[3], "SFX\Room\Intro\Guard\Ulgrin\Escort" + Rand(2) + ".ogg")
 										e\room\NPC[3]\SoundCHN = PlaySound2(e\room\NPC[3]\Sound, Camera, e\room\NPC[3]\Collider)
 										
@@ -1042,14 +1040,14 @@ Function UpdateEvents%()
 								If EntityDistanceSquared(e\room\NPC[3]\Collider, e\room\NPC[5]\Collider) > 25.0 And EntityDistanceSquared(e\room\NPC[4]\Collider, e\room\NPC[5]\Collider)
 									If EntityDistanceSquared(e\room\NPC[5]\Collider, me\Collider) < 12.25
 										For i = 3 To 5
-											e\room\NPC[i]\State = 11.0 : e\room\NPC[i]\State3 = 1.0 : e\room\NPC[i]\Reload = 70.0 * 3.0
 											
 											If i < 5 Then
-												If ChannelPlaying(e\room\NPC[i]\SoundCHN) Then StopChannel(e\room\NPC[i]\SoundCHN)
+												StopChannel(e\room\NPC[i]\SoundCHN) : e\room\NPC[i]\SoundCHN = 0
 												If e\room\NPC[i]\Sound <> 0 Then
 													FreeSound_Strict(e\room\NPC[i]\Sound) : e\room\NPC[i]\Sound = 0
 												EndIf
 											EndIf
+											e\room\NPC[i]\State = 11.0 : e\room\NPC[i]\State3 = 1.0 : e\room\NPC[i]\Reload = 70.0 * 3.0
 										Next
 										e\room\NPC[5]\SoundCHN2 = PlaySound2(e\room\NPC[5]\Sound2, Camera, e\room\NPC[5]\Collider)
 									EndIf
@@ -1192,13 +1190,10 @@ Function UpdateEvents%()
 							Else
 								e\room\NPC[3]\State3 = Max(e\room\NPC[3]\State3 + fps\Factor[0], 50.0)
 								If e\room\NPC[3]\State3 >= 70.0 * 8.0 And e\room\NPC[3]\State3 - fps\Factor[0] < 70.0 * 8.0 And e\room\NPC[3]\State = 7.0 Then
-									If e\room\NPC[4]\SoundCHN <> 0 Then
-										If ChannelPlaying(e\room\NPC[4]\SoundCHN) Then StopChannel(e\room\NPC[4]\SoundCHN) : e\room\NPC[4]\SoundCHN = 0
-									EndIf
 									
 									If e\room\NPC[3]\State2 < 2.0 Then
 										For i = 3 To 4
-											If ChannelPlaying(e\room\NPC[i]\SoundCHN) Then StopChannel(e\room\NPC[i]\SoundCHN)
+											StopChannel(e\room\NPC[i]\SoundCHN) : e\room\NPC[i]\SoundCHN = 0
 											If e\room\NPC[i]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[i]\Sound) : e\room\NPC[i]\Sound = 0
 										Next
 										
@@ -1233,15 +1228,15 @@ Function UpdateEvents%()
 									If EntityDistanceSquared(e\room\NPC[3]\Collider, e\room\NPC[5]\Collider) > 25.0 And EntityDistanceSquared(e\room\NPC[4]\Collider, e\room\NPC[5]\Collider)
 										If EntityDistanceSquared(e\room\NPC[5]\Collider, me\Collider) < 12.25
 											For i = 3 To 5
-												e\room\NPC[i]\State = 11.0 : e\room\NPC[i]\State3 = 1.0 : e\room\NPC[i]\Reload = 70.0 * 3.0
 												
 												If i < 5 Then
-													If ChannelPlaying(e\room\NPC[i]\SoundCHN) Then StopChannel(e\room\NPC[i]\SoundCHN)
+													StopChannel(e\room\NPC[i]\SoundCHN) : e\room\NPC[i]\SoundCHN = 0
 													If e\room\NPC[i]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[i]\Sound) : e\room\NPC[i]\Sound = 0
 												EndIf
 											Next
 											e\room\NPC[5]\SoundCHN2 = PlaySound2(e\room\NPC[5]\Sound2, Camera, e\room\NPC[5]\Collider)
 										EndIf
+										e\room\NPC[i]\State = 11.0 : e\room\NPC[i]\State3 = 1.0 : e\room\NPC[i]\Reload = 70.0 * 3.0
 									EndIf
 								EndIf
 							EndIf
@@ -1527,7 +1522,7 @@ Function UpdateEvents%()
 							EndIf
 							
 							If IntroSFX[3] <> 0 Then
-								If (EntityVisible(n_I\Curr173\OBJ, Camera) And EntityInView(n_I\Curr173\OBJ, Camera)) Lor (EntityVisible(n_I\Curr173\OBJ2, Camera) And EntityInView(n_I\Curr173\OBJ2, Camera)) Then
+								If PlayerSees173(n_I\Curr173) Then
 									CreateHintMsg("Press " + key\Name[key\BLINK] + " to blink.")
 									PlaySound_Strict(IntroSFX[3])
 									FreeSound_Strict(IntroSFX[3]) : IntroSFX[3] = 0
@@ -1838,7 +1833,7 @@ Function UpdateEvents%()
 												
 												For w.WayPoints = Each WayPoints
 													If w\room = e\room Then 
-														FreeEntity(w\OBJ)
+														FreeEntity(w\OBJ) : w\OBJ = 0
 														Delete(w)
 													EndIf
 												Next
@@ -2032,7 +2027,7 @@ Function UpdateEvents%()
 							
 							e\EventState2 = 1.0
 						EndIf
-					ElseIf CoffinDistance < 3.0 Then
+					ElseIf CoffinDistance < 3.0
 						If e\room\NPC[0] = Null Then
 							e\room\NPC[0] = CreateNPC(NPCTypeGuard, e\room\x, e\room\y, e\room\z)
 							RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 90.0, 0.0)
@@ -2043,7 +2038,7 @@ Function UpdateEvents%()
 							
 							If (Not e\room\RoomDoors[0]\Open) Then e\room\RoomDoors[0]\Open = True
 						EndIf
-					ElseIf CoffinDistance > 5.0 Then
+					ElseIf CoffinDistance > 5.0
 						If e\room\NPC[0] <> Null Then
 							If e\room\NPC[0]\PrevState = 0 Then
 								If ChannelPlaying(e\room\NPC[0]\SoundCHN) Then StopChannel(e\room\NPC[0]\SoundCHN)
@@ -2058,7 +2053,7 @@ Function UpdateEvents%()
 						UpdateSoundOrigin(e\room\NPC[0]\SoundCHN, Camera, e\room\NPC[0]\Collider, 100.0)
 						If e\room\NPC[0]\PrevState = 0 Then
 							e\room\NPC[0]\GravityMult = 0.0
-						ElseIf e\room\NPC[0]\PrevState = 1 Then
+						ElseIf e\room\NPC[0]\PrevState = 1
 							If e\room\NPC[0]\State2 < 70.0 * 1.0 Then
 								e\room\NPC[0]\State2 = e\room\NPC[0]\State2 + fps\Factor[0] : e\room\NPC[0]\GravityMult = 0.0
 							Else
@@ -2085,26 +2080,22 @@ Function UpdateEvents%()
 									it.Items = CreateItem("Unknown Note", "paper", EntityX(e\room\OBJ), e\room\y - 1526.0 * RoomScale, EntityZ(e\room\OBJ))
 									EntityType(it\Collider, HIT_ITEM)
 								EndIf
-								If e\room\NPC[0]\Frame = 286.0 Then
-									e\room\NPC[0]\PrevState = 2
-								EndIf
+								If e\room\NPC[0]\Frame = 286.0 Then e\room\NPC[0]\PrevState = 2
 							EndIf
 							If (Not e\room\NPC[0]\SoundCHN2) Then
 								e\room\NPC[0]\Sound2 = LoadSound_Strict("SFX\Room\895Chamber\GuardRadio.ogg")
 								e\room\NPC[0]\SoundCHN2 = LoopSound2(e\room\NPC[0]\Sound2, e\room\NPC[0]\SoundCHN2, Camera, e\room\NPC[0]\Collider, 5)
 							EndIf
 						ElseIf e\room\NPC[0]\PrevState = 2 Then
-							If (Not ChannelPlaying(e\SoundCHN)) And e\Sound <> 0 Then
-								FreeSound_Strict(e\Sound) : e\Sound = 0
+							If (Not ChannelPlaying(e\SoundCHN)) Then
+								If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
 								e\SoundCHN = 0
 							EndIf
-							If (Not ChannelPlaying(e\room\NPC[0]\SoundCHN)) And e\room\NPC[0]\Sound <> 0 Then
-								FreeSound_Strict(e\room\NPC[0]\Sound) : e\room\NPC[0]\Sound = 0
+							If (Not ChannelPlaying(e\room\NPC[0]\SoundCHN)) Then
+								If e\room\NPC[0]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[0]\Sound) : e\room\NPC[0]\Sound = 0
 								e\room\NPC[0]\SoundCHN = 0
 							EndIf
-							If (Not e\room\NPC[0]\Sound2) Then
-								e\room\NPC[0]\Sound2 = LoadSound_Strict("SFX\Room\895Chamber\GuardRadio.ogg")
-							EndIf
+							If (Not e\room\NPC[0]\Sound2) Then e\room\NPC[0]\Sound2 = LoadSound_Strict("SFX\Room\895Chamber\GuardRadio.ogg")
 							e\room\NPC[0]\SoundCHN2 = LoopSound2(e\room\NPC[0]\Sound2, e\room\NPC[0]\SoundCHN2, Camera, e\room\NPC[0]\Collider, 5.0)
 						EndIf
 					EndIf
@@ -2149,7 +2140,7 @@ Function UpdateEvents%()
 								EndIf
 								EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If me\VomitTimer < -10.0 Then Kill()
-							ElseIf me\Sanity < -720.0 Then
+							ElseIf me\Sanity < -720.0
 								If Rand(3) = 1 Then EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If Rand(6) < 5 Then
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
@@ -2165,7 +2156,7 @@ Function UpdateEvents%()
 								EndIf
 								me\BlurTimer = 1000.0
 								If me\VomitTimer = 0.0 Then me\VomitTimer = 1.0
-							ElseIf me\Sanity < -450.0 Then
+							ElseIf me\Sanity < -450.0
 								If Rand(7) = 1 Then EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If Rand(50) = 1 Then
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
@@ -2195,8 +2186,8 @@ Function UpdateEvents%()
 					
 					If e\EventState3 > 0.0 Then e\EventState3 = Max(e\EventState3 - fps\Factor[0], 0.0)
 					If e\EventState3 = 0.0 Then
-						e\EventState3 = -1.0
 						EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
+						e\EventState3 = -1.0
 					EndIf
 					
 					ShouldPlay = 66
@@ -2243,18 +2234,15 @@ Function UpdateEvents%()
 					ElseIf e\EventState = 1.0
 						If PlayerRoom = e\room Then
 							e\room\NPC[0]\State = 1.0
-							e\EventState = 2.0
 							
 							e\Sound = LoadSound_Strict("SFX\Character\Janitor\106Abduct.ogg")
-							PlaySound_Strict(e\Sound)		
+							PlaySound_Strict(e\Sound)
+							e\EventState = 2.0
 							
-							If e\SoundCHN <> 0 Then StopChannel(e\SoundCHN)
+							If e\SoundCHN <> 0 Then StopChannel(e\SoundCHN) : e\SoundCHN = 0
 						ElseIf e\room\Dist < 8.0
-							If (Not e\Sound) Then
-								e\Sound = LoadSound_Strict("SFX\Character\Janitor\Idle.ogg")
-							Else
-								e\SoundCHN = LoopSound2(e\Sound, e\SoundCHN, Camera, e\room\NPC[0]\OBJ, 15.0)
-							EndIf
+							If (Not e\Sound) Then e\Sound = LoadSound_Strict("SFX\Character\Janitor\Idle.ogg")
+							e\SoundCHN = LoopSound2(e\Sound, e\SoundCHN, Camera, e\room\NPC[0]\OBJ, 15.0)
 						EndIf
 					ElseIf e\EventState = 2.0
 						If EntityDistanceSquared(e\room\NPC[0]\Collider, e\room\OBJ) < 2.25 Then
@@ -2271,16 +2259,14 @@ Function UpdateEvents%()
 						n_I\Curr106\Idle = 1
 						
 						If DistanceSquared(EntityX(e\room\NPC[0]\Collider), EntityX(e\room\OBJ), EntityZ(e\room\NPC[0]\Collider), EntityZ(e\room\OBJ)) < 0.16 Then
-							If e\room\NPC[0]\State = 1.0 Then 
-								SetNPCFrame(e\room\NPC[0], 41.0)
-							EndIf
-							e\EventState = e\EventState + (fps\Factor[0] / 2.0)
+							If e\room\NPC[0]\State = 1.0 Then  SetNPCFrame(e\room\NPC[0], 41.0)
 							e\room\NPC[0]\State = 6.0
 							e\room\NPC[0]\CurrSpeed = CurveValue(0.0, e\room\NPC[0]\CurrSpeed, 25.0)
 							PositionEntity(e\room\NPC[0]\Collider, CurveValue(EntityX(e\room\OBJ, True), EntityX(e\room\NPC[0]\Collider), 25.0), 0.3 - e\EventState / 70.0, CurveValue(EntityZ(e\room\OBJ, True), EntityZ(e\room\NPC[0]\Collider), 25.0))
 							ResetEntity(e\room\NPC[0]\Collider)
 							
 							AnimateNPC(e\room\NPC[0], 41.0, 58.0, 0.1, False)
+							e\EventState = e\EventState + (fps\Factor[0] / 2.0)
 						EndIf
 						AnimateNPC(n_I\Curr106, 495.0, 604.0, 0.7, False)
 						
@@ -2309,9 +2295,7 @@ Function UpdateEvents%()
 							Exit
 						EndIf
 					Next
-					If (Not RoomExists) Then
-						e\EventState3 = 1.0
-					EndIf
+					If (Not RoomExists) Then e\EventState3 = 1.0
 					
 					If (Not RemoteDoorOn) Then
 						e\room\RoomDoors[1]\Locked = 1
@@ -2358,9 +2342,7 @@ Function UpdateEvents%()
 							Exit
 						EndIf
 					Next
-					If (Not RoomExists) Then
-						e\EventState3 = 1.0
-					EndIf
+					If (Not RoomExists) Then e\EventState3 = 1.0
 					
 					If (Not RemoteDoorOn) Then
 						e\room\RoomDoors[1]\Locked = 1
@@ -2388,9 +2370,7 @@ Function UpdateEvents%()
 							e\EventState = UpdateElevators(e\EventState, e\room\RoomDoors[0], gatea\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)
 						EndIf
 						If (Not n_I\Curr106\Contained) Then 
-							If e\EventState < -1.5 And e\EventState + fps\Factor[0] >= -1.5 Then
-								PlaySound_Strict(OldManSFX[3])
-							EndIf
+							If e\EventState < -1.5 And e\EventState + fps\Factor[0] >= -1.5 Then PlaySound_Strict(OldManSFX[3])
 						EndIf
 						
 						If EntityDistanceSquared(me\Collider, e\room\Objects[1]) < 16.0 Then
@@ -2725,9 +2705,7 @@ Function UpdateEvents%()
 				
 				If PlayerRoom = e\room Then
 					TurnEntity(e\room\Objects[0], e\EventState3 * fps\Factor[0], 0.0, 0.0)
-					If e\EventState3 > 0.01 Then
-						e\room\SoundCHN = LoopSound2(RoomAmbience[8], e\room\SoundCHN, Camera, e\room\Objects[0], 5.0, (e\EventState3 / 4.0))
-					EndIf
+					If e\EventState3 > 0.01 Then e\room\SoundCHN = LoopSound2(RoomAmbience[8], e\room\SoundCHN, Camera, e\room\Objects[0], 5.0, (e\EventState3 / 4.0))
 					e\EventState3 = CurveValue(e\EventState2 * 5.0, e\EventState3, 150.0)			
 				EndIf
 				
@@ -2917,7 +2895,7 @@ Function UpdateEvents%()
 								EndIf
 							Else
 								If e\EventState - fps\Factor[0] < 70.0 * 1.0 Then 
-									StopChannel(e\SoundCHN)	
+									StopChannel(e\SoundCHN)	: e\SoundCHN = 0
 									e\SoundCHN = PlaySound2(TeslaPowerUpSFX, Camera, e\room\Objects[3], 4.0, 0.5)
 								EndIf 
 								If (Not EntityHidden(e\room\Objects[3])) Then HideEntity(e\room\Objects[3])
@@ -2952,9 +2930,7 @@ Function UpdateEvents%()
 						EndIf
 					ElseIf e\EventStr = "Step2"
 						AnimateNPC(e\room\NPC[0], 57.0, 60.0, 0.5, False)
-						If e\room\NPC[0]\Frame = 60.0 Then
-							e\EventStr = "0"
-						EndIf
+						If e\room\NPC[0]\Frame = 60.0 Then e\EventStr = "0"
 					ElseIf e\EventStr <> "" And e\EventStr <> "Step1" And e\EventStr <> "Done"
 						If Float(e\EventStr) < 70.0 * 10.0 Then
 							If opt\ParticleAmount > 0 Then
@@ -2975,7 +2951,7 @@ Function UpdateEvents%()
 				
 				If ActivateTesla Then
 					me\SndVolume = Max(8.0, me\SndVolume)
-					StopChannel(e\SoundCHN)
+					StopChannel(e\SoundCHN) : e\SoundCHN = 0
 					e\SoundCHN = PlaySound2(TeslaActivateSFX, Camera, e\room\Objects[3], 4.0, 0.5)
 					If (Not EntityHidden(e\room\Objects[4])) Then HideEntity(e\room\Objects[4])
 					e\EventState = 1.0
@@ -3044,8 +3020,8 @@ Function UpdateEvents%()
 			Case e_room2_mt
 				;[Block]
 				If EntityY(me\Collider, True) >= 8.0 And EntityY(me\Collider, True) <= 12.0 Then
-					If (EntityX(me\Collider, True) >= e\room\x - 6.0) And (EntityX(me\Collider, True) <= (e\room\x + 2.0 * MTGridSize + 6.0)) And (EntityZ(me\Collider, True) >= e\room\z - 6.0) And (EntityZ(me\Collider, True) <= (e\room\z + 2.0 * MTGridSize + 6.0)) Then
-						PlayerRoom = e\room
+					If (EntityX(me\Collider, True) >= e\room\x - 6.0) And (EntityX(me\Collider, True) <= (e\room\x + 2.0 * MTGridSize + 6.0)) Then
+						If (EntityZ(me\Collider, True) >= e\room\z - 6.0) And (EntityZ(me\Collider, True) <= (e\room\z + 2.0 * MTGridSize + 6.0)) Then PlayerRoom = e\room
 					EndIf
 				EndIf
 				
@@ -3150,9 +3126,7 @@ Function UpdateEvents%()
 						; ~ Generate the tunnels
 						For iY = 0 To MTGridSize - 1
 							For iX = 0 To MTGridSize - 1
-								If e\room\mt\Grid[iX + (iY * MTGridSize)] > 0 Then
-									e\room\mt\Grid[iX + (iY * MTGridSize)] = (e\room\mt\Grid[(iX) + ((iY + 1) * MTGridSize)] > 0) + (e\room\mt\Grid[(iX) + ((iY - 1) * MTGridSize)] > 0) + (e\room\mt\Grid[(iX + 1) + ((iY) * MTGridSize)] > 0) + (e\room\mt\Grid[(iX - 1) + ((iY) * MTGridSize)] > 0)
-								EndIf
+								If e\room\mt\Grid[iX + (iY * MTGridSize)] > 0 Then e\room\mt\Grid[iX + (iY * MTGridSize)] = (e\room\mt\Grid[(iX) + ((iY + 1) * MTGridSize)] > 0) + (e\room\mt\Grid[(iX) + ((iY - 1) * MTGridSize)] > 0) + (e\room\mt\Grid[(iX + 1) + ((iY) * MTGridSize)] > 0) + (e\room\mt\Grid[(iX - 1) + ((iY) * MTGridSize)] > 0)
 							Next
 						Next
 						
@@ -3191,37 +3165,27 @@ Function UpdateEvents%()
 									If e\room\mt\Grid[(iX + 1) + ((iY) * MTGridSize)] > 0 And e\room\mt\Grid[(iX - 1) + ((iY) * MTGridSize)] > 0 Then ; ~ Horizontal
 										If FirstX = -1 Lor FirstY = -1 Then
 											If e\room\mt\Grid[iX - 1 + (iY * MTGridSize)] < 3 And e\room\mt\Grid[iX + 1 + (iY * MTGridSize)] < 3 And e\room\mt\Grid[iX + ((iY - 1) * MTGridSize)] < 3 And e\room\mt\Grid[iX + ((iY + 1) * MTGridSize)] < 3 Then
-												If e\room\mt\Grid[iX - 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX - 1 + ((iY + 1) * MTGridSize)] < 1 Then
-													FirstX = iX : FirstY = iY
-												EndIf
+												If e\room\mt\Grid[iX - 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX - 1 + ((iY + 1) * MTGridSize)] < 1 Then FirstX = iX : FirstY = iY
 											EndIf
 										EndIf
 										If e\room\mt\Grid[iX - 1 + (iY * MTGridSize)] < 3 And e\room\mt\Grid[iX + 1 + (iY * MTGridSize)] < 3 And e\room\mt\Grid[iX + ((iY - 1) * MTGridSize)] < 3 And e\room\mt\Grid[iX + ((iY + 1) * MTGridSize)] < 3 Then
-											If e\room\mt\Grid[iX - 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX - 1 + ((iY + 1) * MTGridSize)] < 1 Then
-												LastX = iX : LastY = iY
-											EndIf
+											If e\room\mt\Grid[iX - 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX - 1 + ((iY + 1) * MTGridSize)] < 1 Then LastX = iX : LastY = iY
 										EndIf
-									ElseIf e\room\mt\Grid[(iX) + ((iY + 1) * MTGridSize)] > 0 And e\room\mt\Grid[(iX) + ((iY - 1) * MTGridSize)] > 0 Then ; ~ Vertical
+									ElseIf e\room\mt\Grid[(iX) + ((iY + 1) * MTGridSize)] > 0 And e\room\mt\Grid[(iX) + ((iY - 1) * MTGridSize)] > 0 ; ~ Vertical
 										If FirstX = -1 Lor FirstY = -1 Then
 											If e\room\mt\Grid[iX - 1 + (iY * MTGridSize)] < 3 And e\room\mt\Grid[iX + 1 + (iY * MTGridSize)] < 3 And e\room\mt\Grid[iX + ((iY - 1) * MTGridSize)] < 3 And e\room\mt\Grid[iX + ((iY + 1) * MTGridSize)] < 3 Then
-												If e\room\mt\Grid[iX - 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX - 1 + ((iY + 1) * MTGridSize)] < 1 Then
-													FirstX = iX : FirstY = iY
-												EndIf
+												If e\room\mt\Grid[iX - 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX - 1 + ((iY + 1) * MTGridSize)] < 1 Then FirstX = iX : FirstY = iY
 											EndIf
 										EndIf
 										If e\room\mt\Grid[iX - 1 + (iY * MTGridSize)] < 3 And e\room\mt\Grid[iX + 1 + (iY * MTGridSize)] < 3 And e\room\mt\Grid[iX + ((iY - 1) * MTGridSize)] < 3 And e\room\mt\Grid[iX + ((iY + 1) * MTGridSize)] < 3 Then
-											If e\room\mt\Grid[iX - 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX - 1 + ((iY + 1) * MTGridSize)] < 1 Then
-												LastX = iX : LastY = iY
-											EndIf
+											If e\room\mt\Grid[iX - 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX + 1 + ((iY - 1) * MTGridSize)] < 1 And e\room\mt\Grid[iX - 1 + ((iY + 1) * MTGridSize)] < 1 Then LastX = iX : LastY = iY
 										EndIf
 									EndIf
 								EndIf
 							Next
 						Next
 						
-						If LastX = FirstX And LastY = FirstY Then
-							RuntimeError("The maintenance tunnels could not be generated properly!")
-						EndIf
+						If LastX = FirstX And LastY = FirstY Then RuntimeError("The maintenance tunnels could not be generated properly!")
 						
 						; ~ Place the tunnels
 						For i = MT_ROOM1 To MT_GENERATOR
@@ -3242,10 +3206,10 @@ Function UpdateEvents%()
 											If e\room\mt\Grid[(iX + 1) + ((iY) * MTGridSize)] > 0 Then
 												RotateEntity(TempInt, 0.0, 90.0, 0.0)
 												e\room\mt\Angles[iX + (iY * MTGridSize)] = 1
-											ElseIf e\room\mt\Grid[(iX - 1) + ((iY) * MTGridSize)] > 0 Then
+											ElseIf e\room\mt\Grid[(iX - 1) + ((iY) * MTGridSize)] > 0
 												RotateEntity(TempInt, 0.0, 270.0, 0.0)
 												e\room\mt\Angles[iX + (iY * MTGridSize)] = 3
-											ElseIf e\room\mt\Grid[(iX) + ((iY + 1) * MTGridSize)] > 0 Then
+											ElseIf e\room\mt\Grid[(iX) + ((iY + 1) * MTGridSize)] > 0
 												RotateEntity(TempInt, 0.0, 180.0, 0.0)
 												e\room\mt\Angles[iX + (iY * MTGridSize)] = 2
 											Else
@@ -3255,9 +3219,7 @@ Function UpdateEvents%()
 											;[End Block]
 										Case MT_ROOM2 + 1
 											;[Block]
-											If (iX = FirstX And iY = FirstY) Lor (iX = LastX And iY = LastY) Then
-												e\room\mt\Grid[iX + (iY * MTGridSize)] = 6
-											EndIf
+											If (iX = FirstX And iY = FirstY) Lor (iX = LastX And iY = LastY) Then e\room\mt\Grid[iX + (iY * MTGridSize)] = 6
 											
 											If e\room\mt\Grid[(iX + 1) + (iY * MTGridSize)] > 0 And e\room\mt\Grid[(iX - 1) + (iY * MTGridSize)] > 0 Then ; ~ Horizontal
 												TempInt = CopyEntity(Meshes[e\room\mt\Grid[iX + (iY * MTGridSize)] - 1])
@@ -3268,7 +3230,7 @@ Function UpdateEvents%()
 												RotateEntity(TempInt, 0.0, (TempInt2 * 180.0) + 90.0, 0.0)
 												
 												e\room\mt\Angles[iX + (iY * MTGridSize)] = (TempInt2 * 2) + 1
-											ElseIf e\room\mt\Grid[iX + ((iY + 1) * MTGridSize)] > 0 And e\room\mt\Grid[iX + ((iY - 1) * MTGridSize)] > 0 Then ; ~ Vertical
+											ElseIf e\room\mt\Grid[iX + ((iY + 1) * MTGridSize)] > 0 And e\room\mt\Grid[iX + ((iY - 1) * MTGridSize)] > 0 ; ~ Vertical
 												TempInt = CopyEntity(Meshes[e\room\mt\Grid[iX + (iY * MTGridSize)] - 1])
 												
 												AddLight(Null, e\room\x + (iX * 2.0), e\room\y + MTGridY + (372.0 * RoomScale), e\room\z + (iY * 2.0), 2, 500.0 * RoomScale, 255, 255, 255)
@@ -3289,10 +3251,10 @@ Function UpdateEvents%()
 												If iA > 0 And iC > 0 Then
 													RotateEntity(TempInt, 0.0, 0.0, 0.0)
 													e\room\mt\Angles[iX + (iY * MTGridSize)] = 0
-												ElseIf iA > 0 And iD > 0 Then
+												ElseIf iA > 0 And iD > 0
 													RotateEntity(TempInt, 0.0, 90.0, 0.0)
 													e\room\mt\Angles[iX + (iY * MTGridSize)] = 1
-												ElseIf iB > 0 And iC > 0 Then
+												ElseIf iB > 0 And iC > 0
 													RotateEntity(TempInt, 0.0, 270.0, 0.0)
 													e\room\mt\Angles[iX + (iY * MTGridSize)] = 3
 												Else
@@ -3301,9 +3263,7 @@ Function UpdateEvents%()
 												EndIf
 											EndIf
 											
-											If iX = FirstX And iY = FirstY Then
-												e\room\mt\Grid[iX + (iY * MTGridSize)] = 5
-											EndIf
+											If iX = FirstX And iY = FirstY Then e\room\mt\Grid[iX + (iY * MTGridSize)] = 5
 											;[End Block]
 										Case MT_ROOM2C + 1
 											;[Block]
@@ -3316,10 +3276,10 @@ Function UpdateEvents%()
 											If iA > 0 And iC > 0 And iD > 0 Then
 												RotateEntity(TempInt, 0.0, 90.0, 0.0)
 												e\room\mt\Angles[iX + (iY * MTGridSize)] = 1
-											ElseIf iB > 0 And iC > 0 And iD > 0 Then
+											ElseIf iB > 0 And iC > 0 And iD > 0
 												RotateEntity(TempInt, 0.0, 270.0, 0.0)
 												e\room\mt\Angles[iX + (iY * MTGridSize)] = 3
-											ElseIf iC > 0 And iA > 0 And iB > 0 Then
+											ElseIf iC > 0 And iA > 0 And iB > 0
 												RotateEntity(TempInt, 0.0, 0.0, 0.0)
 												e\room\mt\Angles[iX + (iY * MTGridSize)] = 0
 											Else
@@ -3419,7 +3379,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3428,7 +3388,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3442,7 +3402,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + ((iY - 1) * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + ((iY - 1) * MTGridSize)]
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3451,7 +3411,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + ((iY - 1) * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + ((iY - 1) * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX + ((iY - 1) * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3465,7 +3425,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX - 1 + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY*MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY*MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX - 1 + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3474,7 +3434,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX - 1 + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX - 1 + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX - 1 + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3488,7 +3448,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + 1 + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + 1 + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3497,7 +3457,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + 1 + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + 1 + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX + 1 + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3515,7 +3475,7 @@ Function UpdateEvents%()
 						
 						PositionEntity(e\room\Objects[0], e\room\x + (FirstX * 2.0), EntityY(e\room\Objects[0], True), e\room\z + (FirstY * 2.0), True)
 						PositionEntity(e\room\Objects[1], e\room\x + (LastX * 2.0), EntityY(e\room\Objects[1], True), e\room\z + (LastY * 2.0), True)
-					ElseIf (Not e\room\mt\Meshes[MT_ROOM1]) Then
+					ElseIf (Not e\room\mt\Meshes[MT_ROOM1])
 						; ~ Place the tunnels
 						For i = MT_ROOM1 To MT_GENERATOR
 							Meshes[i] = CopyEntity(misc_I\MTModelID[i])
@@ -3537,7 +3497,7 @@ Function UpdateEvents%()
 											If e\room\mt\Grid[(iX + 1) + ((iY) * MTGridSize)] > 0 And e\room\mt\Grid[(iX - 1) + ((iY) * MTGridSize)] > 0 Then ; ~ Horizontal
 												TempInt = CopyEntity(Meshes[e\room\mt\Grid[iX + (iY * MTGridSize)] - 1])
 												AddLight(Null, e\room\x + (iX * 2.0), e\room\y + MTGridY + (372.0 * RoomScale), e\room\z + (iY * 2.0), 2, 500.0 * RoomScale, 255, 255, 255)
-											ElseIf e\room\mt\Grid[(iX) + ((iY + 1) * MTGridSize)] > 0 And e\room\mt\Grid[(iX) + ((iY - 1) * MTGridSize)] > 0 Then ; ~ Vertical
+											ElseIf e\room\mt\Grid[(iX) + ((iY + 1) * MTGridSize)] > 0 And e\room\mt\Grid[(iX) + ((iY - 1) * MTGridSize)] > 0 ; ~ Vertical
 												TempInt = CopyEntity(Meshes[e\room\mt\Grid[iX + (iY * MTGridSize)] - 1])
 												AddLight(Null, e\room\x + (iX * 2.0), e\room\y + MTGridY + (372.0 * RoomScale), e\room\z + (iY * 2.0), 2, 500.0 * RoomScale, 255, 255, 255)
 											Else
@@ -3629,7 +3589,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3638,7 +3598,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX + ((iY + 1) * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3652,7 +3612,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + ((iY - 1) * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + ((iY - 1) * MTGridSize)]
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3661,7 +3621,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + ((iY - 1) * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + ((iY - 1) * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX + ((iY - 1) * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3675,7 +3635,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX - 1 + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX - 1 + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3684,7 +3644,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX - 1 + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX - 1 + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX - 1 + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3698,7 +3658,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + 1 + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + 1 + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3707,7 +3667,7 @@ Function UpdateEvents%()
 											For i = 0 To 3
 												If e\room\mt\waypoints[iX + 1 + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)] Then
 													Exit
-												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null Then
+												ElseIf e\room\mt\waypoints[iX + (iY * MTGridSize)]\connected[i] = Null
 													e\room\mt\waypoints[iX + 1 + (iY * MTGridSize)]\connected[i] = e\room\mt\waypoints[iX + (iY * MTGridSize)]
 													e\room\mt\waypoints[iX + 1 + (iY * MTGridSize)]\Dist[i] = Dist
 													Exit
@@ -3755,17 +3715,15 @@ Function UpdateEvents%()
 								n_I\Curr106\PrevY = EntityY(me\Collider)
 							EndIf
 							
-								Local spawnPoint.WayPoints = Null
+							Local spawnPoint.WayPoints = Null
 								
-								For x = 0 * ((MTGridSize ^ 2) / 5.0) To ((MTGridSize ^ 2) - 1)
-									If Rand(2) = 1 And e\room\mt\waypoints[x] <> Null Then 
-										spawnPoint = e\room\mt\waypoints[x]
-										x = MTGridSize ^ 2
-									EndIf
-								Next 
-								If spawnPoint <> Null Then
-									e\room\NPC[0] = CreateNPC(NPCType966, EntityX(spawnPoint\OBJ, True), EntityY(spawnPoint\OBJ, True), EntityZ(spawnPoint\OBJ, True))
+							For x = 0 * ((MTGridSize ^ 2) / 5.0) To ((MTGridSize ^ 2) - 1)
+								If Rand(2) = 1 And e\room\mt\waypoints[x] <> Null Then 
+									spawnPoint = e\room\mt\waypoints[x]
+									x = MTGridSize ^ 2
 								EndIf
+							Next 
+							If spawnPoint <> Null Then e\room\NPC[0] = CreateNPC(NPCType966, EntityX(spawnPoint\OBJ, True), EntityY(spawnPoint\OBJ, True), EntityZ(spawnPoint\OBJ, True))
 						EndIf
 					Else
 						For iY = 0 To MTGridSize - 1
@@ -3794,7 +3752,6 @@ Function UpdateEvents%()
 						EndIf
 					EndIf
 				EndIf 
-				;[End Block]
 			Case e_room2_2_hcz_106
 				;[Block]
 				If (Not n_I\Curr106\Contained) Then 
@@ -3916,9 +3873,7 @@ Function UpdateEvents%()
 								e\SoundCHN = PlaySound2(e\Sound, Camera, e\room\Objects[2], 6.0)
 							EndIf
 						Else
-							If e\SoundCHN <> 0 Then
-								If ChannelPlaying(e\SoundCHN) Then StopChannel(e\SoundCHN)
-							EndIf
+							If ChannelPlaying(e\SoundCHN) Then StopChannel(e\SoundCHN) : e\SoundCHN = 0
 						EndIf						
 					EndIf
 				EndIf
@@ -5613,12 +5568,8 @@ Function UpdateEvents%()
 								SoundTransmission = UpdateLever(e\room\Objects[3])
 							EndIf
 							If (Not SoundTransmission) Then
-								If e\SoundCHN2 <> 0 Then
-									If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2)
-								EndIf
-								If e\SoundCHN3 <> 0 Then
-									If ChannelPlaying(e\SoundCHN3) Then StopChannel(e\SoundCHN3)
-								EndIf
+								If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
+								If ChannelPlaying(e\SoundCHN3) Then StopChannel(e\SoundCHN3) : e\SoundCHN3 = 0
 							EndIf
 							
 							If e\EventState = 0.0 Then 
@@ -5636,9 +5587,7 @@ Function UpdateEvents%()
 								If SoundTransmission Then
 									UpdateButton(e\room\Objects[4])
 									If d_I\ClosestButton = e\room\Objects[4] And mo\MouseHit1 Then
-										If e\SoundCHN2 <> 0 Then
-											If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2)
-										EndIf 
+										If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 										FemurBreakerSFX = LoadSound_Strict("SFX\Room\106Chamber\FemurBreaker.ogg")
 										e\SoundCHN2 = PlaySound_Strict(FemurBreakerSFX)
 										e\EventState = 1.0 ; ~ Start the femur breaker
@@ -5680,9 +5629,7 @@ Function UpdateEvents%()
 										de\Timer = 90000.0 : de\AlphaChange = 0.005 : de\SizeChange = 0.003
 										EntityParent(de\OBJ, e\room\OBJ)
 										
-										If e\SoundCHN2 <> 0 Then
-											If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2)
-										EndIf 
+										If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 										LoadEventSound(e, "SFX\Character\LureSubject\106Bait.ogg", 1)
 										e\SoundCHN2 = PlaySound_Strict(e\Sound2)
 									ElseIf e\EventState3 - fps\Factor[0] < 2900.0 And e\EventState3 >= 2900.0 Then
@@ -6203,7 +6150,7 @@ Function UpdateEvents%()
 							
 							If e\EventState2 >= 1040.0 And e\EventState2 - fps\Factor[0] < 1040.0 Then 
 								PlaySound2(LoadTempSound("SFX\SCP\1123\Officer1.ogg"), Camera, e\room\NPC[0]\OBJ)
-							ElseIf e\EventState2 >= 1400.0 And e\EventState2 - fps\Factor[0] < 1400.0 Then 
+							ElseIf e\EventState2 >= 1400.0 And e\EventState2 - fps\Factor[0] < 1400.0
 								PlaySound2(LoadTempSound("SFX\SCP\1123\Officer2.ogg"), Camera, e\room\NPC[0]\OBJ)
 							EndIf
 							e\room\NPC[0]\State = 3.0
@@ -6318,7 +6265,7 @@ Function UpdateEvents%()
 						Next
 						GiveAchievement(Achv1123)
 						
-						If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2)
+						StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 						If e\Sound2 <> 0 Then
 							FreeSound_Strict(e\Sound2) : e\Sound2 = 0
 						EndIf
@@ -6913,7 +6860,7 @@ Function UpdateEvents%()
 										;[Block]
 										me\Terminated = True
 										me\BlinkTimer = -10.0
-										If e\SoundCHN <> 0 Then StopChannel(e\SoundCHN)
+										If ChannelPlaying(e\SoundCHN) Then StopChannel(e\SoundCHN) : e\SoundCHN = 0
 										msg\DeathMsg = Chr(34) + "A heavily mutilated corpse found inside the output booth of SCP-914. DNA testing identified the corpse as Class D " + SubjectName + ". "
 										msg\DeathMsg = msg\DeathMsg + "The subject had obviously been " + Chr(34) + "refined" + Chr(34) + " by SCP-914 on the " + Chr(34) + "Rough" + Chr(34) + " setting, but we are still confused as to how he "
 										msg\DeathMsg = msg\DeathMsg + "ended up inside the intake booth and who or what wound the key." + Chr(34)
@@ -7178,7 +7125,6 @@ Function UpdateEvents%()
 				If PlayerRoom = e\room Then
 					If e\EventState = 0.0 Then
 						If EntityDistanceSquared(e\room\Objects[0], me\Collider) < 0.64 And e\EventState3 = 0.0
-							e\EventState = 1.0
 							If BrokenDoor Then
 								LoadEventSound(e, "SFX\Door\DoorSparks.ogg", 1)
 								e\SoundCHN2 = PlaySound2(e\Sound2, Camera, e\room\Objects[1], 5.0)
@@ -7192,6 +7138,7 @@ Function UpdateEvents%()
 								OpenCloseDoor(e\room\RoomDoors[i])
 							Next
 							PlaySound_Strict(AlarmSFX[3])
+							e\EventState = 1.0
 						ElseIf EntityDistanceSquared(e\room\Objects[0], me\Collider) > 5.76
 							e\EventState3 = 0.0
 						EndIf
@@ -7997,7 +7944,7 @@ Function UpdateEvents%()
 				EndIf
 				If e\EventState = 2.0 Then
 					If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
-					If e\SoundCHN2 <> 0 Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
+					StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 					HideEntity(I_1499\Sky)
 					HideChunks()
 					For n.NPCs = Each NPCs
@@ -8452,12 +8399,8 @@ Function UpdateDimension106%()
 							; ~ Move to the "exit room"
 							me\BlinkTimer = -10.0 : me\LightBlink = 5.0 : me\BlurTimer = 1500.0
 							
-							If e\SoundCHN <> 0 Then
-								StopChannel(e\SoundCHN)
-							EndIf
-							If e\SoundCHN2 <> 0 Then
-								StopChannel(e\SoundCHN2)
-							EndIf
+							StopChannel(e\SoundCHN) : e\SoundCHN = 0
+							StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 							
 							PositionEntity(me\Collider, EntityX(e\room\Objects[8], True) - 400.0 * RoomScale, -304.0 * RoomScale, EntityZ(e\room\Objects[8], True))
 							ResetEntity(me\Collider)
@@ -9030,7 +8973,7 @@ Function UpdateDimension1499%()
 						Else
 							ShouldPlay = 19
 							If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
-							If e\SoundCHN2 <> 0 Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
+							If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 							If e\Sound2 <> 0 Then FreeSound_Strict(e\Sound2) : e\Sound2 = 0
 						EndIf
 					EndIf
@@ -9052,7 +8995,7 @@ Function UpdateDimension1499%()
 			Else
 				If e\EventState = 2.0 Then
 					If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
-					If e\SoundCHN2 <> 0 Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
+					StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 					HideEntity(I_1499\Sky)
 					HideChunks()
 					For n.NPCs = Each NPCs
