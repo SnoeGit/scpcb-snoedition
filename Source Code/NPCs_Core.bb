@@ -1276,7 +1276,7 @@ Function UpdateNPCs%()
 						EndIf
 						
 						If chs\NoTarget And n\Target = Null Then n\State = 5.0
-						If n_I\Curr106\State <= 0.0 And n_I\Curr106\Idle = 0 Then n\State = 2.0
+						If n_I\Curr106\State <= 0.0 And (Not n_I\Curr106\Contained) Then n\State = 2.0
 						
 						If (Not me\Terminated) Then
 							If MilliSecs2() > n\State3 Then
@@ -1439,7 +1439,7 @@ Function UpdateNPCs%()
 						ElseIf n\State = 3.0
 							n\State2 = n\State2 + fps\Factor[0]
 							If n\State2 > 70.0 * 26.0 Then
-								If n_I\Curr106\State <= 0.0 And n_I\Curr106\Idle = 0 Then n\State = 2.0
+								If n_I\Curr106\State <= 0.0 And (Not n_I\Curr106\Contained) Then n\State = 2.0
 								AnimateNPC(n, 823.0, 847.0, n\Speed * 8.0, False)
 								If n\Frame > 846.9 Then
 									StopStream_Strict(n\SoundCHN) : n\SoundCHN = 0 : n\SoundCHN_IsStream = False

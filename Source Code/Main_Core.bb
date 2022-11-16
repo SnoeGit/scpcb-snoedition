@@ -74,7 +74,7 @@ Else
 	Graphics3DExt(opt\GraphicWidth, opt\GraphicHeight, 0, (opt\DisplayMode = 2) + 1)
 EndIf
 
-Const VersionNumber$ = "1.6"
+Const VersionNumber$ = "1.7"
 
 AppTitle("SCP - Containment Breach Gameplay Overhaul v" + VersionNumber)
 
@@ -2796,6 +2796,180 @@ Function UpdateGUI%()
 							SelectedItem = Null
 						EndIf
 					;[End Block]
+				Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
+					;[Block]
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.5), 100.0)
+						
+						If SelectedItem\State = 100.0 Then
+							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+							
+							If (wi\GasMask = 1 And SelectedItem\ItemTemplate\TempName = "gasmask") Lor (wi\GasMask = 2 And SelectedItem\ItemTemplate\TempName = "finegasmask") Lor (wi\GasMask = 3 And SelectedItem\ItemTemplate\TempName = "supergasmask") Lor (wi\GasMask = 4 And SelectedItem\ItemTemplate\TempName = "heavygasmask") Then
+								CreateMsg("You removed the gas mask.")
+								wi\GasMask = 0
+							Else
+								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
+								Select SelectedItem\ItemTemplate\TempName
+									Case "gasmask"
+										;[Block]
+										CreateMsg("You put on the gas mask.")
+										wi\GasMask = 1
+										;[End Block]
+									Case "finegasmask"
+										;[Block]
+										CreateMsg("You put on the gas mask. It feels dry to breathe.")
+										wi\GasMask = 2
+										;[End Block]
+									Case "supergasmask"
+										;[Block]
+										CreateMsg("You put on the gas mask and you can breathe easier.")
+										wi\GasMask = 3
+										;[End Block]
+									Case "heavygasmask"
+										;[Block]
+										CreateMsg("You put on the gas mask. A mysterious calming sensation flows through your mind.")
+										wi\GasMask = 4
+										;[End Block]
+								End Select
+							EndIf
+							SelectedItem\State = 0.0
+							SelectedItem = Null
+						EndIf
+					;[End Block]
+				Case "scp1499", "super1499"
+					;[Block]
+					If (Not PreventItemOverlapping(True)) Then
+						
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						
+						SelectedItem\State = Min(SelectedItem\State + fps\Factor[0] / 1.5, 100.0)
+						
+						If SelectedItem\State = 100.0 Then
+							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+							
+							If I_1499\Using > 0 Then
+								CreateMsg("You removed the gas mask.")
+								I_1499\Using = 0
+							Else
+								Select SelectedItem\ItemTemplate\TempName
+									Case "scp1499"
+										;[Block]
+										CreateMsg("You put on the gas mask.")
+										I_1499\Using = 1
+										;[End Block]
+									Case "super1499"
+										;[Block]
+										CreateMsg("You put on the gas mask and you can breathe easier.")
+										I_1499\Using = 2
+										;[End Block]
+								End Select
+								GiveAchievement(Achv1499)
+								For r.Rooms = Each Rooms
+									If r\RoomTemplate\Name = "dimension_1499" Then
+										me\BlinkTimer = -1.0
+										I_1499\PrevRoom = PlayerRoom
+										I_1499\PrevX = EntityX(me\Collider)
+										I_1499\PrevY = EntityY(me\Collider)
+										I_1499\PrevZ = EntityZ(me\Collider)
+										
+										If I_1499\x = 0.0 And I_1499\y = 0.0 And I_1499\z = 0.0 Then
+											PositionEntity(me\Collider, r\x + 6086.0 * RoomScale, r\y + 304.0 * RoomScale, r\z + 2292.5 * RoomScale)
+											RotateEntity(me\Collider, 0.0, 90.0, 0.0, True)
+										Else
+											PositionEntity(me\Collider, I_1499\x, I_1499\y + 0.05, I_1499\z)
+										EndIf
+										ResetEntity(me\Collider)
+										TeleportToRoom(r)
+										PlaySound_Strict(LoadTempSound("SFX\SCP\1499\Enter.ogg"))
+										I_1499\x = 0.0
+										I_1499\y = 0.0
+										I_1499\z = 0.0
+										If n_I\Curr096 <> Null Then
+										If n_I\Curr096\SoundCHN <> 0 Then
+										SetStreamVolume_Strict(n_I\Curr096\SoundCHN, 0.0)
+											EndIf
+										EndIf
+										For e.Events = Each Events
+											If e\EventID = e_dimension_1499 Then
+												If EntityDistanceSquared(e\room\OBJ, me\Collider) > PowTwo(8300.0 * RoomScale) Then
+													If e\EventState2 < 5.0 Then
+														e\EventState2 = e\EventState2 + 1.0
+													EndIf
+												EndIf
+												Exit
+											EndIf
+										Next
+										Exit
+									EndIf
+								Next
+							EndIf
+							SelectedItem\State = 0.0
+							SelectedItem = Null
+						EndIf
+					EndIf
+					;[End Block]
+				Case "helmet"
+					;[Block]
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.1), 100.0)
+						
+						If SelectedItem\State = 100.0 Then
+							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+							
+							If wi\BallisticHelmet Then
+								CreateMsg("You removed the helmet.")
+								wi\BallisticHelmet = False
+							Else
+								wi\GasMask = 0 : wi\SCRAMBLE = 0
+								wi\BallisticHelmet = True
+								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
+								CreateMsg("You put on the helmet.")
+							EndIf
+							SelectedItem\State = 0.0
+							SelectedItem = Null
+						EndIf
+					;[End Block]
+				Case "scramble", "finescramble", "killscramble"
+					;[Block]
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						
+						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.5), 100.0)
+						
+						If SelectedItem\State3 = 100.0 Then
+							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+							
+								If (wi\SCRAMBLE = 1 And SelectedItem\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And SelectedItem\ItemTemplate\TempName = "finescramble") Lor (wi\SCRAMBLE = 3 And SelectedItem\ItemTemplate\TempName = "killscramble") Then
+								CreateMsg("You removed the gear.")
+								wi\SCRAMBLE = 0
+							Else
+								wi\GasMask = 0 : wi\BallisticHelmet = False
+								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
+								CreateMsg("You put on the gear.")
+								Select SelectedItem\ItemTemplate\TempName
+									Case "scramble"
+										;[Block]
+										wi\SCRAMBLE = 1
+										;[End Block]
+									Case "finescramble"
+										;[Block]
+										wi\SCRAMBLE = 2
+										;[End Block]
+									Case "killscramble"
+										;[Block]
+										wi\SCRAMBLE = 3
+										If (Not chs\GodMode) Then PlaySound_Strict(LoadTempSound("SFX\SCP\294\Burn.ogg"))
+										msg\DeathMsg = SubjectName + " found dead with SCRAMBLE Gear that appears to have partially melted. It is unsure why apparatus had malfunctioned."	
+										Kill()
+										;[End Block]
+								End Select
+							EndIf
+							SelectedItem\State3 = 0.0
+							SelectedItem = Null
+						EndIf
+					;[End Block]
 				Case "scp513"
 					;[Block]
 					PlaySound_Strict(LoadTempSound("SFX\SCP\513\Bell.ogg"))
@@ -3057,35 +3231,6 @@ Function UpdateGUI%()
 						
 						RemoveItem(SelectedItem)
 					EndIf
-					;[End Block]
-				Case "ticket"
-					;[Block]
-					If SelectedItem\State = 0.0 Then
-						CreateMsg(Chr(34) + "Hey, I remember this movie!" + Chr(34))
-						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5) + ".ogg"))
-						SelectedItem\State = 1.0
-					EndIf
-					;[End Block]
-				Case "scp1025"
-					;[Block]
-					If SelectedItem\State3 = 0.0 Then
-						If SelectedItem\State = 7.0 Then
-							If I_008\Timer = 0.0 Then I_008\Timer = 1.0
-						ElseIf (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
-							I_1025\State[SelectedItem\State] = Max(1.0, I_1025\State[SelectedItem\State])
-							I_1025\State[7] = 1 + (SelectedItem\State2 = 2.0) * 2.0 ; ~ 3x as fast if VERYFINE
-						EndIf
-						If Rand(3 - (SelectedItem\State2 <> 2.0) * SelectedItem\State2) = 1 Then ; ~ Higher chance for good illness if FINE, lower change for good illness if COARSE
-							SelectedItem\State = 6.0
-						Else
-							SelectedItem\State = Rand(0, 7)
-						EndIf
-						SelectedItem\State3 = 1.0
-					EndIf
-				Case "book"
-					;[Block]
-					CreateMsg(Chr(34) + "I really don't have the time for that right now..." + Chr(34))
-					SelectedItem = Null
 					;[End Block]
 				Case "cup"
 					;[Block]
@@ -3552,6 +3697,21 @@ Function UpdateGUI%()
 						EndIf
 					EndIf
 					;[End Block]
+				Case "nav300", "nav310"
+					;[Block]
+					If SelectedItem\ItemTemplate\TempName = "nav300" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.008)
+					If SelectedItem\ItemTemplate\TempName = "nav310" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.004)
+					
+					If SelectedItem\State > 0.0 Then
+						If SelectedItem\State <= 20.0 And ((MilliSecs2() Mod 800) < 200) Then
+							If (Not LowBatteryCHN[0]) Then
+								LowBatteryCHN[0] = PlaySound_Strict(LowBatterySFX[0])
+							ElseIf (Not ChannelPlaying(LowBatteryCHN[0]))
+								LowBatteryCHN[0] = PlaySound_Strict(LowBatterySFX[0])
+							EndIf
+						EndIf
+					EndIf
+					;[End Block]
 				Case "cigarette"
 					;[Block]
 					If CanUseItem(True) Then
@@ -3614,20 +3774,6 @@ Function UpdateGUI%()
 						RemoveItem(SelectedItem)
 					EndIf
 					;[End Block]
-				Case "scp714"
-					;[Block]
-					If CanUseItem(True, True)
-						If I_714\Using Then
-							CreateMsg("You removed the ring.")
-							I_714\Using = False
-						Else
-							CreateMsg("You put on the ring.")
-							GiveAchievement(Achv714)
-							I_714\Using = True
-						EndIf
-						SelectedItem = Null	
-					EndIf
-					;[End Block]
 				Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 					;[Block]
 					If wi\BallisticVest = 0 Then
@@ -3645,23 +3791,23 @@ Function UpdateGUI%()
 								Select SelectedItem\ItemTemplate\TempName
 									Case "hazmatsuit"
 										;[Block]
-										wi\HazmatSuit = 1
 										CreateMsg("You put on the hazmat suit.")
+										wi\HazmatSuit = 1
 										;[End Block]
 									Case "finehazmatsuit"
 										;[Block]
-										wi\HazmatSuit = 2
 										CreateMsg("You put on the hazmat suit. The air feels dry to breathe.")
+										wi\HazmatSuit = 2
 										;[End Block]
 									Case "superhazmatsuit"
 										;[Block]
-										wi\HazmatSuit = 3
 										CreateMsg("You put on the hazmat suit and you can breathe easier.")
+										wi\HazmatSuit = 3
 										;[End Block]
 									Case "heavyhazmatsuit"
 										;[Block]
+										CreateMsg("You put on the hazmat suit. A mysterious calming sensation flows through your whole body.")
 										wi\HazmatSuit = 4
-										CreateMsg("You put on the hazmat suit.")
 										;[End Block]
 								End Select
 								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_427\Using = False : I_714\Using = False
@@ -3702,136 +3848,7 @@ Function UpdateGUI%()
 						SelectedItem = Null
 					EndIf
 					;[End Block]
-				Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
-					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
-						
-						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.5), 100.0)
-						
-						If SelectedItem\State = 100.0 Then
-							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
-							
-							If (wi\GasMask = 1 And SelectedItem\ItemTemplate\TempName = "gasmask") Lor (wi\GasMask = 2 And SelectedItem\ItemTemplate\TempName = "finegasmask") Lor (wi\GasMask = 3 And SelectedItem\ItemTemplate\TempName = "supergasmask") Lor (wi\GasMask = 4 And SelectedItem\ItemTemplate\TempName = "heavygasmask") Then
-								CreateMsg("You removed the gas mask.")
-								wi\GasMask = 0
-							Else
-								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
-								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
-								Select SelectedItem\ItemTemplate\TempName
-									Case "gasmask"
-										;[Block]
-										CreateMsg("You put on the gas mask.")
-										wi\GasMask = 1
-										;[End Block]
-									Case "finegasmask"
-										;[Block]
-										CreateMsg("You put on the gas mask. It feels dry to breathe.")
-										wi\GasMask = 2
-										;[End Block]
-									Case "supergasmask"
-										;[Block]
-										CreateMsg("You put on the gas mask and you can breathe easier.")
-										wi\GasMask = 3
-										;[End Block]
-									Case "heavygasmask"
-										;[Block]
-										CreateMsg("You put on the gas mask.")
-										wi\GasMask = 4
-										;[End Block]
-								End Select
-							EndIf
-							SelectedItem\State = 0.0
-							SelectedItem = Null
-						EndIf
-					;[End Block]
-				Case "nav300", "nav310"
-					;[Block]
-					If SelectedItem\ItemTemplate\TempName = "nav300" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.008)
-					If SelectedItem\ItemTemplate\TempName = "nav310" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.004)
-					
-					If SelectedItem\State > 0.0 Then
-						If SelectedItem\State <= 20.0 And ((MilliSecs2() Mod 800) < 200) Then
-							If (Not LowBatteryCHN[0]) Then
-								LowBatteryCHN[0] = PlaySound_Strict(LowBatterySFX[0])
-							ElseIf (Not ChannelPlaying(LowBatteryCHN[0]))
-								LowBatteryCHN[0] = PlaySound_Strict(LowBatterySFX[0])
-							EndIf
-						EndIf
-					EndIf
-					;[End Block]
-				Case "scp1499", "super1499"
-					;[Block]
-					If (Not PreventItemOverlapping(True)) Then
-						
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
-						
-						SelectedItem\State = Min(SelectedItem\State + fps\Factor[0] / 1.5, 100.0)
-						
-						If SelectedItem\State = 100.0 Then
-							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
-							
-							If I_1499\Using > 0 Then
-								CreateMsg("You removed the gas mask.")
-								I_1499\Using = 0
-							Else
-								Select SelectedItem\ItemTemplate\TempName
-									Case "scp1499"
-										;[Block]
-										CreateMsg("You put on the gas mask.")
-										I_1499\Using = 1
-										;[End Block]
-									Case "super1499"
-										;[Block]
-										CreateMsg("You put on the gas mask and you can breathe easier.")
-										I_1499\Using = 2
-										;[End Block]
-								End Select
-								GiveAchievement(Achv1499)
-								For r.Rooms = Each Rooms
-									If r\RoomTemplate\Name = "dimension_1499" Then
-										me\BlinkTimer = -1.0
-										I_1499\PrevRoom = PlayerRoom
-										I_1499\PrevX = EntityX(me\Collider)
-										I_1499\PrevY = EntityY(me\Collider)
-										I_1499\PrevZ = EntityZ(me\Collider)
-										
-										If I_1499\x = 0.0 And I_1499\y = 0.0 And I_1499\z = 0.0 Then
-											PositionEntity(me\Collider, r\x + 6086.0 * RoomScale, r\y + 304.0 * RoomScale, r\z + 2292.5 * RoomScale)
-											RotateEntity(me\Collider, 0.0, 90.0, 0.0, True)
-										Else
-											PositionEntity(me\Collider, I_1499\x, I_1499\y + 0.05, I_1499\z)
-										EndIf
-										ResetEntity(me\Collider)
-										TeleportToRoom(r)
-										PlaySound_Strict(LoadTempSound("SFX\SCP\1499\Enter.ogg"))
-										I_1499\x = 0.0
-										I_1499\y = 0.0
-										I_1499\z = 0.0
-										If n_I\Curr096 <> Null Then
-										If n_I\Curr096\SoundCHN <> 0 Then
-										SetStreamVolume_Strict(n_I\Curr096\SoundCHN, 0.0)
-											EndIf
-										EndIf
-										For e.Events = Each Events
-											If e\EventID = e_dimension_1499 Then
-												If EntityDistanceSquared(e\room\OBJ, me\Collider) > PowTwo(8300.0 * RoomScale) Then
-													If e\EventState2 < 5.0 Then
-														e\EventState2 = e\EventState2 + 1.0
-													EndIf
-												EndIf
-												Exit
-											EndIf
-										Next
-										Exit
-									EndIf
-								Next
-							EndIf
-							SelectedItem\State = 0.0
-							SelectedItem = Null
-						EndIf
-					EndIf
-					;[End Block]
-				Case "badge"
+				Case "badge", "key", "oldpaper"
 					;[Block]
 					If SelectedItem\State = 0.0 Then
 						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(6, 10) + ".ogg"))
@@ -3840,41 +3857,25 @@ Function UpdateGUI%()
 								;[Block]
 								CreateMsg(Chr(34) + "Huh? This guy looks just like me!" + Chr(34))
 								;[End Block]
+							Case "Lost Key"
+								;[Block]
+								CreateMsg(Chr(34) + "Isn't this the key to that old shack? The one where I... No, it can't be." + Chr(34))	
+								;[End Block]
+							Case "Disciplinary Hearing DH-S-4137-17092"
+								;[Block]
+								me\BlurTimer = 1000.0
+								CreateMsg(Chr(34) + "Why does this seem so familiar?" + Chr(34))
+								;[End Block]
 						End Select
 						
 						SelectedItem\State = 1.0
 					EndIf
 					;[End Block]
-				Case "key"
+				Case "ticket", "coin"
 					;[Block]
 					If SelectedItem\State = 0.0 Then
-						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(6, 10) + ".ogg"))
-						
-						CreateMsg(Chr(34) + "Isn't this the key to that old shack? The one where I... No, it can't be." + Chr(34))					
-					EndIf
-					
-					SelectedItem\State = 1.0
-					;[End Block]
-				Case "oldpaper"
-					;[Block]
-					If SelectedItem\State = 0.0 Then
-						Select SelectedItem\ItemTemplate\Name
-							Case "Disciplinary Hearing DH-S-4137-17092"
-								;[Block]
-								me\BlurTimer = 1000.0
-								
-								CreateMsg(Chr(34) + "Why does this seem so familiar?" + Chr(34))
-								PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(6, 10) + ".ogg"))
-								SelectedItem\State = 1.0
-								;[End Block]
-						End Select
-					EndIf
-					;[End Block]
-				Case "coin"
-					;[Block]
-					If SelectedItem\State = 0.0 Then
+						If SelectedItem\ItemTemplate\TempName = "ticket" Then CreateMsg(Chr(34) + "Hey, I remember this movie!" + Chr(34))
 						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5) + ".ogg"))
-						
 						SelectedItem\State = 1.0
 					EndIf
 					;[End Block]
@@ -3914,64 +3915,6 @@ Function UpdateGUI%()
 						RemoveItem(SelectedItem)
 					EndIf
 					;[End Block]
-				Case "helmet"
-					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
-						
-						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.1), 100.0)
-						
-						If SelectedItem\State = 100.0 Then
-							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
-							
-							If wi\BallisticHelmet Then
-								CreateMsg("You removed the helmet.")
-								wi\BallisticHelmet = False
-							Else
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = True
-								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
-								CreateMsg("You put on the helmet.")
-							EndIf
-							SelectedItem\State = 0.0
-							SelectedItem = Null
-						EndIf
-					;[End Block]
-				Case "scramble", "finescramble", "killscramble"
-					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
-						
-						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.5), 100.0)
-						
-						If SelectedItem\State3 = 100.0 Then
-							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
-							
-								If (wi\SCRAMBLE = 1 And SelectedItem\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And SelectedItem\ItemTemplate\TempName = "finescramble") Lor (wi\SCRAMBLE = 3 And SelectedItem\ItemTemplate\TempName = "killscramble") Then
-								CreateMsg("You removed the gear.")
-								wi\SCRAMBLE = 0
-							Else
-								wi\GasMask = 0 : wi\BallisticHelmet = False
-								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
-								CreateMsg("You put on the gear.")
-								Select SelectedItem\ItemTemplate\TempName
-									Case "scramble"
-										;[Block]
-										wi\SCRAMBLE = 1
-										;[End Block]
-									Case "finescramble"
-										;[Block]
-										wi\SCRAMBLE = 2
-										;[End Block]
-									Case "killscramble"
-										;[Block]
-										wi\SCRAMBLE = 3
-										If (Not chs\GodMode) Then PlaySound_Strict(LoadTempSound("SFX\SCP\294\Burn.ogg"))
-										Kill()
-										;[End Block]
-								End Select
-							EndIf
-							SelectedItem\State3 = 0.0
-							SelectedItem = Null
-						EndIf
-					;[End Block]
 				Case "scp500"
 					;[Block]
 					If I_500\Taken < Rand(20) Then
@@ -3998,6 +3941,41 @@ Function UpdateGUI%()
 						I_500\Taken = 0
 						RemoveItem(SelectedItem)
 					EndIf
+					;[End Block]
+				Case "scp714"
+					;[Block]
+					If CanUseItem(True, True)
+						If I_714\Using Then
+							CreateMsg("You removed the ring.")
+							I_714\Using = False
+						Else
+							CreateMsg("You put on the ring.")
+							GiveAchievement(Achv714)
+							I_714\Using = True
+						EndIf
+						SelectedItem = Null	
+					EndIf
+					;[End Block]
+				Case "scp1025"
+					;[Block]
+					If SelectedItem\State3 = 0.0 Then
+						If SelectedItem\State = 7.0 Then
+							If I_008\Timer = 0.0 Then I_008\Timer = 1.0
+						ElseIf (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
+							I_1025\State[SelectedItem\State] = Max(1.0, I_1025\State[SelectedItem\State])
+							I_1025\State[7] = 1 + (SelectedItem\State2 = 2.0) * 2.0 ; ~ 3x as fast if VERYFINE
+						EndIf
+						If Rand(3 - (SelectedItem\State2 <> 2.0) * SelectedItem\State2) = 1 Then ; ~ Higher chance for good illness if FINE, lower change for good illness if COARSE
+							SelectedItem\State = 6.0
+						Else
+							SelectedItem\State = Rand(0, 7)
+						EndIf
+						SelectedItem\State3 = 1.0
+					EndIf
+				Case "book"
+					;[Block]
+					CreateMsg(Chr(34) + "I really don't have the time for that right now..." + Chr(34))
+					SelectedItem = Null
 					;[End Block]
 				Case "scp1123"
 					;[Block]
@@ -4255,9 +4233,7 @@ Function RenderGUI%()
 	
 	EndIf
 	
-	If chs\DebugHUD <> 0 Then
-		RenderDebugHUD()
-	EndIf
+	If chs\DebugHUD <> 0 Then RenderDebugHUD()
 	
 	If SelectedScreen <> Null Then
 		DrawImage(SelectedScreen\Img, mo\Viewport_Center_X - ImageWidth(SelectedScreen\Img) / 2, mo\Viewport_Center_Y - ImageHeight(SelectedScreen\Img) / 2)
@@ -4318,9 +4294,7 @@ Function RenderGUI%()
 		OtherSize = OtherOpen\InvSlots
 		
 		For i = 0 To OtherSize - 1
-			If OtherOpen\SecondInv[i] <> Null Then
-				OtherAmount = OtherAmount + 1
-			EndIf
+			If OtherOpen\SecondInv[i] <> Null Then OtherAmount = OtherAmount + 1
 		Next
 		
 		Local TempX% = 0
@@ -4722,33 +4696,6 @@ Function RenderGUI%()
 						EndIf
 					EndIf
 					;[End Block]
-				Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
-					;[Block]
-					If wi\BallisticVest = 0 Then
-						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
-						
-						Width = 300 * MenuScale
-						Height = 20 * MenuScale
-						x = mo\Viewport_Center_X - (Width / 2)
-						y = mo\Viewport_Center_Y + (80 * MenuScale)
-						
-						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
-					EndIf
-					;[End Block]
-				Case "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet", "vest", "finevest"
-					;[Block]
-					If (Not PreventItemOverlapping()) Then
-						
-						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
-						
-						Width = 300 * MenuScale
-						Height = 20 * MenuScale
-						x = mo\Viewport_Center_X - (Width / 2)
-						y = mo\Viewport_Center_Y + (80 * MenuScale)
-						
-						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
-					EndIf
-					;[End Block]
 				Case "nav", "nav300", "nav310", "navulti"
 					;[Block]
 					If (Not SelectedItem\ItemTemplate\Img) Then
@@ -4922,6 +4869,33 @@ Function RenderGUI%()
 						EndIf
 					EndIf
 					;[End Block]
+				Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
+					;[Block]
+					If wi\BallisticVest = 0 Then
+						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
+						
+						Width = 300 * MenuScale
+						Height = 20 * MenuScale
+						x = mo\Viewport_Center_X - (Width / 2)
+						y = mo\Viewport_Center_Y + (80 * MenuScale)
+						
+						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
+					EndIf
+					;[End Block]
+				Case "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet", "vest", "finevest"
+					;[Block]
+					If (Not PreventItemOverlapping()) Then
+						
+						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - (ImageWidth(SelectedItem\ItemTemplate\InvImg) / 2), mo\Viewport_Center_Y - (ImageHeight(SelectedItem\ItemTemplate\InvImg) / 2))
+						
+						Width = 300 * MenuScale
+						Height = 20 * MenuScale
+						x = mo\Viewport_Center_X - (Width / 2)
+						y = mo\Viewport_Center_Y + (80 * MenuScale)
+						
+						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
+					EndIf
+					;[End Block]
 				Case "scp1499", "super1499"
 					;[Block]
 					If (Not PreventItemOverlapping(True)) Then
@@ -4994,10 +4968,8 @@ Function UpdateMenu%()
 	If MenuOpen Then
 		If PlayerRoom\RoomTemplate\Name <> "gate_b" And PlayerRoom\RoomTemplate\Name <> "gate_a" Then
 			If me\StopHidingTimer = 0.0 Then
-				If n_I\Curr173 <> Null And n_I\Curr106 <> Null Then
-				If EntityDistanceSquared(n_I\Curr173\Collider, me\Collider) < 16.0 Lor EntityDistanceSquared(n_I\Curr106\Collider, me\Collider) < 16.0 Then 
-						me\StopHidingTimer = 1.0
-					EndIf	
+				If n_I\Curr106 <> Null Then
+					If EntityDistanceSquared(n_I\Curr106\Collider, me\Collider) < 16.0 Then me\StopHidingTimer = 1.0
 				EndIf
 			ElseIf me\StopHidingTimer < 40.0
 				If (Not me\Terminated) Then 
@@ -5319,9 +5291,7 @@ Function UpdateMenu%()
 					opt\CanOpenConsole = UpdateMainMenuTick(x + (270 * MenuScale), y, opt\CanOpenConsole)
 					
 					If PrevCanOpenConsole Then
-						If PrevCanOpenConsole <> opt\CanOpenConsole Then
-							mm\ShouldDeleteGadgets = True
-						EndIf
+						If PrevCanOpenConsole <> opt\CanOpenConsole Then mm\ShouldDeleteGadgets = True
 					EndIf
 					
 					y = y + (30 * MenuScale)
@@ -5354,9 +5324,7 @@ Function UpdateMenu%()
 					EndIf
 					
 					If PrevCurrFrameLimit Then
-						If PrevCurrFrameLimit <> opt\CurrFrameLimit Then
-							mm\ShouldDeleteGadgets = True
-						EndIf
+						If PrevCurrFrameLimit <> opt\CurrFrameLimit Then mm\ShouldDeleteGadgets = True
 					EndIf
 					;[End Block]
 			End Select

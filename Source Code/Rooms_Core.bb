@@ -2344,9 +2344,6 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Document SCP-895", "paper", r\x - 688.0 * RoomScale, r\y + 133.0 * RoomScale, r\z - 304.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Level 3 Key Card", "key3", r\x + 240.0 * RoomScale, r\y - 1456.0 * RoomScale, r\z + 2064.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
-			
 			it.Items = CreateItem("Night Vision Goggles", "nvg", r\x + 280.0 * RoomScale, r\y - 1456.0 * RoomScale, r\z + 2164.0 * RoomScale)
 			it\State = Rnd(100.0, 1000.0)
 			EntityParent(it\Collider, r\OBJ)

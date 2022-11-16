@@ -997,11 +997,7 @@ Function LoadEvents%()
 	
 	CreateEvent("room2_nuke", "room2_nuke", 0)
 	
-	If Rand(5) < 5 Then 
-		CreateEvent("cont1_895_106", "cont1_895", 0)
-	Else
-		CreateEvent("cont1_895", "cont1_895", 0)
-	EndIf 
+	CreateEvent("cont1_895", "cont1_895", 0)
 	
 	CreateEvent("room2_checkpoint", "room2_checkpoint_lcz_hcz", 0, 1.0)
 	CreateEvent("room2_checkpoint", "room2_checkpoint_hcz_ez", 0, 1.0)
@@ -1941,7 +1937,7 @@ Function InitNewGame%()
 	
 	RenderLoading(50, "STATS")
 	
-	me\BlinkTimer = -10.0 : me\BlinkEffect = 1.0 : me\Stamina = 100.0 : me\StaminaEffect = 1.0 : me\HeartBeatRate = 70.0 : me\Funds = Rand(0, 6)
+	me\BlinkTimer = -10.0 : me\BlinkEffect = 1.0 : me\Stamina = 100.0 : me\StaminaEffect = 1.0 : me\HeartBeatRate = 70.0 : me\Funds = Rand(4)
 	
 	I_005\ChanceToSpawn = Rand(3)
 	

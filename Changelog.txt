@@ -2,13 +2,17 @@ v1.7
 
 General:
 
-- Some SCP-420-J healing nerfed from 0.5 to 0.42
+- Some SCP-420-J healing nerfed from 0.5 -> 0.42
+- Heavy gear were given unique textures.
+- SCP-173 does not cause the "STOP HIDING" to appear anymore.
 
 Rooms:
 
 - Replace a possible 9V Battery with a 4.5V Battery in room2_office_2.
 - Remove 9V Battery from room2_3_ez and make the second battery always spawn between either a 9V or 4.5V.
 - Maintenance Tunnels'(room2_mt) NVGs have battery.
+- Falling Guard drops the Level 3 Key Card at the SCP-895 staircases.
+- SCP-106 will always spawn at the coffin of SCP-895.
 
 
 v1.6

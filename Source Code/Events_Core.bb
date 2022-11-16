@@ -19,69 +19,69 @@ Global forest_event.Events
 Const e_cont1_173% = 0, e_cont1_173_intro% = 1
 Const e_butt_ghost% = 2
 Const e_room2_checkpoint% = 3
-Const e_cont1_895% = 4, e_cont1_895_106% = 5
-Const e_room1_dead_end_106% = 6
-Const e_room2c_gw_lcz_173% = 7, e_room2c_gw_ez_096% = 8
-Const e_cont1_372% = 9
-Const e_dimension_106% = 10
-Const e_room2_cafeteria% = 11
-Const e_room2c_ec% = 12
-Const e_room2_closets% = 13
-Const e_room2_6_lcz_173% = 14
-Const e_room2_elevator% = 15
-Const e_room2_ic% = 16
-Const e_room2_2_lcz% = 17
-Const e_room2_nuke% = 18
-Const e_room2_2_ez% = 19, e_room2_ez_035% = 20
-Const e_room2_tesla% = 21
-Const e_trick% = 22
-Const e_room2_mt% = 23
-Const e_room2_2_hcz_106% = 24
-Const e_room2_4_hcz_106% = 25, e_room2_4_hcz% = 26
-Const e_room3_hcz_duck% = 27, e_room3_hcz_1048% = 28
-Const e_room2_scientists_2% = 29
-Const e_room2_servers_hcz% = 30
-Const e_room2_storage% = 31
-Const e_door_closing% = 32
-Const e_room3_2_ez% = 33
-Const e_room3_storage% = 34
-Const e_room3_2_hcz% = 35
-Const e_room4_lcz% = 36
-Const e_cont2_012% = 37
-Const e_cont1_035% = 38
-Const e_cont2_049% = 39
-Const e_cont1_079% = 40
-Const e_cont1_106% = 41
-Const e_cont1_205% = 42
-Const e_cont2_860_1% = 43
-Const e_cont3_966% = 44
-Const e_cont2_1123% = 45
-Const e_room2_test_hcz% = 46, e_room2_test_lcz_173% = 47
-Const e_room2_6_hcz_smoke% = 48, e_room2_6_hcz% = 49
-Const e_room2_5_hcz_106% = 50
-Const e_toilet_guard% = 51
-Const e_cont2_008% = 52
-Const e_106_victim% = 53
-Const e_106_sinkhole% = 54
-Const e_682_roar% = 55
-Const e_cont1_914% = 56
-Const e_1048_a% = 57
-Const e_room4_2_hcz% = 58
-Const e_room2_gw_2% = 59, e_gateway% = 60
-Const e_cont2_500_1499% = 61
-Const e_cont2c_1162_arc% = 62
-Const e_room2_sl% = 63
-Const e_096_spawn% = 64
-Const e_room2_medibay% = 65
-Const e_dimension_1499% = 66
-Const e_room2_shaft% = 67
-Const e_room4_ic% = 68
-Const e_cont2_409% = 69
-Const e_cont1_005% = 70
-Const e_gate_b_entrance% = 71
-Const e_gate_b% = 72
-Const e_gate_a_entrance% = 73
-Const e_gate_a% = 74
+Const e_cont1_895% = 4
+Const e_room1_dead_end_106% = 5
+Const e_room2c_gw_lcz_173% = 6, e_room2c_gw_ez_096% = 7
+Const e_cont1_372% = 8
+Const e_dimension_106% = 9
+Const e_room2_cafeteria% = 10
+Const e_room2c_ec% = 11
+Const e_room2_closets% = 12
+Const e_room2_6_lcz_173% = 13
+Const e_room2_elevator% = 14
+Const e_room2_ic% = 15
+Const e_room2_2_lcz% = 16
+Const e_room2_nuke% = 17
+Const e_room2_2_ez% = 18, e_room2_ez_035% = 19
+Const e_room2_tesla% = 20
+Const e_trick% = 21
+Const e_room2_mt% = 22
+Const e_room2_2_hcz_106% = 23
+Const e_room2_4_hcz_106% = 24, e_room2_4_hcz% = 25
+Const e_room3_hcz_duck% = 26, e_room3_hcz_1048% = 27
+Const e_room2_scientists_2% = 28
+Const e_room2_servers_hcz% = 29
+Const e_room2_storage% = 30
+Const e_door_closing% = 31
+Const e_room3_2_ez% = 32
+Const e_room3_storage% = 33
+Const e_room3_2_hcz% = 34
+Const e_room4_lcz% = 35
+Const e_cont2_012% = 36
+Const e_cont1_035% = 37
+Const e_cont2_049% = 38
+Const e_cont1_079% = 39
+Const e_cont1_106% = 40
+Const e_cont1_205% = 41
+Const e_cont2_860_1% = 42
+Const e_cont3_966% = 43
+Const e_cont2_1123% = 44
+Const e_room2_test_hcz% = 45, e_room2_test_lcz_173% = 46
+Const e_room2_6_hcz_smoke% = 47, e_room2_6_hcz% = 48
+Const e_room2_5_hcz_106% = 49
+Const e_toilet_guard% = 50
+Const e_cont2_008% = 51
+Const e_106_victim% = 52
+Const e_106_sinkhole% = 53
+Const e_682_roar% = 54
+Const e_cont1_914% = 55
+Const e_1048_a% = 56
+Const e_room4_2_hcz% = 57
+Const e_room2_gw_2% = 58, e_gateway% = 59
+Const e_cont2_500_1499% = 60
+Const e_cont2c_1162_arc% = 61
+Const e_room2_sl% = 62
+Const e_096_spawn% = 63
+Const e_room2_medibay% = 64
+Const e_dimension_1499% = 65
+Const e_room2_shaft% = 66
+Const e_room4_ic% = 67
+Const e_cont2_409% = 68
+Const e_cont1_005% = 69
+Const e_gate_b_entrance% = 70
+Const e_gate_b% = 71
+Const e_gate_a_entrance% = 72
+Const e_gate_a% = 73
 ;[End Block]
 
 Function FindEventID%(EventName$)
@@ -105,10 +105,6 @@ Function FindEventID%(EventName$)
 		Case "cont1_895"
 			;[Block]
 			Return(e_cont1_895)
-			;[End Block]
-		Case "cont1_895_106"
-			;[Block]
-			Return(e_cont1_895_106)
 			;[End Block]
 		Case "room1_dead_end_106"
 			;[Block]
@@ -1983,7 +1979,7 @@ Function UpdateEvents%()
 				UpdateSoundOrigin(e\SoundCHN, Camera, e\room\RoomDoors[0]\OBJ)
 				UpdateSoundOrigin(e\SoundCHN2, Camera, e\room\RoomDoors[1]\OBJ)
 				;[End Block]
-			Case e_cont1_895, e_cont1_895_106
+			Case e_cont1_895
 				;[Block]
 				If e\EventState < MilliSecs2() Then
 					; ~ SCP-079 starts broadcasting SCP-895's camera feed on monitors after leaving the first zone
@@ -2007,7 +2003,7 @@ Function UpdateEvents%()
 					CoffinDistance = EntityDistance(me\Collider, e\room\Objects[1])
 					If CoffinDistance < 1.5 Then 
 						GiveAchievement(Achv895)
-						If (Not n_I\Curr106\Contained) And e\EventID = e_cont1_895_106 And e\EventState2 = 0.0 Then
+						If (Not n_I\Curr106\Contained) And e\EventState2 = 0.0 Then
 							de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(e\room\Objects[1], True), e\room\y - 1531.0 * RoomScale, EntityZ(e\room\Objects[1], True), 90.0, Rnd(360.0), 0.0, 0.05, 0.8)
 							de\SizeChange = 0.001
 							EntityParent(de\OBJ, e\room\OBJ)
@@ -2019,7 +2015,6 @@ Function UpdateEvents%()
 							
 							e\EventState2 = 1.0
 						EndIf
-					ElseIf CoffinDistance < 3.0
 						If e\room\NPC[0] = Null Then
 							e\room\NPC[0] = CreateNPC(NPCTypeGuard, e\room\x, e\room\y, e\room\z)
 							RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 90.0, 0.0)
@@ -2030,7 +2025,7 @@ Function UpdateEvents%()
 							
 							If (Not e\room\RoomDoors[0]\Open) Then e\room\RoomDoors[0]\Open = True
 						EndIf
-					ElseIf CoffinDistance > 5.0
+					ElseIf CoffinDistance > 4.5
 						If e\room\NPC[0] <> Null Then
 							If e\room\NPC[0]\PrevState = 0 Then
 								If ChannelPlaying(e\room\NPC[0]\SoundCHN) Then StopChannel(e\room\NPC[0]\SoundCHN)
@@ -2069,7 +2064,10 @@ Function UpdateEvents%()
 									de.Decals = CreateDecal(DECAL_BLOOD_2, EntityX(e\room\OBJ), e\room\y - 1531.0 * RoomScale, EntityZ(e\room\OBJ), 90.0, Rnd(360.0), 0.0, 0.4)
 									EntityParent(de\OBJ, e\room\OBJ)
 									
-									it.Items = CreateItem("Unknown Note", "paper", EntityX(e\room\OBJ), e\room\y - 1526.0 * RoomScale, EntityZ(e\room\OBJ))
+									it.Items = CreateItem("Unknown Note", "paper", EntityX(e\room\OBJ), e\room\y - 1516.0 * RoomScale, EntityZ(e\room\OBJ))
+									EntityType(it\Collider, HIT_ITEM)
+									
+									it.Items = CreateItem("Level 3 Key Card", "key3", EntityX(e\room\OBJ), e\room\y - 1504.0 * RoomScale, EntityZ(e\room\OBJ))
 									EntityType(it\Collider, HIT_ITEM)
 								EndIf
 								If e\room\NPC[0]\Frame = 286.0 Then e\room\NPC[0]\PrevState = 2
