@@ -309,7 +309,7 @@ Function UpdateMainMenu%()
 						
 						If UpdateMainMenuTick(x + (20 * MenuScale), y + ((175 + 28 * i) * MenuScale), (SelectedDifficulty = difficulties[i])) Then SelectedDifficulty = difficulties[i]
 						
-						If SelectedDifficulty\SaveType <> SAVE_ANYWHERE Then opt\AutoSaveEnabled = False
+						opt\AutoSaveEnabled = False
 						
 						If PrevSelectedDifficulty <> SelectedDifficulty Then
 							If PrevSelectedDifficulty = difficulties[ESOTERIC] Then
@@ -900,7 +900,7 @@ Function UpdateMainMenu%()
 								
 								y = y + (30 * MenuScale)
 								
-								opt\AutoSaveEnabled = UpdateMainMenuTick(x, y, opt\AutoSaveEnabled, SelectedDifficulty\SaveType <> SAVE_ANYWHERE)
+								opt\AutoSaveEnabled = UpdateMainMenuTick(x, y, opt\AutoSaveEnabled)
 								
 								y = y + (30 * MenuScale)
 								
@@ -1663,91 +1663,69 @@ Function RenderMainMenu%()
 							
 							Color(255, 255, 255)
 							Text(x, y + (5 * MenuScale), "Enable console:")
-							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_Console)
-							EndIf
+							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_Console)
 							
 							y = y + (30 * MenuScale)
 							
 							If opt\CanOpenConsole Then
 								Color(255, 255, 255)
 								Text(x, y + (5 * MenuScale), "Open console on error:")
-								If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-									RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_ConsoleOnError)
-								EndIf
+								If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_ConsoleOnError)
 							EndIf
 							
 							y = y + (30 * MenuScale)
 							
 							Color(255, 255, 255)
 							Text(x, y + (5 * MenuScale), "Achievement popups:")
-							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_AchievementPopups)
-							EndIf
+							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_AchievementPopups)
 							
 							y = y + (30 * MenuScale)
 							
-							Color(255 - (155 * (SelectedDifficulty\SaveType <> SAVE_ANYWHERE)), 255 - (155 * (SelectedDifficulty\SaveType <> SAVE_ANYWHERE)), 255 - (155 * (SelectedDifficulty\SaveType <> SAVE_ANYWHERE)))
+							Color(255, 255, 255)
 							Text(x, y + (5 * MenuScale), "Enable auto save:")
-							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_AutoSave)
-							EndIf
+							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_AutoSave)
 							
 							y = y + (30 * MenuScale)
 							
 							Color(255, 255, 255)
 							Text(x, y + (5 * MenuScale), "Show FPS:")
-							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_FPS)
-							EndIf
+							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_FPS)
 							
 							y = y + (30 * MenuScale)
 							
 							Color(255, 255, 255)
 							Text(x, y + (5 * MenuScale), "Frame limit:")
 							Color(255, 255, 255)
-							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_FrameLimit, opt\FrameLimit)
-							EndIf
+							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_FrameLimit, opt\FrameLimit)
 							If opt\CurrFrameLimit > 0.0 Then
 								Color(255, 255, 0)
 								Text(x, y + (45 * MenuScale), opt\FrameLimit + " FPS")
-								If MouseOn(x + (130 * MenuScale), y + (40 * MenuScale), 164 * MenuScale, 20 * MenuScale) Then
-									RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_FrameLimit, opt\FrameLimit)
-								EndIf
+								If MouseOn(x + (130 * MenuScale), y + (40 * MenuScale), 164 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_FrameLimit, opt\FrameLimit)
 							EndIf
 						Else
 							y = y + (20 * MenuScale)
 							
 							Color(255, 255, 255)
 							Text(x, y + (5 * MenuScale), "Smooth Bars:")
-							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SmoothBars)
-							EndIf
+							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SmoothBars)
 							
 							y = y + (30 * MenuScale)
 							
 							Color(255, 255, 255)
 							Text(x, y + (5 * MenuScale), "Play startup videos:")
-							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_StartupVideos)
-							EndIf
+							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_StartupVideos)
 							
 							y = y + (30 * MenuScale)
 							
 							Color(255, 255, 255)
 							Text(x, y + (5 * MenuScale), "Use launcher:")
-							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_Launcher)
-							EndIf
+							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_Launcher)
 							
 							y = y + (30 * MenuScale)
 							
 							Color(255, 255, 255)
 							Text(x, y + (5 * MenuScale), "Enable Subtitles:")
-							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_Subtitles)
-							EndIf
+							If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_Subtitles)
 							
 							y = y + (30 * MenuScale)
 							
@@ -1759,9 +1737,7 @@ Function RenderMainMenu%()
 							y = y + (5 * MenuScale)
 							
 							If opt\EnableSubtitles Then
-								If MouseOn(x + (230 * MenuScale), y, 147 * MenuScale, 147 * MenuScale) Then
-									RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SubtitlesColor)
-								EndIf
+								If MouseOn(x + (230 * MenuScale), y, 147 * MenuScale, 147 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SubtitlesColor)
 							EndIf
 							
 							y = y + (30 * MenuScale)
@@ -1769,9 +1745,7 @@ Function RenderMainMenu%()
 							If opt\EnableSubtitles Then
 								Color(255, 255, 255)
 								Text(x, y + (5 * MenuScale), "RED COLOR:")
-								If MouseOn(x + (125 * MenuScale), y, 40 * MenuScale, 20 * MenuScale) Then
-									RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SubtitlesColor)
-								EndIf
+								If MouseOn(x + (125 * MenuScale), y, 40 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SubtitlesColor)
 							EndIf
 							
 							y = y + (30 * MenuScale)
@@ -1779,9 +1753,7 @@ Function RenderMainMenu%()
 							If opt\EnableSubtitles Then
 								Color(255, 255, 255)
 								Text(x, y + (5 * MenuScale), "GREEN COLOR:")
-								If MouseOn(x + (125 * MenuScale), y, 40 * MenuScale, 20 * MenuScale) Then
-									RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SubtitlesColor)
-								EndIf
+								If MouseOn(x + (125 * MenuScale), y, 40 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SubtitlesColor)
 							EndIf
 							
 							y = y + (30 * MenuScale)
@@ -1789,16 +1761,12 @@ Function RenderMainMenu%()
 							If opt\EnableSubtitles Then
 								Color(255, 255, 255)
 								Text(x, y + (5 * MenuScale), "BLUE COLOR:")
-								If MouseOn(x + (125 * MenuScale), y, 40 * MenuScale, 20 * MenuScale) Then
-									RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SubtitlesColor)
-								EndIf
+								If MouseOn(x + (125 * MenuScale), y, 40 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SubtitlesColor)
 							EndIf
 							
 							y = y + (40 * MenuScale)
 							
-							If MouseOn(x, y, 170 * MenuScale, 30 * MenuScale) Then
-								RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_ResetOptions)
-							EndIf
+							If MouseOn(x, y, 170 * MenuScale, 30 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_ResetOptions)
 							
 							If opt\EnableSubtitles Then
 								Color(opt\SubColorR, opt\SubColorG, opt\SubColorB)
@@ -2043,13 +2011,9 @@ Function UpdateLauncher%(lnchr.Launcher)
 		EndIf
 		DrawImage(LauncherIMG[2], LauncherWidth - 400, LauncherHeight - 86, 2)
 		
-		If UpdateLauncherButton(LauncherWidth - 300, LauncherHeight - 105, 150, 30, "REPORT A BUG!", False, False) Then
-			ExecFile("https://github.com/SnoeGit/scpcb-snoedition/issues")
-		EndIf
+		If UpdateLauncherButton(LauncherWidth - 300, LauncherHeight - 105, 150, 30, "REPORT A BUG!", False, False) Then ExecFile("https://github.com/SnoeGit/scpcb-snoedition/issues")
 		
-		If UpdateLauncherButton(LauncherWidth - 300, LauncherHeight - 50, 150, 30, "SEE CHANGELOG", False, False) Then
-			ExecFile("Changelog.txt")
-		EndIf
+		If UpdateLauncherButton(LauncherWidth - 300, LauncherHeight - 50, 150, 30, "SEE CHANGELOG", False, False) Then ExecFile("Changelog.txt")
 		
 		If UpdateLauncherButton(LauncherWidth - 120, LauncherHeight - 105, 100, 30, "LAUNCH", False, False) Then
 			If opt\DisplayMode = 1 Then
