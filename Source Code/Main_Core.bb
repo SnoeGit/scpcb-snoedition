@@ -737,7 +737,7 @@ Function UpdateGame%()
 			If me\Sanity < 0.0 Then
 				If me\RestoreSanity Then me\Sanity = Min(me\Sanity + fps\Factor[0], 0.0)
 				If me\Sanity < -200.0 Then
-					If SelectedDifficulty\SaveType <> SAVE_ANYWHERE Then
+					If SelectedDifficulty\SaveType => SAVE_ON_SCREENS Then
 						CanSave = False
 					ElseIf me\Sanity < -450.0
 						CanSave = False
@@ -925,8 +925,10 @@ Function UpdateGame%()
 		
 		If KeyHit(key\SAVE) Then
 			RN = PlayerRoom\RoomTemplate\Name
-			If SelectedDifficulty\SaveType < NO_SAVES Then
-				If RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Lor RN = "dimension_106" Then
+			If SelectedDifficulty\SaveType =< DELETE_ON_DEATH Then
+				If SelectedDifficulty\SaveType => SAVE_ON_SCREENS And SelectedScreen = Null And sc_I\SelectedMonitor = Null
+					CreateHintMsg("Saving is only permitted on clickable monitors scattered throughout the facility.")
+				ElseIf RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Lor RN = "dimension_106" Then
 					CreateHintMsg("You can't save in this location.")
 				ElseIf (Not CanSave) Lor QuickLoadPercent > -1
 					CreateHintMsg("You can't save at this moment.")
@@ -935,8 +937,6 @@ Function UpdateGame%()
 					EndIf
 				ElseIf as\Timer <= 70.0 * 5.0
 					CancelAutoSave()
-				ElseIf SelectedDifficulty\SaveType > SAVE_ANYWHERE And SelectedScreen = Null And sc_I\SelectedMonitor = Null
-					CreateHintMsg("Saving is only permitted on clickable monitors scattered throughout the facility.")
 				Else
 					SaveGame(CurrSave\Name)
 				EndIf
@@ -1035,7 +1035,7 @@ Function Kill%(IsBloody% = False)
 		
 		me\KillAnim = Rand(0, 1)
 		PlaySound_Strict(DamageSFX[0])
-		If SelectedDifficulty\SaveType = NO_SAVES Lor SelectedDifficulty\SaveType = DELETE_ON_DEATH Then
+		If SelectedDifficulty\SaveType => DELETE_ON_DEATH Then
 			DeleteGame(CurrSave)
 			LoadSavedGames()
 		EndIf
@@ -2064,9 +2064,7 @@ Function UpdateGUI%()
 		For n = 0 To OtherSize - 1
 			If MouseOn(x, y, INVENTORY_GFX_SIZE, INVENTORY_GFX_SIZE) Then IsMouseOn = n
 			
-			If IsMouseOn = n Then
-				MouseSlot = n
-			EndIf
+			If IsMouseOn = n Then MouseSlot = n
 			
 			If OtherOpen = Null Then Exit
 			
@@ -2109,9 +2107,7 @@ Function UpdateGUI%()
 			EndIf
 		Next
 		
-		If mo\MouseHit1 Then
-			mo\DoubleClickSlot = IsMouseOn
-		EndIf
+		If mo\MouseHit1 Then mo\DoubleClickSlot = IsMouseOn
 		
 		If SelectedItem <> Null Then
 			If (Not mo\MouseDown1) Then
@@ -2226,9 +2222,7 @@ Function UpdateGUI%()
 		For n = 0 To MaxItemAmount - 1
 			If MouseOn(x, y, INVENTORY_GFX_SIZE, INVENTORY_GFX_SIZE) Then IsMouseOn = n
 			
-			If IsMouseOn = n Then
-				MouseSlot = n
-			EndIf
+			If IsMouseOn = n Then MouseSlot = n
 			
 			If Inventory(n) <> Null And SelectedItem <> Inventory(n) Then
 				If IsMouseOn = n Then
@@ -2265,9 +2259,7 @@ Function UpdateGUI%()
 			EndIf
 		Next
 		
-		If mo\MouseHit1 Then
-			mo\DoubleClickSlot = IsMouseOn
-		EndIf
+		If mo\MouseHit1 Then mo\DoubleClickSlot = IsMouseOn
 		
 		If SelectedItem <> Null Then
 			If (Not mo\MouseDown1) Then
@@ -5468,7 +5460,7 @@ Function UpdateMenu%()
 			Else
 				y = y + (75 * MenuScale)
 				
-				If SelectedDifficulty\SaveType <> NO_SAVES And SelectedDifficulty\SaveType <> DELETE_ON_DEATH Then
+				If SelectedDifficulty\SaveType =< SAVE_ON_SCREENS Then
 					If GameSaved Then
 						If UpdateMainMenuButton(x, y, 430 * MenuScale, 60 * MenuScale, "LOAD GAME") Then
 							RenderLoading(0, "GAME FILES")
@@ -5963,7 +5955,7 @@ Function RenderMenu%()
 			Text(x, y + (40 * MenuScale), TempStr)
 			
 			If me\Terminated And me\SelectedEnding = -1 Then
-				If SelectedDifficulty\SaveType <> NO_SAVES And SelectedDifficulty\SaveType <> DELETE_ON_DEATH Then
+				If SelectedDifficulty\SaveType =< SAVE_ON_SCREENS Then
 					y = y + (250 * MenuScale)
 				Else
 					y = y + (175 * MenuScale)
@@ -6006,7 +5998,7 @@ Function UpdateEnding%()
 	EndIf
 	
 	GiveAchievement(Achv055)
-	If ((Not UsedConsole) Lor opt\DebugMode) And SelectedMap = "" Then
+	If (Not UsedConsole) And SelectedMap = "" Then
 		GiveAchievement(AchvConsole)
 		If SelectedDifficulty\Name = "Keter" Lor SelectedDifficulty\Name = "Apollyon" Then
 			GiveAchievement(AchvKeter)
@@ -6903,12 +6895,10 @@ Function Use427%()
 			CreateMsg("You can't feel your legs. But you don't need legs anymore.")
 		EndIf
 		I_427\Timer = I_427\Timer + fps\Factor[0]
-		If (Not I_427\Sound[0]) Then
-			I_427\Sound[0] = LoadSound_Strict("SFX\SCP\427\Effect.ogg")
-		EndIf
-		If (Not I_427\Sound[1]) Then
-			I_427\Sound[1] = LoadSound_Strict("SFX\SCP\427\Transform.ogg")
-		EndIf
+		
+		If (Not I_427\Sound[0]) Then I_427\Sound[0] = LoadSound_Strict("SFX\SCP\427\Effect.ogg")
+		If (Not I_427\Sound[1]) Then I_427\Sound[1] = LoadSound_Strict("SFX\SCP\427\Transform.ogg")
+		
 		For i = 0 To 1
 			If (Not ChannelPlaying(I_427\SoundCHN[i])) Then I_427\SoundCHN[i] = PlaySound_Strict(I_427\Sound[i])
 		Next

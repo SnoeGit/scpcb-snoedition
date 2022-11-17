@@ -4016,7 +4016,7 @@ Function UpdateNPCs%()
 									If n\State3 < 900.0 Then
 										me\BlurTimer = Float(((Sin(MilliSecs2() / 50.0) + 1.0) * 200.0) / Sqr(Dist))
 										
-										If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 And Dist < 256.0 Then
+										If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 And Dist < 128.0 Then
 											If me\StaminaEffect < 1.5 Then
 												Select Rand(4)
 													Case 1
@@ -4106,7 +4106,7 @@ Function UpdateNPCs%()
 											n\Angle = VectorYaw(EntityX(me\Collider) - EntityX(n\Collider), 0.0, EntityZ(me\Collider) - EntityZ(n\Collider))
 											n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
 											
-											If Dist < 0.81 Then n\State = 10.0
+											If Dist < 0.64 Then n\State = 10.0
 										EndIf
 									Else
 										If MilliSecs2() > n\State2 And Dist < 256.0 Then
@@ -4175,7 +4175,7 @@ Function UpdateNPCs%()
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 											
-													InjurePlayer(Rnd(0.5 * DifficultyDMGMult, 0.8 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.1, 0.3))
+											InjurePlayer(Rnd(0.5 * DifficultyDMGMult, 0.8 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.1, 0.3))
 													
 											If me\Injuries > 14.0 Then
 												Kill(True)

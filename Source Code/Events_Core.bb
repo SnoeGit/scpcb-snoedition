@@ -647,7 +647,7 @@ Function UpdateEvents%()
 						
 						If SelectedDifficulty\SaveType = SAVE_ANYWHERE Then
 							CreateHintMsg("Press " + key\Name[key\SAVE] + " to save.")
-						ElseIf SelectedDifficulty\SaveType = SAVE_ON_SCREENS Lor SelectedDifficulty\SaveType = DELETE_ON_DEATH Then
+						ElseIf SelectedDifficulty\SaveType =< DELETE_ON_DEATH Then
 							CreateHintMsg("Saving is only permitted on clickable monitors scattered throughout the facility.")
 						EndIf
 						
@@ -803,7 +803,7 @@ Function UpdateEvents%()
 								EndIf
 								
 								; ~ If Ulgrin can see the player then start shooting at them.
-								If (Not chs\NoTarget) And (CurrTrigger = "173scene_end" And EntityVisible(e\room\NPC[2]\Collider, me\Collider)) Then
+								If (Not chs\NoTarget) And ((CurrTrigger = "173scene_end" Lor EntityDistanceSquared(e\room\NPC[2]\Collider, me\Collider) < 4.5) And EntityVisible(e\room\NPC[2]\Collider, me\Collider)) Then
 									e\room\NPC[2]\State = 1.0
 									e\room\NPC[2]\State3 = 1.0
 								ElseIf e\room\NPC[2]\State = 1.0 And (Not EntityVisible(e\room\NPC[2]\Collider, me\Collider))
@@ -6240,25 +6240,21 @@ Function UpdateEvents%()
 						PrevSecondaryLightOn = 0.0
 						If (Not me\Crouch) Then SetCrouch(True)
 						For i = 0 To MaxItemAmount - 1
-							If Inventory(i) <> Null Then
-								If Inventory(i)\ItemTemplate\Name = "Leaflet"
-									RemoveItem(Inventory(i))
-									Inventory(i) = CreateItem("Strange Note", "paper", 1.0, 1.0, 1.0)
-									HideEntity(Inventory(i)\Collider)
-									Inventory(i)\Picked = True
-									Inventory(i)\ItemTemplate\Found = True
-									EntityType(Inventory(i)\Collider, HIT_ITEM)
-									ItemAmount = ItemAmount + 1
-									Exit
-								EndIf
+							If Inventory(i)\ItemTemplate\Name = "Leaflet"
+								RemoveItem(Inventory(i))
+								Inventory(i) = CreateItem("Strange Note", "paper", 1.0, 1.0, 1.0)
+								HideEntity(Inventory(i)\Collider)
+								Inventory(i)\Picked = True
+								Inventory(i)\ItemTemplate\Found = True
+								EntityType(Inventory(i)\Collider, HIT_ITEM)
+								ItemAmount = ItemAmount + 1
+								Exit
 							EndIf
 						Next
 						GiveAchievement(Achv1123)
 						
 						StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
-						If e\Sound2 <> 0 Then
-							FreeSound_Strict(e\Sound2) : e\Sound2 = 0
-						EndIf
+						If e\Sound2 <> 0 Then FreeSound_Strict(e\Sound2) : e\Sound2 = 0
 						
 						If e\room\NPC[0] <> Null Then RemoveNPC(e\room\NPC[0])
 						RemoveEvent(e)
