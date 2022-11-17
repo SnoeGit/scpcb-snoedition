@@ -2982,12 +2982,17 @@ Function UpdateGUI%()
 					If CanUseItem(True) Then
 						GiveAchievement(Achv500)
 						
-						If I_008\Timer > 0.0 Then
-							CreateMsg("You swallowed the pill. Your nausea is fading.")
-							I_008\Revert = True
-						ElseIf I_409\Timer > 0.0
-							CreateMsg("You swallowed the pill. Your body is getting warmer and the crystals are receding.")
-							I_409\Revert = True
+						If I_008\Timer > 0.0 Lor I_409\Timer > 0.0 Then
+							If I_008\Timer > 0.0 And I_409\Timer = 0.0 Then
+								CreateMsg("You swallowed the pill. Your nausea is fading.")
+								I_008\Revert = True
+							ElseIf I_409\Timer > 0.0 And I_008\Timer = 0.0
+								CreateMsg("You swallowed the pill. Your body is getting warmer and the crystals are receding.")
+								I_409\Revert = True
+							Else
+								CreateMsg("You swallowed the pill. Your nausea is fading and the crystals are receding.")
+								I_008\Revert = True : I_409\Revert = True
+							EndIf
 						Else
 							CreateMsg("You swallowed the pill.")
 						EndIf
@@ -7163,11 +7168,11 @@ Function Update008%()
 		If EntityHidden(t\OverlayID[3]) Then ShowEntity(t\OverlayID[3])
 		If I_008\Timer < 93.0 Then
 			PrevI008Timer = I_008\Timer
-			If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0 Then
+			If I_427\Timer < 70.0 * 360.0 Then
 				If I_008\Revert Then
-					I_008\Timer = Max(0.0, I_008\Timer - (fps\Factor[0] * 0.01))
+					I_008\Timer = Max(0.0, I_008\Timer - (fps\Factor[0] * 0.02))
 				Else
-					I_008\Timer = Min(I_008\Timer + (fps\Factor[0] * 0.002), 100.0)
+					If (Not I_427\Using) Then I_008\Timer = Min(I_008\Timer + (fps\Factor[0] * 0.002), 100.0)
 				EndIf
 			EndIf
 			
@@ -7321,11 +7326,11 @@ Function Update409%()
 	If I_409\Timer > 0.0 Then
 		If EntityHidden(t\OverlayID[7]) Then ShowEntity(t\OverlayID[7])
 		
-		If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0 Then
+		If I_427\Timer < 70.0 * 360.0 Then
 			If I_409\Revert Then
-				I_409\Timer = Max(0.0, I_409\Timer - (fps\Factor[0] * 0.01))
+				I_409\Timer = Max(0.0, I_409\Timer - (fps\Factor[0] * 0.02))
 			Else
-				I_409\Timer = Min(I_409\Timer + (fps\Factor[0] * 0.004), 100.0)
+				If (Not I_427\Using) Then I_409\Timer = Min(I_409\Timer + (fps\Factor[0] * 0.004), 100.0)
 			EndIf
 		EndIf	
 		EntityAlpha(t\OverlayID[7], Min(((I_409\Timer * 0.2) ^ 2.0) / 1000.0, 0.5))

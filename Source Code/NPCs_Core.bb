@@ -3170,10 +3170,8 @@ Function UpdateNPCs%()
 						If n\Frame >= 550.0 Then
 							HideEntity(n\OBJ)
 							HideEntity(n\Collider)
-							If n\Sound <> 0 Then
-								FreeSound_Strict(n\Sound) : n\Sound = 0
-								StopChannel(n\SoundCHN) : n\SoundCHN = 0
-							EndIf
+							StopChannel(n\SoundCHN) : n\SoundCHN = 0
+							If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 						EndIf
 					EndIf
 				EndIf
