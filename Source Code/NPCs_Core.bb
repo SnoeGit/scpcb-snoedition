@@ -563,23 +563,18 @@ Function RemoveNPC%(n.NPCs)
 	If n\OBJ2 <> 0 Then FreeEntity(n\OBJ2) : n\OBJ2 = 0
 	If n\OBJ3 <> 0 Then FreeEntity(n\OBJ3) : n\OBJ3 = 0
 	
-	If n\SoundCHN <> 0 Then
-		If (Not n\SoundCHN_IsStream) Then
-			StopChannel(n\SoundCHN)
-		Else
-			StopStream_Strict(n\SoundCHN)
-		EndIf
-		n\SoundCHN = 0
+	If n\SoundCHN_IsStream Then
+		If n\SoundCHN <> 0 Then StopStream_Strict(n\SoundCHN)
+	Else
+		StopChannel(n\SoundCHN)
 	EndIf
-	
-	If n\SoundCHN2 <> 0 Then
-		If (Not n\SoundCHN2_IsStream) Then
-			StopChannel(n\SoundCHN2)
-		Else
-			StopStream_Strict(n\SoundCHN2)
-		EndIf
-		n\SoundCHN2 = 0
+	n\SoundCHN = 0
+	If n\SoundCHN2_IsStream Then
+		If n\SoundCHN2 <> 0 Then StopStream_Strict(n\SoundCHN2)
+	Else
+		StopChannel(n\SoundCHN2)
 	EndIf
+	n\SoundCHN2 = 0
 	
 	FreeEntity(n\Collider) : n\Collider = 0	
 	FreeEntity(n\OBJ) : n\OBJ = 0
@@ -600,26 +595,30 @@ Function UpdateNPCs%()
 	Local DifficultyDMGMult#
 	
 	Select SelectedDifficulty\OtherFactors
+		Case CASUAL
+			;[Block]
+			DifficultyDMGMult = 1.0
+			;[End Block]
 		Case EASY
-		;[Block]
-		DifficultyDMGMult = 1.0
-		;[End Block]
+			;[Block]
+			DifficultyDMGMult = 1.15
+			;[End Block]
 		Case NORMAL
-		;[Block]
-		DifficultyDMGMult = 1.15
-		;[End Block]
+			;[Block]
+			DifficultyDMGMult = 1.3
+			;[End Block]
 		Case HARD
-		;[Block]
-		DifficultyDMGMult = 1.3
-		;[End Block]
+			;[Block]
+			DifficultyDMGMult = 1.45
+			;[End Block]
 		Case EXTREME
-		;[Block]
-		DifficultyDMGMult = 1.45
-		;[End Block]
+			;[Block]
+			DifficultyDMGMult = 1.6
+			;[End Block]
 		Case CAKE
-		;[Block]
-		DifficultyDMGMult = 0.75
-		;[End Block]
+			;[Block]
+			DifficultyDMGMult = 0.75
+			;[End Block]
 	End Select
 	
 	For n.NPCs = Each NPCs
@@ -985,7 +984,7 @@ Function UpdateNPCs%()
 										If (Dist > 1600.0 Lor PlayerRoom\RoomTemplate\Name = "dimension_106") Then TranslateEntity(n\Collider, 0.0, ((EntityY(me\Collider) - 0.14) - EntityY(n\Collider)) / 50.0, 0.0)
 										If Dist <= 4.5 Then
 											n\CurrSpeed = CurveValue(n\Speed * 1.16, n\CurrSpeed, 10.0)
-										ElseIf Dist < 9.0 Then
+										ElseIf Dist < 9.0
 											n\CurrSpeed = CurveValue(n\Speed * 1.08, n\CurrSpeed, 10.0)
 										Else
 											n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
@@ -1042,7 +1041,7 @@ Function UpdateNPCs%()
 													RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), Min(20.0, Sqr(Dist2) * 10.0)), 0.0)
 													If Dist <= 4.5 Then
 														n\CurrSpeed = CurveValue(n\Speed * 1.16, n\CurrSpeed, 10.0)
-													ElseIf Dist < 9.0 Then
+													ElseIf Dist < 9.0
 														n\CurrSpeed = CurveValue(n\Speed * 1.08, n\CurrSpeed, 10.0)
 													Else
 														n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
@@ -1135,7 +1134,7 @@ Function UpdateNPCs%()
 											PlaySound2(OldManSFX[3], Camera, n\Collider)
 											n\SoundCHN2 = PlaySound2(OldManSFX[6 + Rand(0, 2)], Camera, n\Collider)
 											n\PathTimer = 0.0
-											n\Reload = (70.0 * 10.0) / (SelectedDifficulty\OtherFactors + 1.0)
+											n\Reload = (70.0 * 10.0) / (SelectedDifficulty\AggressiveNPCs + 1.0)
 										EndIf
 									EndIf
 								EndIf
@@ -1613,18 +1612,24 @@ Function UpdateNPCs%()
 									RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 10.0), 0.0)
 									
 									If Dist < 0.25 Then
-										TakeOffTimer = Min(TakeOffTimer + (fps\Factor[0] * 1.2), 400.0)
-										If wi\HazmatSuit > 0 Lor I_714\Using Then
-											If TakeOffTimer > 90.0 And TakeOffTimer - (fps\Factor[0] * 1.2) <= 90.0 And (Not ChannelPlaying(n\SoundCHN2)) Then
+										If wi\HazmatSuit > 0 Lor I_714\Using > 0 Then
+											TakeOffTimer = TakeOffTimer + (fps\Factor[0] * 1.5)
+											If TakeOffTimer > 100.0 And TakeOffTimer - (fps\Factor[0] * 1.5) <= 100.0 And (Not ChannelPlaying(n\SoundCHN2)) Then
 												If wi\HazmatSuit > 0 Then n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\TakeOffHazmat.ogg"))
-												If I_714\Using Then	n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\714Equipped.ogg"))
-											ElseIf TakeOffTimer >= 400.0
+												If I_714\Using = 3 Then	n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\714Equipped.ogg"))
+											ElseIf I_714\Using = 2 And TakeOffTimer >= 240.0
+												I_714\Using = 1
+												PlaySound_Strict(PickSFX[3])
+												CreateMsg("The ring failed to resist any longer.")
+												TakeOffTimer = 0.0
+												Exit
+											ElseIf TakeOffTimer >= 500.0
 												For i = 0 To MaxItemAmount - 1
 													If Inventory(i) <> Null Then
 														If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") Then
 															If Inventory(i)\State2 < 3.0 And wi\HazmatSuit = 4 Then
 																Inventory(i)\State2 = Inventory(i)\State2 + 1.0
-																TakeOffTimer = 195.0
+																TakeOffTimer = 240.0
 																me\CameraShake = 2.0
 															Else
 																RemoveItem(Inventory(i))
@@ -1633,8 +1638,8 @@ Function UpdateNPCs%()
 																CreateMsg("The hazmat suit was destroyed.")
 																TakeOffTimer = 0.0
 															EndIf
-														ElseIf I_714\Using Then
-															I_714\Using = False
+														ElseIf I_714\Using = 3
+															I_714\Using = 1
 															PlaySound_Strict(PickSFX[3])
 															CreateMsg("The ring was forcibly removed.")
 															TakeOffTimer = 0.0
@@ -2167,9 +2172,9 @@ Function UpdateNPCs%()
 											If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 												PlaySound2(DamageSFX[Rand(5, 8)], Camera, n\Collider)
 
-													InjurePlayer(Rnd(0.6 * DifficultyDMGMult, 0.9 * DifficultyDMGMult), 0.0, 0.0, Rnd(0.1, 0.25), 0.2)
+													InjurePlayer(Rnd(0.55 * DifficultyDMGMult, 0.85 * DifficultyDMGMult), 0.0, 0.0, Rnd(0.15, 0.25), 0.2)
 												
-												If me\Injuries > 3.0 Then
+												If me\Injuries => 3.0 Then
 													msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2."
 													Kill(True)
 												EndIf
@@ -2862,7 +2867,7 @@ Function UpdateNPCs%()
 			Case NPCType372
 				;[Block]
 				RN = PlayerRoom\RoomTemplate\Name
-				If RN <> "dimension_106" And RN <> "dimension_1499" Then 
+				If PlayerInReachableRoom() Then
 					If n\Idle Then
 						If (Not EntityHidden(n\OBJ)) Then HideEntity(n\OBJ)
 						If Rand(50) = 1 And (me\BlinkTimer < -5.0 And me\BlinkTimer > -15.0) Then
@@ -3132,9 +3137,9 @@ Function UpdateNPCs%()
 													InjurePlayer(Rnd(0.5))
 												Else
 													PlaySound_Strict(DamageSFX[Rand(9, 10)])
-													InjurePlayer(Rnd(0.8 * DifficultyDMGMult, 1.2 * DifficultyDMGMult), 0.0, 100.0, Rnd(0.15, 0.55), 0.2)
+													InjurePlayer(Rnd(0.75 * DifficultyDMGMult, 1.15 * DifficultyDMGMult), 0.0, 100.0, Rnd(0.25, 0.55), 0.2)
 													
-													If me\Injuries > 3.0 Then
+													If me\Injuries => 3.0 Then
 														If PlayerRoom\RoomTemplate\Name = "room2_ez" Then
 															msg\DeathMsg = Chr(34) + "One large and highly active tentacle-like appendage seems "
 															msg\DeathMsg = msg\DeathMsg + "to have grown outside the dead body of a scientist within office area [DATA REDACTED]. It's level of aggression is "
@@ -3427,9 +3432,7 @@ Function UpdateNPCs%()
 										n\State3 = n\State3 + fps\Factor[0]
 										If Rnd(5000.0) < n\State3 Then
 											Temp = True
-											If n\SoundCHN <> 0 Then
-												If ChannelPlaying(n\SoundCHN) Then Temp = False
-											EndIf
+											If ChannelPlaying(n\SoundCHN) Then Temp = False
 											If Temp Then
 												n\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\860\Cancer" + Rand(0, 2) + ".ogg"), Camera, n\Collider)
 											EndIf
@@ -3633,13 +3636,13 @@ Function UpdateNPCs%()
 									If Temp Then
 										If DistanceSquared(n\EnemyX, EntityX(n\Collider), n\EnemyZ, EntityZ(n\Collider)) < 2.25 Then
 											PlaySound_Strict(DamageSFX[11])
-											InjurePlayer(Rnd(1.5, 2.5), 0.0, 500.0, Rnd(0.2, 0.75))
+											InjurePlayer(Rnd(1.5, 2.5), 0.0, 500.0, Rnd(0.25, 0.75))
 										Else
 											SetNPCFrame(n, 449.0)
 										EndIf
 									EndIf
 									
-									If me\Injuries > 4.0 Then 
+									If me\Injuries => 4.0 Then 
 										msg\DeathMsg = Chr(34) + "All four (4) escaped SCP-939 specimens have been captured and recontained successfully. "
 										msg\DeathMsg = msg\DeathMsg + "They made quite a mess at Storage Area 6. A cleaning team has been dispatched." + Chr(34)
 										Kill(True)
@@ -4016,7 +4019,7 @@ Function UpdateNPCs%()
 									If n\State3 < 900.0 Then
 										me\BlurTimer = Float(((Sin(MilliSecs2() / 50.0) + 1.0) * 200.0) / Sqr(Dist))
 										
-										If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 And Dist < 128.0 Then
+										If I_714\Using <> 3 And wi\GasMask <> 4 And wi\HazmatSuit <> 4 And Dist < 128.0 Then
 											If me\StaminaEffect < 1.5 Then
 												Select Rand(4)
 													Case 1
@@ -4037,10 +4040,18 @@ Function UpdateNPCs%()
 														;[End Block]
 												End Select
 											EndIf
-											me\BlinkEffect = Max(me\BlinkEffect, 1.5)
+											If I_714\Using = 1 Then
+												me\BlinkEffect = Max(me\BlinkEffect, 1.6)
+											Else
+												me\BlinkEffect = Max(me\BlinkEffect, 1.3)
+											EndIf
 											me\BlinkEffectTimer = 500.0
 											
-											me\StaminaEffect = 2.0
+											If I_714\Using = 1 Then 
+												me\StaminaEffect = Max(me\StaminaEffect, 2.0)
+											Else
+												me\StaminaEffect = Max(me\StaminaEffect, 1.5)
+											EndIf
 											me\StaminaEffectTimer = 500.0
 										EndIf			
 									EndIf
@@ -4175,9 +4186,9 @@ Function UpdateNPCs%()
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 											
-											InjurePlayer(Rnd(0.5 * DifficultyDMGMult, 0.8 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.1, 0.3))
+											InjurePlayer(Rnd(0.45 * DifficultyDMGMult, 0.75 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.15, 0.35))
 													
-											If me\Injuries > 14.0 Then
+											If me\Injuries => 14.0 Then
 												Kill(True)
 											EndIf
 										EndIf
@@ -4288,7 +4299,7 @@ Function UpdateNPCs%()
 											Temp = Rand(0, 2)
 											If Temp = 0 Then
 												SetNPCFrame(n, 296.0)
-											ElseIf Temp = 1 Then
+											ElseIf Temp = 1
 												SetNPCFrame(n, 856.0)
 											Else
 												SetNPCFrame(n, 905.0)
@@ -4296,7 +4307,7 @@ Function UpdateNPCs%()
 											Temp = Rand(0, 2)
 											If Temp = 0 Then
 												SetNPCFrame(n\Target, 296.0)
-											ElseIf Temp = 1 Then
+											ElseIf Temp = 1
 												SetNPCFrame(n\Target, 856.0)
 											Else
 												SetNPCFrame(n\Target, 905.0)
@@ -4311,10 +4322,10 @@ Function UpdateNPCs%()
 							If n\CurrSpeed = 0.0
 								If n\Reload = 0.0 And n\PrevState <> 2 Then
 									AnimateNPC(n, 296.0, 320.0, 0.2)
-								ElseIf n\Reload = 0.0 And n\PrevState = 2 Then
+								ElseIf n\Reload = 0.0 And n\PrevState = 2
 									If n\Frame <= 532.5 Then
 										AnimateNPC(n, 509.0, 533.0, 0.2, False)
-									ElseIf n\Frame > 533.5 And n\Frame <= 600.5 Then
+									ElseIf n\Frame > 533.5 And n\Frame <= 600.5
 										AnimateNPC(n, 534.0, 601.0, 0.2, False)
 									Else
 										Temp = Rand(0, 1)
@@ -4331,7 +4342,7 @@ Function UpdateNPCs%()
 											PointEntity(n\OBJ, me\Collider)
 											RotateEntity(n\Collider, 0.0, CurveAngle(n\Angle, EntityYaw(n\Collider), 10.0), 0.0)
 										EndIf
-									ElseIf n\PrevState = 1 Then
+									ElseIf n\PrevState = 1
 										AnimateNPC(n, 602.0, 712.0, 0.2, False)
 										If n\Frame > 711.5 Then
 											n\Reload = 0.0
@@ -4339,15 +4350,15 @@ Function UpdateNPCs%()
 									Else
 										If n\Frame <= 319.5 Then
 											AnimateNPC(n, 296.0, 320.0, 0.2, False)
-										ElseIf n\Frame > 320.5 And  n\Frame < 903.5 Then
+										ElseIf n\Frame > 320.5 And  n\Frame < 903.5
 											AnimateNPC(n, 856.0, 904.0, 0.2, False)
-										ElseIf n\Frame > 904.5 And n\Frame < 952.5 Then
+										ElseIf n\Frame > 904.5 And n\Frame < 952.5
 											AnimateNPC(n, 905.0, 953.0, 0.2, False)
 										Else
 											Temp = Rand(0, 2)
 											If Temp = 0 Then
 												SetNPCFrame(n, 296.0)
-											ElseIf Temp = 1 Then
+											ElseIf Temp = 1
 												SetNPCFrame(n, 856.0)
 											Else
 												SetNPCFrame(n, 905.0)
@@ -4500,10 +4511,10 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.7 * DifficultyDMGMult, 1.15 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.1, 0.4), 0.2)
+										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.15, 0.4), 0.2)
 
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
-										If me\Injuries > 8.0 Then
+										If me\Injuries > 9.0 Then
 											Kill(True)
 											If PlayerRoom\RoomTemplate\Name = "dimension_1499"
 												msg\DeathMsg = "All personnel situated within Evacuation Shelter LC-2 during the breach have been administered "
@@ -4526,10 +4537,10 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.7 * DifficultyDMGMult, 1.15 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.1, 0.4), 0.2)
+										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.15, 0.4), 0.2)
 										
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
-										If me\Injuries > 10.0 Then
+										If me\Injuries > 9.0 Then
 											Kill(True)
 											If PlayerRoom\RoomTemplate\Name = "dimension_1499"
 												msg\DeathMsg = "All personnel situated within Evacuation Shelter LC-2 during the breach have been administered "
@@ -4717,9 +4728,9 @@ Function UpdateNPCs%()
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound_Strict(DamageSFX[Rand(5, 8)])
 											
-											InjurePlayer(Rnd(0.45 * DifficultyDMGMult, 0.75 * DifficultyDMGMult), 1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs), 0.0, Rnd(0.1, 0.25), 0.2)
+											InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.7 * DifficultyDMGMult), 1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs), 0.0, Rnd(0.15, 0.3), 0.2)
 													
-											If me\Injuries > 3.0 Then
+											If me\Injuries => 3.0 Then
 												msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by [DATA REDACTED], who was infected with SCP-008. Said subject was located by Nine-Tailed Fox and terminated."
 												Kill(True)
 											EndIf
@@ -5007,7 +5018,7 @@ Function UpdateMTFUnit%(n.NPCs)
 												n_I\Curr173\Target = Null
 												LoadNPCSound(n, "SFX\Character\MTF\173\Cont" + Rand(4) + ".ogg")
 												PlayMTFSound(n\Sound, n)
-												PlayAnnouncement("SFX\Character\MTF\Announc173Contain.ogg")
+												If PlayerInReachableRoom() Then PlayAnnouncement("SFX\Character\MTF\Announc173Contain.ogg")
 												Exit
 											EndIf
 										EndIf
@@ -5034,7 +5045,7 @@ Function UpdateMTFUnit%(n.NPCs)
 							EndIf
 						EndIf
 						n\PathTimer = 70.0 * Rnd(6.0, 10.0) ; ~ Search again after 6-10 seconds
-					ElseIf (n\PathTimer <= 70.0 * 2.5) And (n\MTFLeader = Null) Then
+					ElseIf (n\PathTimer <= 70.0 * 2.5) And (n\MTFLeader = Null)
 						n\PathTimer = n\PathTimer - fps\Factor[0]
 						n\CurrSpeed = 0.0
 						If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
@@ -5049,7 +5060,7 @@ Function UpdateMTFUnit%(n.NPCs)
 							FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 							n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 							RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
-						ElseIf n\PathStatus = 1 Then
+						ElseIf n\PathStatus = 1
 							If n\Path[n\PathLocation] = Null Then
 								If n\PathLocation > 19 Then
 									n\PathLocation = 0 : n\PathStatus = 0
@@ -5104,7 +5115,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 								FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 								n\CurrSpeed = 0.0
-							ElseIf EntityDistanceSquared(n\Collider, n\MTFLeader\Collider) > 1.0 Then
+							ElseIf EntityDistanceSquared(n\Collider, n\MTFLeader\Collider) > 1.0
 								PointEntity(n\Collider, n\MTFLeader\Collider)
 								RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
 								
@@ -5385,7 +5396,7 @@ Function UpdateMTFUnit%(n.NPCs)
 						If n\PathTimer <= 0.0 Then ; ~ Update path
 							n\PathStatus = FindPath(n, n\EnemyX, n\EnemyY + 0.1, n\EnemyZ)
 							n\PathTimer = 70.0 * Rnd(6.0, 10.0) ; ~ Search again after 6 seconds
-						ElseIf n\PathTimer <= 70.0 * 2.5 Then
+						ElseIf n\PathTimer <= 70.0 * 2.5
 							n\PathTimer = n\PathTimer - fps\Factor[0]
 							n\CurrSpeed = 0.0
 							If Rand(35) = 1 Then
@@ -5402,7 +5413,7 @@ Function UpdateMTFUnit%(n.NPCs)
 								FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 								n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 								RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
-							ElseIf n\PathStatus = 1 Then
+							ElseIf n\PathStatus = 1
 								If n\Path[n\PathLocation] = Null Then
 									If n\PathLocation > 19 Then
 										n\PathLocation = 0 : n\PathStatus = 0
@@ -5471,7 +5482,7 @@ Function UpdateMTFUnit%(n.NPCs)
 							PlayMTFSound(LoadTempSound("SFX\Character\MTF\Targetlost" + Rand(3) + ".ogg"), n)
 							If MTFCameraCheckTimer = 0.0 Then
 								If Rand(15 - (7 * SelectedDifficulty\AggressiveNPCs)) = 1 ; ~ Maybe change this to another chance -- ENDSHN
-									PlayAnnouncement("SFX\Character\MTF\AnnouncCameraCheck.ogg")
+									If PlayerInReachableRoom() Then PlayAnnouncement("SFX\Character\MTF\AnnouncCameraCheck.ogg")
 									MTFCameraCheckTimer = fps\Factor[0]
 								EndIf
 							EndIf
@@ -6021,7 +6032,7 @@ Function UpdateMTFUnit%(n.NPCs)
 							EndIf
 						EndIf
 						n\PathTimer = 70.0 * Rnd(6.0, 10.0) ; ~ Search again after 6-10 seconds
-					ElseIf n\PathTimer <= 70.0 * 2.5 And n\MTFLeader = Null Then
+					ElseIf n\PathTimer <= 70.0 * 2.5 And n\MTFLeader = Null
 						n\PathTimer = n\PathTimer - fps\Factor[0]
 						n\CurrSpeed = 0.0
 						FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
@@ -6034,7 +6045,7 @@ Function UpdateMTFUnit%(n.NPCs)
 							FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 							n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 							RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
-						ElseIf n\PathStatus = 1 Then
+						ElseIf n\PathStatus = 1
 							If n\Path[n\PathLocation] = Null Then
 								If n\PathLocation > 19 Then
 									n\PathLocation = 0 : n\PathStatus = 0
@@ -6065,7 +6076,7 @@ Function UpdateMTFUnit%(n.NPCs)
 							If n\MTFLeader = Null Then
 								FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 								n\CurrSpeed = 0.0
-							ElseIf EntityDistanceSquared(n\Collider, n\MTFLeader\Collider) > 1.0 Then
+							ElseIf EntityDistanceSquared(n\Collider, n\MTFLeader\Collider) > 1.0
 								PointEntity(n\Collider, n\MTFLeader\Collider)
 								RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
 								
@@ -6391,7 +6402,7 @@ Function TeleportCloser%(n.NPCs)
 	If closestWaypoint <> Null Then
 		If n\InFacility <> 1 Lor SelectedDifficulty\AggressiveNPCs Then
 			ShouldTeleport = True
-		ElseIf EntityY(closestWaypoint\OBJ, True) <= 7.0 And EntityY(closestWaypoint\OBJ, True) >= -10.0 Then
+		ElseIf EntityY(closestWaypoint\OBJ, True) <= 7.0 And EntityY(closestWaypoint\OBJ, True) >= -10.0
 			ShouldTeleport = True
 		EndIf
 		
@@ -6727,26 +6738,30 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 	Local DifficultyDMGMult#
 	
 	Select SelectedDifficulty\OtherFactors
+		Case CASUAL
+			;[Block]
+			DifficultyDMGMult = 1.0
+			;[End Block]
 		Case EASY
-		;[Block]
-		DifficultyDMGMult = 1.0
-		;[End Block]
+			;[Block]
+			DifficultyDMGMult = 1.15
+			;[End Block]
 		Case NORMAL
-		;[Block]
-		DifficultyDMGMult = 1.15
-		;[End Block]
+			;[Block]
+			DifficultyDMGMult = 1.3
+			;[End Block]
 		Case HARD
-		;[Block]
-		DifficultyDMGMult = 1.3
-		;[End Block]
+			;[Block]
+			DifficultyDMGMult = 1.45
+			;[End Block]
 		Case EXTREME
-		;[Block]
-		DifficultyDMGMult = 1.45
-		;[End Block]
+			;[Block]
+			DifficultyDMGMult = 1.6
+			;[End Block]
 		Case CAKE
-		;[Block]
-		DifficultyDMGMult = 0.75
-		;[End Block]
+			;[Block]
+			DifficultyDMGMult = 0.75
+			;[End Block]
 	End Select
 	
 	p.Particles = CreateParticle(PARTICLE_FLASH, x, y, z, Rnd(0.08, 0.1), 0.0, 5.0)
@@ -6762,8 +6777,8 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 		Select Rand(17)
 			Case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ; ~ Vest
 				;[Block]
-				me\Stamina = me\Stamina - Rnd(5.0)
-				InjurePlayer(Rnd(0.62 * DifficultyDMGMult, 0.73 * DifficultyDMGMult), 0.0, 650.0, Rnd(0.25, 0.5))
+				If wi\BallisticVest <> 2 Then me\Stamina = me\Stamina - Rnd(5.0)
+				InjurePlayer(Rnd(0.61 * DifficultyDMGMult, 0.72 * DifficultyDMGMult), 0.0, 650.0, Rnd(0.35, 0.5))
 				If wi\BallisticVest > 0 Then
 					ShotMessageUpdate = "A bullet penetrated your vest."
 				Else
@@ -6794,7 +6809,7 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 				;[End Block]
 			Case 15 ; ~ Neck
 				;[Block]
-				InjurePlayer(Rnd(0.75 * DifficultyDMGMult, 0.9 * DifficultyDMGMult), 0.0, 650.0)
+				InjurePlayer(Rnd(0.73 * DifficultyDMGMult, 0.88 * DifficultyDMGMult), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet struck your neck, making you gasp."
 				;[End Block]
 			Case 16, 17 ; ~ Helmet, Face or Head
@@ -6978,17 +6993,21 @@ Function NPCSpeedChange%(n.NPCs)
 	Select n\NPCType
 		Case NPCType173, NPCType106, NPCType096, NPCType049, NPCType049_2, NPCType939
 			Select SelectedDifficulty\OtherFactors
-				Case NORMAL
+				Case EASY
 					;[Block]
 					n\Speed = n\Speed * 1.1
 					;[End Block]
-				Case HARD
+				Case NORMAL
 					;[Block]
 					n\Speed = n\Speed * 1.2
 					;[End Block]
-				Case EXTREME
+				Case HARD
 					;[Block]
 					n\Speed = n\Speed * 1.3
+					;[End Block]
+				Case EXTREME
+					;[Block]
+					n\Speed = n\Speed * 1.4
 					;[End Block]
 				Case CAKE
 					;[Block]
@@ -6998,15 +7017,19 @@ Function NPCSpeedChange%(n.NPCs)
 	End Select
 End Function
 
-Function PlayerInReachableRoom%(CanSpawnIn049Chamber% = False)
+Function PlayerInReachableRoom%(CanSpawnIn049Chamber% = False, Intro% = False)
 	Local e.Events
 	Local RN$ = PlayerRoom\RoomTemplate\Name
 	
 	; ~ Player is in these rooms, returning false
-	If RN = "dimension_106" Lor RN = "dimension_1499" Lor RN = "cont1_173_intro" Lor RN = "gate_b" Lor RN = "gate_a" Then Return(False)
+	If RN = "dimension_106" Lor RN = "dimension_1499" Lor (RN = "cont1_173_intro" And (Not Intro)) Lor RN = "gate_b" Lor RN = "gate_a" Then Return(False)
 	; ~ Player is in SCP-860-1, returning false
 	If forest_event <> Null Then
 		If forest_event\EventState = 1.0 Then Return(False)
+	EndIf
+	; ~ Player is inside the fake world, returning false
+	If skull_event <> Null Then
+		If skull_event\EventState > 0.0 Then Return(False)
 	EndIf
 	
 	If (Not CanSpawnIn049Chamber) Then
@@ -7039,7 +7062,6 @@ Function UseDoorNPC%(n.NPCs, PlaySFX% = True)
 				Else
 					If (Not n\Path[n\PathLocation]\door\Open) Then
 						OpenCloseDoor(n\Path[n\PathLocation]\door, PlaySFX)
-						If n\NPCType = NPCType049 Then n\Path[n\PathLocation]\door\TimerState = 70.0 * 5.0
 					EndIf
 				EndIf
 			EndIf

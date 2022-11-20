@@ -12,6 +12,7 @@ Type ItemTemplates
 	Field OBJ%, OBJPath$
 	Field InvImg%, InvImg2%, InvImgPath$
 	Field ImgPath$, Img%
+	Field ImgWidth%, ImgHeight%
 	Field IsAnim%
 	Field Scale#
 	Field Tex%, TexPath$
@@ -336,9 +337,9 @@ Function RemoveWearableItems%(item.Items)
 			;[Block]
 			If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 			;[End Block]
-		Case "scp714"
+		Case "scp714", "greyscp714"
 			;[Block]
-			I_714\Using = False
+			I_714\Using = 0
 			;[End Block]
 		Case "scp1499", "super1499"
 			;[Block]
@@ -704,7 +705,7 @@ End Function
 
 Function IsItemInFocus%()
 	Select SelectedItem\ItemTemplate\TempName
-		Case "nav", "nav300", "nav310", "navulti", "paper", "oldpaper", "badge", "radio", "18vradio", "fineradio", "veryfineradio"
+		Case "nav", "nav300", "nav310", "navulti", "paper", "oldpaper", "badge", "radio", "18vradio", "fineradio", "veryfineradio", "scp1025"
 			;[Block]
 			Return(True)
 			;[End Block]

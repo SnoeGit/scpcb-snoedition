@@ -791,6 +791,8 @@ Function LoadItems%()
 	CreateItemTemplate("SCP-500", "scp500", ItemsPath + "scps\scp_500.b3d", INVPath + "INV_scp_500.png", "", 0.035, 2)
 	CreateItemTemplate("SCP-513", "scp513", ItemsPath + "scps\scp_513.b3d", INVPath + "INV_scp_513.png", "", 0.1, 2)
 	CreateItemTemplate("SCP-714", "scp714", ItemsPath + "scps\scp_714.b3d", INVPath + "INV_scp_714.png", "", 0.3, 3)
+	CreateItemTemplate("Green Jade Ring", "kill714", ItemsPath + "scps\scp_714.b3d", INVPath + "INV_scp_714.png", "", 0.3, 3)
+	CreateItemTemplate("Augelite Ring", "coarse714", ItemsPath + "scps\scp_714.b3d", INVPath + "INV_scp_714_grey.png", "", 0.3, 3, ItemsPath + "scps\scp_714_grey.png", "", 1)
 	CreateItemTemplate("SCP-860", "scp860", ItemsPath + "scps\scp_860.b3d", INVPath + "INV_scp_860.png", "", 0.003, 3)
 	CreateItemTemplate("SCP-1025", "scp1025", ItemsPath + "scps\scp_1025.b3d", INVPath + "INV_scp_1025.png", "", 0.1, 0)
 	CreateItemTemplate("SCP-1123", "scp1123", ItemsPath + "scps\scp_1123.b3d", INVPath + "INV_scp_1123.png", "", 0.015, 2)
@@ -858,6 +860,8 @@ Function LoadItems%()
 	
 	it.ItemTemplates = CreateItemTemplate("Pill", "pill", ItemsPath + "scps\pill.b3d", INVPath + "INV_pill.png", "", 0.0001, 2)
 	EntityColor(it\OBJ, 255.0, 255.0, 255.0)
+	
+	CreateItemTemplate("Green Jade Ring", "ring", ItemsPath + "scps\scp_714.b3d", INVPath + "INV_scp_714.png", "", 0.2, 3)
 	
 	CreateItemTemplate("Radio Transceiver", "radio", ItemsPath + "radio.b3d", INVPath + "INV_radio.png", ItemsPath + "radio_HUD.png", 1.0, 1)
 	CreateItemTemplate("Radio Transceiver", "fineradio", ItemsPath + "radio.b3d", INVPath + "INV_radio.png", ItemsPath + "radio_HUD.png", 1.0, 1)
@@ -1908,14 +1912,18 @@ End Function
 Function InitStats%()
 	me\Controllable = True: me\Playable = True : me\SelectedEnding = -1
 	
+	opt\CameraFogFar = 6.0
+	opt\CameraFogNear = 0.1
 	HideDistance = 17.0
-	as\Timer = 70.0 * 120.0
 	
 	If opt\DebugMode Then
 		InitCheats()
 	Else
 		ClearCheats()
 	EndIf
+	
+	as\Timer = 70.0 * 120.0
+	If SelectedDifficulty\SaveType <> SAVE_ANYWHERE Then opt\AutoSaveEnabled = False
 	
 	LoadAchievementsFile()
 End Function
@@ -1940,6 +1948,8 @@ Function InitNewGame%()
 	me\BlinkTimer = -10.0 : me\BlinkEffect = 1.0 : me\Stamina = 100.0 : me\StaminaEffect = 1.0 : me\HeartBeatRate = 70.0 : me\Funds = Rand(4)
 	
 	I_005\ChanceToSpawn = Rand(3)
+	
+	I_714\Using = 1
 	
 	AccessCode = 0
 	Repeat

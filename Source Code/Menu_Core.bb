@@ -276,7 +276,7 @@ Function UpdateMainMenu%()
 					y = 376 * MenuScale
 					
 					Width = 580 * MenuScale
-					Height = 345 * MenuScale
+					Height = 370 * MenuScale
 					
 					CurrSave\Name = UpdateMainMenuInputBox(x + (150 * MenuScale), y + (15 * MenuScale), 200 * MenuScale, 30 * MenuScale, CurrSave\Name, 1, 15)
 					If SelectedInputBox = 1 Then
@@ -304,7 +304,7 @@ Function UpdateMainMenu%()
 					
 					opt\IntroEnabled = UpdateMainMenuTick(x + (280 * MenuScale), y + (110 * MenuScale), opt\IntroEnabled)	
 					
-					For i = SAFE To ESOTERIC
+					For i = CASUAL To ESOTERIC
 						Local PrevSelectedDifficulty.Difficulty = SelectedDifficulty
 						
 						If UpdateMainMenuTick(x + (20 * MenuScale), y + ((175 + 28 * i) * MenuScale), (SelectedDifficulty = difficulties[i])) Then SelectedDifficulty = difficulties[i]
@@ -329,7 +329,7 @@ Function UpdateMainMenu%()
 							PlaySound_Strict(ButtonSFX)
 						EndIf
 						
-						; ~ Agressive NPCs
+						; ~ Aggressive NPCs
 						SelectedDifficulty\AggressiveNPCs = UpdateMainMenuTick(x + (160 * MenuScale), y + (210 * MenuScale), SelectedDifficulty\AggressiveNPCs)
 						
 						; ~ Inventory slots
@@ -348,7 +348,7 @@ Function UpdateMainMenu%()
 							If SelectedDifficulty\OtherFactors < CAKE Then
 								SelectedDifficulty\OtherFactors = SelectedDifficulty\OtherFactors + 1
 							Else
-								SelectedDifficulty\OtherFactors = EASY
+								SelectedDifficulty\OtherFactors = CASUAL
 							EndIf
 							PlaySound_Strict(ButtonSFX)
 						EndIf
@@ -1180,7 +1180,7 @@ Function RenderMainMenu%()
 				
 				y = y + Height + (20 * MenuScale)
 				Width = 580 * MenuScale
-				Height = 345 * MenuScale
+				Height = 370 * MenuScale
 				
 				RenderFrame(x, y, Width, Height)				
 				
@@ -1209,7 +1209,7 @@ Function RenderMainMenu%()
 				Text(x + (20 * MenuScale), y + (115 * MenuScale), "Enable intro sequence:")
 				
 				Text(x + (20 * MenuScale), y + (155 * MenuScale), "Difficulty:")
-				For i = SAFE To ESOTERIC
+				For i = CASUAL To ESOTERIC
 					Color(difficulties[i]\R, difficulties[i]\G, difficulties[i]\B)
 					Text(x + (60 * MenuScale), y + ((180 + 28 * i) * MenuScale), difficulties[i]\Name)
 				Next
@@ -1255,6 +1255,10 @@ Function RenderMainMenu%()
 					
 					Color(255, 255, 255)
 					Select SelectedDifficulty\OtherFactors
+						Case CASUAL
+							;[Block]
+							TempStr = "Casual"
+							;[End Block]
 						Case EASY
 							;[Block]
 							TempStr = "Easy"
