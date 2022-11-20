@@ -13,6 +13,8 @@ General:
 - Euclid's inventory slots reduced to 6.
 - Euclid, Keter, and Apollyon NPCs are all 10% faster.
 - Euclid has AggressiveNPCs turned on.
+- SCP-106 speed reduced from 1.24 to 1.22
+- SCP-049 speed reduced from 1.5 to 1.49
 
 Rooms:
 
