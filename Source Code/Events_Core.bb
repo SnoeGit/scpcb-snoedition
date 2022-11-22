@@ -2108,7 +2108,7 @@ Function UpdateEvents%()
 							TurnEntity(me\Collider, 0.0, AngleDist(PointDirection(EntityX(me\Collider, True), EntityZ(me\Collider, True), EntityX(e\room\Objects[1], True), EntityZ(e\room\Objects[1], True)) + 90.0 + Sin(WrapAngle(e\EventState3 / 10.0)), EntityYaw(me\Collider)) / 4.0, 0.0, True)
 							CameraPitch = (CameraPitch * 0.8) + (((-60.0) * Min(Max((2.0 - Distance(EntityX(me\Collider, True), EntityX(e\room\Objects[1], True), EntityZ(me\Collider, True), EntityZ(e\room\Objects[1], True))) / 2.0, 0.0), 1.0)) * 0.2)
 							
-							me\Sanity = me\Sanity - (fps\Factor[0] * ((1.1 + (0.5 * SelectedDifficulty\AggressiveNPCs)) / I_714\Using) / (wi\NightVision + wi\SCRAMBLE))
+							me\Sanity = me\Sanity - (fps\Factor[0] * ((1.1 + (0.275 * SelectedDifficulty\AggressiveNPCs)) / I_714\Using) / (wi\NightVision + wi\SCRAMBLE))
 							me\RestoreSanity = False
 							me\BlurTimer = Sin(MilliSecs2() / 10) * Abs(me\Sanity)
 							
@@ -4715,7 +4715,7 @@ Function UpdateEvents%()
 								EndIf
 								If EntityVisible(e\room\Objects[2], Camera) Then 
 									
-									me\Sanity = Max(-600.0, me\Sanity - fps\Factor[0] * ((0.45 + (0.45 * SelectedDifficulty\AggressiveNPCs)) / I_714\Using))
+									me\Sanity = Max(-600.0, me\Sanity - fps\Factor[0] * ((0.45 + (0.225 * SelectedDifficulty\AggressiveNPCs)) / I_714\Using))
 									me\RestoreSanity = False
 									
 									e\SoundCHN2 = LoopSound2(e\Sound2, e\SoundCHN2, Camera, e\room\Objects[3], 10.0, e\EventState3 / (86.0 * 70.0))
@@ -4802,7 +4802,7 @@ Function UpdateEvents%()
 								Else
 									If SelectedDifficulty\SaveType <> SAVE_ANYWHERE Then CanSave = False
 									If DistanceSquared(EntityX(me\Collider), EntityX(e\room\RoomDoors[0]\FrameOBJ), EntityZ(me\Collider), EntityZ(e\room\RoomDoors[0]\FrameOBJ)) < 21.5 And EntityY(me\Collider) < -2.5 Then
-										If me\Sanity > -500.0 Then me\Sanity = me\Sanity - fps\Factor[0] * ((0.2 + (0.2 * SelectedDifficulty\AggressiveNPCs)) / I_714\Using)
+										If me\Sanity > -500.0 Then me\Sanity = me\Sanity - fps\Factor[0] * ((0.2 + (0.1 * SelectedDifficulty\AggressiveNPCs)) / I_714\Using)
 										me\RestoreSanity = False
 										Pvt = CreatePivot()
 										PositionEntity(Pvt, EntityX(Camera), EntityY(me\Collider), EntityZ(Camera))
@@ -5960,10 +5960,10 @@ Function UpdateEvents%()
 							If e\room\NPC[0]\State = 0.0 Lor EntityDistanceSquared(me\Collider, e\room\NPC[0]\Collider) > 400.0 Then
 								e\EventState3 = e\EventState3 + (1.0 + me\CurrSpeed) * fps\Factor[0]
 								If (e\EventState3 Mod 500.0) < 10.0 And ((e\EventState3 - (1.0 + me\CurrSpeed) * fps\Factor[0]) Mod 500.0) > 490.0 Then
-									If e\EventState3 > 3000.0 - (500.0 * SelectedDifficulty\AggressiveNPCs) And Rnd(10000 + (500.0 * SelectedDifficulty\AggressiveNPCs)) < e\EventState3
+									If e\EventState3 > 3000.0 - (250.0 * SelectedDifficulty\AggressiveNPCs) And Rnd(10000 + (250.0 * SelectedDifficulty\AggressiveNPCs)) < e\EventState3
 										e\room\NPC[0]\State = 2.0
 										PositionEntity(e\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
-										e\EventState3 = e\EventState3 - Rnd(1000.0, 2000.0 - (500.0 * SelectedDifficulty\AggressiveNPCs))
+										e\EventState3 = e\EventState3 - Rnd(1000.0, 2000.0 - (250.0 * SelectedDifficulty\AggressiveNPCs))
 									Else
 										e\room\NPC[0]\State = 1.0
 										PositionEntity(e\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
@@ -6812,7 +6812,7 @@ Function UpdateEvents%()
 						CanSave = False
 						e\room\RoomDoors[1]\Open = False
 						If e\EventState > 70.0 * 2.0 Then
-							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (0.25 + (0.25 * SelectedDifficulty\AggressiveNPCs)))
+							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (0.25 + (0.125 * SelectedDifficulty\AggressiveNPCs)))
 							If e\room\RoomDoors[0]\Open Then
 								e\room\RoomDoors[0]\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\914\DoorClose.ogg"), Camera, e\room\RoomDoors[0]\OBJ)
 							EndIf
@@ -7867,7 +7867,7 @@ Function UpdateEvents%()
 					EndIf
 				Else
 					If e\EventState = 2.0
-						If Rand(-1, 1 + (2 * SelectedDifficulty\AggressiveNPCs)) > 0 Then
+						If Rand(-1, 1 + (1 * SelectedDifficulty\AggressiveNPCs)) > 0 Then
 							e\EventState = 0.0
 						Else
 							e\EventState = 3.0
@@ -8400,7 +8400,7 @@ Function UpdateDimension106%()
 										PrevSecondaryLightOn = 0.0
 										
 										me\BlinkTimer = -10.0 : me\LightBlink = 5.0 : me\BlurTimer = 1500.0
-										If wi\NightVision > 0 Then opt\CameraFogFar = 22.0
+										If wi\NightVision > 0 Then opt\CameraFogFar = HideDistance
 										
 										PlaySound_Strict(LoadTempSound("SFX\Room\PocketDimension\Exit.ogg"))
 										
@@ -8621,7 +8621,7 @@ Function UpdateDimension106%()
 										PrevSecondaryLightOn = 0.0
 										
 										me\LightBlink = 5.0
-										If wi\NightVision > 0 Then opt\CameraFogFar = 22.0
+										If wi\NightVision > 0 Then opt\CameraFogFar = HideDistance
 										
 										If RoomName = "cont1_106" Then
 											TeleportEntity(me\Collider, EntityX(r\Objects[10], True), 0.4, EntityZ(r\Objects[10], True), 0.3, True)

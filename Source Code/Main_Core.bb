@@ -130,7 +130,7 @@ InitLoadingScreens("LoadingScreens\loading_screens.ini")
 ; ~ As a workaround, I moved the files and renamed them so they
 ; ~ Can load without FastText
 fo\FontID[Font_Default] = LoadFont_Strict("GFX\fonts\Courier New.ttf", 16)
-fo\FontID[Font_Default_Big] = LoadFont_Strict("GFX\fonts\\Courier New.ttf", 52)
+fo\FontID[Font_Default_Big] = LoadFont_Strict("GFX\fonts\Courier New.ttf", 52)
 fo\FontID[Font_Digital] = LoadFont_Strict("GFX\fonts\DS-Digital.ttf", 20)
 fo\FontID[Font_Digital_Big] = LoadFont_Strict("GFX\fonts\DS-Digital.ttf", 60)
 fo\FontID[Font_Journal] = LoadFont_Strict("GFX\fonts\Journal.ttf", 58)
@@ -2755,14 +2755,15 @@ Function UpdateGUI%()
 						If SelectedItem\State3 = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 							
-								If (wi\NightVision = 1 And SelectedItem\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And SelectedItem\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And SelectedItem\ItemTemplate\TempName = "finenvg") Then
+							If (wi\NightVision = 1 And SelectedItem\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And SelectedItem\ItemTemplate\TempName = "supernvg") Lor (wi\NightVision = 3 And SelectedItem\ItemTemplate\TempName = "finenvg") Then
 								CreateMsg("You removed the goggles.")
 								wi\NightVision = 0
-								wi\NVGTimer = 600.0
+								wi\NVGTimer = 600.0 ;Reset timer
 								opt\CameraFogFar = opt\StoredCameraFogFar
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[1])
 							Else
 								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+								If wi\NightVision = 0 Then opt\StoredCameraFogFar = opt\CameraFogFar
 								CreateMsg("You put on the goggles.")
 								Select SelectedItem\ItemTemplate\TempName
 									Case "nvg"
@@ -2778,7 +2779,7 @@ Function UpdateGUI%()
 										wi\NightVision = 3
 										;[End Block]
 								End Select
-								If PlayerRoom\RoomTemplate\Name <> "dimension_106" Then opt\CameraFogFar = 22.0
+								If PlayerRoom\RoomTemplate\Name <> "dimension_106" Then opt\CameraFogFar = HideDistance
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[0])
 							EndIf
 							SelectedItem\State3 = 0.0
@@ -2876,16 +2877,12 @@ Function UpdateGUI%()
 										I_1499\y = 0.0
 										I_1499\z = 0.0
 										If n_I\Curr096 <> Null Then
-										If n_I\Curr096\SoundCHN <> 0 Then
-										SetStreamVolume_Strict(n_I\Curr096\SoundCHN, 0.0)
-											EndIf
+											If n_I\Curr096\SoundCHN <> 0 Then SetStreamVolume_Strict(n_I\Curr096\SoundCHN, 0.0)
 										EndIf
 										For e.Events = Each Events
 											If e\EventID = e_dimension_1499 Then
 												If EntityDistanceSquared(e\room\OBJ, me\Collider) > PowTwo(8300.0 * RoomScale) Then
-													If e\EventState2 < 5.0 Then
-														e\EventState2 = e\EventState2 + 1.0
-													EndIf
+													If e\EventState2 < 5.0 Then e\EventState2 = e\EventState2 + 1.0
 												EndIf
 												Exit
 											EndIf
@@ -2950,7 +2947,7 @@ Function UpdateGUI%()
 										;[Block]
 										wi\SCRAMBLE = 3
 										If (Not chs\GodMode) Then PlaySound_Strict(LoadTempSound("SFX\SCP\294\Burn.ogg"))
-										msg\DeathMsg = SubjectName + " found dead with SCRAMBLE Gear that appears to have partially melted. It is unsure why apparatus had malfunctioned."	
+										msg\DeathMsg = SubjectName + " found dead with SCRAMBLE Gear that appears to have partially melted. It is unsure why the apparatus had malfunctioned."	
 										Kill()
 										;[End Block]
 								End Select
@@ -3313,7 +3310,7 @@ Function UpdateGUI%()
 						me\StaminaEffectTimer = 20.0
 						
 						If SelectedItem\ItemTemplate\TempName = "syringeinf" Then
-							I_008\Timer = I_008\Timer + (1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs))
+							I_008\Timer = I_008\Timer + (1.0 + SelectedDifficulty\AggressiveNPCs)
 							me\VomitTimer = 70.0 * 1.0
 						EndIf
 						CreateMsg("You injected yourself with the syringe and feel a slight adrenaline rush.")

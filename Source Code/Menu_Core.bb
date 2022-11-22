@@ -330,7 +330,14 @@ Function UpdateMainMenu%()
 						EndIf
 						
 						; ~ Aggressive NPCs
-						SelectedDifficulty\AggressiveNPCs = UpdateMainMenuTick(x + (160 * MenuScale), y + (210 * MenuScale), SelectedDifficulty\AggressiveNPCs)
+						If MouseOn(x + (160 * MenuScale), y + (210 * MenuScale), ImageWidth(ga\ArrowIMG[1]), ImageHeight(ga\ArrowIMG[1])) And mo\MouseHit1 Then
+							If SelectedDifficulty\AggressiveNPCs < 2 Then
+								SelectedDifficulty\AggressiveNPCs = SelectedDifficulty\AggressiveNPCs + 1
+							Else
+								SelectedDifficulty\AggressiveNPCs = 0
+							EndIf
+							PlaySound_Strict(ButtonSFX)
+						EndIf
 						
 						; ~ Inventory slots
 						If MouseOn(x + (410 * MenuScale), y + (240 * MenuScale), ImageWidth(ga\ArrowIMG[3]), ImageHeight(ga\ArrowIMG[3])) And mo\MouseHit1 Then
@@ -1241,8 +1248,22 @@ Function RenderMainMenu%()
 					Text(x + (200 * MenuScale), y + (186 * MenuScale), "Save type: " + TempStr)
 					
 					; ~ Aggressive NPCs
-					Color(255, 255, 255)
-					Text(x + (200 * MenuScale), y + (215 * MenuScale), "Aggressive NPCs")
+					DrawImage(ga\ArrowIMG[1], x + (160 * MenuScale), y + (210 * MenuScale))
+					Select SelectedDifficulty\AggressiveNPCs
+						Case 0
+							;[Block]
+							TempStr = "Not Aggressive"
+							;[End Block]
+						Case 1
+							;[Block]
+							TempStr = "Aggressive"
+							;[End Block]
+						Case 2
+							;[Block]
+							TempStr = "Very Aggressive"
+							;[End Block]
+					End Select
+					Text(x + (200 * MenuScale), y + (215 * MenuScale), "Aggressive NPCs: " + TempStr)
 					
 					; ~ Inventory slots
 					DrawImage(ga\ArrowIMG[3], x + (160 * MenuScale), y + 240 * MenuScale)

@@ -3388,7 +3388,7 @@ Function UpdateSecurityCams%()
 						If (sc\CoffinEffect = 1 Lor sc\CoffinEffect = 3) And I_714\Using <> 3 And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then
 							If sc\InSight Then
 								Local Pvt% = CreatePivot()
-								me\Sanity = me\Sanity - fps\Factor[0] * ((1.0 + (0.5 * SelectedDifficulty\AggressiveNPCs)) / I_714\Using)
+								me\Sanity = me\Sanity - fps\Factor[0] * ((1.0 + (0.25 * SelectedDifficulty\AggressiveNPCs)) / I_714\Using)
 								me\RestoreSanity = False
 								
 								PositionEntity(Pvt, EntityX(Camera), EntityY(Camera), EntityZ(Camera))
