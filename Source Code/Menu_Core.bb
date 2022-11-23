@@ -304,7 +304,7 @@ Function UpdateMainMenu%()
 					
 					opt\IntroEnabled = UpdateMainMenuTick(x + (280 * MenuScale), y + (110 * MenuScale), opt\IntroEnabled)	
 					
-					For i = CASUAL To ESOTERIC
+					For i = EASY To ESOTERIC
 						Local PrevSelectedDifficulty.Difficulty = SelectedDifficulty
 						
 						If UpdateMainMenuTick(x + (20 * MenuScale), y + ((175 + 28 * i) * MenuScale), (SelectedDifficulty = difficulties[i])) Then SelectedDifficulty = difficulties[i]
@@ -352,10 +352,10 @@ Function UpdateMainMenu%()
 						
 						; ~ Other factor's difficulty
 						If MouseOn(x + (160 * MenuScale), y + (270 * MenuScale), ImageWidth(ga\ArrowIMG[1]), ImageHeight(ga\ArrowIMG[1])) And mo\MouseHit1 Then
-							If SelectedDifficulty\OtherFactors < CAKE Then
+							If SelectedDifficulty\OtherFactors < CASUAL Then
 								SelectedDifficulty\OtherFactors = SelectedDifficulty\OtherFactors + 1
 							Else
-								SelectedDifficulty\OtherFactors = CASUAL
+								SelectedDifficulty\OtherFactors = EASY
 							EndIf
 							PlaySound_Strict(ButtonSFX)
 						EndIf
@@ -1216,7 +1216,7 @@ Function RenderMainMenu%()
 				Text(x + (20 * MenuScale), y + (115 * MenuScale), "Enable intro sequence:")
 				
 				Text(x + (20 * MenuScale), y + (155 * MenuScale), "Difficulty:")
-				For i = CASUAL To ESOTERIC
+				For i = EASY To ESOTERIC
 					Color(difficulties[i]\R, difficulties[i]\G, difficulties[i]\B)
 					Text(x + (60 * MenuScale), y + ((180 + 28 * i) * MenuScale), difficulties[i]\Name)
 				Next
@@ -1276,10 +1276,6 @@ Function RenderMainMenu%()
 					
 					Color(255, 255, 255)
 					Select SelectedDifficulty\OtherFactors
-						Case CASUAL
-							;[Block]
-							TempStr = "Casual"
-							;[End Block]
 						Case EASY
 							;[Block]
 							TempStr = "Easy"
@@ -1292,13 +1288,17 @@ Function RenderMainMenu%()
 							;[Block]
 							TempStr = "Hard"
 							;[End Block]
+						Case HARDER
+							;[Block]
+							TempStr = "Harder"
+							;[End Block]
 						Case EXTREME
 							;[Block]
 							TempStr = "Extreme"
 							;[End Block]
-						Case CAKE
+						Case CASUAL
 							;[Block]
-							TempStr = "Cake"
+							TempStr = "Casual"
 							;[End Block]
 					End Select
 					Text(x + (200 * MenuScale), y + (276 * MenuScale), "Other difficulty factors: " + TempStr)

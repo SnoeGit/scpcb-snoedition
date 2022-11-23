@@ -1612,17 +1612,12 @@ Function UpdateNPCs%()
 									RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 10.0), 0.0)
 									
 									If Dist < 0.25 Then
-										If wi\HazmatSuit > 0 Lor I_714\Using > 0 Then
+										If wi\HazmatSuit > 0 Lor I_714\Using > 1 Then
 											TakeOffTimer = TakeOffTimer + (fps\Factor[0] * 1.5)
+											If I_714\Using = 2 And TakeOffTimer < 240.0 Then TakeOffTimer = 240.0
 											If TakeOffTimer > 100.0 And TakeOffTimer - (fps\Factor[0] * 1.5) <= 100.0 And (Not ChannelPlaying(n\SoundCHN2)) Then
 												If wi\HazmatSuit > 0 Then n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\TakeOffHazmat.ogg"))
 												If I_714\Using = 3 Then	n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\714Equipped.ogg"))
-											ElseIf I_714\Using = 2 And TakeOffTimer >= 240.0
-												I_714\Using = 1
-												PlaySound_Strict(PickSFX[3])
-												CreateMsg("The ring failed to resist any longer.")
-												TakeOffTimer = 0.0
-												Exit
 											ElseIf TakeOffTimer >= 500.0
 												For i = 0 To MaxItemAmount - 1
 													If Inventory(i) <> Null Then
@@ -1638,10 +1633,14 @@ Function UpdateNPCs%()
 																CreateMsg("The hazmat suit was destroyed.")
 																TakeOffTimer = 0.0
 															EndIf
-														ElseIf I_714\Using = 3
+														ElseIf I_714\Using > 1
 															I_714\Using = 1
 															PlaySound_Strict(PickSFX[3])
-															CreateMsg("The ring was forcibly removed.")
+															If I_714\Using = 3 Then
+																CreateMsg("The ring was forcibly removed.")
+															Else
+																CreateMsg("The ring failed to resist any longer.")
+															EndIf
 															TakeOffTimer = 0.0
 															Exit
 														EndIf

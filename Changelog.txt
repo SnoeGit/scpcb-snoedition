@@ -5,7 +5,6 @@ General:
 - Some SCP-420-J healing nerfed from 0.5 -> 0.42
 - Heavy gear were given unique textures.
 - SCP-173 does not cause the "STOP HIDING" to appear anymore.
-- SCP-500-01 cures SCP-008 and SCP-409 twice as fast.
 - Heavy Hazmat Suit completely prevents taking damage from SCP-035's containment chamber.
 - A new item Augelite Ring as a new item that gives the player more stamina than SCP-714 but does not give you immunity to memetic SCPs and instead resists them.
 - Added 2 new rings that are both named Green Jade Ring.
@@ -13,22 +12,32 @@ General:
 - Euclid's inventory slots reduced to 6.
 - Euclid, Keter, and Apollyon NPCs are all 10% faster.
 - Euclid has AggressiveNPCs turned on.
-- SCP-106 speed reduced from 1.24 to 1.22
-- SCP-049 speed reduced from 1.5 to 1.49
+- Keter and Apollyon both use Very AggressiveNPCs.
+- AggressiveNPCs increases enemy spawnrate by 50% instead of 100% increase and with Very AggressiveNPCs having the original 100% increase in spawnrate.
+- SCP-106 speed reduced from 1.24 to 1.23
 
 Rooms:
 
 - Replace a possible 9V Battery with a 4.5V Battery in room2_office_2.
-- Remove 9V Battery from room2_3_ez and make the second battery always spawn between either a 9V or 4.5V.
+- Remove third 9V Battery from room2_3_ez and make the second battery always spawn between either a 9V or 4.5V.
 - Maintenance Tunnels'(room2_mt) NVGs have battery.
 - Falling Guard drops the Level 3 Key Card at the SCP-895 staircases.
 - SCP-106 will always spawn at the coffin of SCP-895.
 - Ulgrin after the intro now shoots the player when they get too close.
 
-Bug Fixes:
+v1.61
 
-- SCP-500-01 cures both SCP-008 and SCP-409 without having to cure SCP-008 first.
-- SCP-427 does not overwrite SCP-500-01's ability to quickly cure both SCP-008 and SCP-409.
+General:
+
+- SCP-500-01 cures the player fully twice as fast.
+- Some SCP-420-J healing reduced from 0.5 -> 0.42
+
+Bug Fixes: 
+
+- Hazmat Suit no longer has the gasmask overlay when it shouldn't.
+- SCP-966 attack can reach the player.
+- SCP-427 does not override SCP-500-01 anymore.
+- SCP-500-01 cures both SCP-008 and SCP-409 at the same time.
 
 v1.6
 
@@ -67,7 +76,7 @@ General:
 Rooms:
 
 - SCP-008's Chamber requires a Level 4 Key Card to enter.
-- Entering SCP-008's Chamber now infects players who do not wear a Gas Mask.
+- Entering SCP-008's Chamber now infects players who do not wear a gasmask.
 - SCP-012 now has a Sanity system that once the player runs out of sanity will no longer be able to resist SCP-012.
 - SCP-895 can affect the SCP-106 Observation room monitor.
 - Can no longer save at chat screen in SCP-012's room if the event is activated and one is not wearing SCP-714 or Heavy gear.

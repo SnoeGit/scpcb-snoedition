@@ -34,12 +34,12 @@ Const NO_SAVES% = 3
 
 ; ~ Other Factors ID Constants
 ;[Block]
-Const CASUAL% = 0
-Const EASY% = 1
-Const NORMAL% = 2
-Const HARD% = 3
+Const EASY% = 0
+Const NORMAL% = 1
+Const HARD% = 2
+Const HARDER% = 3
 Const EXTREME% = 4
-Const CAKE% = 5
+Const CASUAL% = 5
 ;[End Block]
 
 Function SetDifficultyColor%(ID%, R%, G%, B%)
@@ -54,7 +54,7 @@ difficulties[SAFE]\Description = "The game can be saved any time. However, as in
 difficulties[SAFE]\AggressiveNPCs = 0
 difficulties[SAFE]\InventorySlots = 10
 difficulties[SAFE]\SaveType = SAVE_ANYWHERE
-difficulties[SAFE]\OtherFactors = CASUAL
+difficulties[SAFE]\OtherFactors = EASY
 SetDifficultyColor(SAFE, 90, 160, 25)
 
 difficulties[MILD] = New Difficulty
@@ -64,7 +64,7 @@ difficulties[MILD]\Description = difficulties[MILD]\Description + "Mild-class ob
 difficulties[MILD]\AggressiveNPCs = 0
 difficulties[MILD]\InventorySlots = 8
 difficulties[MILD]\SaveType = SAVE_ON_SCREENS
-difficulties[MILD]\OtherFactors = EASY
+difficulties[MILD]\OtherFactors = NORMAL
 SetDifficultyColor(MILD, 130, 135, 25)
 
 difficulties[EUCLID] = New Difficulty
@@ -74,7 +74,7 @@ difficulties[EUCLID]\Description = difficulties[EUCLID]\Description + "Euclid-cl
 difficulties[EUCLID]\AggressiveNPCs = 1
 difficulties[EUCLID]\InventorySlots = 6
 difficulties[EUCLID]\SaveType = SAVE_ON_SCREENS
-difficulties[EUCLID]\OtherFactors = NORMAL
+difficulties[EUCLID]\OtherFactors = HARD
 SetDifficultyColor(EUCLID, 200, 200, 25)
 
 difficulties[KETER] = New Difficulty
@@ -84,7 +84,7 @@ difficulties[KETER]\Description = difficulties[KETER]\Description + "The same ca
 difficulties[KETER]\AggressiveNPCs = 2
 difficulties[KETER]\InventorySlots = 4
 difficulties[KETER]\SaveType = DELETE_ON_DEATH
-difficulties[KETER]\OtherFactors = HARD
+difficulties[KETER]\OtherFactors = HARDER
 SetDifficultyColor(KETER, 200, 25, 25)
 
 difficulties[APOLLYON] = New Difficulty
@@ -104,7 +104,7 @@ difficulties[THAUMIEL]\Description = difficulties[THAUMIEL]\Description + " This
 difficulties[THAUMIEL]\AggressiveNPCs = 0
 difficulties[THAUMIEL]\InventorySlots = 16
 difficulties[THAUMIEL]\SaveType = SAVE_ANYWHERE
-difficulties[THAUMIEL]\OtherFactors = CAKE
+difficulties[THAUMIEL]\OtherFactors = CASUAL
 SetDifficultyColor(THAUMIEL, 50, 65, 205)
 
 difficulties[ESOTERIC] = New Difficulty
@@ -113,7 +113,7 @@ difficulties[ESOTERIC]\AggressiveNPCs = 0
 difficulties[ESOTERIC]\InventorySlots = 10
 difficulties[ESOTERIC]\Customizable = True
 difficulties[ESOTERIC]\SaveType = SAVE_ANYWHERE
-difficulties[ESOTERIC]\OtherFactors = CASUAL
+difficulties[ESOTERIC]\OtherFactors = EASY
 SetDifficultyColor(ESOTERIC, 200, 50, 200)
 
 SelectedDifficulty = difficulties[MILD]
