@@ -2644,39 +2644,36 @@ Function UpdateGUI%()
 										;[End Block]
 								End Select
 								;[End Block]
-							Case "superbat", "killbat"
+							Case "superbat"
 								;[Block]
-								If SelectedItem\ItemTemplate\TempName = "killbat" And wi\HazmatSuit <> 4 Then
-									me\LightFlash = 1.0
-									PlaySound_Strict(IntroSFX[Rand(8, 10)])
-									msg\DeathMsg = SubjectName + " found dead inside SCP-914's output booth next to what appears to be an ordinary nine-volt battery. The subject is covered in severe "
-									msg\DeathMsg = msg\DeathMsg + "electrical burns, and assumed to be killed via an electrical shock caused by the battery. The battery has been stored for further study."
-									Kill()
-								EndIf
 								Select Inventory(MouseSlot)\ItemTemplate\TempName
-									Case "nav300", "nav310"
+									Case "nav300"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0, 500.0), 5000.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0, 500.0), 500.0)
 										CreateMsg("You replaced the navigator's battery.")
 										;[End Block]
 									Case "navulti", "nav"
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in this navigator.")
 										;[End Block]
-									Case "radio", "18vradio"
+									Case "radio"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0, 500.0), 5000.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0, 500.0), 500.0)
 										CreateMsg("You replaced the radio's battery.")
+										;[End Block]
+									Case "18vradio"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside this radio.")
 										;[End Block]
 									Case "fineradio", "veryfineradio"
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in this radio.")
 										;[End Block]
-									Case "nvg", "supernvg"
+									Case "nvg"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
@@ -2687,16 +2684,98 @@ Function UpdateGUI%()
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in these goggles.")
 										;[End Block]
-									Case "scramble", "finescramble"
+									Case "supernvg"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside these goggles.")
+										;[End Block]
+									Case "scramble"
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
 										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(500.0, 5000.0), 5000.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
-									Case "killscramble"
+									Case "finescramble", "killscramble"
 										;[Block]
 										CreateMsg("The battery doesn't fit inside this gear.")
+										;[End Block]
+									Default
+										;[Block]
+										For z = 0 To MaxItemAmount - 1
+											If Inventory(z) = SelectedItem Then
+												Inventory(z) = PrevItem
+												Exit
+											EndIf
+										Next
+										Inventory(MouseSlot) = SelectedItem
+										SelectedItem = Null
+										;[End Block]
+								End Select
+								;[End Block]
+							Case "killbat"
+								;[Block]
+								If wi\HazmatSuit <> 4 Then
+									me\LightFlash = 1.0
+									PlaySound_Strict(IntroSFX[Rand(8, 10)])
+									msg\DeathMsg = SubjectName + " found dead inside SCP-914's output booth next to what appears to be an ordinary nine-volt battery. The subject is covered in severe "
+									msg\DeathMsg = msg\DeathMsg + "electrical burns, and assumed to be killed via an electrical shock caused by the battery. The battery has been stored for further study."
+									Kill()
+								EndIf
+								Select Inventory(MouseSlot)\ItemTemplate\TempName
+									Case "nav300"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside this navigator.")
+										;[End Block]
+									Case "nav310"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0, 500.0), 500.0)
+										CreateMsg("You replaced the gear's battery.")
+										;[End Block]
+									Case "navulti", "nav"
+										;[Block]
+										CreateMsg("There seems to be no place for batteries in this navigator.")
+										;[End Block]
+									Case "radio"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside this radio.")
+										;[End Block]
+									Case "18vradio"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0, 500.0), 500.0)
+										CreateMsg("You replaced the radio's battery.")
+										;[End Block]
+									Case "fineradio", "veryfineradio"
+										;[Block]
+										CreateMsg("There seems to be no place for batteries in this radio.")	
+										;[End Block]
+									Case "nvg"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside these goggles.")
+										;[End Block]
+									Case "supernvg"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(500.0, 5000.0), 5000.0)
+										CreateMsg("You replaced the goggles' battery.")
+									Case "finenvg"
+										;[Block]
+										CreateMsg("There seems to be no place for batteries in these goggles.")
+										;[End Block]
+									Case "scramble", "killscramble"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside this gear.")
+										;[End Block]
+									Case "finescramble"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(500.0, 5000.0), 5000.0)
+										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
 									Default
 										;[Block]
