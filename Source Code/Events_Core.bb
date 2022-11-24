@@ -7188,8 +7188,7 @@ Function UpdateEvents%()
 			Case e_cont2_500_1499
 				;[Block]
 				If e\room\Dist < 15.0 Then
-					If n_I\Curr106\Contained Then e\EventState = 2.0
-					If n_I\Curr106\State < 0.0 Then e\EventState = 2.0
+					If n_I\Curr106\Contained Lor n_I\Curr106\State < 0.0 Then e\EventState = 2.0
 					
 					If e\EventState < 2.0 Then
 						If e\EventState = 0.0 Then
