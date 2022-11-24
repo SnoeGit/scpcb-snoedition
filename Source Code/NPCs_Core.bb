@@ -1628,19 +1628,19 @@ Function UpdateNPCs%()
 																me\CameraShake = 2.0
 															Else
 																RemoveItem(Inventory(i))
+																CreateMsg("The hazmat suit was destroyed.")
 																wi\HazmatSuit = 0
 																PlaySound_Strict(PickSFX[2])
-																CreateMsg("The hazmat suit was destroyed.")
 																TakeOffTimer = 0.0
 															EndIf
 														ElseIf I_714\Using > 1
-															I_714\Using = 1
-															PlaySound_Strict(PickSFX[3])
 															If I_714\Using = 3 Then
 																CreateMsg("The ring was forcibly removed.")
 															Else
 																CreateMsg("The ring failed to resist any longer.")
 															EndIf
+															I_714\Using = 1
+															PlaySound_Strict(PickSFX[3])
 															TakeOffTimer = 0.0
 															Exit
 														EndIf
