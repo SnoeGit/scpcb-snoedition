@@ -65,7 +65,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "vest"
+		Case "vest", "finevest"
 			;[Block]
 			Select Setting
 				Case ROUGH
@@ -103,9 +103,13 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[Block]
 					it2.Items = CreateItem("Ballistic Vest", "vest", x, y, z)
 					;[End Block]	
-				Case FINE, VERYFINE
+				Case FINE
 					;[Block]
 					it2.Items = CreateItem("Heavy Ballistic Vest", "finevest", x, y, z)
+					;[End Block]
+				Case VERYFINE
+					;[Block]
+					it2.Items = CreateItem("Bulky Ballistic Vest", "veryfinevest", x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]

@@ -2457,6 +2457,7 @@ Function UpdateDoors%()
 					If d\OpenState > 48.0 Then
 						d\Open = False
 						d\OpenState = Min(d\OpenState, 48.0)
+						d\Locked = 1
 					EndIf	
 				EndIf
 			EndIf

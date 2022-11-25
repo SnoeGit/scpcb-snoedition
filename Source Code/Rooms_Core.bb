@@ -929,7 +929,7 @@ Function FillRoom%(r.Rooms)
 			r\RoomDoors.Doors[1] = CreateDoor(r\x - 96.0 * RoomScale, r\y - 5104.0 * RoomScale, r\z + 256.0 * RoomScale, 0.0, r, False, ONE_SIDED_DOOR, KEY_CARD_4)
 			r\RoomDoors[1]\AutoClose = False
 			PositionEntity(r\RoomDoors[1]\Buttons[0], r\x + 70.0 * RoomScale, EntityY(r\RoomDoors[1]\Buttons[0], True), r\z - 24.0 * RoomScale, True)
-			RotateEntity(r\RoomDoors[1]\Buttons[0], 0.0, -90.0, 0.0, True)	
+			RotateEntity(r\RoomDoors[1]\Buttons[0], 0.0, -90.0, 0.0, True)
 			
 			r\RoomDoors[0]\LinkedDoor = r\RoomDoors[1]
 			r\RoomDoors[1]\LinkedDoor = r\RoomDoors[0]
@@ -1351,11 +1351,12 @@ Function FillRoom%(r.Rooms)
 			d.Doors = CreateDoor(r\x, r\y, r\z, 0.0, r, False, HEAVY_DOOR, KEY_HAND_BLACK)
 			
 			; ~ Containment door
-			d.Doors = CreateDoor(r\x - 272.0 * RoomScale, r\y - 3552.0 * RoomScale, r\z + 98.0 * RoomScale, 90.0, r, True, BIG_DOOR)
-			d\MTFClose = False : d\Locked = 1
-			For i = 0 To 1
-				FreeEntity(d\Buttons[i]) : d\Buttons[i] = 0
-			Next
+			d.Doors = CreateDoor(r\x - 272.0 * RoomScale, r\y - 3552.0 * RoomScale, r\z + 98.0 * RoomScale, -90.0, r, False, BIG_DOOR, KEY_CARD_3)
+			d\MTFClose = False
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.92, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) + 0.2 , True)
+			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.86, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.2, True)
+			RotateEntity(d\Buttons[0], 0.0, -90.0, 0.0, True)
+			RotateEntity(d\Buttons[1], 0.0, 90.0, 0.0, True)
 			
 			; ~ Other doors
 			d.Doors = CreateDoor(r\x - 896.0 * RoomScale, r\y, r\z - 640.0 * RoomScale, 90.0, r, False, HEAVY_DOOR)

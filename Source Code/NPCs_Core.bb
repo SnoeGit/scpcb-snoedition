@@ -4044,14 +4044,14 @@ Function UpdateNPCs%()
 											Else
 												me\BlinkEffect = Max(me\BlinkEffect, 1.3)
 											EndIf
-											me\BlinkEffectTimer = 600.0
+											me\BlinkEffectTimer = 550.0
 											
 											If I_714\Using = 1 Then 
 												me\StaminaEffect = Max(me\StaminaEffect, 2.0)
 											Else
 												me\StaminaEffect = Max(me\StaminaEffect, 1.5)
 											EndIf
-											me\StaminaEffectTimer = 600.0
+											me\StaminaEffectTimer = 550.0
 										EndIf			
 									EndIf
 								EndIf
