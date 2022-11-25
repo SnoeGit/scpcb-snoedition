@@ -5,6 +5,8 @@
 ; ~ Likely to cause more crashes than 'clean' CB, as this prevents anyone from loading any assets that don't exist, regardless if they are ever used
 ; ~ Added zero checks since blitz load functions return zero sometimes even if the filetype exists.
 
+Const MaxChannelsAmount% = 32
+
 Type Sound
 	Field InternalHandle%
 	Field Name$
@@ -20,13 +22,11 @@ Function AutoReleaseSounds%()
 		Local TryRelease% = True
 		Local i%
 		
-		For i = 0 To 31
-			If snd\Channels[i] <> 0 Then
-				If ChannelPlaying(snd\Channels[i]) Then
-					TryRelease = False
-					snd\ReleaseTime = MilliSecs2() + 5000
-					Exit
-				EndIf
+		For i = 0 To MaxChannelsAmount - 1
+			If ChannelPlaying(snd\Channels[i]) Then
+				TryRelease = False
+				snd\ReleaseTime = MilliSecs2() + 5000
+				Exit
 			EndIf
 		Next
 		
@@ -47,7 +47,7 @@ Function PlaySound_Strict%(SoundHandle%)
 		Local ShouldPlay% = True
 		Local i%
 		
-		For i = 0 To 31
+		For i = 0 To MaxChannelsAmount - 1
 			If snd\Channels[i] <> 0 Then
 				If (Not ChannelPlaying(snd\Channels[i])) Then
 					If (Not snd\InternalHandle) Then
@@ -261,7 +261,7 @@ Function UpdateStreamSoundOrigin%(StreamHandle, Cam%, Entity%, Range# = 10.0, Vo
 			If Volume > 0.0 Then
 				Local Dist# = EntityDistance(Cam, Entity) / Range
 				
-				If 1.0 - Dist > 0.0 And 1.0 - Dist < 1.0 Then
+				If (1.0 - Dist > 0.0) And (1.0 - Dist < 1.0) Then
 					Local PanValue# = Sin(-DeltaYaw(Cam, Entity))
 					
 					SetStreamVolume_Strict(StreamHandle, Volume * (1.0 - Dist) * opt\SFXVolume * opt\MasterVolume)

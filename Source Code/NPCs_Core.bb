@@ -730,7 +730,7 @@ Function UpdateNPCs%()
 													If x < 25.0 And x > 15.0 Then
 														z = Abs(EntityZ(me\Collider) - EntityZ(w\OBJ, True))
 														If z < 25.0 And z > 15.0 Then
-															PositionEntity(n\Collider, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 0.35, EntityZ(w\OBJ, True))
+															PositionEntity(n\Collider, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 200.0 * RoomScale, EntityZ(w\OBJ, True))
 															ResetEntity(n\Collider)
 															Exit
 														EndIf
@@ -2713,7 +2713,7 @@ Function UpdateNPCs%()
 									If x > 3.0 And x < 9.0 Then
 										z = Abs(EntityZ(me\Collider) - EntityZ(w\OBJ, True))
 										If z > 3.0 And z < 9.0 Then
-											PositionEntity(n\Collider, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 0.35, EntityZ(w\OBJ, True))
+											PositionEntity(n\Collider, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 200.0 * RoomScale, EntityZ(w\OBJ, True))
 											PositionEntity(n\OBJ, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 0.35, EntityZ(w\OBJ, True))
 											ResetEntity(n\Collider)
 											If EntityHidden(n\OBJ) Then
@@ -3742,7 +3742,7 @@ Function UpdateNPCs%()
 									If w\door = Null Then
 										If Abs(EntityX(w\OBJ, True) - EntityX(n\Collider)) < 4.0 Then
 											If Abs(EntityZ(w\OBJ, True) - EntityZ(n\Collider)) < 4.0 Then
-												PositionEntity(n\Collider, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 0.35, EntityZ(w\OBJ, True))
+												PositionEntity(n\Collider, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 200.0 * RoomScale, EntityZ(w\OBJ, True))
 												ResetEntity(n\Collider)
 												Exit
 											EndIf
@@ -4044,14 +4044,14 @@ Function UpdateNPCs%()
 											Else
 												me\BlinkEffect = Max(me\BlinkEffect, 1.3)
 											EndIf
-											me\BlinkEffectTimer = 500.0
+											me\BlinkEffectTimer = 600.0
 											
 											If I_714\Using = 1 Then 
 												me\StaminaEffect = Max(me\StaminaEffect, 2.0)
 											Else
 												me\StaminaEffect = Max(me\StaminaEffect, 1.5)
 											EndIf
-											me\StaminaEffectTimer = 500.0
+											me\StaminaEffectTimer = 600.0
 										EndIf			
 									EndIf
 								EndIf
@@ -4779,7 +4779,7 @@ Function UpdateNPCs%()
 															z = Abs(EntityZ(n\Collider) - EntityZ(w\OBJ, True))
 															If z < 12.0 And z > 4.0 Then
 																If w\room\Dist > 4.0
-																	PositionEntity(n\Collider, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 0.35, EntityZ(w\OBJ, True))
+																	PositionEntity(n\Collider, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 200.0 * RoomScale, EntityZ(w\OBJ, True))
 																	ResetEntity(n\Collider)
 																	n\PathStatus = 0
 																	n\PathTimer = 0.0
@@ -5184,7 +5184,7 @@ Function UpdateMTFUnit%(n.NPCs)
 						EndIf
 					EndIf
 					
-					If n_I\Curr106\State <= 0 Then
+					If n_I\Curr106\State <= 0.0 Then
 						If NPCSeesNPC(n_I\Curr106, n) Lor EntityDistanceSquared(n\Collider, n_I\Curr106\Collider) < 9.0 Then
 							If EntityVisible(n\Collider, n_I\Curr106\Collider) Then
 								n\State = 4.0
@@ -5508,7 +5508,7 @@ Function UpdateMTFUnit%(n.NPCs)
 						EndIf
 					EndIf
 					
-					If n_I\Curr106\State <= 0 Then
+					If n_I\Curr106\State <= 0.0 Then
 						If NPCSeesNPC(n_I\Curr106, n) Lor EntityDistanceSquared(n\Collider, n_I\Curr106\Collider) < 9.0 Then
 							If EntityVisible(n\Collider, n_I\Curr106\Collider) Then
 								n\State = 4.0
@@ -6406,7 +6406,7 @@ Function TeleportCloser%(n.NPCs)
 		EndIf
 		
 		If ShouldTeleport Then
-			PositionEntity(n\Collider, EntityX(closestWaypoint\OBJ, True), EntityY(closestWaypoint\OBJ, True) + 0.15, EntityZ(closestWaypoint\OBJ, True), True)
+			PositionEntity(n\Collider, EntityX(closestWaypoint\OBJ, True), EntityY(closestWaypoint\OBJ, True) + 200.0 * RoomScale, EntityZ(closestWaypoint\OBJ, True), True)
 			ResetEntity(n\Collider)
 			n\PathStatus = 0
 			n\PathTimer = 0.0
@@ -7032,7 +7032,7 @@ Function PlayerInReachableRoom%(CanSpawnIn049Chamber% = False, Intro% = False)
 	EndIf
 	
 	If (Not CanSpawnIn049Chamber) Then
-		If SelectedDifficulty\AggressiveNPCs = 0 Then
+		If SelectedDifficulty\AggressiveNPCs < 2 Then
 			If RN = "cont2_049" And EntityY(me\Collider) <= (-2848.0) * RoomScale Then Return(False)
 		EndIf
 	EndIf
