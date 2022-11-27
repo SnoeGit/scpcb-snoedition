@@ -892,11 +892,11 @@ Function UpdateGame%()
 					W = SelectedItem\ItemTemplate\TempName
 					V = SelectedItem\State
 					; ~ Reset SCP-1025
-					If SelectedItem\ItemTemplate\TempName = "scp1025" Then
+					If W = "paper" Lor W = "badge" Lor W = "oldpaper" Lor W = "ticket" Lor W = "scp1025" Then
 						If SelectedItem\ItemTemplate\Img <> 0 Then FreeImage(SelectedItem\ItemTemplate\Img) : SelectedItem\ItemTemplate\Img = 0
 					EndIf
 				EndIf
-				If (W <> "vest" And W <> "finevest" And W <> "hazmatsuit" And W <> "finehazmatsuit" And W <> "superhazmatsuit" And W <> "heavyhazmatsuit") Lor V = 0.0 Lor V = 100.0
+				If (W <> "vest" And W <> "finevest" And W <> "hazmatsuit" And W <> "finehazmatsuit" And W <> "superhazmatsuit" And W <> "heavyhazmatsuit") Lor V = 0.0 Lor V = 100.0 Then
 					If InvOpen Then
 						StopMouseMovement()
 					Else
@@ -3437,6 +3437,13 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "radio", "18vradio", "fineradio", "veryfineradio"
 					;[Block]
+					If (Not SelectedItem\ItemTemplate\Img) Then
+						SelectedItem\ItemTemplate\Img = LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath)
+						SelectedItem\ItemTemplate\Img = ScaleImage2(SelectedItem\ItemTemplate\Img, MenuScale, MenuScale)
+						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img)
+						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img)
+						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
+					EndIf
 					If SelectedItem\ItemTemplate\TempName <> "fineradio" And SelectedItem\ItemTemplate\TempName <> "veryfineradio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.004)
 					
 					; ~ RadioState[5] = Has the "use the number keys" -message been shown yet (True / False)
@@ -3769,6 +3776,13 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "nav300", "nav310"
 					;[Block]
+					If (Not SelectedItem\ItemTemplate\Img) Then
+						SelectedItem\ItemTemplate\Img = LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath)
+						SelectedItem\ItemTemplate\Img = ScaleImage2(SelectedItem\ItemTemplate\Img, MenuScale, MenuScale)
+						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
+						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
+						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
+					EndIf
 					If SelectedItem\ItemTemplate\TempName = "nav300" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.008)
 					If SelectedItem\ItemTemplate\TempName = "nav310" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.004)
 					
@@ -4045,6 +4059,13 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp1025"
 					;[Block]
+					If (Not SelectedItem\ItemTemplate\Img) Then
+						SelectedItem\ItemTemplate\Img = LoadImage_Strict("GFX\Items\1025\1025(" + (Int(SelectedItem\State) + 1) + ").png")	
+						SelectedItem\ItemTemplate\Img = ScaleImage2(SelectedItem\ItemTemplate\Img, MenuScale, MenuScale)
+						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
+						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
+						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
+					EndIf
 					If SelectedItem\State3 = 0.0 Then
 						If SelectedItem\State = 7.0 Then
 							If I_008\Timer = 0.0 Then I_008\Timer = 1.0
@@ -4808,8 +4829,8 @@ Function RenderGUI%()
 					Local NAV_WIDTH% = 287 * MenuScale
 					Local NAV_HEIGHT% = 256 * MenuScale
 					
-					x = opt\GraphicWidth - SelectedItem\ItemTemplate\ImgWidth + (20.0 * MenuScale)
-					y = opt\GraphicHeight - ((SelectedItem\ItemTemplate\ImgHeight * 2) * (0.4 * MenuScale)) - (85 * MenuScale)
+					x = opt\GraphicWidth - SelectedItem\ItemTemplate\ImgWidth + (20 * MenuScale)
+					y = opt\GraphicHeight - SelectedItem\ItemTemplate\ImgHeight - (85 * MenuScale)
 					
 					Local PlayerX%, PlayerZ%
 					
@@ -4870,8 +4891,8 @@ Function RenderGUI%()
 							EndIf
 							Rect(xx + (80 * MenuScale), yy + (70 * MenuScale), 270 * MenuScale, 230 * MenuScale, False)
 							
-							x = opt\GraphicWidth - SelectedItem\ItemTemplate\ImgWidth + (20.0 * MenuScale)
-							y = opt\GraphicHeight - ((SelectedItem\ItemTemplate\ImgHeight * 2) * (0.4 * MenuScale)) - (85.0 * MenuScale)
+							x = opt\GraphicWidth - SelectedItem\ItemTemplate\ImgWidth + (20 * MenuScale)
+							y = opt\GraphicHeight - SelectedItem\ItemTemplate\ImgHeight - (85 * MenuScale)
 							
 							If Offline Then 
 								Color(100, 0, 0)
@@ -6940,14 +6961,10 @@ Function Render294%()
 	Text(x + (905 * MenuScale), y + (185 * MenuScale), Right(I_294\ToInput, 13), True, True)
 	
 	If Temp Then
-		If mo\MouseHit2 Lor (Not I_294\Using) Then 
-			HidePointer()
-		EndIf
+		If mo\MouseHit2 Lor (Not I_294\Using) Then HidePointer()
 	Else ; ~ Playing a dispensing sound
 		If (Not ChannelPlaying(PlayerRoom\SoundCHN)) Then
-			If I_294\ToInput <> "OUT OF RANGE" Then
-				HidePointer()
-			EndIf
+			If I_294\ToInput <> "OUT OF RANGE" Then HidePointer()
 		EndIf
 	EndIf
 End Function
