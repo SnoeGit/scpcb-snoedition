@@ -6631,7 +6631,7 @@ Function TriggerTeslaGateOnNPCs%(e.Events)
 	Local i%
 	
 	For n.NPCs = Each NPCs
-		If (n\NPCType = NPCType513_1) Lor (n\NPCType = NPCType372) Lor (n\NPCType = NPCType966) Then Return
+		If (n\NPCType = NPCType513_1) Lor (n\NPCType = NPCType372) Lor (n\NPCType = NPCType966) Lor (n\NPCType = NPCType939) Then Return
 		If (Not n\IsDead) Then
 			If e\EventState = 0.0 Then
 				For i = 0 To 2
