@@ -26,7 +26,7 @@ Const AchvO5% = 38, AchvPD% = 39, AchvSNAV% = 40, AchvTesla% = 41
 Const AchievementsFile$ = "Data\Achievements.ini"
 
 Function GiveAchievement%(AchvName%, ShowMessage% = True)
-	If SelectedDifficulty\OtherFactors <> CAKE And SelectedDifficulty\InventorySlots < 11 Then
+	If SelectedDifficulty\OtherFactors <> CASUAL And SelectedDifficulty\InventorySlots < 11 Then
 		If achv\Achievement[AchvName] <> True Then
 			achv\Achievement[AchvName] = True
 			If opt\AchvMsgEnabled And ShowMessage Then

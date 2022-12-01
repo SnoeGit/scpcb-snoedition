@@ -1246,14 +1246,11 @@ Function UpdateMoving%()
 		EndIf
 	EndIf
 	
-	For i = 0 To MaxItemAmount - 1
-		If Inventory(i) <> Null Then
-			If Inventory(i)\ItemTemplate\TempName = "finevest" Then
-				me\Stamina = Min(me\Stamina, 60.0)
-				Exit
-			EndIf
-		EndIf
-	Next
+	If wi\BallisticVest = 1 Then
+		me\Stamina = Min(me\Stamina, 60.0)
+	ElseIf wi\BallisticVest = 2
+		me\Stamina = Min(me\Stamina, 45.0)
+	EndIf
 	
 	If I_714\Using = 3 Then
 		me\Stamina = Min(me\Stamina, 10.0)
@@ -1609,8 +1606,8 @@ Function UpdateMouseLook%()
 		
 		If InvOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Lor (Not me\Controllable) Then StopMouseMovement()
 		
-		Local The_Yaw# = ((mo\Mouse_X_Speed_1)) * mo\Mouselook_X_Inc / (1.0 + wi\BallisticVest)
-		Local The_Pitch# = ((mo\Mouse_Y_Speed_1)) * mo\Mouselook_Y_Inc / (1.0 + wi\BallisticVest)
+		Local The_Yaw# = ((mo\Mouse_X_Speed_1)) * mo\Mouselook_X_Inc / (1.0 + (1.0 * wi\BallisticVest = 2))
+		Local The_Pitch# = ((mo\Mouse_Y_Speed_1)) * mo\Mouselook_Y_Inc / (1.0 + (1.0 * wi\BallisticVest = 2))
 		
 		TurnEntity(me\Collider, 0.0, -The_Yaw, 0.0) ; ~ Turn the user on the Y (Yaw) axis
 		CameraPitch = CameraPitch + The_Pitch
@@ -1676,7 +1673,7 @@ Function UpdateMouseLook%()
 			EndIf
 		EndIf
 		
-		If wi\HazmatSuit = 0 Then
+		If wi\GasMask > 0 Then
 			If EntityHidden(t\OverlayID[1]) Then ShowEntity(t\OverlayID[1])
 		Else
 			If wi\HazmatSuit = 1 Then me\Stamina = Min(60.0, me\Stamina)
@@ -4213,7 +4210,7 @@ Function RenderHUD%()
 	If me\Stamina <= 0.0 And PlayerRoom\RoomTemplate\Name <> "dimension_106" Then
 		Color(150, 150, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-	ElseIf PlayerRoom\RoomTemplate\Name = "dimension_106" Lor I_714\Using > 1 Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor wi\HazmatSuit = 1 Lor wi\BallisticVest = 2 Lor I_409\Timer >= 55.0 Lor I_1025\State[0] > 0.0
+	ElseIf PlayerRoom\RoomTemplate\Name = "dimension_106" Lor I_714\Using > 1 Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor wi\HazmatSuit = 1 Lor wi\BallisticVest > 0 Lor I_409\Timer >= 55.0 Lor I_1025\State[0] > 0.0
 		Color(200, 0, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
 	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask > 1 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 3

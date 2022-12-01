@@ -5192,7 +5192,7 @@ Function UpdateEvents%()
 				Else	
 					If e\EventState = 0.0 Then	
 						If (Not e\Sound) Then
-							If EntityDistanceSquared(me\Collider, e\room\OBJ) < 400.0 Then
+							If EntityDistanceSquared(me\Collider, e\room\OBJ) < 384.0 Then
 								LoadEventSound(e, "SFX\Room\035Chamber\InProximity.ogg")
 								PlaySound_Strict(e\Sound)
 							EndIf
@@ -8155,7 +8155,7 @@ Function UpdateDimension106%()
 					n_I\Curr106\State = -10.0 : n_I\Curr106\Idle = 0
 				EndIf
 				
-				Local Teleport% = False, Random% = Rand(30)
+				Local Teleport% = False, Random% = Rand(29)
 				
 				Select e\EventState2
 					Case PD_StartRoom
@@ -8237,7 +8237,7 @@ Function UpdateDimension106%()
 						If EntityY(me\Collider) < (-1600.0) * RoomScale Then
 							If EntityDistanceSquared(me\Collider, e\room\Objects[8]) > PowTwo(4750.0 * RoomScale) Then
 								Teleport = True
-								Random = Rand(13, 30)
+								Random = Rand(12, 29)
 							Else ; ~ The player is not at the exit, must've fallen down
 								If (Not me\Terminated) Then 
 									PlaySound_Strict(HorrorSFX[8])
@@ -8530,7 +8530,7 @@ Function UpdateDimension106%()
 							; ~ Player is at the exit
 							If DistanceSquared(EntityX(e\room\Objects[16], True), EntityX(me\Collider), EntityZ(e\room\Objects[16], True), EntityZ(me\Collider)) < PowTwo(144.0 * RoomScale) Then
 								Teleport = True
-								Random = Rand(13, 30)
+								Random = Rand(12, 29)
 							Else ; ~ Somewhere else, must've fallen down
 								If (Not me\Terminated) Then 
 									PlaySound_Strict(HorrorSFX[8])
@@ -8547,7 +8547,7 @@ Function UpdateDimension106%()
 					me\BlinkTimer = -10.0 : me\BlurTimer = 1000.0
 					
 					Select Random
-						Case 1, 2, 3, 4, 5 ; ~ Rotate the player and close by the wall
+						Case 1, 2, 3, 4 ; ~ Rotate the player and close by the wall
 							;[Block]
 							PlaySound_Strict(OldManSFX[3])
 							
@@ -8564,7 +8564,7 @@ Function UpdateDimension106%()
 							
 							FreeEntity(Pvt)
 							;[End Block]
-						Case 6, 7, 8, 9, 10, 11, 12 ; ~ The 4-way room
+						Case 5, 6, 7, 8, 9, 10, 11 ; ~ The 4-way room
 							;[Block]
 							PlaySound_Strict(OldManSFX[3])
 							
@@ -8577,7 +8577,7 @@ Function UpdateDimension106%()
 							e\EventState3 = 0.0
 							e\EventState2 = PD_FourWayRoom
 							;[End Block]
-						Case 13, 14 ; ~ Middle of the large starting room
+						Case 12, 13 ; ~ Middle of the large starting room
 							;[Block]
 							PositionEntity(me\Collider, EntityX(e\room\OBJ), 0.6, EntityZ(e\room\OBJ))
 							ResetEntity(me\Collider)
@@ -8585,7 +8585,7 @@ Function UpdateDimension106%()
 							e\EventState3 = 0.0	
 							e\EventState2 = PD_StartRoom
 							;[End Block]
-						Case 15, 16 ; ~ The exit room
+						Case 14, 15 ; ~ The exit room
 							;[Block]
 							PositionEntity(me\Collider, EntityX(e\room\Objects[8], True) - 400.0 * RoomScale, e\room\y - 300.0 * RoomScale, EntityZ(e\room\Objects[8], True))
 							ResetEntity(me\Collider)
@@ -8593,7 +8593,7 @@ Function UpdateDimension106%()
 							e\EventState3 = 0.0		
 							e\EventState2 = PD_ExitRoom
 							;[End Block]
-						Case 17, 18, 19, 20, 21, 22
+						Case 16, 17, 18, 19, 20, 21
 							;[Block]
 							Local RoomName$ = ""
 							Local LCZ% = False
@@ -8673,7 +8673,7 @@ Function UpdateDimension106%()
 								ResetEntity(me\Collider)
 							EndIf
 							;[End Block]
-						Case 23, 24, 25, 26 ; ~ The tower room
+						Case 22, 23, 24, 25 ; ~ The tower room
 							;[Block]
 							PositionEntity(me\Collider, EntityX(e\room\Objects[12], True), 0.6, EntityZ(e\room\Objects[12], True))
 							ResetEntity(me\Collider)
@@ -8681,7 +8681,7 @@ Function UpdateDimension106%()
 							e\EventState3 = 15.0
 							e\EventState2 = PD_TowerRoom
 							;[End Block]
-						Case 27, 28, 29, 30 ; ~ The fake HCZ tunnel
+						Case 26, 27, 28, 29 ; ~ The fake HCZ tunnel
 							;[Block]
 							PlaySound_Strict(OldManSFX[3])
 							

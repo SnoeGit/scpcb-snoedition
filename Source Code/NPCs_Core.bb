@@ -595,19 +595,19 @@ Function UpdateNPCs%()
 	Local DifficultyDMGMult#
 	
 	Select SelectedDifficulty\OtherFactors
-		Case CASUAL
+		Case EASY
 			;[Block]
 			DifficultyDMGMult = 1.0
 			;[End Block]
-		Case EASY
+		Case NORMAL
 			;[Block]
 			DifficultyDMGMult = 1.15
 			;[End Block]
-		Case NORMAL
+		Case HARD
 			;[Block]
 			DifficultyDMGMult = 1.3
 			;[End Block]
-		Case HARD
+		Case HARDER
 			;[Block]
 			DifficultyDMGMult = 1.45
 			;[End Block]
@@ -615,7 +615,7 @@ Function UpdateNPCs%()
 			;[Block]
 			DifficultyDMGMult = 1.6
 			;[End Block]
-		Case CAKE
+		Case CASUAL
 			;[Block]
 			DifficultyDMGMult = 0.75
 			;[End Block]
@@ -2172,7 +2172,7 @@ Function UpdateNPCs%()
 											If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 												PlaySound2(DamageSFX[Rand(5, 8)], Camera, n\Collider)
 
-													InjurePlayer(Rnd(0.55 * DifficultyDMGMult, 0.85 * DifficultyDMGMult), 0.0, 0.0, Rnd(0.15, 0.25), 0.2)
+													InjurePlayer(Rnd(0.55 * DifficultyDMGMult, 0.85 * DifficultyDMGMult), 0.0, 0.0, 0.275, 0.2)
 												
 												If me\Injuries => 3.0 Then
 													msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2."
@@ -3137,7 +3137,7 @@ Function UpdateNPCs%()
 													InjurePlayer(Rnd(0.5))
 												Else
 													PlaySound_Strict(DamageSFX[Rand(9, 10)])
-													InjurePlayer(Rnd(0.75 * DifficultyDMGMult, 1.15 * DifficultyDMGMult), 0.0, 100.0, Rnd(0.25, 0.55), 0.2)
+													InjurePlayer(Rnd(0.75 * DifficultyDMGMult, 1.15 * DifficultyDMGMult), 0.0, 100.0, 0.375, 0.2)
 													
 													If me\Injuries => 3.0 Then
 														If PlayerRoom\RoomTemplate\Name = "room2_ez" Then
@@ -4186,7 +4186,7 @@ Function UpdateNPCs%()
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 											
-											InjurePlayer(Rnd(0.45 * DifficultyDMGMult, 0.75 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.15, 0.35))
+											InjurePlayer(Rnd(0.45 * DifficultyDMGMult, 0.75 * DifficultyDMGMult), 0.0, 500.0, 0.225)
 													
 											If me\Injuries => 14.0 Then
 												Kill(True)
@@ -4511,7 +4511,7 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.15, 0.4), 0.2)
+										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, 0.325, 0.2)
 
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 										If me\Injuries > 9.0 Then
@@ -4537,7 +4537,7 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, Rnd(0.15, 0.4), 0.2)
+										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, 0.325, 0.2)
 										
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 										If me\Injuries > 9.0 Then
@@ -4728,7 +4728,7 @@ Function UpdateNPCs%()
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound_Strict(DamageSFX[Rand(5, 8)])
 											
-											InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.7 * DifficultyDMGMult), 1.0 + SelectedDifficulty\AggressiveNPCs, 0.0, Rnd(0.15, 0.3), 0.2)
+											InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.7 * DifficultyDMGMult), 1.0 + SelectedDifficulty\AggressiveNPCs, 0.0, 0.2, 0.2)
 													
 											If me\Injuries => 3.0 Then
 												msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by [DATA REDACTED], who was infected with SCP-008. Said subject was located by Nine-Tailed Fox and terminated."
@@ -6717,7 +6717,7 @@ Function TriggerTeslaGateOnNPCs%(e.Events)
 End Function
 
 Function PlayerSees173%(n.NPCs)
-	If (Not chs\NoTarget) And (wi\IsNVGBlinking Lor (Not (EntityInView(n\OBJ, Camera) Lor EntityInView(n\OBJ2, Camera))) Lor (me\LightBlink > 0.0 And wi\NightVision = 0) Lor (me\BlinkTimer > -16.0 And me\BlinkTimer < -6.0)) Then
+	If (Not chs\NoTarget) And (wi\IsNVGBlinking Lor (Not (EntityInView(n\OBJ, Camera) Lor EntityInView(n\OBJ2, Camera))) Lor (me\LightBlink > 0.25 And wi\NightVision = 0) Lor (me\BlinkTimer > -16.0 And me\BlinkTimer < -6.0)) Then
 		Return(False)
 	Else
 		Return(True)
@@ -6738,19 +6738,19 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 	Local DifficultyDMGMult#
 	
 	Select SelectedDifficulty\OtherFactors
-		Case CASUAL
+		Case EASY
 			;[Block]
 			DifficultyDMGMult = 1.0
 			;[End Block]
-		Case EASY
+		Case NORMAL
 			;[Block]
 			DifficultyDMGMult = 1.15
 			;[End Block]
-		Case NORMAL
+		Case HARD
 			;[Block]
 			DifficultyDMGMult = 1.3
 			;[End Block]
-		Case HARD
+		Case HARDER
 			;[Block]
 			DifficultyDMGMult = 1.45
 			;[End Block]
@@ -6758,7 +6758,7 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 			;[Block]
 			DifficultyDMGMult = 1.6
 			;[End Block]
-		Case CAKE
+		Case CASUAL
 			;[Block]
 			DifficultyDMGMult = 0.75
 			;[End Block]
@@ -6777,8 +6777,12 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 		Select Rand(17)
 			Case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ; ~ Vest
 				;[Block]
-				If wi\BallisticVest <> 2 Then me\Stamina = me\Stamina - Rnd(5.0)
-				InjurePlayer(Rnd(0.61 * DifficultyDMGMult, 0.72 * DifficultyDMGMult), 0.0, 650.0, Rnd(0.35, 0.5))
+				If wi\BallisticVest = 0 Then
+					me\Stamina = me\Stamina - Rnd(2.0, 5.0)
+				ElseIf wi\BallisticVest = 1
+					me\Stamina = me\Stamina - Rnd(2.5)
+				EndIf
+				InjurePlayer(Rnd(0.62 * DifficultyDMGMult, 0.73 * DifficultyDMGMult), 0.0, 650.0, (0.62 / 1.4))
 				If wi\BallisticVest > 0 Then
 					ShotMessageUpdate = "A bullet penetrated your vest."
 				Else
@@ -6787,24 +6791,24 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 				;[End Block]
 			Case 11 ; ~ Left Leg
 				;[Block]
-				me\Stamina = me\Stamina - Rnd(10.0)
-				InjurePlayer(Rnd(0.45 * DifficultyDMGMult, 0.55 * DifficultyDMGMult), 0.0, 650.0)
+				me\Stamina = me\Stamina - Rnd(3.0, 10.0)
+				InjurePlayer(Rnd(0.44 * DifficultyDMGMult, 0.54 * DifficultyDMGMult), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your left leg."
 				;[End Block]
 			Case 12 ; ~ Right Leg
 				;[Block]
-				me\Stamina = me\Stamina - Rnd(10.0)
-				InjurePlayer(Rnd(0.45 * DifficultyDMGMult, 0.55 * DifficultyDMGMult), 0.0, 650.0)
+				me\Stamina = me\Stamina - Rnd(3.0, 10.0)
+				InjurePlayer(Rnd(0.44 * DifficultyDMGMult, 0.54 * DifficultyDMGMult), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your right leg."
 				;[End Block]
 			Case 13 ; ~ Left Arm
 				;[Block]
-				InjurePlayer(Rnd(0.45 * DifficultyDMGMult, 0.55 * DifficultyDMGMult), 0.0, 650.0)
+				InjurePlayer(Rnd(0.44 * DifficultyDMGMult, 0.54 * DifficultyDMGMult), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your left arm."
 				;[End Block]
 			Case 14 ; ~ Right Arm
 				;[Block]
-				InjurePlayer(Rnd(0.45 * DifficultyDMGMult, 0.55 * DifficultyDMGMult), 0.0, 650.0)
+				InjurePlayer(Rnd(0.44 * DifficultyDMGMult, 0.54 * DifficultyDMGMult), 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your right arm."
 				;[End Block]
 			Case 15 ; ~ Neck
@@ -6993,15 +6997,15 @@ Function NPCSpeedChange%(n.NPCs)
 	Select n\NPCType
 		Case NPCType173, NPCType106, NPCType096, NPCType049, NPCType049_2, NPCType939
 			Select SelectedDifficulty\OtherFactors
-				Case EASY
+				Case NORMAL
 					;[Block]
 					n\Speed = n\Speed * 1.1
 					;[End Block]
-				Case NORMAL
+				Case HARD
 					;[Block]
 					n\Speed = n\Speed * 1.2
 					;[End Block]
-				Case HARD
+				Case HARDER
 					;[Block]
 					n\Speed = n\Speed * 1.3
 					;[End Block]
@@ -7009,7 +7013,7 @@ Function NPCSpeedChange%(n.NPCs)
 					;[Block]
 					n\Speed = n\Speed * 1.4
 					;[End Block]
-				Case CAKE
+				Case CASUAL
 					;[Block]
 					n\Speed = n\Speed * 0.8
 					;[End Block]
