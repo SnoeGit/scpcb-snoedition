@@ -337,7 +337,7 @@ Function RemoveWearableItems%(item.Items)
 			;[Block]
 			If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 			;[End Block]
-		Case "scp714", "greyscp714"
+		Case "scp714", "coarse714"
 			;[Block]
 			I_714\Using = 0
 			;[End Block]
@@ -349,7 +349,7 @@ Function RemoveWearableItems%(item.Items)
 			;[Block]
 			I_427\Using = False
 			;[End Block]
-		Case "scramble", "finescramble"
+		Case "scramble", "finescramble", "killscramble"
 			;[Block]
 			wi\SCRAMBLE = 0
 			;[End Block]
@@ -660,8 +660,6 @@ Function DropItem%(item.Items, PlayDropSound% = True)
 		EndIf
 	Next
 	ItemAmount = ItemAmount - 1
-	
-	RemoveWearableItems(item)
 	
 	CatchErrors("DropItem")
 End Function

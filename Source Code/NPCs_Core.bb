@@ -349,7 +349,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[End Block]
 		Case NPCType860_2
 			;[Block]
-			n\NVGName = "SCP-860-2"
+			n\NVGName = "Unknown"
 			
 			n\Collider = CreatePivot()
 			EntityRadius(n\Collider, 0.25)
@@ -378,9 +378,9 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[End Block]
 		Case NPCType939
 			;[Block]
-			i = 1
+			i = Rand(25)
 			For n2.NPCs = Each NPCs
-				If n\NPCType = n2\NPCType And n <> n2 Then i = i + 1
+				If n\NPCType = n2\NPCType And n <> n2 Then i = i + Rand(25)
 			Next
 			n\NVGName = "SCP-939-" + i
 			
@@ -2172,7 +2172,7 @@ Function UpdateNPCs%()
 											If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 												PlaySound2(DamageSFX[Rand(5, 8)], Camera, n\Collider)
 
-													InjurePlayer(Rnd(0.55 * DifficultyDMGMult, 0.85 * DifficultyDMGMult), 0.0, 0.0, 0.275, 0.2)
+													InjurePlayer(Rnd(0.55, 0.85) * DifficultyDMGMult, 0.0, 0.0, Rnd(0.25, 0.3) * DifficultyDMGMult, 0.2)
 												
 												If me\Injuries => 3.0 Then
 													msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2."
@@ -3137,7 +3137,7 @@ Function UpdateNPCs%()
 													InjurePlayer(Rnd(0.5))
 												Else
 													PlaySound_Strict(DamageSFX[Rand(9, 10)])
-													InjurePlayer(Rnd(0.75 * DifficultyDMGMult, 1.15 * DifficultyDMGMult), 0.0, 100.0, 0.375, 0.2)
+													InjurePlayer(Rnd(0.75, 1.15) * DifficultyDMGMult, 0.0, 100.0, Rnd(0.35, 0.4) * DifficultyDMGMult, 0.2)
 													
 													If me\Injuries => 3.0 Then
 														If PlayerRoom\RoomTemplate\Name = "room2_ez" Then
@@ -3690,6 +3690,8 @@ Function UpdateNPCs%()
 					If n\State < 3.0 And (Not chs\NoTarget) And (Not n\IgnorePlayer) Then
 						Dist = EntityDistanceSquared(n\Collider, me\Collider)
 						
+						If Dist < PowTwo(opt\CameraFogFar * LightVolume) And EntityInView(n\Collider, Camera) And EntityVisible(Camera, n\Collider) Then GiveAchievement(Achv939)
+						
 						If Dist < 16.0 Then Dist = Dist - PowTwo((EntityVisible(me\Collider, n\Collider) + (EntityVisible(me\Collider, n\Collider) * 0.21)))
 						If PowTwo(me\SndVolume) > Dist Lor Dist < 2.25 Then
 							If n\State3 = 0.0 Then
@@ -4186,7 +4188,7 @@ Function UpdateNPCs%()
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 											
-											InjurePlayer(Rnd(0.45 * DifficultyDMGMult, 0.75 * DifficultyDMGMult), 0.0, 500.0, 0.225)
+											InjurePlayer(Rnd(0.45, 0.75) * DifficultyDMGMult, 0.0, 500.0, Rnd(0.2, 0.25) * DifficultyDMGMult)
 													
 											If me\Injuries => 14.0 Then
 												Kill(True)
@@ -4511,7 +4513,7 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, 0.325, 0.2)
+										InjurePlayer(Rnd(0.65, 1.1) * DifficultyDMGMult, 0.0, 500.0, Rnd(0.3, 0.35) * DifficultyDMGMult, 0.2)
 
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 										If me\Injuries > 9.0 Then
@@ -4537,7 +4539,7 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.65 * DifficultyDMGMult, 1.1 * DifficultyDMGMult), 0.0, 500.0, 0.325, 0.2)
+										InjurePlayer(Rnd(0.65, 1.1) * DifficultyDMGMult, 0.0, 500.0, Rnd(0.3, 0.35) * DifficultyDMGMult, 0.2)
 										
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 										If me\Injuries > 9.0 Then
@@ -4728,7 +4730,7 @@ Function UpdateNPCs%()
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound_Strict(DamageSFX[Rand(5, 8)])
 											
-											InjurePlayer(Rnd(0.4 * DifficultyDMGMult, 0.7 * DifficultyDMGMult), 1.0 + SelectedDifficulty\AggressiveNPCs, 0.0, 0.2, 0.2)
+											InjurePlayer(Rnd(0.4, 0.7) * DifficultyDMGMult, 1.0 + SelectedDifficulty\AggressiveNPCs, 0.0, Rnd(0.175, 0.225) * DifficultyDMGMult, 0.2)
 													
 											If me\Injuries => 3.0 Then
 												msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by [DATA REDACTED], who was infected with SCP-008. Said subject was located by Nine-Tailed Fox and terminated."
@@ -6663,8 +6665,7 @@ Function TriggerTeslaGateOnNPCs%(e.Events)
 										de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(n\Collider), e\room\y + 0.005, EntityZ(n\Collider), 90.0, Rnd(360.0), 0.0, Rnd(0.5, 0.7), Rnd(0.8, 1.0))
 										de\SizeChange = 0.004 : de\Timer = 90000.0
 										
-										n\Idle = 1
-										n\State3 = 1.0
+										n\Idle = 1 : n\State3 = 1.0
 									EndIf
 									;[End Block]
 								Case NPCType049, NPCType096, NPCType173, NPCType066, NPCType1499_1
@@ -6690,9 +6691,7 @@ Function TriggerTeslaGateOnNPCs%(e.Events)
 						
 						n\State3 = n\State3 + fps\Factor[0]
 						If n\State3 > 1200.0 Then
-							If e\Sound2 <> 0 Then 
-								FreeSound_Strict(e\Sound2) : e\Sound2 = 0
-							EndIf
+							If e\Sound2 <> 0 Then FreeSound_Strict(e\Sound2) : e\Sound2 = 0
 							PositionEntity(n\Collider, 0.0, 500.0, 0.0)
 							
 							n\Idle = 0
@@ -6725,11 +6724,8 @@ Function PlayerSees173%(n.NPCs)
 End Function
 
 Function UpdateNPCBlinking%(n.NPCs)
-	If n\BlinkTimer > 0.0 Then
-		n\BlinkTimer = n\BlinkTimer - fps\Factor[0]
-	Else
-		n\BlinkTimer = 70.0 * Rnd(10.0, 15.0)
-	EndIf
+	n\BlinkTimer = n\BlinkTimer - fps\Factor[0]
+	If n\BlinkTimer <= 0.0 Then n\BlinkTimer = 70.0 * Rnd(10.0, 15.0)
 End Function
 
 Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = False)  
@@ -6782,7 +6778,7 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 				ElseIf wi\BallisticVest = 1
 					me\Stamina = me\Stamina - Rnd(2.5)
 				EndIf
-				InjurePlayer(Rnd(0.62 * DifficultyDMGMult, 0.73 * DifficultyDMGMult), 0.0, 650.0, (0.62 / 1.4))
+				InjurePlayer(Rnd(0.61, 0.72) * DifficultyDMGMult, 0.0, 650.0, (0.61 / 1.4) * DifficultyDMGMult)
 				If wi\BallisticVest > 0 Then
 					ShotMessageUpdate = "A bullet penetrated your vest."
 				Else
@@ -6792,28 +6788,28 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 			Case 11 ; ~ Left Leg
 				;[Block]
 				me\Stamina = me\Stamina - Rnd(3.0, 10.0)
-				InjurePlayer(Rnd(0.44 * DifficultyDMGMult, 0.54 * DifficultyDMGMult), 0.0, 650.0)
+				InjurePlayer(Rnd(0.44, 0.54) * DifficultyDMGMult, 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your left leg."
 				;[End Block]
 			Case 12 ; ~ Right Leg
 				;[Block]
 				me\Stamina = me\Stamina - Rnd(3.0, 10.0)
-				InjurePlayer(Rnd(0.44 * DifficultyDMGMult, 0.54 * DifficultyDMGMult), 0.0, 650.0)
+				InjurePlayer(Rnd(0.44, 0.54) * DifficultyDMGMult, 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your right leg."
 				;[End Block]
 			Case 13 ; ~ Left Arm
 				;[Block]
-				InjurePlayer(Rnd(0.44 * DifficultyDMGMult, 0.54 * DifficultyDMGMult), 0.0, 650.0)
+				InjurePlayer(Rnd(0.44, 0.54) * DifficultyDMGMult, 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your left arm."
 				;[End Block]
 			Case 14 ; ~ Right Arm
 				;[Block]
-				InjurePlayer(Rnd(0.44 * DifficultyDMGMult, 0.54 * DifficultyDMGMult), 0.0, 650.0)
+				InjurePlayer(Rnd(0.44, 0.54) * DifficultyDMGMult, 0.0, 650.0)
 				ShotMessageUpdate = "A bullet hit your right arm."
 				;[End Block]
 			Case 15 ; ~ Neck
 				;[Block]
-				InjurePlayer(Rnd(0.73 * DifficultyDMGMult, 0.88 * DifficultyDMGMult), 0.0, 650.0)
+				InjurePlayer(Rnd(0.73, 0.88) * DifficultyDMGMult, 0.0, 650.0)
 				ShotMessageUpdate = "A bullet struck your neck, making you gasp."
 				;[End Block]
 			Case 16, 17 ; ~ Helmet, Face or Head
@@ -6878,6 +6874,7 @@ Function MoveToPocketDimension%()
 	
 	For r.Rooms = Each Rooms
 		If r\RoomTemplate\Name = "dimension_106" Then
+			UpdateTimer = 0.0
 			HideEntity(me\Head)
 			ShowEntity(me\Collider)
 			PlaySound_Strict(Use914SFX)
@@ -6887,7 +6884,7 @@ Function MoveToPocketDimension%()
 			TeleportToRoom(r)
 			
 			me\BlinkTimer = -10.0 : me\FallTimer = 0.0 : me\DropSpeed = 0.0
-			InjurePlayer(0.5, 0.0, 1600.0)
+			InjurePlayer(0.5, 0.0, 1500.0)
 			
 			wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
 			If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0

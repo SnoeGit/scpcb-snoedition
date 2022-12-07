@@ -2630,8 +2630,6 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 						TeleportEntity(me\Collider, EntityX(SecondPivot, True) + x, (0.1 * fps\Factor[0]) + EntityY(SecondPivot, True) + (EntityY(me\Collider) - EntityY(FirstPivot, True)), EntityZ(SecondPivot, True) + z, 0.3, True)
 						UpdateTimer = 0.0
 						me\DropSpeed = 0.0
-						UpdateDoors()
-						UpdateRooms()
 						
 						door1\SoundCHN = PlaySound2(OpenDoorSFX(ELEVATOR_DOOR, Rand(0, 2)), Camera, door1\OBJ)
 					EndIf
@@ -2743,8 +2741,6 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 						TeleportEntity(me\Collider, EntityX(FirstPivot, True) + x, (0.1 * fps\Factor[0]) + EntityY(FirstPivot, True) + (EntityY(me\Collider) - EntityY(SecondPivot, True)), EntityZ(FirstPivot, True) + z, 0.3, True)
 						UpdateTimer = 0.0
 						me\DropSpeed = 0.0
-						UpdateDoors()
-						UpdateRooms()
 						
 						door2\SoundCHN = PlaySound2(OpenDoorSFX(ELEVATOR_DOOR, Rand(0, 2)), Camera, door2\OBJ)
 					EndIf
@@ -3305,9 +3301,7 @@ Function UpdateSecurityCams%()
 					If (Not EntityHidden(sc\Cam)) Then HideEntity(sc\Cam)
 				EndIf
 				
-				If sc\room <> Null Then
-					If sc\room\RoomTemplate\Name = "room2_sl" Then sc\CoffinEffect = 0
-				EndIf
+				If sc\room\RoomTemplate\Name = "room2_sl" Then sc\CoffinEffect = 0
 				
 				If Close Lor sc = sc_I\CoffinCam Then 
 					If sc\FollowPlayer Then

@@ -1938,11 +1938,11 @@ Function UpdateEvents%()
 					EndIf
 				EndIf
 				
-				For i = 0 To 1
+				If e\room\Dist < 12.0 Then
 					For e2.Events = Each Events
 						If e\room\RoomTemplate\Name = "room2_checkpoint_hcz_ez" Then
 							If e2\EventID = e_cont2_008 Then
-								If e\room\Dist < 12.0 Then
+								For i = 0 To 1
 									If e2\EventState = 2.0 Then
 										TurnCheckpointMonitorsOff(False)
 										e\room\RoomDoors[i]\Locked = 0
@@ -1951,11 +1951,11 @@ Function UpdateEvents%()
 										e\room\RoomDoors[i]\Locked = 1
 									EndIf
 									Exit
-								EndIf
+								Next
 							EndIf
 						Else
 							If e2\EventID = e_room2_sl Then
-								If e\room\Dist < 12.0 Then
+								For i = 0 To 1
 									If e2\EventState3 = 0.0 Then
 										TurnCheckpointMonitorsOff()
 										e\room\RoomDoors[i]\Locked = 0
@@ -1964,11 +1964,11 @@ Function UpdateEvents%()
 										e\room\RoomDoors[i]\Locked = 1
 									EndIf
 									Exit
-								EndIf
+								Next
 							EndIf
 						EndIf
 					Next
-				Next
+				EndIf
 				
 				If e\room\RoomDoors[0]\Open <> e\EventState Then
 					If (Not e\Sound) Then LoadEventSound(e, "SFX\Door\DoorCheckpoint.ogg")
@@ -7738,8 +7738,8 @@ Function UpdateEvents%()
 								If sc\ScrOBJ <> 0 Then
 									If EntityHidden(sc\ScrOBJ) Then
 										ShowEntity(sc\ScrOBJ)
-										If sc\ScrOverlay <> 0 Then ShowEntity(sc\ScrOverlay)
-										If sc\MonitorOBJ <> 0 Then ShowEntity(sc\MonitorOBJ)
+										ShowEntity(sc\ScrOverlay)
+										ShowEntity(sc\MonitorOBJ)
 									EndIf
 								EndIf
 								Exit
@@ -7758,8 +7758,8 @@ Function UpdateEvents%()
 								If sc\ScrOBJ <> 0 Then
 									If (Not EntityHidden(sc\ScrOBJ)) Then
 										HideEntity(sc\ScrOBJ)
-										If sc\ScrOverlay <> 0 Then HideEntity(sc\ScrOverlay)
-										If sc\MonitorOBJ <> 0 Then HideEntity(sc\MonitorOBJ)
+										HideEntity(sc\ScrOverlay)
+										HideEntity(sc\MonitorOBJ)
 									EndIf
 								EndIf
 								Exit

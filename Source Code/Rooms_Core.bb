@@ -1931,18 +1931,20 @@ Function FillRoom%(r.Rooms)
 			d.Doors = CreateDoor(r\x + 1392.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 64.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_3)
 			d\Locked = 1 : d\MTFClose = False
 			
-			d.Doors = CreateDoor(r\x - 640.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 64.0 * RoomScale, 90.0, r)
+			d.Doors = CreateDoor(r\x - 640.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 64.0 * RoomScale, -90.0, r)
 			d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
-			FreeEntity(d\Buttons[1]) : d\Buttons[1] = 0
+			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
+			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
 			d.Doors = CreateDoor(r\x + 1264.0 * RoomScale, r\y + 383.9 * RoomScale, r\z + 312.0 * RoomScale, 180.0, r, True, ONE_SIDED_DOOR)
 			d\Locked = 1 : d\MTFClose = False
 			PositionEntity(d\Buttons[0], r\x + 1120.0 * RoomScale, EntityY(d\Buttons[0], True), r\z + 322.0 * RoomScale, True)
 			PositionEntity(d\Buttons[1], r\x + 1120.0 * RoomScale, EntityY(d\Buttons[1], True), r\z + 302.0 * RoomScale, True)
 			
-			d.Doors = CreateDoor(r\x, r\y, r\z + 1184.0 * RoomScale, 0.0, r, False, DEFAULT_DOOR, KEY_CARD_3)
+			d.Doors = CreateDoor(r\x, r\y, r\z + 1184.0 * RoomScale, 180.0, r, False, DEFAULT_DOOR, KEY_CARD_3)
 			d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
-			FreeEntity(d\Buttons[1]) : d\Buttons[1] = 0
+			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
+			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
 			r\Objects[0] = LoadRMesh("GFX\map\IntroDesk.rmesh", Null)
 			ScaleEntity(r\Objects[0], RoomScale, RoomScale, RoomScale)
@@ -2116,7 +2118,7 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Document SCP-895", "paper", r\x - 688.0 * RoomScale, r\y + 133.0 * RoomScale, r\z - 304.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Night Vision Goggles", "nvg", r\x + 280.0 * RoomScale, r\y - 1456.0 * RoomScale, r\z + 2164.0 * RoomScale)
+			it.Items = CreateItem("Night Vision Goggles", "nvg", r\x + 50.0 * RoomScale, r\y - 1302.0 * RoomScale, r\z + 2415.0 * RoomScale)
 			it\State = Rnd(100.0, 1000.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]

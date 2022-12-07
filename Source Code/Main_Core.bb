@@ -1226,22 +1226,15 @@ Function UpdateMoving%()
 	
 	If (Not me\Terminated) And (Not chs\NoClip) And (PlayerRoom\RoomTemplate\Name <> "dimension_106") And (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) Then
 		If me\Stamina < 5.0 Then
-			Temp = 0
-			If wi\GasMask > 0 Lor I_1499\Using > 0 Then Temp = 1
-			If (Not ChannelPlaying(BreathCHN)) Then BreathCHN = PlaySound_Strict(BreathSFX((Temp), 0))
+			Temp3 = 0
+			If wi\GasMask > 0 Lor I_1499\Using > 0 Then Temp3 = 1
+			If (Not ChannelPlaying(BreathCHN)) Then BreathCHN = PlaySound_Strict(BreathSFX((Temp3), 0))
 		ElseIf me\Stamina < 40.0
-			If (Not BreathCHN) Then
-				Temp = 0.0
-				If wi\GasMask > 0 Lor I_1499\Using > 0 Then Temp = 1
-				BreathCHN = PlaySound_Strict(BreathSFX((Temp), Rand(3)))
-				ChannelVolume(BreathCHN, Min((70.0 - me\Stamina) / 70.0, 1.0) * opt\SFXVolume * opt\MasterVolume)
-			Else
-				If (Not ChannelPlaying(BreathCHN)) Then
-					Temp = 0.0
-					If wi\GasMask > 0 Lor I_1499\Using > 0 Then Temp = 1
-					BreathCHN = PlaySound_Strict(BreathSFX((Temp), Rand(3)))
-					ChannelVolume(BreathCHN, Min((70.0 - me\Stamina) / 70.0, 1.0) * opt\SFXVolume * opt\MasterVolume)		
-				EndIf
+			If (Not ChannelPlaying(BreathCHN)) Then
+				Temp3 = 0
+				If wi\GasMask > 0 Lor I_1499\Using > 0 Then Temp3 = 1
+				BreathCHN = PlaySound_Strict(BreathSFX((Temp3), Rand(3)))
+				ChannelVolume(BreathCHN, Min((70.0 - me\Stamina) / 70.0, 1.0) * opt\SFXVolume * opt\MasterVolume)		
 			EndIf
 		EndIf
 	EndIf
@@ -1299,7 +1292,7 @@ Function UpdateMoving%()
 				
 				Temp = (me\Shake Mod 360.0)
 				
-				Local TempCHN%
+				Local TempCHN%, TempCHN2%
 				
 				If me\Playable Then me\Shake = ((me\Shake + fps\Factor[0] * Min(Sprint, 1.5) * 7.0) Mod 720.0)
 				If Temp < 180.0 And (me\Shake Mod 360.0) >= 180.0 And (Not me\Terminated) Then
@@ -1329,7 +1322,7 @@ Function UpdateMoving%()
 					Else
 						me\SndVolume = Max(3.0 - (me\Crouch * 0.6), me\SndVolume)
 					EndIf
-					ChannelVolume(TempCHN, (1.0 - (me\Crouch * 0.6)) * opt\SFXVolume * opt\MasterVolume)
+					ChannelVolume(TempCHN2, (1.0 - (me\Crouch * 0.6)) * opt\SFXVolume * opt\MasterVolume)
 				EndIf	
 			EndIf
 		Else
@@ -1437,14 +1430,13 @@ Function UpdateMoving%()
 				EndIf
 				
 				If me\DropSpeed < -0.07 Then 
-					If CurrStepSFX = 0 Then
+					If CurrStepSFX = 0 Lor CurrStepSFX = 3 Then
 						PlaySound_Strict(StepSFX(GetStepSound(me\Collider), 0, Rand(0, 7 - Temp3)))
+						If CurrStepSFX = 3 Then PlaySound_Strict(Step2SFX[Rand(13, 14)])
 					ElseIf CurrStepSFX = 1
 						PlaySound_Strict(StepSFX(2, 0, Rand(0, 2)))
 					ElseIf CurrStepSFX = 2
 						PlaySound_Strict(Step2SFX[Rand(0, 2)])
-					ElseIf CurrStepSFX = 3
-						PlaySound_Strict(Step2SFX[Rand(13, 14)])
 					EndIf
 					me\SndVolume = Max(3.0, me\SndVolume)
 				EndIf
@@ -1681,17 +1673,18 @@ Function UpdateMouseLook%()
 		EndIf
 		
 		If wi\GasMask <> 2 And wi\GasMask <> 4 And wi\HazmatSuit <> 2 And wi\HazmatSuit <> 4 And I_1499\Using <> 2 Then
+			; ~ TODO: Make more realistic
 			If ChannelPlaying(BreathCHN) Then
-				wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * 2.0), 100.0)
+				wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * Rnd(0.5, 1.2)), 100.0)
 			Else
 				If wi\GasMask = 3 Lor wi\HazmatSuit = 3 Then
 					If me\CurrSpeed > 0.0 And (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) Then
-						wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * 0.2), 100.0)
+						wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * Rnd(0.15, 0.5)), 100.0)
 					Else
-						wi\GasMaskFogTimer = Max(0.0, wi\GasMaskFogTimer - (fps\Factor[0] * 0.32))
+						wi\GasMaskFogTimer = Max(0.0, wi\GasMaskFogTimer - (fps\Factor[0] * 0.3))
 					EndIf
 				Else
-					wi\GasMaskFogTimer = Max(0.0, wi\GasMaskFogTimer - (fps\Factor[0] * 0.32))
+					wi\GasMaskFogTimer = Max(0.0, wi\GasMaskFogTimer - (fps\Factor[0] * 0.3))
 				EndIf
 			EndIf
 			If wi\GasMaskFogTimer > 0.0 Then
@@ -1701,7 +1694,7 @@ Function UpdateMouseLook%()
 		EndIf
 	Else
 		If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel(BreathGasRelaxedCHN) : BreathGasRelaxedCHN = 0
-		wi\GasMaskFogTimer = Max(0.0, wi\GasMaskFogTimer - (fps\Factor[0] * 0.32))
+		wi\GasMaskFogTimer = Max(0.0, wi\GasMaskFogTimer - (fps\Factor[0] * 0.3))
 		If (Not EntityHidden(t\OverlayID[1])) Then HideEntity(t\OverlayID[1])
 		If (Not EntityHidden(t\OverlayID[2])) Then HideEntity(t\OverlayID[2])
 		If (Not EntityHidden(t\OverlayID[10])) Then HideEntity(t\OverlayID[10])
@@ -2259,14 +2252,36 @@ Function UpdateGUI%()
 			If (Not mo\MouseDown1) Then
 				If MouseSlot = 66 Then
 					Select SelectedItem\ItemTemplate\TempName
-						Case "vest", "finevest", "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
+						Case "vest", "finevest"
 							;[Block]
-							CreateHintMsg("Double click on this item to take it off.")
+							CreateHintMsg("Double click on the vest to take it off.")
+							;[End Block]
+						Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
+							;[Block]
+							CreateHintMsg("Double click on the hazmat suit to take it off.")
+							;[End Block]
+						Case "scp427"
+							;[Block]
+							If I_427\Using > 0 Then
+								CreateHintMsg("Double click on the locket to take it off.")
+							Else
+								DropItem(SelectedItem)
+								InvOpen = False
+							EndIf
+							;[End Block]
+						Case "scp714", "coarse714"
+							;[Block]
+							If (I_714\Using = 3 And SelectedItem\ItemTemplate\TempName = "scp714") Lor (I_714\Using = 2 And SelectedItem\ItemTemplate\TempName = "coarse714") Then
+								CreateHintMsg("Double click on the ring to take it off.")
+							Else
+								DropItem(SelectedItem)
+								InvOpen = False
+							EndIf
 							;[End Block]
 						Case "scp1499", "super1499"
 							;[Block]
-							If I_1499\Using > 0 Then
-								CreateHintMsg("Double click on this item to take it off.")
+							If (I_1499\Using = 1 And SelectedItem\ItemTemplate\TempName = "scp1499") Lor (I_1499\Using = 2 And SelectedItem\ItemTemplate\TempName = "super1499") Then
+								CreateHintMsg("Double click on the gas mask to take it off.")
 							Else
 								DropItem(SelectedItem)
 								InvOpen = False
@@ -2274,8 +2289,8 @@ Function UpdateGUI%()
 							;[End Block]
 						Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
 							;[Block]
-							If wi\GasMask > 0 Then
-								CreateHintMsg("Double click on this item to take it off.")
+							If (wi\GasMask = 1 And SelectedItem\ItemTemplate\TempName = "gasmask") Lor (wi\GasMask = 2 And SelectedItem\ItemTemplate\TempName = "finegasmask") Lor (wi\GasMask = 3 And SelectedItem\ItemTemplate\TempName = "supergasmask") Lor (wi\GasMask = 4 And SelectedItem\ItemTemplate\TempName = "heavygasmask") Then
+								CreateHintMsg("Double click on the gas mask to take it off.")
 							Else
 								DropItem(SelectedItem)
 								InvOpen = False
@@ -2284,7 +2299,7 @@ Function UpdateGUI%()
 						Case "helmet"
 							;[Block]
 							If wi\BallisticHelmet Then
-								CreateHintMsg("Double click on this item to take it off.")
+								CreateHintMsg("Double click on the helmet to take it off.")
 							Else
 								DropItem(SelectedItem)
 								InvOpen = False
@@ -2292,8 +2307,8 @@ Function UpdateGUI%()
 							;[End Block] 
 						Case "nvg", "supernvg", "finenvg"
 							;[Block]
-							If wi\NightVision > 0 Then
-								CreateHintMsg("Double click on this item to take it off.")
+							If (wi\NightVision = 1 And SelectedItem\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 3 And SelectedItem\ItemTemplate\TempName = "finenvg") Lor (wi\NightVision = 2 And SelectedItem\ItemTemplate\TempName = "supernvg") Then
+								CreateHintMsg("Double click on the goggles to take it off.")
 							Else
 								DropItem(SelectedItem)
 								InvOpen = False
@@ -2301,8 +2316,8 @@ Function UpdateGUI%()
 							;[End Block]
 						Case "scramble", "finescramble", "killscramble"
 							;[Block]
-							If wi\SCRAMBLE > 0 Then
-								CreateHintMsg("Double click on this item to take it off.")
+							If (wi\SCRAMBLE = 1 And SelectedItem\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And SelectedItem\ItemTemplate\TempName = "finescramble") Lor (wi\SCRAMBLE = 3 And SelectedItem\ItemTemplate\TempName = "killscramble") Then
+								CreateHintMsg("Double click on the gear to take it off.")
 							Else
 								DropItem(SelectedItem)
 								InvOpen = False
@@ -3963,15 +3978,19 @@ Function UpdateGUI%()
 				Case "scp427"
 					;[Block]
 					If CanUseItem(True, True) Then
-						If I_427\Using Then
-							CreateMsg("You closed the locket.")
-							I_427\Using = False
+						If I_427\Timer < 70.0 * 360.0 Then
+							If I_427\Using Then
+								CreateMsg("You closed the locket.")
+								I_427\Using = False
+							Else
+								GiveAchievement(Achv427)
+								CreateMsg("You opened the locket.")
+								I_427\Using = True
+							EndIf
+							SelectedItem = Null
 						Else
-							GiveAchievement(Achv427)
-							CreateMsg("You opened the locket.")
-							I_427\Using = True
+							CreateMsg("You can't reach the locket anymore.")
 						EndIf
-						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "pill"
@@ -5524,6 +5543,7 @@ Function UpdateMenu%()
 						If UpdateMainMenuButton(x, y, 430 * MenuScale, 60 * MenuScale, "LOAD GAME") Then
 							RenderLoading(0, "GAME FILES")
 							
+							KillSounds()
 							LoadGameQuick(CurrSave\Name)
 							
 							MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
@@ -5585,6 +5605,7 @@ Function UpdateMenu%()
 						If UpdateMainMenuButton(x, y, 430 * MenuScale, 60 * MenuScale, "LOAD GAME") Then
 							RenderLoading(0, "GAME FILES")
 							
+							KillSounds()
 							LoadGameQuick(CurrSave\Name)
 							
 							MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
