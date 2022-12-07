@@ -5145,15 +5145,15 @@ Function UpdateEvents%()
 										e\EventState2 = Min(e\EventState2 + (fps\Factor[0] / 6000.0), 1.0)
 										e\EventState3 = CurveValue(e\EventState2, e\EventState3, 50.0)
 										
-										If I_714\Using = 1 And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then
-											me\Sanity = me\Sanity - (fps\Factor[0] * 1.1)
+										If I_714\Using <> 3 And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then
+											me\Sanity = me\Sanity - (fps\Factor[0] * 1.1 / I_714\Using)
 											me\BlurTimer = Sin(MilliSecs2() / 10.0) * Abs(me\Sanity)
 										EndIf
 										
 										If wi\HazmatSuit = 0 Then
-											InjurePlayer(fps\Factor[0] / 5000.0)
-										ElseIf wi\HazmatSuit < 4
-											InjurePlayer(fps\Factor[0] / 10000.0)
+											InjurePlayer(fps\Factor[0] / 6000.0)
+										ElseIf wi\HazmatSuit <> 4
+											InjurePlayer(fps\Factor[0] / 12000.0)
 										EndIf
 										
 										If me\Terminated And me\Bloodloss >= 100.0 Then
@@ -8139,7 +8139,13 @@ Function UpdateDimension106%()
 				CurrStepSFX = 1
 				ShouldPlay = 3
 				
-				InjurePlayer(fps\Factor[0] * 0.00005)
+				If wi\HazmatSuit = 0 Then
+					InjurePlayer(fps\Factor[0] / 15000.0)
+				ElseIf wi\HazmatSuit <> 4
+					InjurePlayer(fps\Factor[0] / 20000.0)
+				Else
+					InjurePlayer(fps\Factor[0] / 25000.0)
+				EndIf
 				PrevSecondaryLightOn = SecondaryLightOn : SecondaryLightOn = True
 				
 				If e\EventState = 0.0 Then e\EventState = 0.1
