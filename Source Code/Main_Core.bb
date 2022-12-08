@@ -2153,10 +2153,12 @@ Function UpdateGUI%()
 					EndIf
 					
 					SelectedItem = Null
-					OtherOpen = Null
-					ClosedInv = True
 					
-					MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
+					If (Not KeyDown(key\INVENTORY)) Then
+						OtherOpen = Null
+						ClosedInv = True
+						MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
+					EndIf
 				Else
 					If PrevOtherOpen\SecondInv[MouseSlot] = Null Then
 						For z = 0 To OtherSize - 1
@@ -2266,7 +2268,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the locket to take it off.")
 							Else
 								DropItem(SelectedItem)
-								InvOpen = False
+								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "scp714", "coarse714"
@@ -2275,7 +2277,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the ring to take it off.")
 							Else
 								DropItem(SelectedItem)
-								InvOpen = False
+								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "scp1499", "super1499"
@@ -2284,7 +2286,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the gas mask to take it off.")
 							Else
 								DropItem(SelectedItem)
-								InvOpen = False
+								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
@@ -2293,7 +2295,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the gas mask to take it off.")
 							Else
 								DropItem(SelectedItem)
-								InvOpen = False
+								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "helmet"
@@ -2302,7 +2304,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the helmet to take it off.")
 							Else
 								DropItem(SelectedItem)
-								InvOpen = False
+								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
 							EndIf
 							;[End Block] 
 						Case "nvg", "supernvg", "finenvg"
@@ -2311,7 +2313,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the goggles to take it off.")
 							Else
 								DropItem(SelectedItem)
-								InvOpen = False
+								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "scramble", "finescramble", "killscramble"
@@ -2320,18 +2322,19 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the gear to take it off.")
 							Else
 								DropItem(SelectedItem)
-								InvOpen = False
+								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Default
 							;[Block]
 							DropItem(SelectedItem)
-							InvOpen = False
+							If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
 							;[End Block]
 					End Select
-					
-					MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
-					StopMouseMovement()
+					If (Not KeyDown(key\INVENTORY)) Then
+						MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
+						StopMouseMovement()
+					EndIf
 				Else
 					If Inventory(MouseSlot) = Null Then
 						For z = 0 To MaxItemAmount - 1
