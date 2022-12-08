@@ -3,6 +3,7 @@ v1.7
 General:
 
 - Heavy gear were given unique textures.
+- Holding Tab while dropping items does not close inventory.
 - SCP-173 does not cause the "STOP HIDING" to appear anymore.
 - Heavy Hazmat Suit completely prevents taking damage from SCP-035's containment chamber.
 - A new item Augelite Ring as a new item that gives the player more stamina than SCP-714 but does not give you immunity to memetic SCPs and instead resists them.
