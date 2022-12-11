@@ -294,6 +294,7 @@ Function UpdateConsole%()
 							CreateConsoleMsg("- camerafog [near] [far]")
 							CreateConsoleMsg("- spawn [npc type] [state]")
 							CreateConsoleMsg("- injure [value]")
+							CreateConsoleMsg("- bloodloss [value]")
 							CreateConsoleMsg("- infect [value]")
 							CreateConsoleMsg("- crystal [value]") 
 							CreateConsoleMsg("- teleport [room name]")
@@ -587,6 +588,13 @@ Function UpdateConsole%()
 					
 					me\Injuries = Float(StrTemp)
 					CreateConsoleMsg("Player's injuries set to " + Float(StrTemp))
+					;[End Block]
+				Case "bloodloss", "bleed"
+					;[Block]
+					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					
+					me\Bloodloss = Float(StrTemp)
+					CreateConsoleMsg("Player's bloodloss set to " + Float(StrTemp))
 					;[End Block]
 				Case "cls", "clear"
 					;[Block]
@@ -1527,21 +1535,23 @@ Function RenderDebugHUD%()
 			
 			Text(x + (380 * MenuScale), y + (80 * MenuScale), "Heal Timer: " + me\HealTimer)
 			
-			Text(x + (380 * MenuScale), y + (120 * MenuScale), "Heart Beat Timer: " + me\HeartBeatTimer)
+			Text(x + (380 * MenuScale), y + (100 * MenuScale), "Quick Heal Timer: " + me\QuickHealTimer)
 			
-			Text(x + (380 * MenuScale), y + (160 * MenuScale), "Explosion Timer: " + me\ExplosionTimer)
+			Text(x + (380 * MenuScale), y + (140 * MenuScale), "Heart Beat Timer: " + me\HeartBeatTimer)
 			
-			Text(x + (380 * MenuScale), y + (200 * MenuScale), "Current Speed: " + me\CurrSpeed)
+			Text(x + (380 * MenuScale), y + (180 * MenuScale), "Explosion Timer: " + me\ExplosionTimer)
 			
-			Text(x + (380 * MenuScale), y + (240 * MenuScale), "Camera Shake Timer: " + me\CameraShakeTimer)
-			Text(x + (380 * MenuScale), y + (260 * MenuScale), "Current Camera Zoom: " + me\CurrCameraZoom)
+			Text(x + (380 * MenuScale), y + (220 * MenuScale), "Current Speed: " + me\CurrSpeed)
 			
-			Text(x + (380 * MenuScale), y + (300 * MenuScale), "Vomit Timer: " + me\VomitTimer)
+			Text(x + (380 * MenuScale), y + (260 * MenuScale), "Camera Shake Timer: " + me\CameraShakeTimer)
+			Text(x + (380 * MenuScale), y + (280 * MenuScale), "Current Camera Zoom: " + me\CurrCameraZoom)
+			
+			Text(x + (380 * MenuScale), y + (320 * MenuScale), "Vomit Timer: " + me\VomitTimer)
 			
 			If me\Playable Then
-				Text(x + (380 * MenuScale), y + (340 * MenuScale), "Is Playable: True")
+				Text(x + (380 * MenuScale), y + (360 * MenuScale), "Is Playable: True")
 			Else
-				Text(x + (380 * MenuScale), y + (340 * MenuScale), "Is Playable: False")
+				Text(x + (380 * MenuScale), y + (360 * MenuScale), "Is Playable: False")
 			EndIf
 			
 			Text(x + (380 * MenuScale), y + (380 * MenuScale), "Refined Items: " + me\RefinedItems)
@@ -1550,24 +1560,24 @@ Function RenderDebugHUD%()
 		Case 3
 			;[Block]
 			If n_I\Curr049 <> Null Then
-			Text(x, y, "SCP-049 Position: (" + FloatToString(EntityX(n_I\Curr049\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr049\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr049\OBJ), 2) + ")")
-			Text(x, y + (20 * MenuScale), "SCP-049 Idle: " + n_I\Curr049\Idle)
-			Text(x, y + (40 * MenuScale), "SCP-049 State: " + n_I\Curr049\State)
+				Text(x, y, "SCP-049 Position: (" + FloatToString(EntityX(n_I\Curr049\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr049\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr049\OBJ), 2) + ")")
+				Text(x, y + (20 * MenuScale), "SCP-049 Idle: " + n_I\Curr049\Idle)
+				Text(x, y + (40 * MenuScale), "SCP-049 State: " + n_I\Curr049\State)
 			EndIf
 			If n_I\Curr096 <> Null Then
-			Text(x, y + (60 * MenuScale), "SCP-096 Position: (" + FloatToString(EntityX(n_I\Curr096\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr096\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr096\OBJ), 2) + ")")
-			Text(x, y + (80 * MenuScale), "SCP-096 Idle: " + n_I\Curr096\Idle)
-			Text(x, y + (100 * MenuScale), "SCP-096 State: " + n_I\Curr096\State)
+				Text(x, y + (60 * MenuScale), "SCP-096 Position: (" + FloatToString(EntityX(n_I\Curr096\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr096\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr096\OBJ), 2) + ")")
+				Text(x, y + (80 * MenuScale), "SCP-096 Idle: " + n_I\Curr096\Idle)
+				Text(x, y + (100 * MenuScale), "SCP-096 State: " + n_I\Curr096\State)
 			EndIf
 			If n_I\Curr106 <> Null Then
-			Text(x, y + (120 * MenuScale), "SCP-106 Position: (" + FloatToString(EntityX(n_I\Curr106\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr106\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr106\OBJ), 2) + ")")
-			Text(x, y + (140 * MenuScale), "SCP-106 Idle: " + n_I\Curr106\Idle)
-			Text(x, y + (160 * MenuScale), "SCP-106 State: " + n_I\Curr106\State)
+				Text(x, y + (120 * MenuScale), "SCP-106 Position: (" + FloatToString(EntityX(n_I\Curr106\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr106\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr106\OBJ), 2) + ")")
+				Text(x, y + (140 * MenuScale), "SCP-106 Idle: " + n_I\Curr106\Idle)
+				Text(x, y + (160 * MenuScale), "SCP-106 State: " + n_I\Curr106\State)
 			EndIf
 			If n_I\Curr173 <> Null Then
-			Text(x, y + (180 * MenuScale), "SCP-173 Position: (" + FloatToString(EntityX(n_I\Curr173\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr173\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr173\OBJ), 2) + ")")
-			Text(x, y + (200 * MenuScale), "SCP-173 Idle: " + n_I\Curr173\Idle)
-			Text(x, y + (220 * MenuScale), "SCP-173 State: " + n_I\Curr173\State)
+				Text(x, y + (180 * MenuScale), "SCP-173 Position: (" + FloatToString(EntityX(n_I\Curr173\OBJ), 2) + ", " + FloatToString(EntityY(n_I\Curr173\OBJ), 2) + ", " + FloatToString(EntityZ(n_I\Curr173\OBJ), 2) + ")")
+				Text(x, y + (200 * MenuScale), "SCP-173 Idle: " + n_I\Curr173\Idle)
+				Text(x, y + (220 * MenuScale), "SCP-173 State: " + n_I\Curr173\State)
 			EndIf
 			
 			Text(x, y + (260 * MenuScale), "Pills Taken: " + I_500\Taken)

@@ -3976,9 +3976,7 @@ Function UpdateNPCs%()
 							n\State3 = Max(n\State3 - fps\Factor[0] * 0.2, 0.0)
 						EndIf
 						
-						If n\State <> 10.0 Then
-							n\LastSeen = 0
-						EndIf
+						If n\State <> 10.0 Then n\LastSeen = 0
 						
 						Select n\State
 							Case 0.0 ; ~ Idles

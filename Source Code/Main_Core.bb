@@ -155,7 +155,7 @@ Type Player
 	Field CameraShakeTimer#, Shake#, CameraShake#, BigCameraShake#
 	Field Vomit%, VomitTimer#, Regurgitate%
 	Field HeartBeatRate#, HeartBeatTimer#, HeartBeatVolume#
-	Field Injuries#, Bloodloss#, PrevInjuries#, PrevBloodloss#, HealTimer#
+	Field Injuries#, Bloodloss#, PrevInjuries#, PrevBloodloss#, HealTimer#, QuickHealTimer#
 	Field DropSpeed#, HeadDropSpeed#, CurrSpeed#
 	Field Crouch%, CrouchState#
 	Field SndVolume#
@@ -1332,7 +1332,7 @@ Function UpdateMoving%()
 				Sprint = 0.5
 			EndIf
 		EndIf
-		If KeyHit(key\CROUCH) And me\Playable And (Not me\Zombie) And me\Controllable = True And me\Bloodloss < 60.0 And I_427\Timer < 70.0 * 390.0 And (Not chs\NoClip) And (SelectedItem = Null Lor (SelectedItem\ItemTemplate\TempName <> "firstaid" And SelectedItem\ItemTemplate\TempName <> "finefirstaid" And SelectedItem\ItemTemplate\TempName <> "bluefirstaid")) Then 
+		If KeyHit(key\CROUCH) And me\Playable And (Not me\Zombie) And me\Controllable = True And me\Bloodloss < 65.0 And I_427\Timer < 70.0 * 390.0 And (Not chs\NoClip) And (SelectedItem = Null Lor (SelectedItem\ItemTemplate\TempName <> "firstaid" And SelectedItem\ItemTemplate\TempName <> "finefirstaid" And SelectedItem\ItemTemplate\TempName <> "bluefirstaid")) Then 
 			SetCrouch((Not me\Crouch))
 		EndIf
 		
@@ -1466,7 +1466,7 @@ Function UpdateMoving%()
 		Temp2 = me\Bloodloss
 		me\BlurTimer = Max(Max(Sin(MilliSecs2() / 100.0) * me\Bloodloss * 30.0, me\Bloodloss * 2.0 * (2.0 - me\CrouchState)), me\BlurTimer)
 		If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0 Then me\Bloodloss = Min(me\Bloodloss + (Min(me\Injuries, 3.5) / 300.0) * fps\Factor[0], 100.0)
-		If Temp2 <= 60.0 And me\Bloodloss > 60.0 Then CreateMsg("You are feeling faint from the amount of blood you have lost.")
+		If Temp2 <= 65.0 And me\Bloodloss > 65.0 Then CreateMsg("You are feeling faint from the amount of blood you have lost.")
 	EndIf
 	
 	Update008()
@@ -1491,7 +1491,7 @@ Function UpdateMoving%()
 		
 		me\CurrCameraZoom = Max(me\CurrCameraZoom, (Sin(Float(MilliSecs2()) / 20.0) + 1.0) * me\Bloodloss * 0.2)
 		
-		If me\Bloodloss > 60.0 Then 
+		If me\Bloodloss > 65.0 Then 
 			If (Not me\Crouch) Then SetCrouch(True)
 		EndIf
 		If me\Bloodloss >= 100.0 Then 
@@ -1507,9 +1507,14 @@ Function UpdateMoving%()
 	EndIf
 	
 	If me\HealTimer > 0.0 Then
-		me\HealTimer = me\HealTimer - (fps\Factor[0] / 70.0)
-		me\Bloodloss = Min(me\Bloodloss + (2.0 / 400.0) * fps\Factor[0], 100.0)
-		me\Injuries = Max(me\Injuries - (fps\Factor[0] / 70.0) / 30.0, 0.0)
+		me\HealTimer = Max(me\HealTimer - (fps\Factor[0] / 70.0), 0.0)
+		me\Bloodloss = Min(me\Bloodloss + (fps\Factor[0] / 200.0), 100.0)
+		me\Injuries = Max(me\Injuries - (fps\Factor[0] / 70.0) / 20.0, 0.0)
+	EndIf
+	
+	If me\QuickHealTimer > 0.0 Then
+		me\QuickHealTimer = Max(me\QuickHealTimer - (fps\Factor[0] / 70.0), 0.0)
+		me\Injuries = Max(me\Injuries - (fps\Factor[0] / 70.0) / 5.0, 0.0)
 	EndIf
 		
 	If me\Playable Then
@@ -3344,6 +3349,7 @@ Function UpdateGUI%()
 						EndIf
 						me\CameraShakeTimer = GetINIString2(SCP294File, Loc, "Camera Shake")
 						me\Injuries = Max(me\Injuries + GetINIInt2(SCP294File, Loc, "Damage"), 0.0)
+						me\QuickHealTimer = GetINIFloat2(SCP294File, Loc, "Heal")
 						me\Bloodloss = Max(me\Bloodloss + GetINIInt2(SCP294File, Loc, "Blood Loss"), 0.0)
 						StrTemp =  GetINIString2(SCP294File, Loc, "Sound")
 						If StrTemp <> "" Then
@@ -3399,13 +3405,13 @@ Function UpdateGUI%()
 				Case "syringe", "syringeinf"
 					;[Block]
 					If CanUseItem(True, True) Then
-						me\HealTimer = 30.0
-						me\StaminaEffect = 0.5
+						me\HealTimer = 20.0
+						me\StaminaEffect = 0.75
 						me\StaminaEffectTimer = 20.0
 						
 						If SelectedItem\ItemTemplate\TempName = "syringeinf" Then
 							I_008\Timer = I_008\Timer + (1.0 + SelectedDifficulty\AggressiveNPCs)
-							me\VomitTimer = 70.0 * 1.0
+							me\VomitTimer = 70.0
 						EndIf
 						CreateMsg("You injected yourself with the syringe and feel a slight adrenaline rush.")
 					
@@ -3415,9 +3421,9 @@ Function UpdateGUI%()
 				Case "finesyringe"
 					;[Block]
 					If CanUseItem(True, True) Then
-						me\HealTimer = Rnd(20.0, 40.0)
-						me\StaminaEffect = Rnd(0.4, 0.7)
-						me\StaminaEffectTimer = Rnd(20.0, 30.0)
+						me\HealTimer = 30.0
+						me\StaminaEffect = 0.5
+						me\StaminaEffectTimer = 30.0
 					
 						CreateMsg("You injected yourself with the syringe and feel an adrenaline rush.")
 					
@@ -3430,9 +3436,9 @@ Function UpdateGUI%()
 						Select Rand(3)
 							Case 1
 								;[Block]
-								me\HealTimer = Rnd(40.0, 60.0)
+								me\HealTimer = 40.0
 								me\StaminaEffect = 0.1
-								me\StaminaEffectTimer = 30.0
+								me\StaminaEffectTimer = 40.0
 								CreateMsg("You injected yourself with the syringe and feel a huge adrenaline rush.")
 								;[End Block]
 							Case 2
@@ -3446,7 +3452,6 @@ Function UpdateGUI%()
 								CreateMsg("You injected yourself with the syringe and feel a pain in your stomach.")
 								;[End Block]
 						End Select
-					
 						RemoveItem(SelectedItem)
 					EndIf
 					;[End Block]

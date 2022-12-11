@@ -57,6 +57,7 @@ Function SaveGame%(File$)
 	WriteFloat(f, me\DeathTimer)
 	WriteFloat(f, me\BlurTimer)
 	WriteFloat(f, me\HealTimer)
+	WriteFloat(f, me\QuickHealTimer)
 	
 	WriteByte(f, me\Crouch)
 	
@@ -555,6 +556,7 @@ Function LoadGame%(File$)
 	me\DeathTimer = ReadFloat(f)	
 	me\BlurTimer = ReadFloat(f)	
 	me\HealTimer = ReadFloat(f)
+	me\QuickHealTimer = ReadFloat(f)
 	
 	me\Crouch = ReadByte(f)
 	
@@ -1441,6 +1443,7 @@ Function LoadGameQuick%(File$)
 	me\DeathTimer = ReadFloat(f)	
 	me\BlurTimer = ReadFloat(f)	
 	me\HealTimer = ReadFloat(f)
+	me\QuickHealTimer = ReadFloat(f)
 	
 	me\Crouch = ReadByte(f)
 	

@@ -7071,7 +7071,7 @@ Function UpdateEvents%()
 					e\room\NPC[0]\State = 8.0
 					ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_BODY_2_TEXTURE)
 					SetNPCFrame(e\room\NPC[0], 19.0)
-					RotateEntity(e\room\NPC[0]\Collider, 0.0, Rnd(360.0), 0.0, True)	
+					RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle - 30.0, 0.0)
 					
 					RemoveEvent(e)
 				EndIf

@@ -339,7 +339,7 @@ Function RemoveWearableItems%(item.Items)
 			;[End Block]
 		Case "scp714", "coarse714"
 			;[Block]
-			I_714\Using = 0
+			I_714\Using = 1
 			;[End Block]
 		Case "scp1499", "super1499"
 			;[Block]
