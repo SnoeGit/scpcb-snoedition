@@ -1039,12 +1039,9 @@ Function UpdateEvents%()
 								If EntityDistanceSquared(e\room\NPC[3]\Collider, e\room\NPC[5]\Collider) > 25.0 And EntityDistanceSquared(e\room\NPC[4]\Collider, e\room\NPC[5]\Collider)
 									If EntityDistanceSquared(e\room\NPC[5]\Collider, me\Collider) < 12.25
 										For i = 3 To 5
-											
 											If i < 5 Then
 												StopChannel(e\room\NPC[i]\SoundCHN) : e\room\NPC[i]\SoundCHN = 0
-												If e\room\NPC[i]\Sound <> 0 Then
-													FreeSound_Strict(e\room\NPC[i]\Sound) : e\room\NPC[i]\Sound = 0
-												EndIf
+												If e\room\NPC[i]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[i]\Sound) : e\room\NPC[i]\Sound = 0
 											EndIf
 											e\room\NPC[i]\State = 11.0 : e\room\NPC[i]\State3 = 1.0 : e\room\NPC[i]\Reload = 70.0 * 3.0
 										Next
@@ -1232,10 +1229,10 @@ Function UpdateEvents%()
 													StopChannel(e\room\NPC[i]\SoundCHN) : e\room\NPC[i]\SoundCHN = 0
 													If e\room\NPC[i]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[i]\Sound) : e\room\NPC[i]\Sound = 0
 												EndIf
+												e\room\NPC[i]\State = 11.0 : e\room\NPC[i]\State3 = 1.0 : e\room\NPC[i]\Reload = 70.0 * 3.0
 											Next
 											e\room\NPC[5]\SoundCHN2 = PlaySound2(e\room\NPC[5]\Sound2, Camera, e\room\NPC[5]\Collider)
 										EndIf
-										e\room\NPC[i]\State = 11.0 : e\room\NPC[i]\State3 = 1.0 : e\room\NPC[i]\Reload = 70.0 * 3.0
 									EndIf
 								EndIf
 							EndIf
@@ -2907,7 +2904,7 @@ Function UpdateEvents%()
 					If e\EventStr = "Step1" And e\room\NPC[0]\State <> 3.0 Then
 						If e\EventState = 0.0 Then
 							For i = 0 To 2
-								If DistanceSquared(EntityX(e\room\NPC[0]\Collider), EntityX(e\room\Objects[i], True), EntityZ(e\room\NPC[0]\Collider), EntityZ(e\room\Objects[i], True)) < PowTwo(400.0 * RoomScale)
+								If DistanceSquared(EntityX(e\room\NPC[0]\Collider), EntityX(e\room\Objects[i], True), EntityZ(e\room\NPC[0]\Collider), EntityZ(e\room\Objects[i], True)) < PowTwo(350.0 * RoomScale)
 									ActivateTesla = True
 									Exit
 								EndIf
@@ -3885,7 +3882,6 @@ Function UpdateEvents%()
 							If itt\Name = "Drawing" Then
 								If itt\Img <> 0 Then FreeImage(itt\Img) : itt\Img = 0
 								itt\Img = LoadImage_Strict(ImgPath)
-								MaskImage(itt\Img, 255, 0, 255)
 								itt\ImgPath = ImgPath
 								Exit
 							EndIf
@@ -3901,9 +3897,7 @@ Function UpdateEvents%()
 							BT = GetBrushTexture(b, 0)
 							TexName = StripPath(TextureName(BT))
 							
-							If Lower(TexName) <> "scp_1048.png" Then
-								PaintSurface(SF, Brush)
-							EndIf
+							If Lower(TexName) <> "scp_1048.png" Then PaintSurface(SF, Brush)
 							FreeBrush(b)
 						Next
 						DeleteSingleTextureEntryFromCache(Tex)
@@ -3952,13 +3946,11 @@ Function UpdateEvents%()
 					If e\EventState = 0.0 Then
 						If e\room\RoomDoors[0]\Open Then 
 							If e\room\RoomDoors[0]\OpenState = 180.0 Then 
-								e\EventState = 1.0
 								PlaySound_Strict(HorrorSFX[5])
+								e\EventState = 1.0
 							EndIf
 						Else
-							If EntityDistanceSquared(me\Collider, e\room\RoomDoors[0]\OBJ) < 2.25 And RemoteDoorOn Then
-								e\room\RoomDoors[0]\Open = True
-							EndIf
+							If EntityDistanceSquared(me\Collider, e\room\RoomDoors[0]\OBJ) < 2.25 And RemoteDoorOn Then e\room\RoomDoors[0]\Open = True
 						EndIf
 					Else
 						If EntityDistanceSquared(e\room\Objects[0], me\Collider) < 4.0 Then

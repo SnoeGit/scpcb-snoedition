@@ -949,19 +949,17 @@ Function UpdateGame%()
 		UpdateAutoSave()
 		
 		If KeyHit(key\CONSOLE) Then
-			If SelectedDifficulty\Name <> "Apollyon" Then
-				If opt\CanOpenConsole Then
-					If ConsoleOpen Then
-						UsedConsole = True
-						ResumeSounds()
-						StopMouseMovement()
-						mm\ShouldDeleteGadgets = True
-					Else
-						PauseSounds()
-					EndIf
-					ConsoleOpen = (Not ConsoleOpen)
-					FlushKeys()
+			If opt\CanOpenConsole And SelectedDifficulty\Name <> "Apollyon" Then
+				If ConsoleOpen Then
+					UsedConsole = True
+					ResumeSounds()
+					StopMouseMovement()
+					mm\ShouldDeleteGadgets = True
+				Else
+					PauseSounds()
 				EndIf
+				ConsoleOpen = (Not ConsoleOpen)
+				FlushKeys()
 			EndIf
 		EndIf
 		
@@ -1116,7 +1114,7 @@ Function ResetNegativeStats%(Revive% = False)
 		
 		; ~ If death by SCP-173 or SCP-106, enable GodMode, prevent instant death again -- Salvage
 		If n_I\Curr173 <> Null Then
-		If n_I\Curr173\Idle = 1 Then
+			If n_I\Curr173\Idle = 1 Then
 				CreateConsoleMsg("Death by SCP-173 causes GodMode to be enabled!")
 				chs\GodMode = True
 				n_I\Curr173\Idle = 0
@@ -1465,7 +1463,7 @@ Function UpdateMoving%()
 	If me\Injuries > 1.0 Then
 		Temp2 = me\Bloodloss
 		me\BlurTimer = Max(Max(Sin(MilliSecs2() / 100.0) * me\Bloodloss * 30.0, me\Bloodloss * 2.0 * (2.0 - me\CrouchState)), me\BlurTimer)
-		If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0 Then me\Bloodloss = Min(me\Bloodloss + (Min(me\Injuries, 3.5) / 300.0) * fps\Factor[0], 100.0)
+		If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0 Then me\Bloodloss = Min(me\Bloodloss + (Min(me\Injuries, 4.0) / 300.0) * fps\Factor[0], 100.0)
 		If Temp2 <= 65.0 And me\Bloodloss > 65.0 Then CreateMsg("You are feeling faint from the amount of blood you have lost.")
 	EndIf
 	
@@ -2354,7 +2352,7 @@ Function UpdateGUI%()
 						PrevItem = Inventory(MouseSlot)
 						
 						Select SelectedItem\ItemTemplate\TempName
-							Case "paper", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "playcard", "mastercard", "oldpaper", "badge", "ticket", "25ct", "coin", "scp588", "key", "scp860", "scp500pill", "scp500pilldeath"
+							Case "paper", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "playcard", "mastercard", "oldpaper", "badge", "oldbadge", "ticket", "25ct", "coin", "scp588", "key", "scp860", "scp500pill", "scp500pilldeath"
 								;[Block]
 								If Inventory(MouseSlot)\ItemTemplate\TempName = "clipboard" Then
 									; ~ Add an item to wallet
@@ -4139,9 +4137,7 @@ Function UpdateGUI%()
 					Case "vest", "finevest"
 						;[Block]
 						SelectedItem\State = 0.0
-						If (Not wi\BallisticVest) Then
-							DropItem(SelectedItem, False)
-						EndIf
+						If (Not wi\BallisticVest) Then DropItem(SelectedItem, False)
 						;[End Block]
 					Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 						;[Block]
@@ -4222,7 +4218,7 @@ Function RenderHUD%()
 	Else
 		BlinkIconID = 3
 	EndIf
-	DrawImage(t\IconID[BlinkIconID], x - (50 * MenuScale), y)
+	DrawBlock(t\IconID[BlinkIconID], x - (50 * MenuScale), y)
 	
 	y = opt\GraphicHeight - (55 * MenuScale)
 	
@@ -4254,7 +4250,7 @@ Function RenderHUD%()
 	Else
 		WalkIconID = 0
 	EndIf
-	DrawImage(t\IconID[WalkIconID], x - (50 * MenuScale), y)
+	DrawBlock(t\IconID[WalkIconID], x - (50 * MenuScale), y)
 End Function
 
 
@@ -4285,7 +4281,7 @@ Function RenderGUI%()
 							e\Img = LoadImage_Strict("GFX\kneel_mortal.png")
 							e\Img = ScaleImage2(e\Img, MenuScale, MenuScale)
 						Else
-							DrawImage(e\Img, mo\Viewport_Center_X - (Rand(390, 310) * MenuScale), mo\Viewport_Center_Y - (Rand(290, 310) * MenuScale))
+							DrawBlock(e\Img, mo\Viewport_Center_X - (Rand(390, 310) * MenuScale), mo\Viewport_Center_Y - (Rand(290, 310) * MenuScale))
 							If (Not ChannelPlaying(e\SoundCHN)) Then e\SoundCHN = PlaySound_Strict(e\Sound)
 						EndIf
 					Else
@@ -4317,7 +4313,7 @@ Function RenderGUI%()
 				
 				FreeEntity(Temp)
 				
-				DrawImage(t\IconID[5], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
+				DrawBlock(t\IconID[5], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
 			EndIf
 	
 			If ClosestItem <> Null And (Not me\Terminated) Then
@@ -4328,10 +4324,10 @@ Function RenderGUI%()
 				If PitchValue > 90.0 And PitchValue <= 180.0 Then PitchValue = 90.0
 				If PitchValue > 180.0 And PitchValue < 270.0 Then PitchValue = 270.0
 				Text(mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (64 * MenuScale), ClosestItem\ItemTemplate\Name, True, False)
-				DrawImage(t\IconID[6], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
+				DrawBlock(t\IconID[6], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
 			EndIf
 			
-			If ga\DrawHandIcon Then DrawImage(t\IconID[5], mo\Viewport_Center_X - (32 * MenuScale), mo\Viewport_Center_Y - (32 * MenuScale))
+			If ga\DrawHandIcon Then DrawBlock(t\IconID[5], mo\Viewport_Center_X - (32 * MenuScale), mo\Viewport_Center_Y - (32 * MenuScale))
 			For i = 0 To 3
 				If ga\DrawArrowIcon[i] Then
 					x = mo\Viewport_Center_X - (32 * MenuScale)
@@ -4354,10 +4350,10 @@ Function RenderGUI%()
 							x = x - (69 * MenuScale)
 							;[End Block]
 					End Select
-					DrawImage(t\IconID[5], x, y)
+					DrawBlock(t\IconID[5], x, y)
 					Color(0, 0, 0)
 					Rect(x + (4 * MenuScale), y + (4 * MenuScale), 56 * MenuScale, 56 * MenuScale)
-					DrawImage(ga\ArrowIMG[i], x + (21 * MenuScale), y + (21 * MenuScale))
+					DrawBlock(ga\ArrowIMG[i], x + (21 * MenuScale), y + (21 * MenuScale))
 				EndIf
 			Next
 				
@@ -4370,7 +4366,7 @@ Function RenderGUI%()
 	If chs\DebugHUD <> 0 Then RenderDebugHUD()
 	
 	If SelectedScreen <> Null Then
-		DrawImage(SelectedScreen\Img, mo\Viewport_Center_X - ImageWidth(SelectedScreen\Img) / 2, mo\Viewport_Center_Y - ImageHeight(SelectedScreen\Img) / 2)
+		DrawBlock(SelectedScreen\Img, mo\Viewport_Center_X - ImageWidth(SelectedScreen\Img) / 2, mo\Viewport_Center_Y - ImageHeight(SelectedScreen\Img) / 2)
 		
 		If mo\MouseUp1 Lor mo\MouseHit2 Then
 			FreeImage(SelectedScreen\Img) : SelectedScreen\Img = 0
@@ -4451,7 +4447,7 @@ Function RenderGUI%()
 			If OtherOpen = Null Then Exit
 			
 			If OtherOpen\SecondInv[n] <> Null Then
-				If (IsMouseOn = n Lor SelectedItem <> OtherOpen\SecondInv[n]) Then DrawImage(OtherOpen\SecondInv[n]\InvImg, x + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale), y + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale))
+				If (IsMouseOn = n Lor SelectedItem <> OtherOpen\SecondInv[n]) Then DrawBlock(OtherOpen\SecondInv[n]\InvImg, x + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale), y + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale))
 			EndIf
 			If OtherOpen\SecondInv[n] <> Null And SelectedItem <> OtherOpen\SecondInv[n] Then
 				If IsMouseOn = n Then
@@ -4472,9 +4468,9 @@ Function RenderGUI%()
 		If SelectedItem <> Null Then
 			If mo\MouseDown1 Then
 				If MouseSlot = 66 Then
-					DrawImage(SelectedItem\InvImg, ScaledMouseX() - InvImgSize, ScaledMouseY() - InvImgSize)
+					DrawBlock(SelectedItem\InvImg, ScaledMouseX() - InvImgSize, ScaledMouseY() - InvImgSize)
 				ElseIf SelectedItem <> PrevOtherOpen\SecondInv[MouseSlot]
-					DrawImage(SelectedItem\InvImg, ScaledMouseX() - InvImgSize, ScaledMouseY() - InvImgSize)
+					DrawBlock(SelectedItem\InvImg, ScaledMouseX() - InvImgSize, ScaledMouseY() - InvImgSize)
 				EndIf
 			EndIf
 		EndIf
@@ -4601,9 +4597,9 @@ Function RenderGUI%()
 			
 			If Inventory(n) <> Null Then
 				If IsMouseOn = n Lor SelectedItem <> Inventory(n) Then 
-					DrawImage(Inventory(n)\InvImg, x + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale), y + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale))
+					DrawBlock(Inventory(n)\InvImg, x + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale), y + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale))
 					SetFont(fo\FontID[Font_Default])
-					Text(x + (32 * MenuScale), y - (8 * MenuScale), n + 1, True, True)
+					If n < MaxItemAmount / 2 Then Text(x + (32 * MenuScale), y - (9 * MenuScale), n + 1, True, True)
 				EndIf
 			EndIf
 			
@@ -4627,9 +4623,9 @@ Function RenderGUI%()
 		If SelectedItem <> Null Then
 			If mo\MouseDown1 Then
 				If MouseSlot = 66 Then
-					DrawImage(SelectedItem\InvImg, ScaledMouseX() - InvImgSize, ScaledMouseY() - InvImgSize)
+					DrawBlock(SelectedItem\InvImg, ScaledMouseX() - InvImgSize, ScaledMouseY() - InvImgSize)
 				ElseIf SelectedItem <> Inventory(MouseSlot)
-					DrawImage(SelectedItem\InvImg, ScaledMouseX() - InvImgSize, ScaledMouseY() - InvImgSize)
+					DrawBlock(SelectedItem\InvImg, ScaledMouseX() - InvImgSize, ScaledMouseY() - InvImgSize)
 				EndIf
 			EndIf
 		EndIf
@@ -4642,7 +4638,7 @@ Function RenderGUI%()
 					;[Block]
 					If (Not PreventItemOverlapping()) Then
 						
-						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
+						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
 						Width = 300 * MenuScale
 						Height = 20 * MenuScale
@@ -4654,12 +4650,12 @@ Function RenderGUI%()
 					;[End Block]
 				Case "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "scp860", "hand", "hand2", "25ct", "scp005", "key", "coin", "scp588", "mastercard"
 					;[Block]
-					DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
+					DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 					;[End Block]
 				Case "firstaid", "finefirstaid", "bluefirstaid"
 					;[Block]
 					If me\Bloodloss <> 0.0 Lor me\Injuries <> 0.0 And wi\HazmatSuit = 0 Then
-						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
+						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
 						Width = 300 * MenuScale
 						Height = 20 * MenuScale
@@ -4669,7 +4665,7 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					EndIf
 					;[End Block]
-				Case "paper"
+				Case "paper", "oldpaper"
 					;[Block]
 					If I_035\Sad = 1 Then
 						If SelectedItem\ItemTemplate\Name = "Document SCP-035" Then
@@ -4685,10 +4681,11 @@ Function RenderGUI%()
 							Case "Burnt Note" 
 								;[Block]
 								SelectedItem\ItemTemplate\Img = LoadImage_Strict("GFX\items\notes\note_Maynard.png")
+								SelectedItem\ItemTemplate\Img = ScaleImage2(SelectedItem\ItemTemplate\Img, MenuScale, MenuScale)
 								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
 								Color(0, 0, 0)
 								SetFont(fo\FontID[Font_Default])
-								Text(277, 469, AccessCode, True, True)
+								Text(277 * MenuScale, 469 * MenuScale, AccessCode, True, True)
 								Color(255, 255, 255)
 								SetBuffer(BackBuffer())
 								;[End Block]
@@ -4737,9 +4734,8 @@ Function RenderGUI%()
 						End Select
 						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
 					EndIf
-					DrawImage(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
+					DrawBlock(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
 					;[End Block]
 				Case "scp1025"
 					;[Block]
@@ -4750,10 +4746,9 @@ Function RenderGUI%()
 						
 						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
 					EndIf
 					
-					DrawImage(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
+					DrawBlock(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
 					;[End Block]
 				Case "radio", "18vradio", "fineradio", "veryfineradio"
 					;[Block]
@@ -4907,7 +4902,7 @@ Function RenderGUI%()
 							Next
 							
 							SetBuffer(BackBuffer())
-							DrawImageRect(t\ImageID[7], xx + (80 * MenuScale), yy + (70 * MenuScale), xx + (80 * MenuScale), yy + (70 * MenuScale), 270 * MenuScale, 230 * MenuScale)
+							DrawBlockRect(t\ImageID[7], xx + (80 * MenuScale), yy + (70 * MenuScale), xx + (80 * MenuScale), yy + (70 * MenuScale), 270 * MenuScale, 230 * MenuScale)
 							If Offline Then
 								Color(100, 0, 0)
 							Else
@@ -5015,7 +5010,7 @@ Function RenderGUI%()
 				Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 					;[Block]
 					If wi\BallisticVest = 0 Then
-						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
+						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
 						Width = 300 * MenuScale
 						Height = 20 * MenuScale
@@ -5029,7 +5024,7 @@ Function RenderGUI%()
 					;[Block]
 					If (Not PreventItemOverlapping()) Then
 						
-						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
+						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
 						Width = 300 * MenuScale
 						Height = 20 * MenuScale
@@ -5043,7 +5038,7 @@ Function RenderGUI%()
 					;[Block]
 					If (Not PreventItemOverlapping(True)) Then
 						
-						DrawImage(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
+						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
 						Width = 300 * MenuScale
 						Height = 20 * MenuScale
@@ -5053,17 +5048,17 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					EndIf
 					;[End Block]
-				Case "badge", "oldpaper", "ticket"
+				Case "badge", "oldbadge", "ticket"
 					;[Block]
 					If (Not SelectedItem\ItemTemplate\Img) Then
 						SelectedItem\ItemTemplate\Img = LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath)	
 						SelectedItem\ItemTemplate\Img = ScaleImage2(SelectedItem\ItemTemplate\Img, MenuScale, MenuScale)
 						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
+						If SelectedItem\ItemTemplate\TempName <> "badge" Then MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
 					EndIf
 					
-					DrawImage(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
+					DrawBlock(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
 					;[End Block]
 			End Select
 			
@@ -5071,12 +5066,12 @@ Function RenderGUI%()
 				If SelectedItem\ItemTemplate\Img <> 0 Then
 					Local IN$ = SelectedItem\ItemTemplate\TempName
 					
-					If IN = "paper" Lor IN = "badge" Lor IN = "oldpaper" Lor IN = "ticket" Lor IN = "scp1025" Then
+					If IN = "paper" Lor IN = "oldpaper" Lor IN = "badge" Lor IN = "oldbadge" Lor IN = "ticket" Lor IN = "scp1025" Then
 						For a_it.Items = Each Items
 							If a_it <> SelectedItem Then
 								Local IN2$ = a_it\ItemTemplate\TempName
 								
-								If IN2 = "paper" Lor IN2 = "badge" Lor IN2 = "oldpaper" Lor IN2 = "ticket" Lor IN2 = "scp1025" Then
+								If IN2 = "paper" Lor IN2 = "oldpaper" Lor IN2 = "badge" Lor IN2 = "oldbadge" Lor IN2 = "ticket" Lor IN2 = "scp1025" Then
 									If a_it\ItemTemplate\Img <> 0 Then
 										If a_it\ItemTemplate\Img <> SelectedItem\ItemTemplate\Img Then
 											FreeImage(a_it\ItemTemplate\Img) : a_it\ItemTemplate\Img = 0
@@ -5681,7 +5676,7 @@ Function RenderMenu%()
 		x = mo\Viewport_Center_X - (Width / 2)
 		y = mo\Viewport_Center_Y - (Height / 2)
 		
-		DrawImage(t\ImageID[0], x, y)
+		DrawBlock(t\ImageID[0], x, y)
 		
 		Color(255, 255, 255)
 		
@@ -6244,14 +6239,14 @@ Function RenderEnding%()
 	If me\EndingTimer < -200.0 Then
 		If me\EndingTimer > -700.0 Then 
 			If Rand(150) < Min((Abs(me\EndingTimer) - 200.0), 155.0) Then
-				DrawImage(me\EndingScreen, mo\Viewport_Center_X - (400 * MenuScale), mo\Viewport_Center_Y - (400 * MenuScale))
+				DrawBlock(me\EndingScreen, mo\Viewport_Center_X - (400 * MenuScale), mo\Viewport_Center_Y - (400 * MenuScale))
 			Else
 				Color(0, 0, 0)
 				Rect(100, 100, opt\GraphicWidth - 200, opt\GraphicHeight - 200)
 				Color(255, 255, 255)
 			EndIf
 		Else
-			DrawImage(me\EndingScreen, mo\Viewport_Center_X - (400 * MenuScale), mo\Viewport_Center_Y - (400 * MenuScale))
+			DrawBlock(me\EndingScreen, mo\Viewport_Center_X - (400 * MenuScale), mo\Viewport_Center_Y - (400 * MenuScale))
 			
 			If me\EndingTimer < -1000.0 And me\EndingTimer > -2000.0 Then
 				Width = ImageWidth(t\ImageID[0])
@@ -6259,7 +6254,7 @@ Function RenderEnding%()
 				x = mo\Viewport_Center_X - (Width / 2)
 				y = mo\Viewport_Center_Y - (Height / 2)
 				
-				DrawImage(t\ImageID[0], x, y)
+				DrawBlock(t\ImageID[0], x, y)
 				
 				Color(255, 255, 255)
 				SetFont(fo\FontID[Font_Default_Big])
@@ -6406,9 +6401,7 @@ Function RenderCredits%()
 	
 	Cls()
 	
-	If Rand(300) > 1 Then
-		DrawImage(me\CreditsScreen, mo\Viewport_Center_X - (400 * MenuScale), mo\Viewport_Center_Y - (400 * MenuScale))
-	EndIf
+	If Rand(300) > 1 Then DrawBlock(me\CreditsScreen, mo\Viewport_Center_X - (400 * MenuScale), mo\Viewport_Center_Y - (400 * MenuScale))
 	
 	ID = 0
 	EndLinesAmount = 0
@@ -6978,7 +6971,7 @@ Function Render294%()
 	
 	x = mo\Viewport_Center_X - (ImageWidth(t\ImageID[5]) / 2)
 	y = mo\Viewport_Center_Y - (ImageHeight(t\ImageID[5]) / 2)
-	DrawImage(t\ImageID[5], x, y)
+	DrawBlock(t\ImageID[5], x, y)
 	If opt\DisplayMode = 0 Then DrawImage(CursorIMG, ScaledMouseX(), ScaledMouseY())
 	
 	Temp = True

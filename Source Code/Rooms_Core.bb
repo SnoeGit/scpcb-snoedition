@@ -1790,19 +1790,17 @@ Function FillRoom%(r.Rooms)
 			Tex = LoadTexture_Strict("GFX\map\textures\Door02.jpg")
 			If opt\Atmosphere Then TextureBlend(Tex, 5)
 			For zTemp = 0 To 1
-				d.Doors = CreateDoor(r\x - 5760.0 * RoomScale, r\y, r\z + ((320.0 + (896.0 * zTemp)) * RoomScale), 0.0, r)
+				d.Doors = CreateDoor(r\x - 5760.0 * RoomScale, r\y, r\z + ((320.0 + (896.0 * zTemp)) * RoomScale), (zTemp * 180.0), r)
 				d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
-				If zTemp = 0 Then
-					FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
-				Else
-					FreeEntity(d\Buttons[1]) : d\Buttons[1] = 0
-				EndIf
+				FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
+				FreeEntity(d\OBJ2) : d\OBJ2 = 0
 				
-				d.Doors = CreateDoor(r\x - 8288.0 * RoomScale, r\y, r\z + ((320.0 + (896.0 * zTemp)) * RoomScale), 0.0, r, zTemp = 0)
-				d\Locked = 1 : d\MTFClose = False : d\MTFClose = False
+				d.Doors = CreateDoor(r\x - 8288.0 * RoomScale, r\y, r\z + ((320.0 + (896.0 * zTemp)) * RoomScale), 180.0, r, zTemp = 0)
+				d\Locked = 1 : d\MTFClose = False
 				If zTemp <> 0 Then 
 					d\DisableWaypoint = True
-					FreeEntity(d\Buttons[1]) : d\Buttons[1] = 0
+					FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
+					FreeEntity(d\OBJ2) : d\OBJ2 = 0
 				EndIf
 				
 				For xTemp = 0 To 2
@@ -1836,6 +1834,7 @@ Function FillRoom%(r.Rooms)
 			d.Doors = CreateDoor(r\x - 3712.0 * RoomScale, r\y - 385.0 * RoomScale, r\z - 2336.0 * RoomScale, 0.0, r)
 			d\AutoClose = False : d\DisableWaypoint = True : d\MTFClose = False
 			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
+			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
 			; ~ The door from the concrete tunnel to the large hall
 			d.Doors = CreateDoor(r\x - 6864.0 * RoomScale, r\y, r\z - 1248.0 * RoomScale, 90.0, r, True)
