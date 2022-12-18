@@ -1,3 +1,25 @@
+v1.75
+
+General:
+
+- Optimizations to code and files.
+- Add SCP-2022-01 as an item to the game.
+- Unique name and texture for Very Fine SCP-714.
+- SCP-294 drinks heal the player over time instead of instantly.
+- New drinks for SCP-294.
+- Syringes heal slightly faster but for not as long. The amount healed is the same.
+- Add new console command "bloodloss" to change me\BloodLoss float value.
+
+Rooms:
+
+- Add back SCP-500 to its chamber.
+- Remove the chat screen from SCP-895's Observation Room.
+
+Bug Fixes:
+
+- Quick slots no longer prevents switching Radio Channels.
+- Fixed intro crash.
+
 v1.7
 
 General:
@@ -32,7 +54,7 @@ General:
 - SCP-500-01 cures the player fully twice as fast.
 - Some SCP-420-J healing reduced from 0.5 -> 0.42
 
-Bug Fixes: 
+Bug Fixes:
 
 - Hazmat Suit no longer has the gasmask overlay when it shouldn't.
 - SCP-966 attack can reach the player.
