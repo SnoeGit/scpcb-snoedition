@@ -788,10 +788,13 @@ Function LoadItems%()
 	it.ItemTemplates = CreateItemTemplate("SCP-500-01", "scp500pill", ItemsPath + "scps\pill.b3d", INVPath + "INV_scp_500_pill.png", "", 0.0001, 2)
 	EntityColor(it\OBJ, 255.0, 0.0, 0.0)
 	
+	it.ItemTemplates = CreateItemTemplate("SCP-2022-01", "scp2022pill", ItemsPath + "scps\pill.b3d", INVPath + "INV_scp_2022_pill.png", "", 0.0001, 2)
+	EntityColor(it\OBJ, 224.0, 160.0, 0.0)
+	
 	CreateItemTemplate("SCP-500", "scp500", ItemsPath + "scps\scp_500.b3d", INVPath + "INV_scp_500.png", "", 0.035, 2)
 	CreateItemTemplate("SCP-513", "scp513", ItemsPath + "scps\scp_513.b3d", INVPath + "INV_scp_513.png", "", 0.1, 2)
 	CreateItemTemplate("SCP-714", "scp714", ItemsPath + "scps\scp_714.b3d", INVPath + "INV_scp_714.png", "", 0.3, 3)
-	CreateItemTemplate("Green Jade Ring", "kill714", ItemsPath + "scps\scp_714.b3d", INVPath + "INV_scp_714.png", "", 0.3, 3)
+	CreateItemTemplate("Sapphire Ring", "kill714", ItemsPath + "scps\scp_714.b3d", INVPath + "INV_scp_714_blue.png", "", 0.3, 3, ItemsPath + "scps\scp_714_blue.png", "", 1)
 	CreateItemTemplate("Augelite Ring", "coarse714", ItemsPath + "scps\scp_714.b3d", INVPath + "INV_scp_714_grey.png", "", 0.3, 3, ItemsPath + "scps\scp_714_grey.png", "", 1)
 	CreateItemTemplate("SCP-860", "scp860", ItemsPath + "scps\scp_860.b3d", INVPath + "INV_scp_860.png", "", 0.003, 3)
 	CreateItemTemplate("SCP-1025", "scp1025", ItemsPath + "scps\scp_1025.b3d", INVPath + "INV_scp_1025.png", "", 0.1, 0)
@@ -1323,7 +1326,7 @@ Global KnobSFX%[2]
 Global LeverSFX%, LightSFX% 
 Global ButtGhostSFX% 
 
-Dim RadioSFX%(2, 8) 
+Dim RadioSFX%(2, 9) 
 
 Global RadioSquelch% 
 Global RadioStatic% 
@@ -1477,10 +1480,10 @@ Function LoadSounds%()
 	
 	ButtGhostSFX = LoadSound_Strict("SFX\SCP\Joke\789J.ogg")
 	
-	RadioSFX(1, 0) = LoadSound_Strict("SFX\Radio\RadioAlarm.ogg")
-	RadioSFX(1, 1) = LoadSound_Strict("SFX\Radio\RadioAlarm2.ogg")
+	RadioSFX(0, 0) = LoadSound_Strict("SFX\Radio\RadioAlarm.ogg")
+	RadioSFX(0, 1) = LoadSound_Strict("SFX\Radio\RadioAlarm2.ogg")
 	For i = 0 To 8
-		RadioSFX(2, i) = LoadSound_Strict("SFX\Radio\SCPRadio" + i + ".ogg")
+		RadioSFX(1, i) = LoadSound_Strict("SFX\Radio\SCPRadio" + i + ".ogg")
 	Next
 	RadioSquelch = LoadSound_Strict("SFX\Radio\Squelch.ogg")
 	RadioStatic = LoadSound_Strict("SFX\Radio\Static.ogg")

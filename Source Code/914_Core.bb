@@ -1346,7 +1346,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					EndIf
 					;[End Block]
 			End Select
-		Case "scp500pill", "scp500pilldeath", "pill"
+		Case "scp500pill", "scp500pilldeath"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -1373,6 +1373,28 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					Else
 						it2.Items = CreateItem("Upgraded Pill", "scp500pilldeath", x, y, z)
 					EndIf
+					;[End Block]
+				Case VERYFINE
+					;[Block]
+					it2.Items = CreateItem("Upgraded Pill", "scp500pilldeath", x, y, z)
+					;[End Block]
+			End Select
+			;[End Block]
+		Case "pill", "scp2022pill"
+			;[Block]
+			Select Setting
+				Case ROUGH, COARSE
+					;[Block]
+					de.Decals = CreateDecal(DECAL_CORROSIVE_1, x, 8.0 * RoomScale + 0.010, z, 90.0, Rnd(360.0), 0.0, 0.2, 0.8)
+					EntityParent(de\OBJ, PlayerRoom\OBJ)
+					;[End Block]
+				Case ONETOONE
+					;[Block]
+					RemoveItem = False
+					;[End Block]
+				Case FINE
+					;[Block]
+					it2.Items = CreateItem("SCP-2022-01", "scp2022pill", x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
