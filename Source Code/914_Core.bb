@@ -65,6 +65,24 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
+		Case "scp268", "super268", "cap"
+			;[Block]
+			Select Setting
+				Case ROUGH, COARSE
+					;[Block]
+					de.Decals = CreateDecal(DECAL_CORROSIVE_1, x, 8.0 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.12)
+					EntityParent(de\OBJ, PlayerRoom\OBJ)
+					;[End Block]
+				Case ONETOONE
+					;[Block]
+					it2.Items = CreateItem("Cap", "cap", x, y, z)
+					;[End Block]
+				Case FINE, VERYFINE
+					;[Block]
+					it2.Items = CreateItem("SCP-268", "super268", x, y, z)
+					;[End Block]
+			End Select
+			;[End Block]
 		Case "vest", "finevest"
 			;[Block]
 			Select Setting

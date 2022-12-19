@@ -184,6 +184,7 @@ Type WearableItems
 	Field BallisticHelmet%
 	Field NightVision%, NVGTimer#, IsNVGBlinking%
 	Field SCRAMBLE%
+	Field Cap%
 End Type
 
 Global wi.WearableItems = New WearableItems
@@ -488,6 +489,13 @@ End Type
 
 Global I_1025.SCP1025 = New SCP1025
 
+Type SCP268
+	Field Using%
+	Field Timer%
+End Type
+
+Global I_268.SCP268 = New SCP268
+
 Type SCP1499
 	Field Using%
 	Field PrevX#, PrevY#, PrevZ#
@@ -719,6 +727,7 @@ Function UpdateGame%()
 			UpdateNPCs()
 			UpdateItems()
 			UpdateParticles()
+			Use268()
 			Use427()
 		
 			If chs\InfiniteStamina Then me\Stamina = 100.0
@@ -2273,6 +2282,24 @@ Function UpdateGUI%()
 								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
 							EndIf
 							;[End Block]
+						Case "scp268", "super268"
+							;[Block]
+							If (I_268\Using = 1 And SelectedItem\ItemTemplate\TempName = "scp268") Lor (I_268\Using = 2 And SelectedItem\ItemTemplate\TempName = "super268") Then
+								CreateHintMsg("Double click on the cap to take it off.")
+							Else
+								DropItem(SelectedItem)
+								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+							EndIf
+							;[End Block]
+						Case "cap"
+							;[Block]
+							If wi\Cap Then
+								CreateHintMsg("Double click on the cap to take it off.")
+							Else
+								DropItem(SelectedItem)
+								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+							EndIf
+							;[End Block]
 						Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
 							;[Block]
 							If (wi\GasMask = 1 And SelectedItem\ItemTemplate\TempName = "gasmask") Lor (wi\GasMask = 2 And SelectedItem\ItemTemplate\TempName = "finegasmask") Lor (wi\GasMask = 3 And SelectedItem\ItemTemplate\TempName = "supergasmask") Lor (wi\GasMask = 4 And SelectedItem\ItemTemplate\TempName = "heavygasmask") Then
@@ -2906,6 +2933,61 @@ Function UpdateGUI%()
 							SelectedItem = Null
 						EndIf
 					;[End Block]
+				Case "scp268", "super268"
+					;[Block]
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.5), 100.0)
+						
+						If SelectedItem\State = 100.0 Then
+							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+							
+							If (I_268\Using = 1 And SelectedItem\ItemTemplate\TempName = "scp268") Lor (I_268\Using = 2 And SelectedItem\ItemTemplate\TempName = "super268") Then
+								CreateMsg("You removed the cap.")
+								I_268\Using = 0
+								PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOff.ogg"))
+							Else
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
+								Select SelectedItem\ItemTemplate\TempName
+									Case "scp268"
+										;[Block]
+										I_268\Using = 1
+										;[End Block]
+									Case "super268"
+										;[Block]
+										I_268\Using = 2
+										;[End Block]
+								End Select
+								CreateMsg("You put on the cap.")
+								PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOn.ogg"))
+							EndIf
+							SelectedItem\State = 0.0
+							SelectedItem = Null
+						EndIf
+					;[End Block]
+				Case "cap"
+					;[Block]
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.5), 100.0)
+						
+						If SelectedItem\State = 100.0 Then
+							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+							
+							If wi\Cap Then
+								CreateMsg("You removed the cap.")
+								wi\Cap = False
+							Else
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
+								wi\Cap = True
+								CreateMsg("You put on the cap.")
+							EndIf
+							SelectedItem\State = 0.0
+							SelectedItem = Null
+						EndIf
+					;[End Block]
 				Case "scp1499", "super1499"
 					;[Block]
 					If (Not PreventItemOverlapping(True)) Then
@@ -2987,7 +3069,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the helmet.")
 								wi\BallisticHelmet = False
 							Else
-								wi\GasMask = 0 : wi\SCRAMBLE = 0
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : I_268\Using = 0
 								wi\BallisticHelmet = True
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								CreateMsg("You put on the helmet.")
@@ -3009,7 +3091,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the gear.")
 								wi\SCRAMBLE = 0
 							Else
-								wi\GasMask = 0 : wi\BallisticHelmet = False
+								wi\GasMask = 0 : wi\BallisticHelmet = False : I_268\Using = 0
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								CreateMsg("You put on the gear.")
 								Select SelectedItem\ItemTemplate\TempName
@@ -3912,7 +3994,7 @@ Function UpdateGUI%()
 										wi\HazmatSuit = 4
 										;[End Block]
 								End Select
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_427\Using = False : I_714\Using = 1
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : I_427\Using = False : I_714\Using = 1
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 							EndIf
 							SelectedItem\State = 0.0
@@ -4130,7 +4212,7 @@ Function UpdateGUI%()
 			
 			If mo\MouseHit2 Then
 				Select SelectedItem\ItemTemplate\TempName
-					Case "firstaid", "finefirstaid", "bluefirstaid", "scp1499", "super1499", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
+					Case "firstaid", "finefirstaid", "bluefirstaid", "scp1499", "super1499", "scp268", "super268", "cap", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
 						;[Block]
 						SelectedItem\State = 0.0
 						;[End Block]
@@ -4184,7 +4266,7 @@ Function UpdateGUI%()
 	For it.Items = Each Items
 		If it <> SelectedItem Then
 			Select it\ItemTemplate\TempName
-				Case "firstaid", "finefirstaid", "bluefirstaid", "vest", "finevest", "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit", "scp1499", "super1499", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
+				Case "firstaid", "finefirstaid", "bluefirstaid", "vest", "finevest", "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit", "scp1499", "super1499", "scp268", "super268", "cap", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
 					;[Block]
 					it\State = 0.0
 					;[End Block]
@@ -4595,6 +4677,18 @@ Function RenderGUI%()
 					Case "super1499"
 						;[Block]
 						If I_1499\Using = 2 Then ShouldDrawRect = True
+						;[End Block]
+					Case "scp268"
+						;[Block]
+						If I_268\Using = 1 Then ShouldDrawRect = True
+						;[End Block]
+					Case "super268"
+						;[Block]
+						If I_268\Using = 2 Then ShouldDrawRect = True
+						;[End Block]
+					Case "cap"
+						;[Block]
+						If wi\Cap Then ShouldDrawRect = True
 						;[End Block]
 					Case "scp427"
 						;[Block]
@@ -5053,6 +5147,20 @@ Function RenderGUI%()
 				Case "scp1499", "super1499"
 					;[Block]
 					If (Not PreventItemOverlapping(True)) Then
+						
+						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
+						
+						Width = 300 * MenuScale
+						Height = 20 * MenuScale
+						x = mo\Viewport_Center_X - (Width / 2)
+						y = mo\Viewport_Center_Y + (80 * MenuScale)
+						
+						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
+					EndIf
+					;[End Block]
+				Case "scp268", "super268", "cap"
+					;[Block]
+					If (Not PreventItemOverlapping()) Then
 						
 						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
@@ -7294,11 +7402,23 @@ Function UpdateVomit%()
 	CatchErrors("UpdateVomit")
 End Function
 
+Function Use268()
+	   
+    If I_268\Using > 0 Then
+        If I_268\Using = 2 Then
+            I_268\Timer = Max(I_268\Timer - (fps\Factor[0] / 1.5), 0)
+        Else
+            I_268\Timer = Max(I_268\Timer - fps\Factor[0], 0)
+        EndIf
+    Else
+        I_268\Timer = Min(I_268\Timer + fps\Factor[0], 630.0)
+    EndIf
+End Function 
+
 Function Update008%()
 	Local r.Rooms, e.Events, p.Particles, de.Decals
 	Local PrevI008Timer#, i%
 	Local TeleportForInfect% = True
-	
 	
 	If PlayerRoom\RoomTemplate\Name = "dimension_1499" Lor PlayerRoom\RoomTemplate\Name = "dimension_106" Lor PlayerRoom\RoomTemplate\Name = "gate_b" Lor PlayerRoom\RoomTemplate\Name = "gate_a"
 		TeleportForInfect = False

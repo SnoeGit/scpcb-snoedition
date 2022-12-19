@@ -122,6 +122,10 @@ Function SaveGame%(File$)
 	WriteByte(f, wi\HazmatSuit)
 	WriteByte(f, wi\NightVision)
 	WriteByte(f, wi\SCRAMBLE)
+	WriteByte(f, wi\Cap)
+	
+	WriteByte(f, I_268\Using)
+	WriteFloat(f, I_268\Timer)
 	
 	WriteByte(f, I_1499\Using)
 	WriteFloat(f, I_1499\PrevX)
@@ -621,6 +625,10 @@ Function LoadGame%(File$)
 	wi\HazmatSuit = ReadByte(f)
 	wi\NightVision = ReadByte(f)
 	wi\SCRAMBLE = ReadByte(f)
+	wi\Cap = ReadByte(f)
+	
+	I_268\Using = ReadByte(f)
+	I_268\Timer = ReadFloat(f)
 	
 	I_1499\Using = ReadByte(f)
 	I_1499\PrevX = ReadFloat(f)
@@ -1508,6 +1516,10 @@ Function LoadGameQuick%(File$)
 	wi\HazmatSuit = ReadByte(f)
 	wi\NightVision = ReadByte(f)
 	wi\SCRAMBLE = ReadByte(f)
+	wi\Cap = ReadByte(f)
+	
+	I_268\Using = ReadByte(f)
+	I_268\Timer = ReadFloat(f)
 	
 	I_1499\Using = ReadByte(f)
 	I_1499\PrevX = ReadFloat(f)
