@@ -3703,6 +3703,9 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Groups of Interest Log", "paper", r\x + 100.0 * RoomScale, r\y + 200.0 * RoomScale, r\z + 100.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
+			it.Items = CreateItem("SCP-268", "scp268", r\x + 110.0 * RoomScale, r\y + 200.0 * RoomScale, r\z + 110.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
 			it.Items = CreateItem("First Aid Kit", "firstaid", r\x + 680.0 * RoomScale, r\y + 260.0 * RoomScale, r\z + 892.5 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 90.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)

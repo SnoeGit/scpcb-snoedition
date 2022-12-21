@@ -3917,9 +3917,7 @@ Function UpdateNPCs%()
 				EndIf
 				
 				UpdateSoundOrigin(n\SoundCHN2, Camera, n\Collider, 20.0, 1.0, False)
-				If ChannelPlaying(n\SoundCHN2) Then
-					me\BlurTimer = Max((5.0 - (Sqr(Dist)) * 300.0), 0.0)
-				EndIf
+				If ChannelPlaying(n\SoundCHN2) Then me\BlurTimer = Max((5.0 - (Sqr(Dist)) * 300.0), 0.0)
 				
 				PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
 				
@@ -4011,7 +4009,9 @@ Function UpdateNPCs%()
 									
 									; ~ Echo / Stares off / Walking around periodically
 									If n\Frame > 213.0
-										If Rand(3) = 1 And Dist < 16.0 Then
+										If Rand(3) = 1 And Dist < 16.0 And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
+											n\State = Rand(1.0, 4.0)
+										ElseIf Rand(3) = 1 And Dist < 2.0 And I_268\Using > 0 And I_268\Timer > 0.0
 											n\State = Rand(1.0, 4.0)
 										Else
 											n\State = Rand(5.0, 6.0)								
@@ -4019,7 +4019,11 @@ Function UpdateNPCs%()
 									EndIf
 									
 									; ~ Echo if player gets close
-									If Dist < 4.0 Then n\State = Rand(4)							
+									If Dist < 4.0 And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
+										n\State = Rand(4)
+									ElseIf Dist < 1.5
+										n\State = Rand(4)
+									EndIf
 								EndIf
 								
 								n\CurrSpeed = CurveValue(0.0, n\CurrSpeed, 10.0)
@@ -4093,7 +4097,7 @@ Function UpdateNPCs%()
 									If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\966\Idle" + Rand(3) + ".ogg"), Camera, n\Collider)
 								EndIf
 								
-								If (Not chs\NoTarget) Then
+								If (Not chs\NoTarget) And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
 									Angle = VectorYaw(EntityX(me\Collider) - EntityX(n\Collider), 0.0, EntityZ(me\Collider) - EntityZ(n\Collider))
 									RotateEntity(n\Collider, 0.0, CurveAngle(Angle, EntityYaw(n\Collider), 20.0), 0.0)
 								EndIf
@@ -4105,8 +4109,18 @@ Function UpdateNPCs%()
 								Else
 									AnimateNPC(n, 580.0, 628.0, n\CurrSpeed * 25.0)
 									
+									; ~ Detect Player using SCP-268 when too close
+									If n\State = 8.0 And Dist < 1.5 And (Not chs\NoTarget) And I_268\Using > 0 And I_268\Timer > 0.0 Then
+										If EntityVisible(n\Collider, me\Collider) Then
+											n\Angle = VectorYaw(EntityX(me\Collider) - EntityX(n\Collider), 0.0, EntityZ(me\Collider) - EntityZ(n\Collider))
+											n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
+											
+											If Dist < 0.64 Then n\State = 10.0
+										EndIf
+									EndIf
+									
 									; ~ Chasing the player
-									If n\State = 8.0 And Dist < 1024.0 And (Not chs\NoTarget) Then
+									If n\State = 8.0 And Dist < 1024.0 And (Not chs\NoTarget) And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
 										If n\PathTimer <= 0.0 Then
 											n\PathStatus = FindPath(n, EntityX(me\Collider, True), EntityY(me\Collider, True), EntityZ(me\Collider, True))
 											n\PathTimer = 40.0 * 10.0
@@ -4210,9 +4224,7 @@ Function UpdateNPCs%()
 											
 											InjurePlayer(Rnd(0.45, 0.75) * DifficultyDMGMult, 0.0, 500.0, Rnd(0.2, 0.25) * DifficultyDMGMult)
 													
-											If me\Injuries => 14.0 Then
-												Kill(True)
-											EndIf
+											If me\Injuries => 14.0 Then Kill(True)
 										EndIf
 									Else
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
