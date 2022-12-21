@@ -2935,12 +2935,13 @@ Function UseDoor%(d.Doors, PlaySFX% = True)
 				Return
 			EndIf
 		EndIf
-		
+		Temp = ((Int(AccessCode2 * 3)) Mod 10000)
+		If Temp < 1000 Then Temp = Temp + 1000
 		If d\Code = Str(AccessCode) Then
 			GiveAchievement(AchvMaynard)
 		ElseIf d\Code = "7816"
 			GiveAchievement(AchvHarp)
-		ElseIf d\Code = "2411"
+		ElseIf d\Code = Temp
 			GiveAchievement(AchvO5)
 		EndIf	
 	Else

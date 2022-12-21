@@ -636,9 +636,7 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case "room2_office_3"
 			;[Block]
-			Temp = ((Int(AccessCode) * 2) Mod 10000)
-			If Temp < 1000 Then Temp = Temp + 1000
-			d.Doors = CreateDoor(r\x + 1456.0 * RoomScale, r\y + 224.0 * RoomScale, r\z, 90.0, r, False, DEFAULT_DOOR, KEY_MISC, Temp)
+			d.Doors = CreateDoor(r\x + 1456.0 * RoomScale, r\y + 224.0 * RoomScale, r\z, 90.0, r, False, DEFAULT_DOOR, KEY_MISC, AccessCode2)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.1, True)
 			
 			d.Doors = CreateDoor(r\x + 463.0 * RoomScale, r\y, r\z, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_5)
@@ -3695,7 +3693,9 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case "room1_o5"
 			;[Block]
-			d.Doors = CreateDoor(r\x, r\y, r\z - 240.0 * RoomScale, 0.0, r, False, DEFAULT_DOOR, KEY_MISC, "2411")
+			Temp = ((Int(AccessCode2 * 3)) Mod 10000)
+			If Temp < 1000 Then Temp = Temp + 1000
+			d.Doors = CreateDoor(r\x, r\y, r\z - 240.0 * RoomScale, 0.0, r, False, DEFAULT_DOOR, KEY_MISC, Temp)
 			
 			it.Items = CreateItem("Field Agent Log #235-001-CO5", "paper", r\x, r\y + 200.0 * RoomScale, r\z + 870.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)

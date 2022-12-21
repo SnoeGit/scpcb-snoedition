@@ -730,7 +730,7 @@ Function UpdateNPCs%()
 													If x < 25.0 And x > 15.0 Then
 														z = Abs(EntityZ(me\Collider) - EntityZ(w\OBJ, True))
 														If z < 25.0 And z > 15.0 Then
-															PositionEntity(n\Collider, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 200.0 * RoomScale, EntityZ(w\OBJ, True))
+															PositionEntity(n\Collider, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 20.0 * RoomScale, EntityZ(w\OBJ, True))
 															ResetEntity(n\Collider)
 															Exit
 														EndIf
@@ -1577,6 +1577,8 @@ Function UpdateNPCs%()
 						EndIf
 					EndIf
 					
+					If TakeOffTimer < 500.0 And Dist >= 0.25 Then TakeOffTimer = Min(TakeOffTimer + fps\Factor[0], 500.0)
+					
 					Select n\State
 						Case 0.0 ; ~ Nothing (used for events)
 							;[Block]
@@ -1616,36 +1618,38 @@ Function UpdateNPCs%()
 									EndIf
 									If Dist < 0.25 Then
 										If wi\HazmatSuit > 0 Lor I_714\Using > 1 Then
-											TakeOffTimer = TakeOffTimer + (fps\Factor[0] * 1.5)
-											If TakeOffTimer > 100.0 And TakeOffTimer - (fps\Factor[0] * 1.5) <= 100.0 And (Not ChannelPlaying(n\SoundCHN2)) Then
+											If I_714\Using <> 2 Then
+												TakeOffTimer = TakeOffTimer - (fps\Factor[0] * 1.5)
+											Else
+												TakeOffTimer = TakeOffTimer - (fps\Factor[0] * 3.0)
+											EndIf
+											If TakeOffTimer < 400.0 And TakeOffTimer + (fps\Factor[0] * 1.5) >= 400.0 And (Not ChannelPlaying(n\SoundCHN2)) Then
 												If wi\HazmatSuit > 0 Then n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\TakeOffHazmat.ogg"))
 												If I_714\Using = 3 Then	n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\714Equipped.ogg"))
-											ElseIf I_714\Using = 2 And TakeOffTimer >= 260.0
-												CreateMsg("The ring failed to resist any longer.")
-												I_714\Using = 1
-												PlaySound_Strict(PickSFX[3])
-												TakeOffTimer = 0.0
-												Exit
-											ElseIf TakeOffTimer >= 500.0
+											ElseIf TakeOffTimer <= 0.0
 												For i = 0 To MaxItemAmount - 1
 													If Inventory(i) <> Null Then
 														If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") Then
 															If Inventory(i)\State2 < 3.0 And wi\HazmatSuit = 4 Then
 																Inventory(i)\State2 = Inventory(i)\State2 + 1.0
-																TakeOffTimer = 240.0
+																TakeOffTimer = 260.0
 																me\CameraShake = 2.0
 															Else
 																RemoveItem(Inventory(i))
 																CreateMsg("The hazmat suit was destroyed.")
 																wi\HazmatSuit = 0
 																PlaySound_Strict(PickSFX[2])
-																TakeOffTimer = 0.0
+																TakeOffTimer = 500.0
 															EndIf
-														ElseIf I_714\Using = 3
-															CreateMsg("The ring was forcibly removed.")
+														ElseIf I_714\Using > 1
+															If I_714\Using = 3 Then
+																CreateMsg("The ring was forcibly removed.")
+															Else
+																CreateMsg("The ring failed to resist any longer.")
+															EndIf
 															I_714\Using = 1
 															PlaySound_Strict(PickSFX[3])
-															TakeOffTimer = 0.0
+															TakeOffTimer = 500.0
 															Exit
 														EndIf
 													EndIf
@@ -1674,7 +1678,6 @@ Function UpdateNPCs%()
 											EndIf										
 										EndIf
 									Else
-										If TakeOffTimer > 0.0 Then TakeOffTimer = Max(TakeOffTimer - fps\Factor[0], 0.0)
 										
 										If (I_268\Using = 0 Lor I_268\Timer =< 0) Then
 											n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 20.0)

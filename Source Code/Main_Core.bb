@@ -204,6 +204,7 @@ Global SoundTransmission%
 Global MainMenuOpen%, MenuOpen%, InvOpen%
 
 Global AccessCode%
+Global AccessCode2%
 
 RenderLoading(10, "DIFFICULTY CORE")
 
@@ -219,7 +220,7 @@ Global RadioState3%[10]
 ;[Block]
 Const MaxOverlayTextureIDAmount% = 13
 Const MaxOverlayIDAmount% = 11
-Const MaxIconIDAmount% = 7
+Const MaxIconIDAmount% = 9
 Const MaxImageIDAmount% = 8
 ;[End Block]
 
@@ -2867,7 +2868,7 @@ Function UpdateGUI%()
 								opt\CameraFogFar = opt\StoredCameraFogFar
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[1])
 							Else
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0
 								If wi\NightVision = 0 Then opt\StoredCameraFogFar = opt\CameraFogFar
 								CreateMsg("You put on the goggles.")
 								Select SelectedItem\ItemTemplate\TempName
@@ -2904,7 +2905,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the gas mask.")
 								wi\GasMask = 0
 							Else
-								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								Select SelectedItem\ItemTemplate\TempName
 									Case "gasmask"
@@ -2979,7 +2980,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the cap.")
 								wi\Cap = False
 							Else
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								wi\Cap = True
 								CreateMsg("You put on the cap.")
@@ -4294,7 +4295,26 @@ Function RenderHUD%()
 	y = opt\GraphicHeight - (95 * MenuScale)
 	
 	Color(255, 255, 255)
-	If me\BlinkTimer < 150.0 Then
+	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) and n_I\Curr049 <> Null Then
+		If TakeOffTimer < 125.0 Then
+			RenderBar(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, TakeOffTimer, 500.0, 100, 0, 0)
+		Else
+			RenderBar(BlinkMeterIMG, x, y - (40 * MenuScale), Width, Height, TakeOffTimer, 500.0)
+		EndIf
+		Rect(x - (51 * MenuScale), y - (41 * MenuScale), 32 * MenuScale, 32 * MenuScale, False)
+		DrawBlock(t\IconID[8], x - (50 * MenuScale), y - (40 * MenuScale))
+	ElseIf I_268\Using > 0 Then
+		If I_268\Timer < 150.0 Then
+			RenderBar(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, I_268\Timer, 600.0, 100, 0, 0)
+		Else
+			RenderBar(BlinkMeterIMG, x, y - (40 * MenuScale), Width, Height, I_268\Timer, 600.0)
+		EndIf
+		Rect(x - (51 * MenuScale), y - (41 * MenuScale), 32 * MenuScale, 32 * MenuScale, False)
+		DrawBlock(t\IconID[7], x - (50 * MenuScale), y - (40 * MenuScale))
+	EndIf
+	
+	Color(255, 255, 255)
+	If me\BlinkTimer < me\BLINKFREQ / 4.0 Then
 		RenderBar(t\ImageID[1], x, y, Width, Height, me\BlinkTimer, me\BLINKFREQ, 100, 0, 0)
 	Else
 		RenderBar(BlinkMeterIMG, x, y, Width, Height, me\BlinkTimer, me\BLINKFREQ)
@@ -4823,10 +4843,21 @@ Function RenderGUI%()
 								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
 								Color(140, 61, 37)
 								SetFont(fo\FontID[Font_Journal])
-								Temp = ((Int(AccessCode) * 2) Mod 10000)
-								If Temp < 1000 Then Temp = Temp + 1000
-								Text(423 * MenuScale, 20 * MenuScale, Temp, True, True)
+								Text(423 * MenuScale, 20 * MenuScale, AccessCode2, True, True)
 								Color(255, 255, 255)
+								SetBuffer(BackBuffer())
+								;[End Block]
+							Case "Unknown Note"
+								;[Block]
+								SelectedItem\ItemTemplate\Img = LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath)	
+								SelectedItem\ItemTemplate\Img = ScaleImage2(SelectedItem\ItemTemplate\Img, MenuScale, MenuScale)
+								
+								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
+								Color(50, 50, 50)
+								SetFont(fo\FontID[Font_Journal])
+								Temp = ((Int(AccessCode2) * 3) Mod 10000)
+								If Temp < 1000 Then Temp = Temp + 1000
+								Text(300 * MenuScale, 295 * MenuScale, Temp, True, True)
 								SetBuffer(BackBuffer())
 								;[End Block]
 							Case "Document SCP-035"
@@ -7403,15 +7434,16 @@ Function UpdateVomit%()
 End Function
 
 Function Use268()
-	   
+	
     If I_268\Using > 0 Then
-        If I_268\Using = 2 Then
+		If I_714\Using > 1 Then I_268\Timer = 0.0
+        If I_268\Using = 2 Then 
             I_268\Timer = Max(I_268\Timer - (fps\Factor[0] / 1.5), 0)
         Else
             I_268\Timer = Max(I_268\Timer - fps\Factor[0], 0)
         EndIf
     Else
-        I_268\Timer = Min(I_268\Timer + fps\Factor[0], 630.0)
+        I_268\Timer = Min(I_268\Timer + fps\Factor[0], 600.0)
     EndIf
 End Function 
 

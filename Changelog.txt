@@ -1,4 +1,4 @@
-v1.75
+v1.8
 
 General:
 
@@ -9,11 +9,13 @@ General:
 - New drinks for SCP-294.
 - Syringes heal slightly faster but for not as long. The amount healed is the same.
 - Add new console command "bloodloss" to change me\BloodLoss float value.
+- Add SCP-268 to the game.
 
 Rooms:
 
 - Add back SCP-500 to its chamber.
 - Remove the chat screen from SCP-895's Observation Room.
+- Randomize the O5 council code.
 
 Bug Fixes:
 

@@ -3882,6 +3882,9 @@ Function UpdateEvents%()
 							If itt\Name = "Drawing" Then
 								If itt\Img <> 0 Then FreeImage(itt\Img) : itt\Img = 0
 								itt\Img = LoadImage_Strict(ImgPath)
+								itt\Img = ScaleImage2(itt\Img, MenuScale, MenuScale)
+								itt\ImgWidth = ImageWidth(itt\Img) / 2
+								itt\ImgHeight = ImageHeight(itt\Img) / 2
 								itt\ImgPath = ImgPath
 								Exit
 							EndIf
@@ -7166,7 +7169,7 @@ Function UpdateEvents%()
 									RotateEntity(p\Pvt, 90.0, 0.0, 0.0)
 								Next
 								FreeEntity(Pvt)
-								If (Not e\SoundCHN) Then e\SoundCHN = PlaySound2(e\Sound, Camera, e\room\Objects[0], 5.0)
+								If (Not ChannelPlaying(e\SoundCHN)) Then e\SoundCHN = PlaySound2(e\Sound, Camera, e\room\Objects[0], 5.0)
 							EndIf
 						Else
 							e\EventState = 0.0

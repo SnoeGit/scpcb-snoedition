@@ -1326,7 +1326,7 @@ Function UpdateConsole%()
 					;[Block]
 					Temp = ((Int(AccessCode) * 3) Mod 10000)
 					If Temp < 1000 Then Temp = Temp + 1000
-					Temp1 = ((Int(AccessCode) * 2) Mod 10000)
+					Temp1 = ((Int(AccessCode2) * 3) Mod 10000)
 					If Temp1 < 1000 Then Temp1 = Temp1 + 1000
 					
 					CreateConsoleMsg("Access Codes:")
@@ -1335,9 +1335,9 @@ Function UpdateConsole%()
 					CreateConsoleMsg("Dr. Harp: 7816")
 					;CreateConsoleMsg("Dr Gears: 1311") ~ Removed since Gears office is locked
 					CreateConsoleMsg("Dr. L.: 1234")
-					CreateConsoleMsg("O5 Council Office: 2411")
+					CreateConsoleMsg("O5 Council Office: " + Temp1)
 					CreateConsoleMsg("Maintenance Tunnel: " + Temp)
-					CreateConsoleMsg("Site Director: " + Temp1)
+					CreateConsoleMsg("Site Director: " + AccessCode2)
 					CreateConsoleMsg(Chr(34) + "cont1_035" + Chr(34) + " storage room: 5731")
 					CreateConsoleMsg("")
 					CreateConsoleMsg("All the others doors don't have a code.")

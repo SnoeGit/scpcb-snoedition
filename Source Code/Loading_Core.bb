@@ -1654,6 +1654,10 @@ Function LoadEntities%()
 		t\IconID[i] = LoadImage_Strict("GFX\gui\hand_symbol(" + (i - 4) + ").png")
 		t\IconID[i] = ScaleImage2(t\IconID[i], MenuScale, MenuScale)
 	Next
+	t\IconID[7] = LoadImage_Strict("GFX\gui\scp_268_icon.png")
+	t\IconID[7] = ScaleImage2(t\IconID[7], MenuScale, MenuScale)
+	t\IconID[8] = LoadImage_Strict("GFX\gui\shield_icon.png")
+	t\IconID[8] = ScaleImage2(t\IconID[8], MenuScale, MenuScale)
 	
 	If (Left(CurrentDate(), 7) = "28 Jun ") Then
 		QuickLoadIcon = LoadImage_Strict("GFX\menu\QuickLoadingPride.png")
@@ -1963,10 +1967,23 @@ Function InitNewGame%()
 			AccessCode = AccessCode + (Rand(9) * (10 ^ i))
 		Next
 		Skip = False
-		If AccessCode <> 7816 And AccessCode <> 2411 And AccessCode <> 5731 Then 
+		If AccessCode <> 7816 And AccessCode <> 5731 And AccessCode <> 2411 Then
 			Skip = True
 		Else
 			AccessCode = 0
+		EndIf
+	Until Skip
+	
+	AccessCode2 = 0
+	Repeat
+		For i = 0 To 3
+			AccessCode2 = AccessCode2 + (Rand(9) * (10 ^ i))
+		Next
+		Skip = False
+		If AccessCode2 <> 7816 And AccessCode2 <> 5731 And AccessCode <> 2411 And AccessCode2 <> AccessCode Then
+			Skip = True
+		Else
+			AccessCode2 = 0
 		EndIf
 	Until Skip
 	

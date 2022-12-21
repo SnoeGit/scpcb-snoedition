@@ -45,6 +45,7 @@ Function SaveGame%(File$)
 	WriteFloat(f, EntityZ(me\Head))
 	
 	WriteString(f, Str(AccessCode))
+	WriteString(f, Str(AccessCode2))
 	
 	WriteFloat(f, EntityPitch(me\Collider))
 	WriteFloat(f, EntityYaw(me\Collider))
@@ -547,6 +548,7 @@ Function LoadGame%(File$)
 	ResetEntity(me\Head)
 	
 	AccessCode = Int(ReadString(f))
+	AccessCode2 = Int(ReadString(f))
 	
 	x = ReadFloat(f)
 	y = ReadFloat(f)
@@ -1438,6 +1440,7 @@ Function LoadGameQuick%(File$)
 	ResetEntity(me\Head)
 	
 	AccessCode = Int(ReadString(f))
+	AccessCode2 = Int(ReadString(f))
 	
 	x = ReadFloat(f)
 	y = ReadFloat(f)
