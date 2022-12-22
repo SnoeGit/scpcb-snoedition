@@ -1577,7 +1577,7 @@ Function UpdateNPCs%()
 						EndIf
 					EndIf
 					
-					If TakeOffTimer < 500.0 And Dist >= 0.25 Then TakeOffTimer = Min(TakeOffTimer + fps\Factor[0], 500.0)
+					If Dist >= 0.25 Then TakeOffTimer = Min(TakeOffTimer + fps\Factor[0], 500.0)
 					
 					Select n\State
 						Case 0.0 ; ~ Nothing (used for events)
@@ -2965,7 +2965,7 @@ Function UpdateNPCs%()
 						TurnEntity(n\OBJ2, 0.0, 20.0 * fps\Factor[0], 0.0)
 						TurnEntity(n\OBJ3, 20.0 * fps\Factor[0], 0.0, 0.0)
 						
-						If n\State = 1.0 And (Not chs\NoTarget) Then
+						If n\State = 1.0 And (Not chs\NoTarget) And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
 							If Abs(EntityX(me\Collider) - EntityX(n\Collider)) < 30.0 Then
 								If Abs(EntityZ(me\Collider) - EntityZ(n\Collider)) < 30.0 Then
 									If Abs(EntityY(me\Collider) - EntityY(n\Collider)) < 20.0 Then
@@ -2989,7 +2989,7 @@ Function UpdateNPCs%()
 							PositionEntity(Target, n\EnemyX, n\EnemyY, n\EnemyZ, True)
 						EndIf
 						
-						If chs\NoTarget And n\State = 2.0 Then n\State = 1.0
+						If chs\NoTarget And I_268\Using > 0 And I_268\Timer > 0.0 And n\State = 2.0 Then n\State = 1.0
 						
 						TurnEntity(n\OBJ2, 0.0, 20.0 * fps\Factor[0], 0.0)
 						TurnEntity(n\OBJ3, 20.0 * fps\Factor[0], 0.0, 0.0)
@@ -3121,7 +3121,7 @@ Function UpdateNPCs%()
 								EndIf
 								n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider)
 								
-								If Dist < 3.24 And (Not chs\NoTarget) Then
+								If Dist < 3.24 And (Not chs\NoTarget) And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
 									If Abs(DeltaYaw(n\Collider, me\Collider)) < 20.0 Then 
 										n\State = 2.0
 										If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0 
@@ -3465,7 +3465,7 @@ Function UpdateNPCs%()
 									
 									If Dist < 20.25 Lor n\State3 > Rnd(200.0, 250.0) Then
 										n\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\860\Cancer" + Rand(3, 5) + ".ogg"), Camera, n\Collider)
-										If (Not chs\NoTarget) Then
+										If (Not chs\NoTarget) And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
 											n\State = 3.0
 										Else
 											If (PrevFrame < 492.0 And n\Frame >= 492.0) Lor (PrevFrame < 568.0 And n\Frame >= 568.0) Then
@@ -3520,7 +3520,7 @@ Function UpdateNPCs%()
 								EndIf
 								MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 								
-								If chs\NoTarget Then
+								If chs\NoTarget And I_268\Using > 0 And I_268\Timer > 0.0 Then
 									If (PrevFrame < 315.0 And n\Frame >= 315.0) Lor (PrevFrame < 492.0 And n\Frame >= 492.0) Then
 										SetNPCFrame(n, 2.0)
 										n\State = 4.0
@@ -3533,7 +3533,7 @@ Function UpdateNPCs%()
 								
 								AnimateNPC(n, 2.0, 199.0, 0.5)
 								
-								If (Not chs\NoTarget) Then n\State = 3.0
+								If (Not chs\NoTarget) And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then n\State = 3.0
 								;[End Block]
 						End Select
 						
@@ -4021,7 +4021,7 @@ Function UpdateNPCs%()
 									; ~ Echo if player gets close
 									If Dist < 4.0 And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
 										n\State = Rand(4)
-									ElseIf Dist < 1.5
+									ElseIf Dist =< 1.4
 										n\State = Rand(4)
 									EndIf
 								EndIf
@@ -4110,7 +4110,7 @@ Function UpdateNPCs%()
 									AnimateNPC(n, 580.0, 628.0, n\CurrSpeed * 25.0)
 									
 									; ~ Detect Player using SCP-268 when too close
-									If n\State = 8.0 And Dist < 1.5 And (Not chs\NoTarget) And I_268\Using > 0 And I_268\Timer > 0.0 Then
+									If n\State = 8.0 And Dist =< 1.4 And (Not chs\NoTarget) And I_268\Using > 0 And I_268\Timer > 0.0 Then
 										If EntityVisible(n\Collider, me\Collider) Then
 											n\Angle = VectorYaw(EntityX(me\Collider) - EntityX(n\Collider), 0.0, EntityZ(me\Collider) - EntityZ(n\Collider))
 											n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
@@ -5178,7 +5178,8 @@ Function UpdateMTFUnit%(n.NPCs)
 					
 					Local Temp% = NPCSeesPlayer(n)
 					
-					If chs\NoTarget Lor (I_268\Using > 0 And I_268\Timer > 0.0) Then Temp = False
+					If chs\NoTarget Then Temp = False
+					If (I_268\Using > 0 And I_268\Timer > 0.0) And Dist > 1.5 Then Temp = False
 					
 					If Temp > 0 Then
 						If n\LastSeen > 0 And n\LastSeen < 70.0 * 15.0 Then
@@ -5342,7 +5343,7 @@ Function UpdateMTFUnit%(n.NPCs)
 					n\State2 = n\State2 - fps\Factor[0]
 					If NPCSeesPlayer(n) = 1 Then
 						; ~ If close enough, start shooting at the player
-						If Dist < 25.0 And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
+						If Dist < 25.0 And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Lor Dist =< 1.4 Then
 							Local Angle# = VectorYaw(EntityX(me\Collider) - EntityX(n\Collider), 0.0, EntityZ(me\Collider) - EntityZ(n\Collider))
 							
 							RotateEntity(n\Collider, 0.0, CurveAngle(Angle, EntityYaw(n\Collider), 10.0), 0.0, True)
@@ -6310,7 +6311,7 @@ Function UpdateMTFUnit%(n.NPCs)
 						Else
 							If PlayerRoom\RoomTemplate\Name = "gate_b" Then n\State3 = Max(0.0, n\State3 - fps\Factor[0])
 							
-							If Dist < 4.0 And chs\NoTarget Then
+							If Dist < 4.0 And chs\NoTarget And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
 								AnimateNPC(n, 79.0, 310.0, 0.35)
 							Else
 								If n\PathStatus = 1 Then
@@ -6381,7 +6382,7 @@ Function UpdateMTFUnit%(n.NPCs)
 				EndIf
 			EndIf
 			
-			If chs\NoTarget And n\State = 1.0 Then n\State = 0.0
+			If chs\NoTarget And (I_268\Using = 0 Lor I_268\Timer =< 0.0) And n\State = 1.0 Then n\State = 0.0
 			
 			If n\State <> 3.0 And n\State <> 5.0 And n\State <> 6.0 And n\State <> 7.0 Then
 				If n\MTFLeader <> Null Then

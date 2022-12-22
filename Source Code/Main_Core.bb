@@ -2868,7 +2868,7 @@ Function UpdateGUI%()
 								opt\CameraFogFar = opt\StoredCameraFogFar
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[1])
 							Else
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = 0
 								If wi\NightVision = 0 Then opt\StoredCameraFogFar = opt\CameraFogFar
 								CreateMsg("You put on the goggles.")
 								Select SelectedItem\ItemTemplate\TempName
@@ -2905,7 +2905,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the gas mask.")
 								wi\GasMask = 0
 							Else
-								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0
+								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = 0
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								Select SelectedItem\ItemTemplate\TempName
 									Case "gasmask"
@@ -3070,7 +3070,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the helmet.")
 								wi\BallisticHelmet = False
 							Else
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : I_268\Using = 0
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : I_268\Using = 0 : wi\Cap = 0
 								wi\BallisticHelmet = True
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								CreateMsg("You put on the helmet.")
@@ -3092,7 +3092,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the gear.")
 								wi\SCRAMBLE = 0
 							Else
-								wi\GasMask = 0 : wi\BallisticHelmet = False : I_268\Using = 0
+								wi\GasMask = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = 0
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								CreateMsg("You put on the gear.")
 								Select SelectedItem\ItemTemplate\TempName
@@ -4295,7 +4295,7 @@ Function RenderHUD%()
 	y = opt\GraphicHeight - (95 * MenuScale)
 	
 	Color(255, 255, 255)
-	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) and n_I\Curr049 <> Null Then
+	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) And n_I\Curr049 <> Null And (I_268\Timer > 0.0 Xor I_268\Using > 0) Then
 		If TakeOffTimer < 125.0 Then
 			RenderBar(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, TakeOffTimer, 500.0, 100, 0, 0)
 		Else
@@ -6676,6 +6676,9 @@ Function NullGame%(PlayButtonSFX% = True)
 	Delete(I_035)
 	I_035.SCP035 = New SCP035
 	
+	Delete(I_268)
+	I_268.SCP268 = New SCP268
+	
 	Delete(I_294)
 	I_294.SCP294 = New SCP294
 	
@@ -7436,11 +7439,10 @@ End Function
 Function Use268()
 	
     If I_268\Using > 0 Then
-		If I_714\Using > 1 Then I_268\Timer = 0.0
         If I_268\Using = 2 Then 
-            I_268\Timer = Max(I_268\Timer - (fps\Factor[0] / 1.5), 0)
+            I_268\Timer = Max(I_268\Timer - ((fps\Factor[0] / 1.5) * I_714\Using), 0)
         Else
-            I_268\Timer = Max(I_268\Timer - fps\Factor[0], 0)
+            I_268\Timer = Max(I_268\Timer - (fps\Factor[0] * I_714\Using), 0)
         EndIf
     Else
         I_268\Timer = Min(I_268\Timer + fps\Factor[0], 600.0)

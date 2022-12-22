@@ -808,7 +808,7 @@ Function UpdateEvents%()
 								EndIf
 								
 								; ~ If Ulgrin can see the player then start shooting at them.
-								If (Not chs\NoTarget) And ((CurrTrigger = "173scene_end" Lor EntityDistanceSquared(e\room\NPC[2]\Collider, me\Collider) < 4.5) And EntityVisible(e\room\NPC[2]\Collider, me\Collider)) Then
+								If (Not chs\NoTarget) And ((CurrTrigger = "173scene_end" Lor EntityDistanceSquared(e\room\NPC[2]\Collider, me\Collider) < 4.5) And EntityVisible(e\room\NPC[2]\Collider, me\Collider)) And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
 									e\room\NPC[2]\State = 1.0
 									e\room\NPC[2]\State3 = 1.0
 								ElseIf e\room\NPC[2]\State = 1.0 And (Not EntityVisible(e\room\NPC[2]\Collider, me\Collider))
@@ -2638,7 +2638,11 @@ Function UpdateEvents%()
 						EndIf
 					ElseIf e\EventState = 2.0
 						If EntityDistanceSquared(e\room\NPC[0]\Collider, me\Collider) < 5.0625 And (Not chs\NoTarget) Then
-							e\room\NPC[0]\State = 1.0 : e\room\NPC[0]\State3 = 1.0
+							If (I_268\Using = 0 Lor I_268\Timer =< 0.0) Lor EntityDistanceSquared(e\room\NPC[0]\Collider, me\Collider) =< 1.4 Then
+								e\room\NPC[0]\State = 1.0 : e\room\NPC[0]\State3 = 1.0
+							Else
+								e\room\NPC[0]\State = 5.0 : e\room\NPC[0]\State3 = 0.0
+							EndIf
 						Else
 							e\room\NPC[0]\State = 5.0 : e\room\NPC[0]\State3 = 0.0
 						EndIf

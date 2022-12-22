@@ -75,7 +75,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Cap", "cap", x, y, z)
+					it2.Items = CreateItem("Newsboy Cap", "cap", x, y, z)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]

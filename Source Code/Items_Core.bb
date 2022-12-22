@@ -341,6 +341,14 @@ Function RemoveWearableItems%(item.Items)
 			;[Block]
 			I_714\Using = 1
 			;[End Block]
+		Case "scp268", "super268"
+			;[Block]
+			I_268\Using = 0
+			;[End Block]
+		Case "cap"
+			;[Block]
+			wi\Cap = 0
+			;[End Block]
 		Case "scp1499", "super1499"
 			;[Block]
 			I_1499\Using = 0
@@ -745,6 +753,14 @@ Function PreventItemOverlapping%(SCP1499% = False, HAZMAT% = False)
 		Return(True)
 	ElseIf SCP1499 And wi\SCRAMBLE > 0 Then
 		CreateMsg("You need to take off the gear in order to use SCP-1499.")
+		SelectedItem = Null
+		Return(True)
+	ElseIf SCP1499 And I_268\Using > 0 Then
+		CreateMsg("You need to take off the cap in order to use SCP-1499.")
+		SelectedItem = Null
+		Return(True)
+	ElseIf SCP1499 And wi\Cap > 0 Then
+		CreateMsg("You need to take off the cap in order to use SCP-1499.")
 		SelectedItem = Null
 		Return(True)
 	ElseIf (Not HAZMAT) and wi\HazmatSuit > 0 Then
