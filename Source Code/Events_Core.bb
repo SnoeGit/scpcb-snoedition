@@ -10,8 +10,6 @@ Type Events
 	Field Img%
 End Type 
 
-Global PostChamber%
-
 Global forest_event.Events
 Global skull_event.Events
 
@@ -5289,7 +5287,7 @@ Function UpdateEvents%()
 							EndIf
 							
 							If Temp And x Then
-								PostChamber = True
+								n_I\Curr049\PostChamber = True
 								e\room\RoomDoors[1]\Locked = 0
 								e\room\RoomDoors[3]\Locked = 0
 								e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)

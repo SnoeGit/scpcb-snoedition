@@ -429,7 +429,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						Case 0
 							;[Block]
 							Select SelectedDifficulty\OtherFactors
-								Case EASY, CASUAL
+								Case EASY
 									;[Block]
 									it2.Items = CreateItem("Level 1 Key Card", "key1", x, y, z)
 									;[End Block]
@@ -470,7 +470,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						Case 1
 							;[Block]
 							Select SelectedDifficulty\OtherFactors
-								Case EASY, CASUAL
+								Case EASY
 									;[Block]
 									it2.Items = CreateItem("Level 2 Key Card", "key2", x, y, z)
 									;[End Block]
@@ -511,7 +511,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						Case 2
 							;[Block]
 							Select SelectedDifficulty\OtherFactors
-								Case EASY, CASUAL
+								Case EASY
 									;[Block]
 									it2.Items = CreateItem("Level 3 Key Card", "key3", x, y, z)
 									;[End Block]
@@ -552,7 +552,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						Case 3
 							;[Block]
 							Select SelectedDifficulty\OtherFactors
-								Case EASY, CASUAL
+								Case EASY
 									;[Block]
 									If Rand(10) = 1 Then
 										it2.Items = CreateItem("Level 4 Key Card", "key4", x, y, z)
@@ -597,7 +597,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						Case 4
 							;[Block]
 							Select SelectedDifficulty\OtherFactors
-								Case EASY, CASUAL
+								Case EASY
 									If Rand(4) = 1 Then
 										it2.Items = CreateItem("Level 5 Key Card", "key5", x, y, z)
 									Else

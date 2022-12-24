@@ -799,11 +799,7 @@ Function UpdateGame%()
 							;[End Block]
 						Case EXTREME
 							;[Block]
-							me\BLINKFREQ = Rnd(205.0, 410.0)
-							;[End Block]
-						Case CASUAL
-							;[Block]
-							me\BLINKFREQ = Rnd(530.0, 790.0)
+							me\BLINKFREQ = Rnd(205.0, 405.0)
 							;[End Block]
 					End Select 
 					me\BlinkTimer = me\BLINKFREQ

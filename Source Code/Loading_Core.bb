@@ -1957,9 +1957,7 @@ Function InitNewGame%()
 	
 	me\BlinkTimer = -10.0 : me\BlinkEffect = 1.0 : me\Stamina = 100.0 : me\StaminaEffect = 1.0 : me\HeartBeatRate = 70.0 : me\Funds = Rand(4)
 	
-	I_005\ChanceToSpawn = Rand(3)
-	
-	I_714\Using = 1
+	I_005\ChanceToSpawn = Rand(3) : I_714\Using = 1
 	
 	AccessCode = 0
 	Repeat
@@ -2050,69 +2048,8 @@ Function InitNewGame%()
 			EndIf
 		EndIf
 		
-		If r\RoomTemplate\Name = "cont1_173" And SelectedDifficulty\Name = "Thaumiel" Then
-			PositionEntity(me\Collider, EntityX(r\OBJ) + 3584.0 * RoomScale, r\y + 704.0 * RoomScale, EntityZ(r\OBJ) + 1024.0 * RoomScale)
-			PlayerRoom = r
-			it.Items = CreateItem("Level 3 Key Card", "key3", 1.0, 1.0, 1.0)
-			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
-			Inventory(0) = it
-			HideEntity(it\Collider)
-			EntityType(it\Collider, HIT_ITEM)
-			EntityParent(it\Collider, 0)
-			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("S-NAV Navigator", "nav", 1.0, 1.0, 1.0)
-			it\State = 100.0
-			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
-			Inventory(1) = it
-			HideEntity(it\Collider)
-			EntityType(it\Collider, HIT_ITEM)
-			EntityParent(it\Collider, 0)
-			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Gas Mask", "gasmask", 1.0, 1.0, 1.0)
-			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
-			Inventory(2) = it
-			HideEntity(it\Collider)
-			EntityType(it\Collider, HIT_ITEM)
-			EntityParent(it\Collider, 0)
-			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Night Vision Goggles", "nvg", 1.0, 1.0, 1.0)
-			it\State = 1000.0
-			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
-			Inventory(3) = it
-			HideEntity(it\Collider)
-			EntityType(it\Collider, HIT_ITEM)
-			EntityParent(it\Collider, 0)
-			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("Radio Transceiver", "radio", 1.0, 1.0, 1.0)
-			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
-			Inventory(4) = it
-			HideEntity(it\Collider)
-			EntityType(it\Collider, HIT_ITEM)
-			EntityParent(it\Collider, 0)
-			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("First Aid Kit", "firstaid", 1.0, 1.0, 1.0)
-			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
-			Inventory(5) = it
-			HideEntity(it\Collider)
-			EntityType(it\Collider, HIT_ITEM)
-			EntityParent(it\Collider, 0)
-			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("ReVision Eyedrops", "eyedrops", 1.0, 1.0, 1.0)
-			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
-			Inventory(6) = it
-			HideEntity(it\Collider)
-			EntityType(it\Collider, HIT_ITEM)
-			EntityParent(it\Collider, 0)
-			ItemAmount = ItemAmount + 1
-			it.Items = CreateItem("SCRAMBLE Gear", "scramble", 1.0, 1.0, 1.0)
-			it\State = 1000.0
-			it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
-			Inventory(7) = it
-			HideEntity(it\Collider)
-			EntityType(it\Collider, HIT_ITEM)
-			EntityParent(it\Collider, 0)
-			ItemAmount = ItemAmount + 1
-		ElseIf r\RoomTemplate\Name = "cont1_173" And (Not opt\IntroEnabled) Then 
+		
+		If r\RoomTemplate\Name = "cont1_173" And (Not opt\IntroEnabled) Then 
 			PositionEntity(me\Collider, EntityX(r\OBJ) + 3584.0 * RoomScale, r\y + 704.0 * RoomScale, EntityZ(r\OBJ) + 1024.0 * RoomScale)
 			PlayerRoom = r
 			If SelectedDifficulty\InventorySlots > 3 Then
@@ -2164,8 +2101,6 @@ Function InitNewGame%()
 		
 		If e\EventID = e_room2_sl Then e\EventState3 = 1.0
 	Next
-	
-	PostChamber = False
 	
 	RenderLoading(90, "PLAYER POSITION")
 	

@@ -276,7 +276,7 @@ Function UpdateMainMenu%()
 					y = 376 * MenuScale
 					
 					Width = 580 * MenuScale
-					Height = 370 * MenuScale
+					Height = 355 * MenuScale
 					
 					CurrSave\Name = UpdateMainMenuInputBox(x + (150 * MenuScale), y + (15 * MenuScale), 200 * MenuScale, 30 * MenuScale, CurrSave\Name, 1, 15)
 					If SelectedInputBox = 1 Then
@@ -342,17 +342,17 @@ Function UpdateMainMenu%()
 						; ~ Inventory slots
 						If MouseOn(x + (410 * MenuScale), y + (240 * MenuScale), ImageWidth(ga\ArrowIMG[3]), ImageHeight(ga\ArrowIMG[3])) And mo\MouseHit1 Then
 							SelectedDifficulty\InventorySlots = SelectedDifficulty\InventorySlots + 2
-							If SelectedDifficulty\InventorySlots > 20 Then SelectedDifficulty\InventorySlots = 2
+							If SelectedDifficulty\InventorySlots > 10 Then SelectedDifficulty\InventorySlots = 2
 							PlaySound_Strict(ButtonSFX)
 						ElseIf MouseOn(x + (160 * MenuScale), y + (240 * MenuScale), ImageWidth(ga\ArrowIMG[1]), ImageHeight(ga\ArrowIMG[1])) And mo\MouseHit1
 							SelectedDifficulty\InventorySlots = SelectedDifficulty\InventorySlots - 2
-							If SelectedDifficulty\InventorySlots <= 0 Then SelectedDifficulty\InventorySlots = 20
+							If SelectedDifficulty\InventorySlots <= 0 Then SelectedDifficulty\InventorySlots = 10
 							PlaySound_Strict(ButtonSFX)
 						EndIf
 						
 						; ~ Other factor's difficulty
 						If MouseOn(x + (160 * MenuScale), y + (270 * MenuScale), ImageWidth(ga\ArrowIMG[1]), ImageHeight(ga\ArrowIMG[1])) And mo\MouseHit1 Then
-							If SelectedDifficulty\OtherFactors < CASUAL Then
+							If SelectedDifficulty\OtherFactors < EXTREME Then
 								SelectedDifficulty\OtherFactors = SelectedDifficulty\OtherFactors + 1
 							Else
 								SelectedDifficulty\OtherFactors = EASY
@@ -1183,7 +1183,7 @@ Function RenderMainMenu%()
 				
 				y = y + Height + (20 * MenuScale)
 				Width = 580 * MenuScale
-				Height = 370 * MenuScale
+				Height = 355 * MenuScale
 				
 				RenderFrame(x, y, Width, Height)				
 				
@@ -1270,36 +1270,38 @@ Function RenderMainMenu%()
 					; ~ Other factor's difficulty
 					DrawImage(ga\ArrowIMG[1], x + (160 * MenuScale), y + (270 * MenuScale))
 					
-					Color(255, 255, 255)
+					Text(x + (200 * MenuScale), y + (276 * MenuScale), "Other difficulty factors:")
 					Select SelectedDifficulty\OtherFactors
 						Case EASY
 							;[Block]
-							TempStr = "Easy"
+							Color(90, 160, 20)
+							TempStr = "Notice"
 							;[End Block]
 						Case NORMAL
 							;[Block]
-							TempStr = "Normal"
+							Color(20, 100, 200)
+							TempStr = "Caution"
 							;[End Block]
 						Case HARD
 							;[Block]
-							TempStr = "Hard"
+							Color(200, 200, 20)
+							TempStr = "Warning"
 							;[End Block]
 						Case HARDER
 							;[Block]
-							TempStr = "Harder"
+							Color(200, 100, 20)
+							TempStr = "Danger"
 							;[End Block]
 						Case EXTREME
 							;[Block]
-							TempStr = "Extreme"
-							;[End Block]
-						Case CASUAL
-							;[Block]
-							TempStr = "Casual"
+							Color(200, 20, 20)
+							TempStr = "Critical"
 							;[End Block]
 					End Select
-					Text(x + (200 * MenuScale), y + (276 * MenuScale), "Other difficulty factors: " + TempStr)
+					Text(x + (440 * MenuScale), y + (276 * MenuScale), TempStr)
 				Else
-					RowText(SelectedDifficulty\Description, x + (160 * MenuScale), y + (180 * MenuScale), 390 * MenuScale, 200 * MenuScale)					
+					Color(255, 255, 255)
+					RowText(SelectedDifficulty\Description, x + (160 * MenuScale), y + (180 * MenuScale), 390 * MenuScale, 170 * MenuScale)					
 				EndIf
 				
 				SetFont(fo\FontID[Font_Default_Big])
@@ -3486,7 +3488,9 @@ Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
 			;[End Block]
 		Case Tooltip_Console
 			;[Block]
-			Txt = "Toggles the use of the developer console. Can be used in-game by pressing " + key\Name[key\CONSOLE] + ". Not available in Apollyon."
+			Txt = "Toggles the use of the developer console. Can be used in-game by pressing " + key\Name[key\CONSOLE]
+			R = 255
+			Txt2 = ". Not available in Apollyon."
 			;[End Block]
 		Case Tooltip_ConsoleOnError
 			;[Block]

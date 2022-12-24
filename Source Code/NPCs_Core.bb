@@ -50,6 +50,7 @@ Type NPCs
 	Field FallingPickDistance#
 	Field HasAsset% = False
 	Field Contained% = False
+	Field PostChamber% = False
 End Type
 
 Const NPCsFile$ = "Data\NPCs.ini"
@@ -614,10 +615,6 @@ Function UpdateNPCs%()
 		Case EXTREME
 			;[Block]
 			DifficultyDMGMult = 1.6
-			;[End Block]
-		Case CASUAL
-			;[Block]
-			DifficultyDMGMult = 0.75
 			;[End Block]
 	End Select
 	
@@ -1735,7 +1732,7 @@ Function UpdateNPCs%()
 												Temp = True
 												If n\Path[n\PathLocation]\door <> Null Then
 													If (Not n\Path[n\PathLocation]\door\IsElevatorDoor > 0) Then
-														If (n\Path[n\PathLocation]\door\Locked > 0 Lor n\Path[n\PathLocation]\door\KeyCard > 3 Lor n\Path[n\PathLocation]\door\Code <> "") And (Not n\Path[n\PathLocation]\door\Open) And PostChamber = False Then
+														If (n\Path[n\PathLocation]\door\Locked > 0 Lor n\Path[n\PathLocation]\door\KeyCard > 3 Lor n\Path[n\PathLocation]\door\Code <> "") And (Not n\Path[n\PathLocation]\door\Open) And (Not n\PostChamber) Then
 															Temp = False
 														ElseIf (n\Path[n\PathLocation]\door\Locked > 0 Lor n\Path[n\PathLocation]\door\KeyCard > 5 Lor n\Path[n\PathLocation]\door\Code <> "") And (Not n\Path[n\PathLocation]\door\Open) Then
 															Temp = False
@@ -6797,10 +6794,6 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 			;[Block]
 			DifficultyDMGMult = 1.6
 			;[End Block]
-		Case CASUAL
-			;[Block]
-			DifficultyDMGMult = 0.75
-			;[End Block]
 	End Select
 	
 	p.Particles = CreateParticle(PARTICLE_FLASH, x, y, z, Rnd(0.08, 0.1), 0.0, 5.0)
@@ -7052,10 +7045,6 @@ Function NPCSpeedChange%(n.NPCs)
 				Case EXTREME
 					;[Block]
 					n\Speed = n\Speed * 1.4
-					;[End Block]
-				Case CASUAL
-					;[Block]
-					n\Speed = n\Speed * 0.8
 					;[End Block]
 			End Select
 	End Select

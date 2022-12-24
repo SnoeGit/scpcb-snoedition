@@ -9,7 +9,7 @@ Type Difficulty
 	Field InventorySlots%
 End Type
 
-Global difficulties.Difficulty[7]
+Global difficulties.Difficulty[6]
 
 Global SelectedDifficulty.Difficulty
 
@@ -20,8 +20,7 @@ Const MILD% = 1
 Const EUCLID% = 2
 Const KETER% = 3
 Const APOLLYON% = 4
-Const THAUMIEL% = 5
-Const ESOTERIC% = 6
+Const ESOTERIC% = 5
 ;[End Block]
 
 ; ~ Save Types ID Constants
@@ -39,7 +38,6 @@ Const NORMAL% = 1
 Const HARD% = 2
 Const HARDER% = 3
 Const EXTREME% = 4
-Const CASUAL% = 5
 ;[End Block]
 
 Function SetDifficultyColor%(ID%, R%, G%, B%)
@@ -65,7 +63,7 @@ difficulties[MILD]\AggressiveNPCs = 0
 difficulties[MILD]\InventorySlots = 8
 difficulties[MILD]\SaveType = SAVE_ON_SCREENS
 difficulties[MILD]\OtherFactors = NORMAL
-SetDifficultyColor(MILD, 125, 140, 20)
+SetDifficultyColor(MILD, 20, 100, 200)
 
 difficulties[EUCLID] = New Difficulty
 difficulties[EUCLID]\Name = "Euclid"
@@ -85,7 +83,7 @@ difficulties[KETER]\AggressiveNPCs = 2
 difficulties[KETER]\InventorySlots = 4
 difficulties[KETER]\SaveType = DELETE_ON_DEATH
 difficulties[KETER]\OtherFactors = HARDER
-SetDifficultyColor(KETER, 200, 20, 20)
+SetDifficultyColor(KETER, 200, 100, 20)
 
 difficulties[APOLLYON] = New Difficulty
 difficulties[APOLLYON]\Name = "Apollyon"
@@ -95,17 +93,7 @@ difficulties[APOLLYON]\AggressiveNPCs = 2
 difficulties[APOLLYON]\InventorySlots = 2
 difficulties[APOLLYON]\SaveType = NO_SAVES
 difficulties[APOLLYON]\OtherFactors = EXTREME
-SetDifficultyColor(APOLLYON, 150, 150, 150)
-
-difficulties[THAUMIEL] = New Difficulty
-difficulties[THAUMIEL]\Name = "Thaumiel"
-difficulties[THAUMIEL]\Description = "Saving is allowed anytime. Thaumiel-class SCPs are anomalies that the Foundation uses to contain or counteract other SCPs or anomalous phenomena."
-difficulties[THAUMIEL]\Description = difficulties[THAUMIEL]\Description + " This difficulty is designed around allowing you to lay back and have a good time without having to worry about constantly dying. Achievements are disabled when playing on this difficulty."
-difficulties[THAUMIEL]\AggressiveNPCs = 0
-difficulties[THAUMIEL]\InventorySlots = 16
-difficulties[THAUMIEL]\SaveType = SAVE_ANYWHERE
-difficulties[THAUMIEL]\OtherFactors = CASUAL
-SetDifficultyColor(THAUMIEL, 50, 65, 205)
+SetDifficultyColor(APOLLYON, 200, 20, 20)
 
 difficulties[ESOTERIC] = New Difficulty
 difficulties[ESOTERIC]\Name = "Esoteric"
