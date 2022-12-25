@@ -53,7 +53,7 @@ difficulties[SAFE]\AggressiveNPCs = 0
 difficulties[SAFE]\InventorySlots = 10
 difficulties[SAFE]\SaveType = SAVE_ANYWHERE
 difficulties[SAFE]\OtherFactors = EASY
-SetDifficultyColor(SAFE, 90, 160, 20)
+SetDifficultyColor(SAFE, 90, 170, 25)
 
 difficulties[MILD] = New Difficulty
 difficulties[MILD]\Name = "Mild"
@@ -63,7 +63,7 @@ difficulties[MILD]\AggressiveNPCs = 0
 difficulties[MILD]\InventorySlots = 8
 difficulties[MILD]\SaveType = SAVE_ON_SCREENS
 difficulties[MILD]\OtherFactors = NORMAL
-SetDifficultyColor(MILD, 20, 100, 200)
+SetDifficultyColor(MILD, 25, 90, 170)
 
 difficulties[EUCLID] = New Difficulty
 difficulties[EUCLID]\Name = "Euclid"
@@ -73,7 +73,7 @@ difficulties[EUCLID]\AggressiveNPCs = 1
 difficulties[EUCLID]\InventorySlots = 6
 difficulties[EUCLID]\SaveType = SAVE_ON_SCREENS
 difficulties[EUCLID]\OtherFactors = HARD
-SetDifficultyColor(EUCLID, 200, 200, 20)
+SetDifficultyColor(EUCLID, 200, 200, 25)
 
 difficulties[KETER] = New Difficulty
 difficulties[KETER]\Name = "Keter"
@@ -83,7 +83,7 @@ difficulties[KETER]\AggressiveNPCs = 2
 difficulties[KETER]\InventorySlots = 4
 difficulties[KETER]\SaveType = DELETE_ON_DEATH
 difficulties[KETER]\OtherFactors = HARDER
-SetDifficultyColor(KETER, 200, 100, 20)
+SetDifficultyColor(KETER, 170, 90, 25)
 
 difficulties[APOLLYON] = New Difficulty
 difficulties[APOLLYON]\Name = "Apollyon"
@@ -93,7 +93,7 @@ difficulties[APOLLYON]\AggressiveNPCs = 2
 difficulties[APOLLYON]\InventorySlots = 2
 difficulties[APOLLYON]\SaveType = NO_SAVES
 difficulties[APOLLYON]\OtherFactors = EXTREME
-SetDifficultyColor(APOLLYON, 200, 20, 20)
+SetDifficultyColor(APOLLYON, 200, 25, 25)
 
 difficulties[ESOTERIC] = New Difficulty
 difficulties[ESOTERIC]\Name = "Esoteric"

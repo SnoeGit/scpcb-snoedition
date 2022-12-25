@@ -1274,27 +1274,27 @@ Function RenderMainMenu%()
 					Select SelectedDifficulty\OtherFactors
 						Case EASY
 							;[Block]
-							Color(90, 160, 20)
+							Color(90, 170, 25)
 							TempStr = "Notice"
 							;[End Block]
 						Case NORMAL
 							;[Block]
-							Color(20, 100, 200)
+							Color(25, 90, 170)
 							TempStr = "Caution"
 							;[End Block]
 						Case HARD
 							;[Block]
-							Color(200, 200, 20)
+							Color(200, 200, 25)
 							TempStr = "Warning"
 							;[End Block]
 						Case HARDER
 							;[Block]
-							Color(200, 100, 20)
+							Color(170, 90, 25)
 							TempStr = "Danger"
 							;[End Block]
 						Case EXTREME
 							;[Block]
-							Color(200, 20, 20)
+							Color(200, 25, 25)
 							TempStr = "Critical"
 							;[End Block]
 					End Select
