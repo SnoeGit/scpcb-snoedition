@@ -3416,7 +3416,7 @@ Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
 			;[Block]
 			Txt = "Adjusts the master volume of sounds. Sliding the bar fully to the left will mute all sounds."
 			R = 255 : G = 255
-			Txt2 = "Current value: " + Int(Value * 100.0) + "% (default is 50%)"
+			Txt2 = "Current value: " + Int(Value * 100.0) + "% (default is 100%)"
 			;[End Block]
 		Case Tooltip_MusicVolume
 			;[Block]

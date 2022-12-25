@@ -426,7 +426,7 @@ Function LoadOptionsINI%()
 	
 	opt\BumpEnabled = GetINIInt(OptionFile, "Graphics", "Enable Bump Mapping", True)
 	
-	opt\VSync = GetINIInt(OptionFile, "Graphics", "VSync", True)
+	opt\VSync = GetINIInt(OptionFile, "Graphics", "VSync", False)
 	
 	opt\AntiAliasing = GetINIInt(OptionFile, "Graphics", "Anti-Aliasing", True)
 	
@@ -499,7 +499,7 @@ Function LoadOptionsINI%()
 	
 	; ~ [AUDIO]
 	
-	opt\MasterVolume = GetINIFloat(OptionFile, "Audio", "Master Volume", 0.5)
+	opt\MasterVolume = GetINIFloat(OptionFile, "Audio", "Master Volume", 1.0)
 	
 	opt\MusicVolume = GetINIFloat(OptionFile, "Audio", "Music Volume", 0.5)
 	opt\CurrMusicVolume = 1.0
@@ -716,7 +716,7 @@ Function ResetOptionsINI%()
 	
 	opt\BumpEnabled = True
 	
-	opt\VSync = True
+	opt\VSync = False
 	
 	If opt\DisplayMode = 0 Then opt\AntiAliasing = True
 	
@@ -739,7 +739,7 @@ Function ResetOptionsINI%()
 	
 	; ~ [AUDIO]
 	
-	opt\MasterVolume = 0.5
+	opt\MasterVolume = 1.0
 	
 	opt\MusicVolume = 0.5
 	

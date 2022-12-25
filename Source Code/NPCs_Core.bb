@@ -585,7 +585,7 @@ Function RemoveNPC%(n.NPCs)
 	Delete(n)
 End Function
 
-Global TakeOffTimer#
+Global TakeOffTimer# = 500.0
 
 Function UpdateNPCs%()
 	CatchErrors("Uncaught (UpdateNPCs)")
