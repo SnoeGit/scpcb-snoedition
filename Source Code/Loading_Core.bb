@@ -1959,6 +1959,8 @@ Function InitNewGame%()
 	
 	I_005\ChanceToSpawn = Rand(3) : I_714\Using = 1
 	
+	TakeOffTimer = 500.0
+	
 	AccessCode = 0
 	Repeat
 		For i = 0 To 3

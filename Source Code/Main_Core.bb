@@ -4290,20 +4290,20 @@ Function RenderHUD%()
 	
 	Color(255, 255, 255)
 	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) And (I_268\Timer =< 0.0 Lor I_268\Using = 0) Then
+		Rect(x - (51 * MenuScale), y - (41 * MenuScale), 32 * MenuScale, 32 * MenuScale, False)
 		If TakeOffTimer < 125.0 Then
 			RenderBar(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, TakeOffTimer, 500.0, 100, 0, 0)
 		Else
 			RenderBar(BlinkMeterIMG, x, y - (40 * MenuScale), Width, Height, TakeOffTimer, 500.0)
 		EndIf
-		Rect(x - (51 * MenuScale), y - (41 * MenuScale), 32 * MenuScale, 32 * MenuScale, False)
 		DrawBlock(t\IconID[8], x - (50 * MenuScale), y - (40 * MenuScale))
 	ElseIf I_268\Using > 0 Then
+		Rect(x - (51 * MenuScale), y - (41 * MenuScale), 32 * MenuScale, 32 * MenuScale, False)
 		If I_268\Timer < 150.0 Then
 			RenderBar(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, I_268\Timer, 600.0, 100, 0, 0)
 		Else
 			RenderBar(BlinkMeterIMG, x, y - (40 * MenuScale), Width, Height, I_268\Timer, 600.0)
 		EndIf
-		Rect(x - (51 * MenuScale), y - (41 * MenuScale), 32 * MenuScale, 32 * MenuScale, False)
 		DrawBlock(t\IconID[7], x - (50 * MenuScale), y - (40 * MenuScale))
 	EndIf
 	
