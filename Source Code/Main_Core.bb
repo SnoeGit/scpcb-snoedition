@@ -3395,31 +3395,31 @@ Function UpdateGUI%()
 						StrTemp = GetINIString2(SCP294File, Loc, "Message")
 						If StrTemp <> "" Then CreateMsg(StrTemp)
 						
-						If GetINIInt2(SCP294File, Loc, "Lethal")
+						If GetINIInt(SCP294File, Loc, "Lethal")
 							msg\DeathMsg = GetINIString2(SCP294File, Loc, "Death Message")
-							If GetINIInt2(SCP294File, Loc, "Lethal") Then Kill()
+							If GetINIInt(SCP294File, Loc, "Lethal") Then Kill()
 						EndIf
-						me\BlurTimer = Max(GetINIInt2(SCP294File, Loc, "Blur") * 70.0, 0.0)
+						me\BlurTimer = Max(GetINIInt(SCP294File, Loc, "Blur") * 70.0, 0.0)
 						If me\VomitTimer = 0.0 Then
-							me\VomitTimer = GetINIInt2(SCP294File, Loc, "Vomit")
+							me\VomitTimer = GetINIInt(SCP294File, Loc, "Vomit")
 						Else
-							me\VomitTimer = Min(me\VomitTimer, GetINIInt2(SCP294File, Loc, "Vomit"))
+							me\VomitTimer = Min(me\VomitTimer, GetINIInt(SCP294File, Loc, "Vomit"))
 						EndIf
 						me\CameraShakeTimer = GetINIString2(SCP294File, Loc, "Camera Shake")
-						me\Injuries = Max(me\Injuries + GetINIInt2(SCP294File, Loc, "Damage"), 0.0)
-						me\QuickHealTimer = GetINIFloat2(SCP294File, Loc, "Heal")
-						me\Bloodloss = Max(me\Bloodloss + GetINIInt2(SCP294File, Loc, "Blood Loss"), 0.0)
+						me\Injuries = Max(me\Injuries + GetINIInt(SCP294File, Loc, "Damage"), 0.0)
+						me\QuickHealTimer = GetINIFloat(SCP294File, Loc, "Heal")
+						me\Bloodloss = Max(me\Bloodloss + GetINIInt(SCP294File, Loc, "Blood Loss"), 0.0)
 						StrTemp =  GetINIString2(SCP294File, Loc, "Sound")
 						If StrTemp <> "" Then
 							PlaySound_Strict(LoadTempSound(StrTemp))
 						EndIf
-						If GetINIInt2(SCP294File, Loc, "Stomach Ache") Then I_1025\State[3] = 1.0
+						If GetINIInt(SCP294File, Loc, "Stomach Ache") Then I_1025\State[3] = 1.0
 						
-						If GetINIInt2(SCP294File, Loc, "Infection") Then I_008\Timer = I_008\Timer + 1.0
+						If GetINIInt(SCP294File, Loc, "Infection") Then I_008\Timer = I_008\Timer + 1.0
 						
-						If GetINIInt2(SCP294File, Loc, "Crystallization") Then I_409\Timer = I_409\Timer + 1.0
+						If GetINIInt(SCP294File, Loc, "Crystallization") Then I_409\Timer = I_409\Timer + 1.0
 						
-						If GetINIInt2(SCP294File, Loc, "Revitalize") Then
+						If GetINIInt(SCP294File, Loc, "Revitalize") Then
 							For i = 0 To 6
 								I_1025\State[i] = 0.0
 							Next
@@ -3427,9 +3427,9 @@ Function UpdateGUI%()
 						
 						
 						If me\DeathTimer = 0.0 Then
-							me\DeathTimer = GetINIInt2(SCP294File, Loc, "Death Timer") * 70.0
+							me\DeathTimer = GetINIInt(SCP294File, Loc, "Death Timer") * 70.0
 						Else
-							me\DeathTimer = Min(me\DeathTimer, GetINIInt2(SCP294File, Loc, "Death Timer") * 70.0)
+							me\DeathTimer = Min(me\DeathTimer, GetINIInt(SCP294File, Loc, "Death Timer") * 70.0)
 						EndIf
 						
 						; ~ The state of refined items is more than 1.0 (fine setting increases it by 1, very fine doubles it)
@@ -4291,7 +4291,7 @@ Function RenderHUD%()
 	y = opt\GraphicHeight - (95 * MenuScale)
 	
 	Color(255, 255, 255)
-	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) And n_I\Curr049 <> Null And (I_268\Timer > 0.0 Xor I_268\Using > 0) Then
+	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) And n_I\Curr049 <> Null And (I_268\Timer =< 0.0 Lor I_268\Using = 0) Then
 		If TakeOffTimer < 125.0 Then
 			RenderBar(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, TakeOffTimer, 500.0, 100, 0, 0)
 		Else
@@ -5497,12 +5497,12 @@ Function UpdateMenu%()
 						
 						y = y + (20 * MenuScale)
 						
-						UpdateMainMenuInputBox(x + (200 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\SCREENSHOT, 210.0)], 13)
+						UpdateMainMenuInputBox(x + (200 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\SCREENSHOT, 210.0)], 12)
 						
 						If opt\CanOpenConsole Then
 							y = y + (20 * MenuScale)
 							
-							UpdateMainMenuInputBox(x + (200 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\CONSOLE, 210.0)], 12)
+							UpdateMainMenuInputBox(x + (200 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\CONSOLE, 210.0)], 13)
 						EndIf
 						
 						Local TempKey%
@@ -5553,11 +5553,11 @@ Function UpdateMenu%()
 									;[End Block]
 								Case 12
 									;[Block]
-									key\CONSOLE = TempKey
+									key\SCREENSHOT = TempKey
 									;[End Block]
 								Case 13
 									;[Block]
-									key\SCREENSHOT = TempKey
+									key\CONSOLE = TempKey
 									;[End Block]
 							End Select
 							SelectedInputBox = 0
@@ -7061,7 +7061,7 @@ Function Update294%()
 					
 					If me\UsedMastercard Then PlaySound_Strict(LoadTempSound("SFX\SCP\294\PullMasterCard.ogg"))
 					
-					If GetINIInt2(SCP294File, Loc, "Explosion") Then 
+					If GetINIInt(SCP294File, Loc, "Explosion") Then 
 						me\ExplosionTimer = 135.0
 						msg\DeathMsg = GetINIString2(SCP294File, Loc, "Death Message")
 					EndIf
@@ -7075,7 +7075,7 @@ Function Update294%()
 					B = Trim(Right(StrTemp, Len(StrTemp) - Sep2))
 					
 					Alpha = Float(GetINIString2(SCP294File, Loc, "Alpha", 1.0))
-					Glow = GetINIInt2(SCP294File, Loc, "Glow")
+					Glow = GetINIInt(SCP294File, Loc, "Glow")
 					If Glow Then Alpha = -Alpha
 					
 					it.Items = CreateItem("Cup", "cup", EntityX(PlayerRoom\Objects[1], True), EntityY(PlayerRoom\Objects[1], True), EntityZ(PlayerRoom\Objects[1], True), R, G, B, Alpha)

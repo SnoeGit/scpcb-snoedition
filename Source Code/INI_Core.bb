@@ -145,29 +145,6 @@ Function GetINIString2$(File$, Start%, Parameter$, DefaultValue$ = "")
 	Return(DefaultValue)
 End Function
 
-Function GetINIInt2%(File$, Start%, Parameter$, DefaultValue$ = "")
-	Local StrTemp$ = GetINIString2(File, Start, Parameter, DefaultValue)
-	
-	Select StrTemp
-		Case "True"
-			;[Block]
-			Return(True)
-			;[End Block]
-		Case "False"
-			;[Block]
-			Return(False)
-			;[End Block]
-		Default
-			;[Block]
-			Return(Int(StrTemp))
-			;[End Block]
-	End Select
-End Function
-
-Function GetINIFloat2#(File$, Section$, Parameter$, DefaultValue# = 0.0)
-	Return(Float(GetINIString2(File, Section, Parameter, DefaultValue)))
-End Function
-
 Function GetINISectionLocation%(File$, Section$, SetInput294% = False)
 	Local Temp%
 	Local f% = ReadFile(File)
@@ -562,11 +539,11 @@ Function LoadOptionsINI%()
 	
 	key\INVENTORY = GetINIInt(OptionFile, "Controls", "Inventory Key", 15)
 	
-	key\SAVE = GetINIInt(OptionFile, "Controls", "Save Key", 63)
+	key\SCREENSHOT = GetINIInt(OptionFile, "Controls", "Screenshot Key", 59)
 	
 	key\CONSOLE = GetINIInt(OptionFile, "Controls", "Console Key", 61)
 	
-	key\SCREENSHOT = GetINIInt(OptionFile, "Controls", "Screenshot Key", 59)
+	key\SAVE = GetINIInt(OptionFile, "Controls", "Save Key", 63)
 	
 	; ~ [ADVANCED]
 	
@@ -684,11 +661,11 @@ Function SaveOptionsINI%(SaveGlobal% = False)
 	
 	PutINIValue(OptionFile, "Controls", "Inventory Key", key\INVENTORY)
 	
-	PutINIValue(OptionFile, "Controls", "Save Key", key\SAVE)
+	PutINIValue(OptionFile, "Controls", "Screenshot Key", key\SCREENSHOT)
 	
 	PutINIValue(OptionFile, "Controls", "Console Key", key\CONSOLE)
 	
-	PutINIValue(OptionFile, "Controls", "Screenshot Key", key\SCREENSHOT)
+	PutINIValue(OptionFile, "Controls", "Save Key", key\SAVE)
 	;[End Block]
 	
 	; ~ [ADVANCED]
@@ -800,11 +777,11 @@ Function ResetOptionsINI%()
 	
 	key\INVENTORY = 15
 	
-	key\SAVE = 63
+	key\SCREENSHOT = 59
 	
 	key\CONSOLE = 61
 	
-	key\SCREENSHOT = 59
+	key\SAVE = 63
 	
 	; ~ [ADVANCED]
 	
