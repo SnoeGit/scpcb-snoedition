@@ -1066,7 +1066,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Green Jade Ring", "kill714", x, y, z)
+					it2.Items = CreateItem("Sapphire Ring", "kill714", x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]

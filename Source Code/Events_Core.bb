@@ -2763,6 +2763,13 @@ Function UpdateEvents%()
 				
 				If Is035Released Then
 					If e\room\Dist < 8.0 Then
+						If PlayerRoom = e\room Then
+							If wi\HazmatSuit = 0 Then
+								InjurePlayer(fps\Factor[0] / 12000.0)
+							ElseIf wi\HazmatSuit <> 4
+								InjurePlayer(fps\Factor[0] / 24000.0)
+							EndIf
+						EndIf
 						If e\room\NPC[0] = Null Then
 							e\room\NPC[0] = CreateNPC(NPCTypeD, e\room\x, 0.5, e\room\z)
 							e\room\NPC[0]\State = 3.0
@@ -2770,6 +2777,8 @@ Function UpdateEvents%()
 							RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 180.0, 0.0)
 							MoveEntity(e\room\NPC[0]\Collider, 0.0, 0.0, -0.5)
 							ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_035_TEXTURE)
+							de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(e\room\NPC[0]\Collider) + (150.0 * RoomScale), EntityY(e\room\NPC[0]\OBJ) - 0.485, EntityZ(e\room\NPC[0]\Collider), 90.0, Rnd(360.0), 0.0)
+							EntityParent(de\OBJ, e\room\OBJ)
 						EndIf
 						
 						If e\room\NPC[1] = Null Then
@@ -4096,7 +4105,7 @@ Function UpdateEvents%()
 								EntityParent(de\OBJ, e\room\OBJ)
 							Next
 							
-							StopStream_Strict(n_I\Curr096\SoundCHN) : n_I\Curr096\SoundCHN = 0 : n_I\Curr096\SoundCHN_IsStream = False
+							StopStream_Strict(n_I\Curr096\SoundCHN) : n_I\Curr096\SoundCHN = 0
 							ShowEntity(e\room\Objects[8])
 							RemoveNPC(e\room\NPC[0]) : e\room\NPC[0] = Null
 							n_I\Curr096\State = 5.0
@@ -5441,7 +5450,7 @@ Function UpdateEvents%()
 									GiveAchievement(Achv079)
 									e\EventState = 3.0
 									e\EventState2 = 1.0
-									If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0 : e\SoundCHN3_IsStream = False
+									If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0
 									e\SoundCHN3 = StreamSound_Strict("SFX\SCP\079\Speech.ogg", opt\SFXVolume * opt\MasterVolume, 0)
 									e\SoundCHN3_IsStream = True
 								EndIf							
@@ -5455,7 +5464,7 @@ Function UpdateEvents%()
 											If (Not EntityHidden(e\room\Objects[1])) Then HideEntity(e\room\Objects[1])							
 										EndIf							
 									Else
-										StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0 : e\SoundCHN3_IsStream = False
+										StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0
 										EntityTexture(e\room\Objects[1], mon_I\MonitorOverlayID[MONITOR_079_OVERLAY_1])
 										If EntityHidden(e\room\Objects[1]) Then ShowEntity(e\room\Objects[1])
 									EndIf
@@ -5463,7 +5472,7 @@ Function UpdateEvents%()
 								e\EventState = e\EventState + fps\Factor[0]
 							Else
 								If EntityDistanceSquared(e\room\Objects[0], me\Collider) < 6.25 Then 
-									If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0 : e\SoundCHN3_IsStream = False
+									If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0
 									e\SoundCHN3 = StreamSound_Strict("SFX\SCP\079\Refuse.ogg", opt\SFXVolume * opt\MasterVolume, 0)
 									e\SoundCHN3_IsStream = True
 									
@@ -5480,7 +5489,7 @@ Function UpdateEvents%()
 										If (Not EntityHidden(e\room\Objects[1])) Then HideEntity(e\room\Objects[1])							
 									EndIf
 								Else
-									StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0 : e\SoundCHN3_IsStream = False
+									StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0
 									EntityTexture(e\room\Objects[1], mon_I\MonitorOverlayID[MONITOR_079_OVERLAY_1])
 									If EntityHidden(e\room\Objects[1]) Then ShowEntity(e\room\Objects[1])
 								EndIf
@@ -5492,7 +5501,7 @@ Function UpdateEvents%()
 				
 				If e\EventState2 = 1.0 Then
 					If RemoteDoorOn Then 	
-						If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0 : e\SoundCHN3_IsStream = False
+						If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0
 						e\SoundCHN3 = StreamSound_Strict("SFX\SCP\079\GateB.ogg", opt\SFXVolume * opt\MasterVolume, 0)
 						e\SoundCHN3_IsStream = True
 						
@@ -6594,7 +6603,7 @@ Function UpdateEvents%()
 					EndIf
 					
 					If e\EventState > 0.0 Then 
-						If e\room\NPC[0] = Null Then e\EventState = e\EventState + fps\Factor[0]
+						e\EventState = e\EventState + fps\Factor[0]
 						If e\EventState > 200.0 Then
 							If e\room\NPC[0] = Null Then
 								e\room\NPC[0] = CreateNPC(NPCTypeD, EntityX(e\room\OBJ), 900.0 * RoomScale, EntityZ(e\room\OBJ))
@@ -6620,7 +6629,6 @@ Function UpdateEvents%()
 								EndIf
 								If EntityY(e\room\NPC[0]\Collider) > 0.6 Then EntityType(e\room\NPC[0]\Collider, 0)
 							Else
-								e\EventState = e\EventState + fps\Factor[0]
 								AnimateNPC(e\room\NPC[0], 11.0, 19.0, 0.25, False)
 								If (Not e\Sound) Then 
 									LoadEventSound(e, "SFX\General\BodyFall.ogg")
@@ -6630,7 +6638,7 @@ Function UpdateEvents%()
 									EntityParent(de\OBJ, e\room\OBJ)
 								EndIf
 								
-								If e\EventState > 400.0 Then RemoveEvent(e)						
+								If e\room\NPC[0]\Frame >= 18.9 Then RemoveEvent(e)
 							EndIf
 						EndIf
 					EndIf
@@ -7925,7 +7933,7 @@ Function UpdateEvents%()
 					If EntityY(me\Collider) > EntityY(e\room\OBJ) - 0.5 Then PlayerRoom = e\room
 				EndIf
 				If e\EventState = 2.0 Then
-					If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
+					If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0
 					StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 					HideEntity(I_1499\Sky)
 					HideChunks()
@@ -8273,7 +8281,7 @@ Function UpdateDimension106%()
 						
 						InjurePlayer(fps\Factor[0] / 5000.0)
 						
-						me\Sanity = Max(me\Sanity - fps\Factor[0] / Sqr(Temp) / 8.0, -1000.0)
+						me\Sanity = Max(me\Sanity - fps\Factor[0] / Sqr(Temp) / 8.0, -910.0)
 						
 						me\CurrCameraZoom = Max(me\CurrCameraZoom, (Sin(Float(MilliSecs2()) / 20.0) + 1.0) * 15.0 * Max((6.0 - Sqr(Temp)) / 6.0, 0.0))
 						
@@ -8615,6 +8623,7 @@ Function UpdateDimension106%()
 									;[Block]
 									RoomName = "cont1_914"
 									LCZ = True
+									GiveAchievement(Achv914)
 									;[End Block]
 								Case 4
 									;[Block]
@@ -8964,7 +8973,7 @@ Function UpdateDimension1499%()
 							If e\Sound2 <> 0 Then e\SoundCHN2 = LoopSound2(e\Sound2, e\SoundCHN2, Camera, e\room\Objects[16], 10.0, opt\MusicVolume * opt\MasterVolume)
 						Else
 							ShouldPlay = 19
-							If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
+							If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0
 							If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 							If e\Sound2 <> 0 Then FreeSound_Strict(e\Sound2) : e\Sound2 = 0
 						EndIf
@@ -8986,7 +8995,7 @@ Function UpdateDimension1499%()
 				PlayerFallingPickDistance = 0.0
 			Else
 				If e\EventState = 2.0 Then
-					If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
+					If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0
 					StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 					HideEntity(I_1499\Sky)
 					HideChunks()
@@ -9169,10 +9178,10 @@ Function UpdateEndings%()
 									ShouldPlay = 66
 									
 									If e\SoundCHN <> 0 Then
-										StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
+										StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0
 									EndIf
 									If e\SoundCHN2 <> 0 Then
-										StopStream_Strict(e\SoundCHN2) : e\SoundCHN2 = 0 : e\SoundCHN2_IsStream = False
+										StopStream_Strict(e\SoundCHN2) : e\SoundCHN2 = 0
 									EndIf
 									
 									Temp = True

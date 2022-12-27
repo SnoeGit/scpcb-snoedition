@@ -1,4 +1,4 @@
-Const MAXACHIEVEMENTS% = 42
+Const MAXACHIEVEMENTS% = 46
 
 Type Achievements
 	Field Achievement%[MAXACHIEVEMENTS]
@@ -15,12 +15,12 @@ Global UsedConsole%
 ; ~ Achievements ID Constants
 ;[Block]
 Const Achv005% = 0, Achv008% = 1, Achv012% = 2, Achv035% = 3, Achv049% = 4, Achv055% = 5, Achv066% = 6,  Achv079% = 7, Achv096% = 8, Achv106% = 9
-Const Achv148% = 10, Achv205% = 11, Achv294% = 12, Achv372% = 13, Achv409% = 14, Achv420J% = 15, Achv427% = 16, Achv500% = 17, Achv513% = 18
-Const Achv714% = 19, Achv789J% = 20, Achv860% = 21, Achv895% = 22, Achv914% = 23, Achv939% = 24, Achv966% = 25, Achv970% = 26
-Const Achv1025% = 27, Achv1048% = 28, Achv1123% = 29, Achv1162_ARC% = 30, Achv1499% = 31
+Const Achv148% = 10, Achv205% = 11, Achv268% = 12, Achv294% = 13, Achv372% = 14, Achv409% = 15, Achv420J% = 16, Achv427% = 17, Achv500% = 18, Achv513% = 19
+Const Achv588% = 20, Achv714% = 21, Achv789J% = 22, Achv860% = 23, Achv895% = 24, Achv914% = 25, Achv939% = 26, Achv966% = 27, Achv970% = 28
+Const Achv1025% = 29, Achv1048% = 30, Achv1123% = 31, Achv1162_ARC% = 32, Achv1499% = 33, Achv2022% = 34
 
-Const AchvConsole% = 32, AchvHarp% = 33, AchvKeter% = 34, AchvKeyCard6% = 35, AchvMaynard% = 36, AchvOmni% = 37
-Const AchvO5% = 38, AchvPD% = 39, AchvSNAV% = 40, AchvTesla% = 41
+Const AchvConsole% = 35, AchvHarp% = 36, AchvMaynard% = 37, AchvKeter% = 38, AchvKeyCard6% = 39, AchvOmni% = 40
+Const AchvO5% = 41, AchvMTF% = 42, AchvPD% = 43, AchvSNAV% = 44, AchvTesla% = 45
 ;[End Block]
 
 Const AchievementsFile$ = "Data\Achievements.ini"

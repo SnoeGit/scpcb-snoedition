@@ -1673,11 +1673,11 @@ Function UpdateMouseLook%()
 			EndIf
 		EndIf
 		
-		If wi\GasMask > 0 Then
-			If EntityHidden(t\OverlayID[1]) Then ShowEntity(t\OverlayID[1])
-		Else
+		If wi\HazmatSuit > 0 Then
 			If wi\HazmatSuit = 1 Then me\Stamina = Min(60.0, me\Stamina)
 			If EntityHidden(t\OverlayID[2]) Then ShowEntity(t\OverlayID[2])
+		Else
+			If EntityHidden(t\OverlayID[1]) Then ShowEntity(t\OverlayID[1])
 		EndIf
 		
 		If wi\GasMask <> 2 And wi\GasMask <> 4 And wi\HazmatSuit <> 2 And wi\HazmatSuit <> 4 And I_1499\Using <> 2 Then
@@ -2470,6 +2470,10 @@ Function UpdateGUI%()
 										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0), 100.0)
 										CreateMsg("You replaced the navigator's battery.")
 										;[End Block]
+									Case "nav310"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside this navigator.")
+										;[End Block]
 									Case "navulti", "nav"
 										;[Block]
 										CreateMsg("There seems to be no place for batteries in this navigator.")
@@ -2537,6 +2541,10 @@ Function UpdateGUI%()
 										RemoveItem(SelectedItem)
 										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(10.0, 100.0), 100.0)
 										CreateMsg("You replaced the navigator's battery.")
+										;[End Block]
+									Case "nav310"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside this navigator.")
 										;[End Block]
 									Case "navulti", "nav"
 										;[Block]
@@ -2956,6 +2964,7 @@ Function UpdateGUI%()
 										I_268\Using = 2
 										;[End Block]
 								End Select
+								GiveAchievement(Achv268)
 								CreateMsg("You put on the cap.")
 								PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOn.ogg"))
 							EndIf
@@ -4081,11 +4090,20 @@ Function UpdateGUI%()
 				Case "pill", "scp2022pill"
 					;[Block]
 					If CanUseItem(True) Then
-						CreateMsg("You swallowed the pill.")
+						If me\Injuries > 0.0 And SelectedItem\ItemTemplate\TempName = "scp2022pill" Then
+							CreateMsg("You swallowed the pill and your wounds started healing.")
+						Else
+							CreateMsg("You swallowed the pill.")
+						EndIf
 						
 						I_1025\State[0] = 0.0
 						
-						If SelectedItem\ItemTemplate\TempName = "scp2022pill" Then me\HealTimer = 50.0
+						If SelectedItem\ItemTemplate\TempName = "scp2022pill" Then
+							GiveAchievement(Achv2022)
+							me\HealTimer = 50.0
+						EndIf
+						
+						
 						
 						RemoveItem(SelectedItem)
 					EndIf	
@@ -7235,6 +7253,7 @@ Function UpdateMTF%()
 				If me\Zone = 2 And PlayerRoom\RoomTemplate\Name <> "cont1_895" Then
 					If PlayerInReachableRoom() Then
 						PlayAnnouncement("SFX\Character\MTF\Announc.ogg")
+						GiveAchievement(AchvMTF)
 					EndIf
 					
 					MTFTimer = fps\Factor[0]

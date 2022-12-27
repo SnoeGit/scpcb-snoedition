@@ -1243,7 +1243,7 @@ Function UpdateNPCs%()
 											
 											SetNPCFrame(n, 194.0)
 											
-											StopStream_Strict(n\SoundCHN) : n\SoundCHN = 0 : n\SoundCHN_IsStream = False
+											StopStream_Strict(n\SoundCHN) : n\SoundCHN = 0
 											n\Sound = 0
 											
 											n\State3 = 0.0
@@ -1440,7 +1440,7 @@ Function UpdateNPCs%()
 								If n_I\Curr106\State <= 0.0 And (Not n_I\Curr106\Contained) Then n\State = 2.0
 								AnimateNPC(n, 823.0, 847.0, n\Speed * 8.0, False)
 								If n\Frame > 846.9 Then
-									StopStream_Strict(n\SoundCHN) : n\SoundCHN = 0 : n\SoundCHN_IsStream = False
+									StopStream_Strict(n\SoundCHN) : n\SoundCHN = 0
 									n\State = 4.0
 								EndIf
 							Else
@@ -1517,7 +1517,7 @@ Function UpdateNPCs%()
 											
 											If n\Frame >= 422.0 Then SetNPCFrame(n, 677.0)
 											
-											StopStream_Strict(n\SoundCHN) : n\SoundCHN = 0 : n\SoundCHN_IsStream = False
+											StopStream_Strict(n\SoundCHN) : n\SoundCHN = 0
 											n\Sound = 0
 											
 											n\State = 2.0
