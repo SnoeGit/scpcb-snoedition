@@ -1055,7 +1055,9 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					EntityParent(de\OBJ, PlayerRoom\OBJ)
 					;[End Block]
 				Case COARSE
+					;[Block]
 					it2.Items = CreateItem("Augelite Ring", "coarse714", x, y, z)
+					;[End Block]
 				Case ONETOONE
 					;[Block]
 					it2.Items = CreateItem("Green Jade Ring", "ring", x, y, z)
@@ -1067,6 +1069,24 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case VERYFINE
 					;[Block]
 					it2.Items = CreateItem("Sapphire Ring", "kill714", x, y, z)
+					;[End Block]
+			End Select
+			;[End Block]
+		Case "scp860", "bluekey"
+			;[Block]
+			Select Setting
+				Case ROUGH, COARSE
+					;[Block]
+					de.Decals = CreateDecal(DECAL_CORROSIVE_1, x, 8.0 * RoomScale + 0.010, z, 90.0, Rnd(360.0), 0.0, 0.2, 0.8)
+					EntityParent(de\OBJ, PlayerRoom\OBJ)
+					;[End Block]
+				Case ONETOONE
+					;[Block]
+					it2.Items = CreateItem("Blue Key", "bluekey", x, y, z)
+					;[End Block]
+				Case FINE, VERYFINE
+					;[Block]
+					it2.Items = CreateItem("SCP-860", "scp860", x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]

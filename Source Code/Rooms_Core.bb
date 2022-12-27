@@ -3162,7 +3162,7 @@ Function FillRoom%(r.Rooms)
 			r\RoomDoors.Doors[0] = CreateDoor(r\x - 459.0 * RoomScale, r\y, r\z + 339.0 * RoomScale, 90.0, r, True, DEFAULT_DOOR)
 			r\RoomDoors[0]\Locked = 1 : r\RoomDoors[0]\MTFClose = False
 			
-			it.Items = CreateItem("Radio Transceiver", "18vradio", r\x + 308.0 * RoomScale, r\y + 92.0 * RoomScale, r\z + 409.0 * RoomScale)
+			it.Items = CreateItem("Radio Transceiver", "radio", r\x + 308.0 * RoomScale, r\y + 92.0 * RoomScale, r\z + 409.0 * RoomScale)
 			it\State = Rnd(10.0, 100.0)
 			
 			For i = 0 To 1

@@ -807,6 +807,8 @@ Function LoadItems%()
 	
 	CreateItemTemplate("Joint", "joint", ItemsPath + "scps\scp_420_j.b3d", INVPath + "INV_scp_420_j.png", "", 0.0004, 2)
 	
+	CreateItemTemplate("Blue Key", "bluekey", ItemsPath + "scps\scp_860.b3d", INVPath + "INV_scp_860.png", "", 0.003, 3)
+	
 	CreateItemTemplate("Metal Panel", "scp148", ItemsPath + "scps\metal_panel.b3d", INVPath + "INV_metal_panel.png", "", RoomScale, 2)
 	
 	CreateItemTemplate("Smelly Joint", "scp420s", ItemsPath + "scps\scp_420_j.b3d", INVPath + "INV_scp_420_j.png", "", 0.0004, 2)

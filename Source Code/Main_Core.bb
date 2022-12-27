@@ -2112,7 +2112,7 @@ Function UpdateGUI%()
 								If OtherOpen\SecondInv[z] <> Null Then
 									Local Name$ = OtherOpen\SecondInv[z]\ItemTemplate\TempName
 									
-									If Name <> "25ct" And Name <> "coin" And Name <> "scp588" And Name <> "key" And Name <> "scp860" And Name <> "scp500pill" And Name <> "scp500pilldeath" Then
+									If Name <> "25ct" And Name <> "coin" And Name <> "scp588" And Name <> "key" And Name <> "scp860" And Name <> "bluekey" And Name <> "scp500pill" And Name <> "scp500pilldeath" And Name <> "pill" And Name <> "scp2022pill" Then
 										IsEmpty = False
 										Exit
 									EndIf
@@ -2357,7 +2357,7 @@ Function UpdateGUI%()
 						PrevItem = Inventory(MouseSlot)
 						
 						Select SelectedItem\ItemTemplate\TempName
-							Case "paper", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "playcard", "mastercard", "oldpaper", "badge", "oldbadge", "ticket", "25ct", "coin", "scp588", "key", "scp860", "scp500pill", "scp500pilldeath"
+							Case "paper", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "playcard", "mastercard", "oldpaper", "badge", "oldbadge", "ticket", "25ct", "coin", "scp588", "key", "scp860", "bluekey", "scp500pill", "scp500pilldeath", "pill", "scp2022pill"
 								;[Block]
 								If Inventory(MouseSlot)\ItemTemplate\TempName = "clipboard" Then
 									; ~ Add an item to wallet
@@ -2365,7 +2365,7 @@ Function UpdateGUI%()
 									Local b$ = SelectedItem\ItemTemplate\TempName
 									Local c%, ri%
 									
-									If b <> "25ct" And b <> "coin" And b <> "scp588" And b <> "key" And b <> "scp860" And b <> "scp500pill" And b <> "scp500pilldeath" Then
+									If b <> "25ct" And b <> "coin" And b <> "scp588" And b <> "key" And b <> "scp860" And b <> "bluekey" And b <> "scp500pill" And b <> "scp500pilldeath" And b <> "pill" And b <> "scp2022pill" Then
 										For c = 0 To Inventory(MouseSlot)\InvSlots - 1
 											If Inventory(MouseSlot)\SecondInv[c] = Null Then
 												If SelectedItem <> Null Then
@@ -2417,7 +2417,7 @@ Function UpdateGUI%()
 												If SelectedItem <> Null Then
 													Inventory(MouseSlot)\SecondInv[c] = SelectedItem
 													Inventory(MouseSlot)\State = 1.0
-													If b <> "25ct" And b <> "coin" And b <> "scp588" And b <> "key" And b <> "scp860" And b <> "scp500pill" And b <> "scp500pilldeath" Then
+													If b <> "25ct" And b <> "coin" And b <> "scp588" And b <> "key" And b <> "scp860" And b <> "bluekey" And b <> "scp500pill" And b <> "scp500pilldeath" And b <> "pill" And b <> "scp2022pill" Then
 														SetAnimTime(Inventory(MouseSlot)\Model, 3.0)
 													EndIf
 													Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
@@ -2684,6 +2684,10 @@ Function UpdateGUI%()
 										RemoveItem(SelectedItem)
 										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0, 500.0), 500.0)
 										CreateMsg("You replaced the navigator's battery.")
+										;[End Block]
+									Case "nav310"
+										;[Block]
+										CreateMsg("The battery doesn't fit inside this navigator.")
 										;[End Block]
 									Case "navulti", "nav"
 										;[Block]
@@ -4000,7 +4004,7 @@ Function UpdateGUI%()
 										wi\HazmatSuit = 4
 										;[End Block]
 								End Select
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : I_427\Using = False : I_714\Using = 1
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : wi\Cap = False : I_268\Using = 0 : I_427\Using = False : I_714\Using = 1
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 							EndIf
 							SelectedItem\State = 0.0
@@ -4209,7 +4213,7 @@ Function UpdateGUI%()
 					Use1123()
 					SelectedItem = Null
 					;[End Block]
-				Case "nav", "navulti", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "scp860", "hand", "hand2", "25ct", "scp005", "key", "coin", "scp588", "mastercard", "paper"
+				Case "nav", "navulti", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "scp860", "bluekey", "hand", "hand2", "25ct", "scp005", "key", "coin", "scp588", "mastercard", "paper"
 					;[Block]
 					; ~ Skip this line
 					;[End Block]
@@ -4792,7 +4796,7 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State3)
 					EndIf
 					;[End Block]
-				Case "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "scp860", "hand", "hand2", "25ct", "scp005", "key", "coin", "scp588", "mastercard"
+				Case "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "scp860", "bluekey", "hand", "hand2", "25ct", "scp005", "key", "coin", "scp588", "mastercard"
 					;[Block]
 					DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 					;[End Block]

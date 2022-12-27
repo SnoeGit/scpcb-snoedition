@@ -1298,7 +1298,7 @@ Function RenderMainMenu%()
 							TempStr = "Critical"
 							;[End Block]
 					End Select
-					Text(x + (440 * MenuScale), y + (276 * MenuScale), TempStr)
+					Text(x + (450 * MenuScale), y + (276 * MenuScale), TempStr)
 				Else
 					Color(255, 255, 255)
 					RowText(SelectedDifficulty\Description, x + (160 * MenuScale), y + (180 * MenuScale), 390 * MenuScale, 170 * MenuScale)					
