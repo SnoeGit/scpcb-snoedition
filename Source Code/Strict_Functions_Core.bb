@@ -122,14 +122,10 @@ Function LoadSound_Strict%(File$)
 	snd\ReleaseTime = 0
 	If opt\EnableSubtitles Then
 		; ~ Check if the sound has subtitles
-		If GetINISectionLocation(SubtitlesFile, File) <> 0 Then
-			snd\HasSubtitles = True
-		EndIf
+		If GetINISectionLocation(SubtitlesFile, File) <> 0 Then snd\HasSubtitles = True
 	EndIf
 	If (Not opt\EnableSFXRelease) Then
-		If (Not snd\InternalHandle) Then 
-			snd\InternalHandle = LoadSound(snd\Name)
-		EndIf
+		If (Not snd\InternalHandle) Then snd\InternalHandle = LoadSound(snd\Name)
 	EndIf
 	Return(Handle(snd))
 End Function
@@ -138,9 +134,7 @@ Function FreeSound_Strict%(SoundHandle%)
 	Local snd.Sound = Object.Sound(SoundHandle)
 	
 	If snd <> Null Then
-		If snd\InternalHandle <> 0 Then
-			FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
-		EndIf
+		If snd\InternalHandle <> 0 Then FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
 		Delete(snd)
 	EndIf
 End Function
@@ -152,12 +146,14 @@ End Type
 Const Mode% = 2
 Const TwoD% = 8192
 
+Function StopChannel_Strict%(SoundCHN%)
+	StopChannel(SoundCHN) : SoundCHN = 0
+End Function
+
 Function StreamSound_Strict%(File$, Volume# = 1.0, CustomMode% = Mode)
 	If FileType(File) <> 1 Then
 		CreateConsoleMsg("Sound " + Chr(34) + File + Chr(34) + " not found.")
-		If opt\ConsoleOpening And opt\CanOpenConsole Then
-			ConsoleOpen = True
-		EndIf
+		If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 		Return(0)
 	EndIf
 	
@@ -167,9 +163,7 @@ Function StreamSound_Strict%(File$, Volume# = 1.0, CustomMode% = Mode)
 	
 	If st\CHN = -1 Then
 		CreateConsoleMsg("Failed to stream Sound (returned -1): " + Chr(34) + File + Chr(34))
-		If opt\ConsoleOpening And opt\CanOpenConsole Then
-			ConsoleOpen = True
-		EndIf
+		If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 		Return(-1)
 	EndIf
 	ChannelVolume(st\CHN, Volume)
@@ -182,13 +176,15 @@ Function StopStream_Strict%(StreamHandle%)
 	
 	If st = Null Then
 		CreateConsoleMsg("Failed to stop stream Sound: Unknown Stream")
+		If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 		Return
 	EndIf
 	If st\CHN = 0 Lor st\CHN = -1 Then
 		CreateConsoleMsg("Failed to stop stream Sound: Return value " + st\CHN)
+		If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 		Return
 	EndIf
-	StopChannel(st\CHN) : st\CHN = 0
+	StopChannel_Strict(st\CHN)
 	
 	Delete(st)
 End Function

@@ -212,6 +212,9 @@ by "Lt Masipag"
 		SCP-205 is based on "SCP-205 - Shadow Lamps", 
 by "Sorts"
 
+		SCP-268 is based on "SCP-268 - Cap of Neglect",
+by "Pair Of Ducks"
+
 		SCP-294 is based on "SCP-294 - The Coffee Machine",
 by "far2"
 
@@ -277,6 +280,9 @@ by "Dedaluminus"
 
 		SCP-1499 is based on "SCP-1499 - The Gas Mask",
 by "Trasknari"
+
+		SCP-2022 is based on "SCP-2022 - Sunlight Pills",
+by "Bucell"
 
 		The Anomalous Ducks are based on "Log of Anomalous Ducks",
 by "Skara Brae"

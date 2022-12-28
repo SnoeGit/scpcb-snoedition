@@ -128,7 +128,7 @@ Function UpdateMainMenu%()
 			ShouldPlay = 66
 		ElseIf ShouldPlay = 66
 			If (Not ChannelPlaying(EndBreathCHN)) Then
-				FreeSound_Strict(EndBreathSFX) : EndBreathSFX = 0
+				FreeSound_Strict(EndBreathSFX)
 				ShouldPlay = 11
 			EndIf
 		Else
@@ -688,10 +688,10 @@ Function UpdateMainMenu%()
 							If opt\PrevEnableSFXRelease <> opt\EnableSFXRelease
 								If opt\EnableSFXRelease Then
 									For snd.Sound = Each Sound
-										For i = 0 To 31
-											StopChannel(snd\Channels[i]) : snd\Channels[i] = 0
+										For i = 0 To MaxChannelsAmount - 1
+											StopChannel_Strict(snd\Channels[i])
 										Next
-										If snd\InternalHandle <> 0 Then FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
+										FreeSound_Strict(snd\InternalHandle)
 										snd\ReleaseTime = 0
 									Next
 								Else
@@ -709,9 +709,7 @@ Function UpdateMainMenu%()
 							opt\EnableUserTracks = UpdateMainMenuTick(x, y, opt\EnableUserTracks)
 							
 							If PrevEnableUserTracks Then
-								If PrevEnableUserTracks <> opt\EnableUserTracks Then
-									mm\ShouldDeleteGadgets = True
-								EndIf
+								If PrevEnableUserTracks <> opt\EnableUserTracks Then mm\ShouldDeleteGadgets = True
 							EndIf
 							
 							If opt\EnableUserTracks Then

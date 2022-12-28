@@ -1,5 +1,5 @@
 Include "Source Code\Math_Core.bb"
-Include "Source Code\Strict_Loads_Core.bb"
+Include "Source Code\Strict_Functions_Core.bb"
 
 Const MaxFontIDAmount% = 8
 ; ~ Fonts ID Constants
@@ -640,7 +640,7 @@ Function UpdateGame%()
 				If Rand(1500) = 1 Then
 					For i = 0 To 5
 						If AmbientSFX(i, CurrAmbientSFX) <> 0 Then
-							If (Not ChannelPlaying(AmbientSFXCHN)) Then FreeSound_Strict(AmbientSFX(i, CurrAmbientSFX)) : AmbientSFX(i, CurrAmbientSFX) = 0
+							If (Not ChannelPlaying(AmbientSFXCHN)) Then FreeSound_Strict(AmbientSFX(i, CurrAmbientSFX))
 						EndIf			
 					Next
 					
@@ -1669,7 +1669,7 @@ Function UpdateMouseLook%()
 			If (Not ChannelPlaying(BreathCHN)) Then
 				If (Not ChannelPlaying(BreathGasRelaxedCHN)) Then BreathGasRelaxedCHN = PlaySound_Strict(BreathGasRelaxedSFX)
 			Else
-				If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel(BreathGasRelaxedCHN) : BreathGasRelaxedCHN = 0
+				If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel_Strict(BreathGasRelaxedCHN)
 			EndIf
 		EndIf
 		
@@ -1701,7 +1701,7 @@ Function UpdateMouseLook%()
 			EndIf
 		EndIf
 	Else
-		If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel(BreathGasRelaxedCHN) : BreathGasRelaxedCHN = 0
+		If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel_Strict(BreathGasRelaxedCHN)
 		wi\GasMaskFogTimer = Max(0.0, wi\GasMaskFogTimer - (fps\Factor[0] * 0.3))
 		If (Not EntityHidden(t\OverlayID[1])) Then HideEntity(t\OverlayID[1])
 		If (Not EntityHidden(t\OverlayID[2])) Then HideEntity(t\OverlayID[2])
@@ -3603,7 +3603,7 @@ Function UpdateGUI%()
 													RadioState[0] = Rand(0.0, UserTrackMusicAmount - 1)
 												EndIf
 											EndIf
-											If CurrUserTrack <> 0 Then FreeSound_Strict(CurrUserTrack) : CurrUserTrack = 0
+											FreeSound_Strict(CurrUserTrack)
 											CurrUserTrack = LoadSound_Strict("SFX\Radio\UserTracks\" + UserTrackName[RadioState[0]])
 											RadioCHN[0] = PlaySound_Strict(CurrUserTrack)
 										Else
@@ -3624,7 +3624,7 @@ Function UpdateGUI%()
 													RadioState[0] = Rand(0.0, UserTrackMusicAmount - 1)
 												EndIf
 											EndIf
-											If CurrUserTrack <> 0 Then FreeSound_Strict(CurrUserTrack) : CurrUserTrack = 0
+											FreeSound_Strict(CurrUserTrack)
 											CurrUserTrack = LoadSound_Strict("SFX\Radio\UserTracks\" + UserTrackName[RadioState[0]])
 											RadioCHN[0] = PlaySound_Strict(CurrUserTrack)
 										EndIf
@@ -4258,7 +4258,7 @@ Function UpdateGUI%()
 				If ChannelPlaying(RadioCHN[i]) Then PauseChannel(RadioCHN[i])
 			Next
 			
-			If ChannelPlaying(LowBatteryCHN[0]) Then StopChannel(LowBatteryCHN[0])
+			If ChannelPlaying(LowBatteryCHN[0]) Then StopChannel_Strict(LowBatteryCHN[0])
 		EndIf		
 	EndIf
 	
@@ -4412,7 +4412,7 @@ Function RenderGUI%()
 				If e\EventState2 = PD_ThroneRoom Then
 					If me\BlinkTimer > -16.0 And me\BlinkTimer < -6.0 Then
 						If (Not e\Img) Then
-							StopChannel(e\SoundCHN) : e\SoundCHN = 0
+							StopChannel_Strict(e\SoundCHN)
 							If Rand(30) = 1 Then PlaySound_Strict(e\Sound2)
 							e\Img = LoadImage_Strict("GFX\kneel_mortal.png")
 							e\Img = ScaleImage2(e\Img, MenuScale, MenuScale)
@@ -4422,7 +4422,7 @@ Function RenderGUI%()
 						EndIf
 					Else
 						If e\Img <> 0 Then FreeImage(e\Img) : e\Img = 0
-						StopChannel(e\SoundCHN) : e\SoundCHN = 0
+						StopChannel_Strict(e\SoundCHN)
 					EndIf
 				EndIf
 				Exit
@@ -4504,9 +4504,7 @@ Function RenderGUI%()
 	If SelectedScreen <> Null Then
 		DrawBlock(SelectedScreen\Img, mo\Viewport_Center_X - ImageWidth(SelectedScreen\Img) / 2, mo\Viewport_Center_Y - ImageHeight(SelectedScreen\Img) / 2)
 		
-		If mo\MouseUp1 Lor mo\MouseHit2 Then
-			FreeImage(SelectedScreen\Img) : SelectedScreen\Img = 0
-		EndIf
+		If mo\MouseUp1 Lor mo\MouseHit2 Then FreeImage(SelectedScreen\Img) : SelectedScreen\Img = 0
 	EndIf
 	
 	Local PrevInvOpen% = InvOpen, MouseSlot% = 66
@@ -6340,9 +6338,7 @@ Function UpdateEnding%()
 		EndIf
 		
 		If me\EndingTimer > -700.0 Then 
-			If me\EndingTimer + fps\Factor[1] > -450.0 And me\EndingTimer <= -450.0 Then
-				PlaySound_Strict(LoadTempSound("SFX\Ending\Ending" + (me\SelectedEnding + 1) + ".ogg"))
-			EndIf			
+			If me\EndingTimer + fps\Factor[1] > -450.0 And me\EndingTimer <= -450.0 Then PlaySound_Strict(LoadTempSound("SFX\Ending\Ending" + (me\SelectedEnding + 1) + ".ogg"))
 		Else
 			If me\EndingTimer < -1000.0 And me\EndingTimer > -2000.0 Then
 				If mm\AchievementsMenu =< 0 Then 
@@ -6365,7 +6361,7 @@ Function UpdateEnding%()
 						ShouldPlay = 24
 						NowPlaying = ShouldPlay
 						For i = 0 To 9
-							If TempSounds[i] <> 0 Then FreeSound_Strict(TempSounds[i]) : TempSounds[i] = 0
+							FreeSound_Strict(TempSounds[i])
 						Next
 						StopStream_Strict(MusicCHN)
 						MusicCHN = StreamSound_Strict("SFX\Music\" + Music[NowPlaying] + ".ogg", 0.0, Mode)
@@ -6624,12 +6620,8 @@ Function RenderCredits%()
 	If me\CreditsTimer = -1.0 Then
 		FreeFont(fo\FontID[Font_Credits])
 		FreeFont(fo\FontID[Font_Credits_Big])
-		If me\CreditsScreen <> 0 Then
-			FreeImage(me\CreditsScreen) : me\CreditsScreen = 0
-		EndIf
-		If me\EndingScreen <> 0 Then
-			FreeImage(me\EndingScreen) : me\EndingScreen = 0
-		EndIf
+		If me\CreditsScreen <> 0 Then FreeImage(me\CreditsScreen) : me\CreditsScreen = 0
+		If me\EndingScreen <> 0 Then FreeImage(me\EndingScreen) : me\EndingScreen = 0
 		Return
 	EndIf
 End Function
@@ -7196,7 +7188,7 @@ Function Use427%()
 			EndIf
 		Else
 			For i = 0 To 1
-				If ChannelPlaying(I_427\SoundCHN[i]) Then StopChannel(I_427\SoundCHN[i]) : I_427\SoundCHN[i] = 0
+				If ChannelPlaying(I_427\SoundCHN[i]) Then StopChannel_Strict(I_427\SoundCHN[i])
 			Next
 		EndIf
 	Else
@@ -7441,7 +7433,7 @@ Function UpdateVomit%()
 		mo\Mouse_Y_Speed_1 = mo\Mouse_Y_Speed_1 + Max((1.0 + me\VomitTimer / 10.0), 0.0)
 		
 		If me\VomitTimer < -15.0 Then
-			FreeSound_Strict(VomitSFX) : VomitSFX = 0
+			FreeSound_Strict(VomitSFX)
 			me\VomitTimer = 0.0
 			If (Not me\Terminated) Then PlaySound_Strict(BreathSFX(0, 0))
 			me\Injuries = me\PrevInjuries
