@@ -245,7 +245,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					Select Rand(2)
+					Select Rand(3)
 						Case 1
 							;[Block]
 							If Rand(2) = 1 Then
@@ -259,28 +259,6 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							;[Block]
 							it2.Items = CreateItem("S-NAV 300 Navigator", "nav300", x, y, z)
 							it2\State = Rnd(10.0, 100.0)
-							;[End Block]
-					End Select
-					;[End Block]
-				Case VERYFINE
-					;[Block]
-					Select Rand(3)
-						Case 1
-							;[Block]
-							If Rand(3) = 1 Then
-								it2.Items = CreateItem("Radio Transceiver", "fineradio", x, y, z)
-							Else
-								it2.Items = CreateItem("Radio Transceiver", "veryfineradio", x, y, z)
-							EndIf
-							;[End Block]
-						Case 2
-							;[Block]
-							If Rand(2) = 1 Then
-								it2.Items = CreateItem("S-NAV Navigator", "nav", x, y, z)
-							Else
-								it2.Items = CreateItem("S-NAV 310 Navigator", "nav310", x, y, z)
-								it2\State = Rnd(10.0, 100.0)
-							EndIf
 							;[End Block]
 						Case 3
 							;[Block]
@@ -298,6 +276,10 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							End Select
 							;[End Block]
 					End Select
+					;[End Block]
+				Case VERYFINE
+					;[Block]
+					it2.Items = CreateItem("Electronical Components", "superelectronics", x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -320,9 +302,14 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 			Select Setting
 				Case ROUGH, COARSE
 					;[Block]
+					de.Decals = CreateDecal(DECAL_BLOOD_2, x, 8.0 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.12)
+					EntityParent(de\OBJ, PlayerRoom\OBJ)
+					;[End Block]
+				Case ONETOONE
+					;[Block]
 					Remove = False
 					;[End Block]
-				Case ONETOONE, FINE, VERYFINE
+				Case FINE, VERYFINE
 					;[Block]
 					For it.Items = Each Items
 						If it <> item And it\Collider <> 0 And (Not it\Picked) Then
@@ -341,6 +328,36 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										Exit
 										;[End Block]
 								End Select
+							EndIf
+						EndIf
+					Next
+					
+					If it2 = Null Then Remove = False
+					;[End Block]
+			End Select
+			;[End Block]
+		Case "superelectronics"
+			;[Block]
+			Select Setting
+				Case ROUGH, COARSE
+					;[Block]
+					de.Decals = CreateDecal(DECAL_BLOOD_2, x, 8.0 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.12)
+					EntityParent(de\OBJ, PlayerRoom\OBJ)
+					;[End Block]
+				Case ONETOONE
+					;[Block]
+					Remove = False
+					;[End Block]
+				Case FINE, VERYFINE
+					;[Block]
+					For it.Items = Each Items
+						If it <> item And it\Collider <> 0 And (Not it\Picked) Then
+							If DistanceSquared(EntityX(it\Collider, True), x, EntityZ(it\Collider, True), z) < PowTwo(180.0 * RoomScale)
+								If it\ItemTemplate\TempName = "nav" Lor it\ItemTemplate\TempName = "nav300" Lor it\ItemTemplate\TempName = "nav310" Then
+									RemoveItem(it)
+									it2.Items = CreateItem("S-NAV Navigator Ultimate", "navulti", x, y, z)
+									Exit
+								EndIf
 							EndIf
 						EndIf
 					Next

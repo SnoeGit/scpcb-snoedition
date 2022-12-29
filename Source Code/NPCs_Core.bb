@@ -1147,7 +1147,7 @@ Function UpdateNPCs%()
 							
 							If (Not PlayerRoom\RoomTemplate\DisableDecals) Lor PlayerRoom\RoomTemplate\Name = "room2_bio" Lor (PlayerRoom\RoomTemplate\Name = "cont1_173" And EntityY(me\Collider) < (100.0) * RoomScale) Lor (PlayerRoom\RoomTemplate\Name = "cont2_012" And EntityY(me\Collider) > (0.0) * RoomScale) Lor (PlayerRoom\RoomTemplate\Name = "room2_test_hcz" And EntityY(me\Collider) < (-1150.0) * RoomScale) Then
 								If PlayerRoom\RoomTemplate\Name <> "gate_a" And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
-									If SelectedDifficulty\AggressiveNPCs = 2 Then
+									If SelectedDifficulty\AggressiveNPCs = VERY_AGGRESSIVE Then
 										n\State = n\State - (fps\Factor[0] * 2.0)
 									ElseIf PlayerRoom\RoomTemplate\Name = "cont1_035" Lor PlayerRoom\RoomTemplate\Name = "cont1_173" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_lcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_hcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_ez"
 										n\State = n\State - (fps\Factor[0] * (0.5 + (SelectedDifficulty\AggressiveNPCs * 1.5)))
@@ -6440,7 +6440,7 @@ Function TeleportCloser%(n.NPCs)
 	Local ShouldTeleport% = False
 	
 	If closestWaypoint <> Null Then
-		If n\InFacility <> 1 Lor SelectedDifficulty\AggressiveNPCs > 0 Then
+		If n\InFacility <> 1 Lor SelectedDifficulty\AggressiveNPCs > NOT_AGGRESSIVE Then
 			ShouldTeleport = True
 		ElseIf EntityY(closestWaypoint\OBJ, True) <= 7.0 And EntityY(closestWaypoint\OBJ, True) >= -10.0
 			ShouldTeleport = True
@@ -7064,7 +7064,7 @@ Function PlayerInReachableRoom%(CanSpawnIn049Chamber% = False, Intro% = False)
 	EndIf
 	
 	If (Not CanSpawnIn049Chamber) Then
-		If SelectedDifficulty\AggressiveNPCs < 2 Then
+		If SelectedDifficulty\AggressiveNPCs < VERY_AGGRESSIVE Then
 			If RN = "cont2_049" And EntityY(me\Collider) <= (-2848.0) * RoomScale Then Return(False)
 		EndIf
 	EndIf

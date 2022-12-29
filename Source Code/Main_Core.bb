@@ -747,7 +747,7 @@ Function UpdateGame%()
 				If me\Sanity < -200.0 Then
 					If SelectedDifficulty\SaveType => SAVE_ON_SCREENS Then
 						CanSave = False
-					ElseIf me\Sanity < -450.0
+					ElseIf me\Sanity < -475.0
 						CanSave = False
 					EndIf
 						

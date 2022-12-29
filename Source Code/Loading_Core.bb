@@ -836,6 +836,7 @@ Function LoadItems%()
 	CreateItemTemplate("Clipboard", "clipboard", ItemsPath + "clipboard.b3d", INVPath + "INV_clipboard.png", "", 0.003, 1, "", INVPath + "INV_clipboard(2).png", 1)
 	
 	CreateItemTemplate("Electronical Components", "electronics", ItemsPath + "circuits.b3d", INVPath + "INV_circuits.png", "", 0.0011, 1)
+	CreateItemTemplate("Electronical Components", "superelectronics", ItemsPath + "circuits.b3d", INVPath + "INV_circuits.png", "", 0.0011, 1, ItemsPath + "circuit_blue.png", "", 1)
 	
 	CreateItemTemplate("Empty Cup", "emptycup", ItemsPath + "cup.b3d", INVPath + "INV_cup.png", "", 0.04, 2)
 	

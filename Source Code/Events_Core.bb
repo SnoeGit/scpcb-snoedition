@@ -2107,10 +2107,10 @@ Function UpdateEvents%()
 							
 							If me\VomitTimer < 0.0 Then
 								me\RestoreSanity = False
-								me\Sanity = -910.0
+								me\Sanity = -960.0
 							EndIf
 							
-							If me\Sanity < -900.0 Then
+							If me\Sanity < -950.0 Then
 								If wi\NightVision > 1 Then
 									msg\DeathMsg = Chr(34) + "Class D viewed SCP-895 through a pair of digital night vision goggles, presumably enhanced by SCP-914. It might be possible that the subject "
 									msg\DeathMsg = msg\DeathMsg + "was able to resist the memetic effects partially through these goggles. The goggles have been stored for further study." + Chr(34)
@@ -2124,7 +2124,7 @@ Function UpdateEvents%()
 								EndIf
 								EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If me\VomitTimer < -10.0 Then Kill()
-							ElseIf me\Sanity < -720.0
+							ElseIf me\Sanity < -760.0
 								If Rand(3) = 1 Then EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If Rand(6) < 5 Then
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
@@ -2140,7 +2140,7 @@ Function UpdateEvents%()
 								EndIf
 								me\BlurTimer = 1000.0
 								If me\VomitTimer = 0.0 Then me\VomitTimer = 1.0
-							ElseIf me\Sanity < -450.0
+							ElseIf me\Sanity < -475.0
 								If Rand(7) = 1 Then EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								If Rand(50) = 1 Then
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
@@ -5701,10 +5701,7 @@ Function UpdateEvents%()
 							e\EventStr = "Load0"
 						EndIf
 						
-						If e\room\RoomDoors[1]\Open Then
-							e\EventState = 1.0
-							GiveAchievement(Achv205)
-						EndIf
+						If e\room\RoomDoors[1]\Open Then e\EventState = 1.0
 					Else
 						ShouldPlay = 16
 						If e\EventState < 65.0 Then
@@ -5793,6 +5790,7 @@ Function UpdateEvents%()
 								If e\EventState2 > 70.0 * 60.0 Then 
 									e\EventState = e\EventState + 1.0
 									PlaySound2(LoadTempSound("SFX\SCP\205\Horror.ogg"), Camera, e\room\Objects[6], 10.0, 0.5)
+									GiveAchievement(Achv205)
 								EndIf
 								;[End Block]
 							Case 9.0
@@ -8275,7 +8273,7 @@ Function UpdateDimension106%()
 						
 						InjurePlayer(fps\Factor[0] / 5000.0)
 						
-						me\Sanity = Max(me\Sanity - fps\Factor[0] / Sqr(Temp) / 8.0, -910.0)
+						me\Sanity = Max(me\Sanity - fps\Factor[0] / Sqr(Temp) / 8.0, -950.0)
 						
 						me\CurrCameraZoom = Max(me\CurrCameraZoom, (Sin(Float(MilliSecs2()) / 20.0) + 1.0) * 15.0 * Max((6.0 - Sqr(Temp)) / 6.0, 0.0))
 						
