@@ -1937,6 +1937,7 @@ Function InitStats%()
 	
 	as\Timer = 70.0 * 120.0
 	If SelectedDifficulty\SaveType <> SAVE_ANYWHERE Then opt\AutoSaveEnabled = False
+	If SelectedDifficulty\Name = "Apollyon" Then opt\CanOpenConsole = False
 	
 	LoadAchievementsFile()
 End Function

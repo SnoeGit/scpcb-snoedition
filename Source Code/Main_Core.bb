@@ -5596,7 +5596,7 @@ Function UpdateMenu%()
 					
 					Local PrevCanOpenConsole% = opt\CanOpenConsole
 					
-					opt\CanOpenConsole = UpdateMainMenuTick(x + (270 * MenuScale), y, opt\CanOpenConsole)
+					opt\CanOpenConsole = UpdateMainMenuTick(x + (270 * MenuScale), y, opt\CanOpenConsole, SelectedDifficulty\Name = "Apollyon")
 					
 					If PrevCanOpenConsole Then
 						If PrevCanOpenConsole <> opt\CanOpenConsole Then mm\ShouldDeleteGadgets = True

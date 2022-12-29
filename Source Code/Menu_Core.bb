@@ -321,7 +321,7 @@ Function UpdateMainMenu%()
 					If SelectedDifficulty\Customizable Then
 						; ~ Save type
 						If MouseOn(x + (160 * MenuScale), y + (180 * MenuScale), ImageWidth(ga\ArrowIMG[1]), ImageHeight(ga\ArrowIMG[1])) And mo\MouseHit1 Then
-							If SelectedDifficulty\SaveType  < NO_SAVES Then
+							If SelectedDifficulty\SaveType < NO_SAVES Then
 								SelectedDifficulty\SaveType = SelectedDifficulty\SaveType + 1
 							Else
 								SelectedDifficulty\SaveType = SAVE_ANYWHERE
