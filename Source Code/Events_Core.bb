@@ -6219,8 +6219,9 @@ Function UpdateEvents%()
 						EndIf
 					ElseIf e\EventState = 6.0
 						PointEntity(e\room\NPC[0]\Collider, me\Collider)
-						AnimateNPC(e\room\NPC[0], 75.0, 128.0, 0.04, True)	
-						If (Not ChannelPlaying(e\room\NPC[0]\SoundCHN)) Then 
+						AnimateNPC(e\room\NPC[0], 75.0, 128.0, 0.04, True)
+						e\EventState2 = e\EventState2 + fps\Factor[0]
+						If e\EventState2 > 1820.0 Then 
 							PlaySound_Strict(LoadTempSound("SFX\SCP\1123\Gunshot.ogg"))
 							FreeSound_Strict(e\room\NPC[0]\Sound)
 							e\EventState = 7.0
@@ -6229,7 +6230,6 @@ Function UpdateEvents%()
 					ElseIf e\EventState = 7.0
 						PositionEntity(me\Collider, EntityX(e\room\OBJ, True), 0.3, EntityZ(e\room\OBJ, True), True)
 						ResetEntity(me\Collider)
-						CanSave = True
 						me\LightFlash = 6.0
 						me\BlurTimer = 500.0
 						me\Injuries = me\PrevInjuries

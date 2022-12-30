@@ -176,12 +176,10 @@ Function StopStream_Strict%(StreamHandle%)
 	
 	If st = Null Then
 		CreateConsoleMsg("Failed to stop stream Sound: Unknown Stream")
-		If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 		Return
 	EndIf
 	If st\CHN = 0 Lor st\CHN = -1 Then
 		CreateConsoleMsg("Failed to stop stream Sound: Return value " + st\CHN)
-		If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 		Return
 	EndIf
 	StopChannel_Strict(st\CHN)

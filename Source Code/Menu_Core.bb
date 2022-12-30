@@ -2175,7 +2175,11 @@ Function RenderLoadingText%(x%, y%, AlignX% = False, AlignY% = False)
 		EndIf
 		SetFont(fo\FontID[Font_Default])
 		Color(ltc\R, ltc\G, ltc\B)
-		Text(x, y, "PRESS ANY KEY TO CONTINUE", AlignX, AlignY)
+		If SelectedLoadingScreen\Title <> "CWM" Then
+			Text(x, y, "PRESS ANY KEY TO CONTINUE", AlignX, AlignY)
+		Else
+			Text(x, y, "PRESS ANY KEY TO WAKE UP", AlignX, AlignY)
+		EndIf
 	Next
 End Function
 
