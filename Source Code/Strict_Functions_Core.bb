@@ -135,8 +135,13 @@ Function FreeSound_Strict%(SoundHandle%)
 	
 	If snd <> Null Then
 		If snd\InternalHandle <> 0 Then FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
+		snd\ReleaseTime = 0
 		Delete(snd)
 	EndIf
+End Function
+
+Function StopChannel_Strict%(SoundCHN%)
+	StopChannel(SoundCHN) : SoundCHN = 0
 End Function
 
 Type Stream
@@ -145,10 +150,6 @@ End Type
 
 Const Mode% = 2
 Const TwoD% = 8192
-
-Function StopChannel_Strict%(SoundCHN%)
-	StopChannel(SoundCHN) : SoundCHN = 0
-End Function
 
 Function StreamSound_Strict%(File$, Volume# = 1.0, CustomMode% = Mode)
 	If FileType(File) <> 1 Then

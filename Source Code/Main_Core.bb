@@ -492,7 +492,7 @@ Global I_1025.SCP1025 = New SCP1025
 
 Type SCP268
 	Field Using%
-	Field Timer%
+	Field Timer#
 End Type
 
 Global I_268.SCP268 = New SCP268

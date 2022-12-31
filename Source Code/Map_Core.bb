@@ -153,6 +153,7 @@ Function AddLight%(room.Rooms, x#, y#, z#, lType%, Range#, R%, G%, B%)
 				EntityBlend(room\LightSprites[i], 3)
 				EntityColor(room\LightSprites[i], R, G, B)
 				EntityParent(room\LightSprites[i], room\OBJ)
+				HideEntity(room\LightSprites[i])
 				
 				room\LightSprites2[i] = CreateSprite()
 				PositionEntity(room\LightSprites2[i], x, y, z)
@@ -4234,7 +4235,6 @@ Function CreateMap%()
 						CurrMapGrid\Grid[x2 + (y2 * MapGridSize)] = MapGrid_Tile
 					EndIf
 				Next
-				
 				If TempHeight = Height Then Temp = x2
 			EndIf
 		Next
