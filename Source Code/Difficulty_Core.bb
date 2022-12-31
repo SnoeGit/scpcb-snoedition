@@ -44,7 +44,7 @@ Const EXTREME% = 4
 ;[Block]
 Const NOT_AGGRESSIVE% = 0
 Const AGGRESSIVE% = 1
-Const VERY_AGGRESIVE% = 2
+Const VERY_AGGRESSIVE% = 2
 ;[End Block]
 
 Function SetDifficultyColor%(ID%, R%, G%, B%)

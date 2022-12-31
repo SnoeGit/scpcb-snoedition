@@ -1215,6 +1215,7 @@ Function RenderMainMenu%()
 					Text(x + (60 * MenuScale), y + ((180 + 28 * i) * MenuScale), difficulties[i]\Name)
 				Next
 				
+				
 				Color(255, 255, 255)
 				RenderFrame(x + (150 * MenuScale), y + (170 * MenuScale), 410 * MenuScale, 160 * MenuScale)
 				
@@ -1298,8 +1299,101 @@ Function RenderMainMenu%()
 					End Select
 					Text(x + (450 * MenuScale), y + (276 * MenuScale), TempStr)
 				Else
+					RenderFrame(x + (590 * MenuScale), y, 350 * MenuScale, 106 * MenuScale)
 					Color(255, 255, 255)
-					RowText(SelectedDifficulty\Description, x + (160 * MenuScale), y + (180 * MenuScale), 390 * MenuScale, 170 * MenuScale)					
+					Select SelectedDifficulty\SaveType
+						Case SAVE_ANYWHERE
+							;[Block]
+							TempStr = "Save anywhere"
+							;[End Block]
+						Case SAVE_ON_SCREENS
+							;[Block]
+							TempStr = "Save on screens"
+							;[End Block]
+						Case DELETE_ON_DEATH
+							;[Block]
+							TempStr = "Delete on death"
+							;[End Block]
+						Case NO_SAVES
+							;[Block]
+							TempStr = "No saves"
+							;[End Block]
+					End Select
+					Text(x + (600 * MenuScale), y + (8 * MenuScale), "Save type: " + TempStr)
+					
+					Select SelectedDifficulty\AggressiveNPCs
+						Case 0
+							;[Block]
+							TempStr = "Not Aggressive"
+							;[End Block]
+						Case 1
+							;[Block]
+							TempStr = "Aggressive"
+							;[End Block]
+						Case 2
+							;[Block]
+							TempStr = "Very Aggressive"
+							;[End Block]
+					End Select
+					Text(x + (600 * MenuScale), y + (24 * MenuScale), "Aggressive NPCs: " + TempStr)
+					
+					Text(x + (600 * MenuScale), y + (40 * MenuScale), "Inventory Slots: " + SelectedDifficulty\InventorySlots)
+					
+					Select SelectedDifficulty\OtherFactors
+						Case EASY
+							;[Block]
+							Color(90, 170, 25)
+							TempStr = "Notice"
+							;[End Block]
+						Case NORMAL
+							;[Block]
+							Color(25, 90, 170)
+							TempStr = "Caution"
+							;[End Block]
+						Case HARD
+							;[Block]
+							Color(200, 200, 25)
+							TempStr = "Warning"
+							;[End Block]
+						Case HARDER
+							;[Block]
+							Color(170, 90, 25)
+							TempStr = "Danger"
+							;[End Block]
+						Case EXTREME
+							;[Block]
+							Color(200, 25, 25)
+							TempStr = "Critical"
+							;[End Block]
+					End Select
+					Text(x + (840 * MenuScale), y + (56 * MenuScale), TempStr)
+					Color(255, 255, 255)
+					Text(x + (600 * MenuScale), y + (56 * MenuScale), "Other difficulty factor:")
+					Select SelectedDifficulty\OtherFactors
+						Case EASY
+							;[Block]
+							TempStr = "+0% Speed/+0% Damage"
+							;[End Block]
+						Case NORMAL
+							;[Block]
+							TempStr = "+10% Speed/+15% Damage"
+							;[End Block]
+						Case HARD
+							;[Block]
+							TempStr = "+20% Speed/+30% Damage"
+							;[End Block]
+						Case HARDER
+							;[Block]
+							TempStr = "+30% Speed/+45% Damage"
+							;[End Block]
+						Case EXTREME
+							;[Block]
+							TempStr = "+40% Speed/+60% Damage"
+							;[End Block]
+					End Select
+					Text(x + (600 * MenuScale), y + (72 * MenuScale), TempStr)
+					If SelectedDifficulty\Name = "Apollyon" Then Text(x + (600 * MenuScale), y + (88 * MenuScale), "No HUD")
+					RowText(SelectedDifficulty\Description, x + (160 * MenuScale), y + (180 * MenuScale), 390 * MenuScale, 170 * MenuScale)
 				EndIf
 				
 				SetFont(fo\FontID[Font_Default_Big])
