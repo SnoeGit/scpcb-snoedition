@@ -2760,13 +2760,6 @@ Function UpdateEvents%()
 				
 				If Is035Released Then
 					If e\room\Dist < 8.0 Then
-						If PlayerRoom = e\room Then
-							If wi\HazmatSuit = 0 Then
-								InjurePlayer(fps\Factor[0] / 12000.0)
-							ElseIf wi\HazmatSuit <> 4
-								InjurePlayer(fps\Factor[0] / 24000.0)
-							EndIf
-						EndIf
 						If e\room\NPC[0] = Null Then
 							e\room\NPC[0] = CreateNPC(NPCTypeD, e\room\x, 0.5, e\room\z)
 							e\room\NPC[0]\State = 3.0
@@ -2774,7 +2767,6 @@ Function UpdateEvents%()
 							RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 180.0, 0.0)
 							MoveEntity(e\room\NPC[0]\Collider, 0.0, 0.0, -0.5)
 							ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_035_TEXTURE)
-							de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(e\room\NPC[0]\Collider) + (150.0 * RoomScale), EntityY(e\room\NPC[0]\OBJ) - 0.485, EntityZ(e\room\NPC[0]\Collider), 90.0, Rnd(360.0), 0.0)
 							EntityParent(de\OBJ, e\room\OBJ)
 						EndIf
 						
@@ -2783,6 +2775,16 @@ Function UpdateEvents%()
 								e\room\NPC[1] = CreateNPC(NPCType035_Tentacle, EntityX(e\room\NPC[0]\Collider), 0.13, EntityZ(e\room\NPC[0]\Collider))
 								RotateEntity(e\room\NPC[1]\Collider, 0.0, e\room\Angle, 0.0)
 								MoveEntity(e\room\NPC[1]\Collider, 0.0, 0.0, 0.6)
+							EndIf
+						Else
+							If EntityDistanceSquared(e\room\NPC[0]\Collider, me\Collider) < 6.25 Then
+								If wi\HazmatSuit = 0 Then
+									InjurePlayer(fps\Factor[0] / 12000.0)
+								ElseIf wi\HazmatSuit <> 4
+									InjurePlayer(fps\Factor[0] / 24000.0)
+								Else
+									InjurePlayer(fps\Factor[0] / 36000.0)
+								EndIf
 							EndIf
 						EndIf
 					Else
@@ -3969,9 +3971,11 @@ Function UpdateEvents%()
 							me\HeartBeatRate = CurveValue(120.0, me\HeartBeatRate, 150.0) 
 							e\SoundCHN = LoopSound2(OldManSFX[4], e\SoundCHN, Camera, e\room\OBJ, 5.0, 0.3)
 							If wi\HazmatSuit = 0 Then
-								InjurePlayer(fps\Factor[0] / 12000.0)
+								InjurePlayer(fps\Factor[0] / 15000.0)
 							ElseIf wi\HazmatSuit <> 4
-								InjurePlayer(fps\Factor[0] / 24000.0)
+								InjurePlayer(fps\Factor[0] / 20000.0)
+							Else
+								InjurePlayer(fps\Factor[0] / 25000.0)
 							EndIf
 							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (2.0 + SelectedDifficulty\AggressiveNPCs))
 						EndIf
@@ -5163,6 +5167,8 @@ Function UpdateEvents%()
 											InjurePlayer(fps\Factor[0] / 6000.0)
 										ElseIf wi\HazmatSuit <> 4
 											InjurePlayer(fps\Factor[0] / 12000.0)
+										Else
+											InjurePlayer(fps\Factor[0] / 18000.0)
 										EndIf
 										
 										If me\Terminated And me\Bloodloss >= 100.0 Then
