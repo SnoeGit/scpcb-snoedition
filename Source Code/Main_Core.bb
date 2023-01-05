@@ -1889,7 +1889,7 @@ Function UpdateGUI%()
 			EndIf
 		EndIf
 		If ShouldDrawHUD Then
-			CameraZoom(Camera, Min(1.0 + (me\CurrCameraZoom / 400.0), 1.1) / Tan((2.0 * ATan(Tan((60) / 2.0) * opt\RealGraphicWidth / opt\RealGraphicHeight)) / 2.0))
+			CameraZoom(Camera, Min(1.0 + (me\CurrCameraZoom / 400.0), 1.1) / Tan((2.0 * ATan(Tan((70) / 2.0) * opt\RealGraphicWidth / opt\RealGraphicHeight)) / 2.0))
 			Pvt = CreatePivot()
 			PositionEntity(Pvt, EntityX(d_I\ClosestButton, True), EntityY(d_I\ClosestButton, True), EntityZ(d_I\ClosestButton, True))
 			RotateEntity(Pvt, 0.0, EntityYaw(d_I\ClosestButton, True) - 180.0, 0.0)
@@ -2087,7 +2087,7 @@ Function UpdateGUI%()
 		If mo\MouseHit1 Then mo\DoubleClickSlot = IsMouseOn
 		
 		If SelectedItem <> Null Then
-			If (Not mo\MouseDown1) Then
+			If (Not mo\MouseDown1) Lor mo\MouseHit2 Then
 				If MouseSlot = 66 Then
 					If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 					ShowEntity(SelectedItem\Collider)
@@ -2144,7 +2144,7 @@ Function UpdateGUI%()
 					
 					SelectedItem = Null
 					
-					If (Not KeyDown(key\INVENTORY)) Then
+					If (Not mo\MouseHit2) Then
 						OtherOpen = Null
 						ClosedInv = True
 						MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
@@ -2241,7 +2241,7 @@ Function UpdateGUI%()
 		If mo\MouseHit1 Then mo\DoubleClickSlot = IsMouseOn
 		
 		If SelectedItem <> Null Then
-			If (Not mo\MouseDown1) Then
+			If (Not mo\MouseDown1) Lor mo\MouseHit2 Then
 				If MouseSlot = 66 Then
 					Select SelectedItem\ItemTemplate\TempName
 						Case "vest", "finevest"
@@ -2258,7 +2258,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the locket to take it off.")
 							Else
 								DropItem(SelectedItem)
-								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+								If (Not mo\MouseHit2) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "scp714", "coarse714"
@@ -2267,7 +2267,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the ring to take it off.")
 							Else
 								DropItem(SelectedItem)
-								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+								If (Not mo\MouseHit2) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "scp1499", "super1499"
@@ -2276,7 +2276,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the gas mask to take it off.")
 							Else
 								DropItem(SelectedItem)
-								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+								If (Not mo\MouseHit2) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "scp268", "super268"
@@ -2285,7 +2285,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the cap to take it off.")
 							Else
 								DropItem(SelectedItem)
-								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+								If (Not mo\MouseHit2) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "cap"
@@ -2294,7 +2294,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the cap to take it off.")
 							Else
 								DropItem(SelectedItem)
-								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+								If (Not mo\MouseHit2) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
@@ -2303,7 +2303,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the gas mask to take it off.")
 							Else
 								DropItem(SelectedItem)
-								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+								If (Not mo\MouseHit2) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "helmet"
@@ -2312,7 +2312,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the helmet to take it off.")
 							Else
 								DropItem(SelectedItem)
-								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+								If (Not mo\MouseHit2) Then InvOpen = False
 							EndIf
 							;[End Block] 
 						Case "nvg", "supernvg", "finenvg"
@@ -2321,7 +2321,7 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the goggles to take it off.")
 							Else
 								DropItem(SelectedItem)
-								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+								If (Not mo\MouseHit2) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Case "scramble", "finescramble", "killscramble"
@@ -2330,16 +2330,16 @@ Function UpdateGUI%()
 								CreateHintMsg("Double click on the gear to take it off.")
 							Else
 								DropItem(SelectedItem)
-								If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+								If (Not mo\MouseHit2) Then InvOpen = False
 							EndIf
 							;[End Block]
 						Default
 							;[Block]
 							DropItem(SelectedItem)
-							If (Not KeyDown(key\INVENTORY)) Then InvOpen = False
+							If (Not mo\MouseHit2) Then InvOpen = False
 							;[End Block]
 					End Select
-					If (Not KeyDown(key\INVENTORY)) Then
+					If (Not mo\MouseHit2) Then
 						MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
 						StopMouseMovement()
 					EndIf
