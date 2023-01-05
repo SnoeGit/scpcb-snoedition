@@ -10,17 +10,26 @@ General:
 - Syringes heal slightly faster but for not as long. The amount healed is the same.
 - Add new console command "bloodloss" to change me\BloodLoss float value.
 - Add SCP-268 to the game.
+- S-NAV Navigator Ultimate is now craftable.
+- Changed Achivement text.
+- Can put Green Jade Ring into wallet.
+- Add Blue Key.
+- Add Achievements for SCP-268, SCP-588, SCP-2022-01, and MTF.
 
 Rooms:
 
 - Add back SCP-500 to its chamber.
 - Remove the chat screen from SCP-895's Observation Room.
 - Randomize the O5 council code.
+- In room2_ez(Random Entrance Zone office), SCP-035's dead host body causes the player to take small damage over time if they are in the same room. A hazmat suit is recommended to reduce damage.
+- Dr. L's room causes corrosion damage like the pocket dimension. A hazmat suit is recommended to reduce damage.
 
 Bug Fixes:
 
 - Quick slots no longer prevents switching Radio Channels.
 - Fixed intro crash.
+- Fix SCP-066 and SCP-1126-ARC rooms not spawning sometimes.
+- Fix S-NAV 310 not giving a message with 4.5v and 9v batteries
 
 v1.7
 
