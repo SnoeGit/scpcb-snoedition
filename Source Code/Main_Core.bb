@@ -4312,6 +4312,17 @@ Function RenderHUD%()
 	
 	Color(255, 255, 255)
 	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) And (I_268\Timer =< 0.0 Lor I_268\Using = 0) Then
+		For i = 0 To MaxItemAmount - 1
+			If Inventory(i) <> Null Then
+				If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") Then
+					If Inventory(i)\State2 < 3.0 And wi\HazmatSuit = 4 Then
+						Color(0, 200, 0)
+						Rect(x - (53 * MenuScale), y - (43 * MenuScale), 36 * MenuScale, 36 * MenuScale)
+					EndIf
+				EndIf
+			EndIf
+		Next
+		Color(255, 255, 255)
 		Rect(x - (51 * MenuScale), y - (41 * MenuScale), 32 * MenuScale, 32 * MenuScale, False)
 		If TakeOffTimer < 125.0 Then
 			RenderBar(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, TakeOffTimer, 500.0, 100, 0, 0)
@@ -4320,9 +4331,18 @@ Function RenderHUD%()
 		EndIf
 		DrawBlock(t\IconID[8], x - (50 * MenuScale), y - (40 * MenuScale))
 	ElseIf I_268\Using > 0 Then
-		If I_714\Using > 1 Then Color(200, 0, 0)
-		Rect(x - (51 * MenuScale), y - (41 * MenuScale), 32 * MenuScale, 32 * MenuScale, False)
+		If I_268\Timer =< 0.0 Then
+			Color(150, 150, 0)
+			Rect(x - (53 * MenuScale), y - (43 * MenuScale), 36 * MenuScale, 36 * MenuScale)
+		ElseIf I_714\Using > 1
+			Color(200, 0, 0)
+			Rect(x - (53 * MenuScale), y - (43 * MenuScale), 36 * MenuScale, 36 * MenuScale)
+		ElseIf I_268\Using = 2
+			Color(0, 200, 0)
+			Rect(x - (53 * MenuScale), y - (43 * MenuScale), 36 * MenuScale, 36 * MenuScale)
+		EndIf
 		Color(255, 255, 255)
+		Rect(x - (51 * MenuScale), y - (41 * MenuScale), 32 * MenuScale, 32 * MenuScale, False)
 		If I_268\Timer < 150.0 Then
 			RenderBar(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, I_268\Timer, 600.0, 100, 0, 0)
 		Else
