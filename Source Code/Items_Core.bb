@@ -719,56 +719,50 @@ Function IsItemInFocus%()
 	Return(False)
 End Function
 
-Function CanUseItem%(CanUseWithEyewear% = False, CanUseWithGasMask% = False, CanUseWithHazmatSuit% = False)
-	If (Not CanUseWithEyewear) And (wi\NightVision > 0 Lor wi\SCRAMBLE > 0) Then
-		CreateMsg("You can't use that item while wearing headgear.")
+Function CanUseItem%(Msg$, CanUseWithEyewear% = False, CanUseWithGasMask% = False, CanUseWithHazmatSuit% = False)
+	If (Not CanUseWithEyewear) And (wi\NightVision > 0 Lor wi\SCRAMBLE > 0 Lor wi\BallisticHelmet) Then
+		CreateMsg("You can't use " + Msg + " while wearing headgear.")
 		Return(False)
 	ElseIf (Not CanUseWithGasMask) And (wi\GasMask > 0 Lor I_1499\Using > 0) Then
-		CreateMsg("You can't use that item while wearing a gas mask.")
+		CreateMsg("You can't use " + Msg + " while wearing a gas mask.")
 		Return(False)
 	ElseIf (Not CanUseWithHazmatSuit) And wi\HazmatSuit > 0 Then
-		CreateMsg("You can't use that item while wearing the hazmat suit.")
+		CreateMsg("You can't use " + Msg + " while wearing the hazmat suit.")
 		Return(False)
 	EndIf
 	Return(True)
 End Function
 
 ; ~ Maybe re-work?
-Function PreventItemOverlapping%(SCP1499% = False, HAZMAT% = False)
-	If SCP1499 And wi\GasMask > 0 Then
-		CreateMsg("You need to take off the gas mask in order to use SCP-1499.")
+Function PreventItemOverlapping%(Msg$, SCP1499% = False)
+	If wi\HazmatSuit > 0 Then
+		CreateMsg("You need to take off the hazmat suit in order to use " + Msg + ".")
 		SelectedItem = Null
-		Return(True)
-	ElseIf (Not SCP1499) And I_1499\Using > 0 Then
-		CreateMsg("You need to take off SCP-1499 in order to use that item.")
+		Return(False)
+	ElseIf SCP1499
+		If wi\GasMask > 0
+			CreateMsg("You need to take off the gas mask in order to use SCP-1499.")
+			SelectedItem = Null
+			Return(False)
+		ElseIf wi\NightVision > 0
+			CreateMsg("You need to take off the goggles in order to use SCP-1499.")
+			SelectedItem = Null
+			Return(False)
+		ElseIf  wi\BallisticHelmet
+			CreateMsg("You need to take off the helmet in order to use SCP-1499.")
+			SelectedItem = Null
+			Return(False)
+		ElseIf wi\SCRAMBLE > 0
+			CreateMsg("You need to take off the gear in order to use SCP-1499.")
+			SelectedItem = Null
+			Return(False)
+		EndIf
+	ElseIf (Not SCP1499) And I_1499\Using > 0
+		CreateMsg("You need to take off SCP-1499 in order to use " + Msg + ".")
 		SelectedItem = Null
-		Return(True)
-	ElseIf SCP1499 And wi\NightVision > 0 Then
-		CreateMsg("You need to take off the goggles in order to use SCP-1499.")
-		SelectedItem = Null
-		Return(True)
-	ElseIf SCP1499 And wi\BallisticHelmet Then
-		CreateMsg("You need to take off the helmet in order to use SCP-1499.")
-		SelectedItem = Null
-		Return(True)
-	ElseIf SCP1499 And wi\SCRAMBLE > 0 Then
-		CreateMsg("You need to take off the gear in order to use SCP-1499.")
-		SelectedItem = Null
-		Return(True)
-	ElseIf SCP1499 And I_268\Using > 0 Then
-		CreateMsg("You need to take off the cap in order to use SCP-1499.")
-		SelectedItem = Null
-		Return(True)
-	ElseIf SCP1499 And wi\Cap > 0 Then
-		CreateMsg("You need to take off the cap in order to use SCP-1499.")
-		SelectedItem = Null
-		Return(True)
-	ElseIf (Not HAZMAT) and wi\HazmatSuit > 0 Then
-		CreateMsg("You need to take off the hazmat suit in order to use that item.")
-		SelectedItem = Null
-		Return(True)
+		Return(False)
 	EndIf
-	Return(False)
+	Return(True)
 End Function
 
 Include "Source Code\914_Core.bb"

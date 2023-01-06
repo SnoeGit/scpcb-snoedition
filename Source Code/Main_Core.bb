@@ -3000,7 +3000,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp1499", "super1499"
 					;[Block]
-					If (Not PreventItemOverlapping(True)) Then
+					If PreventItemOverlapping("gas mask", True) Then
 						
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
@@ -3137,7 +3137,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp500pill"
 					;[Block]
-					If CanUseItem(True) Then
+					If CanUseItem("pill", True) Then
 						GiveAchievement(Achv500)
 						
 						If I_008\Timer > 0.0 Lor I_409\Timer > 0.0 Then
@@ -3189,7 +3189,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "veryfinefirstaid"
 					;[Block]
-					If CanUseItem(True) Then
+					If CanUseItem("bottle", True) Then
 						Select Rand(6)
 							Case 1
 								;[Block]
@@ -3263,7 +3263,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "firstaid", "finefirstaid", "bluefirstaid"
 					;[Block]
-					If CanUseItem(True, True) Then
+					If CanUseItem("first aid kit", True, True) Then
 					If me\Bloodloss = 0.0 And me\Injuries = 0.0 Then
 						CreateMsg("You don't need to use a first aid kit right now.")
 						SelectedItem = Null
@@ -3356,7 +3356,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "eyedrops", "redeyedrops"
 					;[Block]
-					If CanUseItem() Then
+					If CanUseItem("eyedrops") Then
 						me\BlinkEffect = 0.6
 						me\BlinkEffectTimer = Rnd(20.0, 30.0)
 						me\BlurTimer = 200.0
@@ -3369,7 +3369,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "fineeyedrops"
 					;[Block]
-					If CanUseItem() Then
+					If CanUseItem("eyedrops") Then
 						me\BlinkEffect = 0.4
 						me\BlinkEffectTimer = Rnd(30.0, 40.0)
 						me\Bloodloss = Max(me\Bloodloss - 1.0, 0.0)
@@ -3382,7 +3382,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "supereyedrops"
 					;[Block]
-					If CanUseItem() Then
+					If CanUseItem("eyedrops") Then
 						me\BlinkEffect = 0.0
 						me\BlinkEffectTimer = 60.0
 						me\EyeStuck = 10000.0
@@ -3395,7 +3395,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "cup"
 					;[Block]
-					If CanUseItem(True) Then
+					If CanUseItem("cup", True) Then
 						StrTemp = Trim(Lower(SelectedItem\Name))
 						If Left(StrTemp, 6) = "cup of" Then
 							StrTemp = Right(StrTemp, Len(StrTemp) - 7)
@@ -3475,7 +3475,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "syringe", "syringeinf"
 					;[Block]
-					If CanUseItem(True, True) Then
+					If CanUseItem("syringe", True, True) Then
 						me\HealTimer = 20.0
 						me\Bloodloss = me\Bloodloss + 5.0
 						me\StaminaEffect = 0.75
@@ -3492,7 +3492,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "finesyringe"
 					;[Block]
-					If CanUseItem(True, True) Then
+					If CanUseItem("syringe", True, True) Then
 						me\HealTimer = 30.0
 						me\Bloodloss = me\Bloodloss + 5.0
 						me\StaminaEffect = 0.5
@@ -3505,7 +3505,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "veryfinesyringe"
 					;[Block]
-					If CanUseItem(True, True) Then
+					If CanUseItem("syringe", True, True) Then
 						Select Rand(3)
 							Case 1
 								;[Block]
@@ -3908,7 +3908,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "cigarette"
 					;[Block]
-					If CanUseItem(True) Then
+					If CanUseItem("cigarette", True) Then
 						Select Rand(6)
 							Case 1
 								;[Block]
@@ -3940,7 +3940,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp420j"
 					;[Block]
-					If CanUseItem(True) Then
+					If CanUseItem("good ass shit", True) Then
 						If I_714\Using > 1 Then
 							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
 						Else
@@ -3955,7 +3955,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "joint", "scp420s"
 					;[Block]
-					If CanUseItem(True) Then
+					If CanUseItem("good ass shit", True) Then
 						If I_714\Using > 1 Then
 							CreateMsg(Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK." + Chr(34))
 						Else
@@ -4004,7 +4004,8 @@ Function UpdateGUI%()
 										wi\HazmatSuit = 4
 										;[End Block]
 								End Select
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : wi\Cap = False : I_268\Using = 0 : I_427\Using = False : I_714\Using = 1
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : wi\Cap = False
+								I_268\Using = 0 : I_427\Using = False : I_714\Using = 1 : I_1499\Using = 0
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 							EndIf
 							SelectedItem\State = 0.0
@@ -4075,7 +4076,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp427"
 					;[Block]
-					If CanUseItem(True, True) Then
+					If CanUseItem("locket", True, True) Then
 						If I_427\Timer < 70.0 * 360.0 Then
 							If I_427\Using Then
 								CreateMsg("You closed the locket.")
@@ -4093,7 +4094,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "pill", "scp2022pill"
 					;[Block]
-					If CanUseItem(True) Then
+					If CanUseItem("pill", True) Then
 						If me\Injuries > 0.0 And SelectedItem\ItemTemplate\TempName = "scp2022pill" Then
 							CreateMsg("You swallowed the pill and your wounds started healing.")
 						Else
@@ -4114,7 +4115,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp500pilldeath"
 					;[Block]
-					If CanUseItem(True) Then
+					If CanUseItem("pill", True) Then
 						CreateMsg("You swallowed the pill.")
 						
 						If I_427\Timer < 70.0 * 360.0 Then I_427\Timer = 70.0 * 360.0
@@ -4151,7 +4152,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp714", "coarse714"
 					;[Block]
-						If CanUseItem(True, True)
+						If CanUseItem("ring", True, True)
 							If (I_714\Using = 3 And SelectedItem\ItemTemplate\TempName = "scp714") Lor (I_714\Using = 2 And SelectedItem\ItemTemplate\TempName = "coarse714") Then
 								CreateMsg("You removed the ring.")
 								I_714\Using = 1 ; 1 is actually off! Done so I didn't need several If statements for sanity stuff
@@ -4169,7 +4170,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "kill714", "ring"
 					;[Block]
-						If CanUseItem(True, True)
+						If CanUseItem("ring", True, True)
 							If SelectedItem\ItemTemplate\TempName = "kill714" Then
 								CreateMsg("You feel a sudden need to sleep and never wake up.")
 								Kill()
@@ -4804,7 +4805,7 @@ Function RenderGUI%()
 			Select SelectedItem\ItemTemplate\TempName
 				Case "nvg", "supernvg", "finenvg", "scramble", "finescramble", "killscramble"
 					;[Block]
-					If (Not PreventItemOverlapping()) Then
+					If PreventItemOverlapping("goggles") Then
 						
 						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
@@ -4822,7 +4823,7 @@ Function RenderGUI%()
 					;[End Block]
 				Case "firstaid", "finefirstaid", "bluefirstaid"
 					;[Block]
-					If me\Bloodloss <> 0.0 Lor me\Injuries <> 0.0 And wi\HazmatSuit = 0 Then
+					If (me\Bloodloss <> 0.0 Lor me\Injuries <> 0.0) And wi\HazmatSuit = 0 Then
 						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
 						Width = 300 * MenuScale
@@ -5199,7 +5200,7 @@ Function RenderGUI%()
 					;[End Block]
 				Case "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet", "vest", "finevest"
 					;[Block]
-					If (Not PreventItemOverlapping()) Then
+					If PreventItemOverlapping("gas mask") Then
 						
 						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
@@ -5213,7 +5214,7 @@ Function RenderGUI%()
 					;[End Block]
 				Case "scp1499", "super1499"
 					;[Block]
-					If (Not PreventItemOverlapping(True)) Then
+					If PreventItemOverlapping("gas mask", True) Then
 						
 						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
@@ -5227,7 +5228,7 @@ Function RenderGUI%()
 					;[End Block]
 				Case "scp268", "super268", "cap"
 					;[Block]
-					If (Not PreventItemOverlapping()) Then
+					If PreventItemOverlapping("cap") Then
 						
 						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
