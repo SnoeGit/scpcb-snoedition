@@ -756,6 +756,10 @@ Function PreventItemOverlapping%(Msg$, SCP1499% = False)
 			CreateMsg("You need to take off the gear in order to use SCP-1499.")
 			SelectedItem = Null
 			Return(False)
+		ElseIf I_268\Using > 0 Lor wi\Cap
+			CreateMsg("You need to take off the cap in order to use SCP-1499.")
+			SelectedItem = Null
+			Return(False)
 		EndIf
 	ElseIf (Not SCP1499) And I_1499\Using > 0
 		CreateMsg("You need to take off SCP-1499 in order to use " + Msg + ".")
