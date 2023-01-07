@@ -59,7 +59,7 @@ Function ShowSubtitles%(Name$)
 	Local sub.Subtitles, CurrSub.Subtitles
 	Local Loc% = GetINISectionLocation(SubtitlesFile, Name)
 	Local Person% = GetINIString2(SubtitlesFile, Loc, "Person")
-	Local LinesAmount% = GetIniInt(SubtitlesFile, Loc, "LinesAmount")
+	Local LinesAmount% = GetINIInt(SubtitlesFile, Loc, "LinesAmount")
 	Local SubID%, i%
 	
 	Select Person

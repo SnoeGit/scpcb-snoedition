@@ -116,6 +116,25 @@ Function GetINIInt%(File$, Section$, Parameter$, DefaultValue% = 0)
 	End Select
 End Function
 
+Function GetINIInt2%(File$, Start$, Parameter$, DefaultValue% = 0)
+	Local StrTemp$ = GetINIString2(File, Start, Parameter, DefaultValue)
+	
+	Select StrTemp
+		Case "True"
+			;[Block]
+			Return(True)
+			;[End Block]
+		Case "False"
+			;[Block]
+			Return(False)
+			;[End Block]
+		Default
+			;[Block]
+			Return(Int(StrTemp))
+			;[End Block]
+	End Select
+End Function
+
 Function GetINIFloat#(File$, Section$, Parameter$, DefaultValue# = 0.0)
 	Return(Float(GetINIString(File, Section, Parameter, DefaultValue)))
 End Function
