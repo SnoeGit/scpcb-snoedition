@@ -2767,7 +2767,6 @@ Function UpdateEvents%()
 							RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 180.0, 0.0)
 							MoveEntity(e\room\NPC[0]\Collider, 0.0, 0.0, -0.5)
 							ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_035_TEXTURE)
-							EntityParent(de\OBJ, e\room\OBJ)
 						EndIf
 						
 						If e\room\NPC[1] = Null Then
