@@ -751,6 +751,10 @@ Function LoadItems%()
 	CreateItemTemplate("Dr. L's Burnt Note #1", "paper", ItemsPath + "paper.b3d", INVPath + "INV_burnt_note.png", NotePath + "note_L(4).png", 0.0025, 0, NotePath + "burnt_note.png")
 	CreateItemTemplate("Dr. L's Burnt Note #2", "paper", ItemsPath + "paper.b3d", INVPath + "INV_burnt_note.png", NotePath + "note_L(5).png", 0.0025, 0, NotePath + "burnt_note.png")
 	
+	CreateItemTemplate("L.S.'s Note", "paper", NotePath + "note.b3d", INVPath + "INV_note(2).png", NotePath + "note_LS.png", 0.0025, 0)
+	CreateItemTemplate("L.S.'s Note #2", "paper", NotePath + "note.b3d", INVPath + "INV_note(2).png", NotePath + "note_LS(2).png", 0.0025, 0)
+	CreateItemTemplate("L.S.'s Drawing", "paper", NotePath + "note.b3d", INVPath + "INV_note.png", NotePath + "drawing_LS.png", 0.0025, 0, NotePath + "note.png")
+	
 	CreateItemTemplate("Emily Ross' Badge", "badge", ItemsPath + "badge.b3d", INVPath + "INV_Emily_badge.png", ItemsPath + "Emily_badge_HUD.png", 0.0001, 1, ItemsPath + "Emily_badge.png")
 	
 	CreateItemTemplate("Journal Page", "paper", ItemsPath + "paper.b3d", INVPath + "INV_note.png", NotePath + "note_Gonzales.png", 0.0025, 0, NotePath + "note.png")

@@ -138,8 +138,8 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case "gate_a"
 			;[Block]
-			r\RoomDoors.Doors[2] = CreateDoor(r\x - 4064.0 * RoomScale, r\y - 1248.0 * RoomScale, r\z + 3952.0 * RoomScale, 0.0, r)
-			r\RoomDoors[2]\AutoClose = False
+			r\RoomDoors.Doors[0] = CreateDoor(r\x - 4064.0 * RoomScale, r\y - 1248.0 * RoomScale, r\z + 3952.0 * RoomScale, 0.0, r)
+			r\RoomDoors[0]\AutoClose = False
 			
 			d.Doors = CreateDoor(r\x, r\y, r\z + 2336.0 * RoomScale, 0.0, r, True, BIG_DOOR)
 			For i = 0 To 1
@@ -2418,6 +2418,24 @@ Function FillRoom%(r.Rooms)
 			RotateEntity(it\Collider, 0.0, r\Angle, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
+		Case "cont3_268"
+			;[Block]
+			d = CreateDoor(r\x, r\y, r\z + 272.0 * RoomScale, 0, r, False, DEFAULT_DOOR, KEY_CARD_3)
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.061, True)
+			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.061, True)
+			
+			d = CreateDoor(r\x - 160 * RoomScale, r\y, r\z + 639.0 * RoomScale, 0, r, True, ONE_SIDED_DOOR, KEY_CARD_4)
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) + 0.056, True)
+			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.056, True)
+			
+			d = CreateDoor(r\x + 320 * RoomScale, r\y, r\z + 639.0 * RoomScale, 0, r, False, ONE_SIDED_DOOR, KEY_CARD_3)
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) + 0.056, True)
+			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.056, True)
+			
+			it.Items = CreateItem("L.S.'s Note", "paper", r\x - 160 * RoomScale,  r\y + 210.0 * RoomScale, r\z + 1240.0 * RoomScale)
+			RotateEntity(it\Collider, 0.0, r\Angle, 0.0)
+			EntityParent(it\Collider, r\OBJ)
+			;[End Block]
 		Case "cont2_1123"
 			;[Block]
 			; ~ Door to the containment chamber itself
@@ -3706,7 +3724,10 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Groups of Interest Log", "paper", r\x + 100.0 * RoomScale, r\y + 200.0 * RoomScale, r\z + 100.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("SCP-268", "scp268", r\x + 110.0 * RoomScale, r\y + 200.0 * RoomScale, r\z + 110.0 * RoomScale)
+			it.Items = CreateItem("SCP-268", "scp268", r\x + 280.0 * RoomScale, r\y + 200.0 * RoomScale, r\z + 160.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("L.S.'s Note #2", "paper", r\x + 300.0 * RoomScale, r\y + 200.0 * RoomScale, r\z + 180.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("First Aid Kit", "firstaid", r\x + 680.0 * RoomScale, r\y + 260.0 * RoomScale, r\z + 892.5 * RoomScale)

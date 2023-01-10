@@ -2309,6 +2309,19 @@ Function UpdateEvents%()
 						EndIf
 						
 						If EntityDistanceSquared(me\Collider, e\room\Objects[1]) < 16.0 Then
+							For i = 0 To MaxItemAmount - 1
+								If Inventory(i)\ItemTemplate\Name = "SCP-268" Then
+									I_268\Using = 0
+									RemoveItem(Inventory(i))
+									Inventory(i) = CreateItem("L.S.'s Drawing", "paper", 1.0, 1.0, 1.0)
+									HideEntity(Inventory(i)\Collider)
+									Inventory(i)\Picked = True
+									Inventory(i)\ItemTemplate\Found = True
+									EntityType(Inventory(i)\Collider, HIT_ITEM)
+									ItemAmount = ItemAmount + 1
+									Exit
+								EndIf
+							Next
 							gateb\RoomDoors[1]\Locked = 1
 							PlayerRoom = gateb
 							RemoveEvent(e)
@@ -2359,6 +2372,19 @@ Function UpdateEvents%()
 						EndIf
 						
 						If EntityDistanceSquared(me\Collider, e\room\Objects[1]) < 16.0 Then
+							For i = 0 To MaxItemAmount - 1
+								If Inventory(i)\ItemTemplate\Name = "SCP-268" Then
+									I_268\Using = 0
+									RemoveItem(Inventory(i))
+									Inventory(i) = CreateItem("L.S.'s Drawing", "paper", 1.0, 1.0, 1.0)
+									HideEntity(Inventory(i)\Collider)
+									Inventory(i)\Picked = True
+									Inventory(i)\ItemTemplate\Found = True
+									EntityType(Inventory(i)\Collider, HIT_ITEM)
+									ItemAmount = ItemAmount + 1
+									Exit
+								EndIf
+							Next
 							gatea\RoomDoors[1]\Locked = 1
 							PlayerRoom = gatea
 							RemoveEvent(e)
@@ -2720,7 +2746,15 @@ Function UpdateEvents%()
 			Case e_room2_nuke
 				;[Block]
 				If PlayerRoom = e\room Then
-					e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[4], e\room\Objects[5], e)
+					If n_I\Curr096 <> Null Then
+						If n_I\Curr096\State <> 0.0 And n_I\Curr096\State <> 5.0 Then
+							e\EventState2 = Update096ElevatorEvent(e, e\EventState2, e\room\RoomDoors[0], e\room\Objects[4])
+						Else
+							e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[4], e\room\Objects[5], e)
+						EndIf
+					Else
+						e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[4], e\room\Objects[5], e)
+					EndIf
 					
 					e\EventState = UpdateLever(e\room\Objects[1])
 					UpdateLever(e\room\Objects[3])
@@ -5222,8 +5256,18 @@ Function UpdateEvents%()
 				;[Block]
 				If PlayerRoom = e\room Then
 					If EntityY(me\Collider) > (-2848.0) * RoomScale Then
-						e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)
-						e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[2], e\room\RoomDoors[3], e\room\Objects[2], e\room\Objects[3], e)
+						If n_I\Curr096 <> Null Then
+							If n_I\Curr096\State <> 0.0 And n_I\Curr096\State <> 5.0 Then
+								e\EventState2 = Update096ElevatorEvent(e, e\EventState2, e\room\RoomDoors[0], e\room\Objects[0])
+								e\EventState3 = Update096ElevatorEvent(e, e\EventState3, e\room\RoomDoors[2], e\room\Objects[2])
+							Else
+								e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)
+								e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[2], e\room\RoomDoors[3], e\room\Objects[2], e\room\Objects[3], e)
+							EndIf
+						Else
+							e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)
+							e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[2], e\room\RoomDoors[3], e\room\Objects[2], e\room\Objects[3], e)
+						EndIf
 					Else
 						ShouldPlay = 25
 						
@@ -5505,7 +5549,15 @@ Function UpdateEvents%()
 							EndIf
 						EndIf
 					EndIf
-					e\EventState4 = UpdateElevators(e\EventState4, e\room\RoomDoors[1], e\room\RoomDoors[2], e\room\Objects[3], e\room\Objects[4], e)	
+					If n_I\Curr096 <> Null Then
+						If n_I\Curr096\State <> 0.0 And n_I\Curr096\State <> 5.0 Then
+							e\EventState4 = Update096ElevatorEvent(e, e\EventState4, e\room\RoomDoors[1], e\room\Objects[3])
+						Else
+							e\EventState4 = UpdateElevators(e\EventState4, e\room\RoomDoors[1], e\room\RoomDoors[2], e\room\Objects[3], e\room\Objects[4], e)
+						EndIf
+					Else
+						e\EventState4 = UpdateElevators(e\EventState4, e\room\RoomDoors[1], e\room\RoomDoors[2], e\room\Objects[3], e\room\Objects[4], e)
+					EndIf
 				EndIf
 				
 				If e\EventState2 = 1.0 Then
@@ -6591,7 +6643,15 @@ Function UpdateEvents%()
 							RotateEntity(e\room\Levers[0], CurveAngle(1.0, EntityPitch(e\room\Levers[0], True), 15.0), EntityYaw(e\room\Levers[0], True), 0.0, True)
 						EndIf
 					EndIf
-					e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[3], e\room\RoomDoors[4], e\room\Objects[8], e\room\Objects[9], e)
+					If n_I\Curr096 <> Null Then
+						If n_I\Curr096\State <> 0.0 And n_I\Curr096\State <> 5.0 Then
+							e\EventState3 = Update096ElevatorEvent(e, e\EventState3, e\room\RoomDoors[3], e\room\Objects[8])
+						Else
+							e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[3], e\room\RoomDoors[4], e\room\Objects[8], e\room\Objects[9], e)
+						EndIf
+					Else
+						e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[3], e\room\RoomDoors[4], e\room\Objects[8], e\room\Objects[9], e)
+					EndIf
 				EndIf
 				;[End Block]
 			Case e_106_victim
@@ -9362,9 +9422,9 @@ Function UpdateEndings%()
 						Next
 						
 						If n_I\Curr106\Contained Then
-							e\room\RoomDoors[2]\Locked = 1
+							e\room\RoomDoors[0]\Locked = 1
 							
-							PositionEntity(e\room\NPC[5]\Collider, EntityX(e\room\Objects[15], True) + (i - 6) * 0.2, EntityY(e\room\Objects[15], True), EntityZ(e\room\Objects[15], True) + (i - 6) * 0.2, True)
+							PositionEntity(e\room\NPC[5]\Collider, EntityX(e\room\Objects[15], True), EntityY(e\room\Objects[15], True), EntityZ(e\room\Objects[15], True), True)
 							ResetEntity(e\room\NPC[5]\Collider)
 						EndIf
 						
@@ -9379,7 +9439,7 @@ Function UpdateEndings%()
 						PositionEntity(e\room\Objects[0], EntityX(e\room\OBJ, True), EntityY(e\room\OBJ, True), EntityZ(e\room\OBJ, True))
 						ScaleEntity(e\room\Objects[0], RoomScale, RoomScale, RoomScale)
 						EntityType(e\room\Objects[0], HIT_MAP)
-						EntityPickMode(e\room\Objects[0], 3)
+						EntityPickMode(e\room\Objects[0], 2)
 						EntityParent(e\room\Objects[0], e\room\OBJ)
 						
 						e\room\Objects[9] = LoadMesh_Strict("GFX\map\Props\lightgunbase.b3d")
@@ -9511,7 +9571,6 @@ Function UpdateEndings%()
 											n_I\Curr106\PathTimer = 70.0 * 200.0
 											If n_I\Curr106\State3 = 0.0 Then 
 												SetNPCFrame(n_I\Curr106, 259.0)
-												FreeSound_Strict(e\Sound)
 												LoadEventSound(e, "SFX\Ending\GateA\106Retreat.ogg")
 												e\SoundCHN = PlaySound2(e\Sound, Camera, n_I\Curr106\Collider, 35.0)
 											EndIf
@@ -9601,7 +9660,7 @@ Function UpdateEndings%()
 											e\room\NPC[5]\Sound = LoadSound_Strict("SFX\Character\MTF\ThereHeIs1.ogg")
 											PlaySound2(e\room\NPC[5]\Sound, Camera, e\room\NPC[5]\Collider, 25.0)
 											
-											e\room\RoomDoors[2]\Open = True
+											e\room\RoomDoors[0]\Open = True
 											
 											For i = 2 To 4
 												RemoveNPC(e\room\NPC[i]) : e\room\NPC[i] = Null
@@ -9678,7 +9737,7 @@ Function UpdateEndings%()
 										TurnEntity(e\room\Objects[14], 0.0, (Sin(e\EventState3 - 50.0) * 0.85) * fps\Factor[0], 0.0, True)
 										
 										For i = 5 To 8
-											PositionEntity(e\room\NPC[i]\Collider, CurveValue(EntityX(e\room\RoomDoors[2]\FrameOBJ, True), EntityX(e\room\NPC[i]\Collider, True), 50.0), EntityY(e\room\NPC[i]\Collider, True), CurveValue(EntityZ(e\room\RoomDoors[0]\FrameOBJ, True), EntityZ(e\room\NPC[i]\Collider, True), 50.0), True)
+											PositionEntity(e\room\NPC[i]\Collider, CurveValue(EntityX(e\room\RoomDoors[0]\FrameOBJ, True), EntityX(e\room\NPC[i]\Collider, True), 50.0), EntityY(e\room\NPC[i]\Collider, True), CurveValue(EntityZ(e\room\RoomDoors[0]\FrameOBJ, True), EntityZ(e\room\NPC[i]\Collider, True), 50.0), True)
 											ResetEntity(e\room\NPC[i]\Collider)
 										Next
 									EndIf
