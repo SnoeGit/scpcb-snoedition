@@ -4568,8 +4568,18 @@ Function UpdateEvents%()
 			Case e_room3_storage
 				;[Block]
 				If PlayerRoom = e\room Then
-					e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)
-					e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[2], e\room\RoomDoors[3], e\room\Objects[2], e\room\Objects[3], e)
+					If n_I\Curr096 <> Null Then
+						If n_I\Curr096\State <> 0.0 And n_I\Curr096\State <> 5.0 Then
+							e\EventState2 = Update096ElevatorEvent(e, e\EventState2, e\room\RoomDoors[0], e\room\Objects[0])
+							e\EventState3 = Update096ElevatorEvent(e, e\EventState3, e\room\RoomDoors[2], e\room\Objects[2])
+						Else
+							e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)
+							e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[2], e\room\RoomDoors[3], e\room\Objects[2], e\room\Objects[3], e)
+						EndIf
+					Else
+						e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)
+						e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[2], e\room\RoomDoors[3], e\room\Objects[2], e\room\Objects[3], e)
+					EndIf
 					
 					If EntityY(me\Collider) < (-4600.0) * RoomScale Then
 						
@@ -5726,7 +5736,15 @@ Function UpdateEvents%()
 						e\room\NPC[0]\HideFromNVG = True
 						TurnEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 90.0, 0.0, True)
 					EndIf
-					e\EventState4 = UpdateElevators(e\EventState4, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[9], e\room\Objects[10], e)
+					If n_I\Curr096 <> Null Then
+						If n_I\Curr096\State <> 0.0 And n_I\Curr096\State <> 5.0 Then
+							e\EventState4 = Update096ElevatorEvent(e, e\EventState4, e\room\RoomDoors[0], e\room\Objects[9])
+						Else
+							e\EventState4 = UpdateElevators(e\EventState4, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[9], e\room\Objects[10], e)
+						EndIf
+					Else
+						e\EventState4 = UpdateElevators(e\EventState4, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[9], e\room\Objects[10], e)
+					EndIf
 				Else
 					If (Not PlayerInReachableRoom()) Then
 						If e\SoundCHN2 <> 0 Then If ChannelPlaying(e\SoundCHN2) Then StopChannel_Strict(e\SoundCHN2)
@@ -8091,7 +8109,15 @@ Function UpdateEvents%()
 							EndIf
 						EndIf
 					EndIf
-					e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)
+					If n_I\Curr096 <> Null Then
+						If n_I\Curr096\State <> 0.0 And n_I\Curr096\State <> 5.0 Then
+							e\EventState2 = Update096ElevatorEvent(e, e\EventState2, e\room\RoomDoors[0], e\room\Objects[0])
+						Else
+							e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)
+						EndIf
+					Else
+						e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)
+					EndIf
 				EndIf
 				;[End Block]
 			Case e_cont1_005

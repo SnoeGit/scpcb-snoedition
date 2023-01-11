@@ -242,8 +242,8 @@ Function RenderRoomLights%(Cam%)
 			For i = 0 To r\MaxLights - 1
 				If r\Lights[i] <> 0 Then
 					If SecondaryLightOn > 0.5 Then
-						If Cam = Camera Then ; ~ The lights are rendered by player's cam
-							If UpdateRoomLightsTimer = 0.0 Then
+						If UpdateRoomLightsTimer = 0.0 Then
+							If Cam = Camera Then ; ~ The lights are rendered by player's cam
 								If EntityDistanceSquared(Camera, r\Lights[i]) < 72.25 Then
 									If EntityHidden(r\Lights[i]) Then ShowEntity(r\Lights[i])
 									If EntityVisible(Camera, r\Lights[i]) Then
@@ -282,13 +282,13 @@ Function RenderRoomLights%(Cam%)
 										If opt\AdvancedRoomLights Then HideEntity(r\LightSprites2[i])
 									EndIf
 								EndIf
+							Else
+								; ~ This will make the lightsprites not glitch through the wall when they are rendered by the cameras
+								If opt\AdvancedRoomLights Then EntityOrder(r\LightSprites2[i], 0)
 							EndIf
-						Else
-							; ~ This will make the lightsprites not glitch through the wall when they are rendered by the cameras
-							If opt\AdvancedRoomLights Then EntityOrder(r\LightSprites2[i], 0)
 						EndIf
 					Else
-						Return ; ~ The lights off
+						Return ; ~ The lights were turned off
 					EndIf
 				Else
 					Exit
@@ -3799,11 +3799,11 @@ Include "Source Code\Rooms_Core.bb"
 Global UpdateTimer#
 
 Function UpdateDistanceTimer%()
-	If UpdateTimer <= 0.0 Then
-		UpdateTimer = 30.0
-	Else
-		UpdateTimer = UpdateTimer - fps\Factor[0]
-	EndIf
+	UpdateTimer = UpdateTimer - fps\Factor[0]
+End Function
+
+Function ResetDistanceTimer%()
+	If UpdateTimer <= 0.0 Then UpdateTimer = 35.0
 End Function
 
 Function TeleportToRoom%(r.Rooms)

@@ -2435,6 +2435,9 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("L.S.'s Note", "paper", r\x - 160 * RoomScale,  r\y + 210.0 * RoomScale, r\z + 1240.0 * RoomScale)
 			RotateEntity(it\Collider, 0.0, r\Angle, 0.0)
 			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Document SCP-268", "paper", r\x + 180 * RoomScale,  r\y + 210.0 * RoomScale, r\z + 955.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "cont2_1123"
 			;[Block]
