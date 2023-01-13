@@ -15,6 +15,11 @@ General:
 - Can put Green Jade Ring into wallet.
 - Add Blue Key.
 - Add Achievements for SCP-268, SCP-588, SCP-2022-01, and MTF.
+- New meter for SCP-714 and the Hazmat Suit that tells the player how much resistance they got against SCP-049.
+
+NPCs:
+
+- SCP-096 will now break all elevators. There shall be no escape from him.
 
 Rooms:
 
