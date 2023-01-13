@@ -139,6 +139,10 @@ Function GetINIFloat#(File$, Section$, Parameter$, DefaultValue# = 0.0)
 	Return(Float(GetINIString(File, Section, Parameter, DefaultValue)))
 End Function
 
+Function GetINIFloat2#(File$, Section$, Parameter$, DefaultValue# = 0.0)
+	Return(Float(GetINIString2(File, Section, Parameter, DefaultValue)))
+End Function
+
 Function GetINIString2$(File$, Start%, Parameter$, DefaultValue$ = "")
 	Local TemporaryString$ = ""
 	Local f% = ReadFile(File)

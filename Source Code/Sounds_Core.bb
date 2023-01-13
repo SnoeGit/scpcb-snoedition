@@ -66,7 +66,7 @@ Function PlayMTFSound%(SoundHandle%, n.NPCs)
 				Case "radio", "fineradio", "18vradio"
 					;[Block]
 					If SoundHandle <> MTFSFX[0] Lor (Not ChannelPlaying(RadioCHN[3])) Then
-						StopChannel_Strict(RadioCHN[3])
+						StopChannel(RadioCHN[3]) : RadioCHN[3] = 0
 						RadioCHN[3] = PlaySound_Strict(SoundHandle)
 					EndIf
 					;[End Block]
@@ -77,15 +77,15 @@ End Function
 
 Function LoadEventSound%(e.Events, File$, Number% = 0)
 	If Number = 0 Then
-		FreeSound_Strict(e\Sound)
+		If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
 		e\Sound = LoadSound_Strict(File)
 		Return(e\Sound)
 	ElseIf Number = 1
-		FreeSound_Strict(e\Sound2)
+		If e\Sound2 <> 0 Then FreeSound_Strict(e\Sound2) : e\Sound2 = 0
 		e\Sound2 = LoadSound_Strict(File)
 		Return(e\Sound2)
 	ElseIf Number = 2
-		FreeSound_Strict(e\Sound3)
+		If e\Sound3 <> 0 Then FreeSound_Strict(e\Sound3) : e\Sound3 = 0
 		e\Sound3 = LoadSound_Strict(File)
 		Return(e\Sound3)
 	EndIf
@@ -93,11 +93,11 @@ End Function
 
 Function LoadNPCSound%(n.NPCs, File$, Number% = 0)
 	If Number = 0 Then
-		FreeSound_Strict(n\Sound)
+		If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 		n\Sound = LoadSound_Strict(File)
 		Return(n\Sound)
 	ElseIf Number = 1
-		FreeSound_Strict(n\Sound2)
+		If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2) : n\Sound2 = 0
 		n\Sound2 = LoadSound_Strict(File)
 		Return(n\Sound2)
 	EndIf
@@ -106,7 +106,7 @@ End Function
 Function LoadTempSound%(File$)
 	Local TempSound%
 	
-	FreeSound_Strict(TempSounds[TempSoundIndex])
+	If TempSounds[TempSoundIndex] <> 0 Then FreeSound_Strict(TempSounds[TempSoundIndex]) : TempSounds[TempSoundIndex] = 0
 	TempSound = LoadSound_Strict(File)
 	TempSounds[TempSoundIndex] = TempSound
 	TempSoundIndex = ((TempSoundIndex + 1) Mod 10)
@@ -120,7 +120,7 @@ Function UpdateMusic%()
 		If NowPlaying <> ShouldPlay Then ; ~ Playing the wrong clip, fade out
 			opt\CurrMusicVolume = Max(opt\CurrMusicVolume - (fps\Factor[0] / 250.0), 0.0)
 			If opt\CurrMusicVolume = 0.0 Then
-				If NowPlaying < 66 Then StopStream_Strict(MusicCHN)
+				If NowPlaying < 66 Then StopStream_Strict(MusicCHN) : MusicCHN = 0
 				NowPlaying = ShouldPlay
 				CurrMusic = False
 			EndIf
@@ -266,24 +266,24 @@ Function KillSounds%()
 	Local i%
 	
 	For i = 0 To 9
-		FreeSound_Strict(TempSounds[i])
+		If TempSounds[i] <> 0 Then FreeSound_Strict(TempSounds[i]) : TempSounds[i] = 0
 	Next
 	
 	For e.Events = Each Events
 		If e\SoundCHN_IsStream Then
-			If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN)
+			If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN_IsStream = False
 		Else
-			StopChannel_Strict(e\SoundCHN)
+			StopChannel(e\SoundCHN) : e\SoundCHN = 0
 		EndIf
 		If e\SoundCHN2_IsStream Then
-			If e\SoundCHN2 <> 0 Then StopStream_Strict(e\SoundCHN2)
+			If e\SoundCHN2 <> 0 Then StopStream_Strict(e\SoundCHN2) : e\SoundCHN2_IsStream = False
 		Else
-			StopChannel_Strict(e\SoundCHN2)
+			StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 		EndIf
 		If e\SoundCHN3_IsStream Then
-			If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3)
+			If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3) : e\SoundCHN3_IsStream = False
 		Else
-			StopChannel_Strict(e\SoundCHN3)
+			StopChannel(e\SoundCHN3) : e\SoundCHN3 = 0
 		EndIf
 	Next
 	
@@ -291,47 +291,47 @@ Function KillSounds%()
 		If n\SoundCHN_IsStream Then
 			If n\SoundCHN <> 0 Then StopStream_Strict(n\SoundCHN)
 		Else
-			StopChannel_Strict(n\SoundCHN)
+			StopChannel(n\SoundCHN) : n\SoundCHN = 0
 		EndIf
 		If n\SoundCHN2_IsStream Then
 			If n\SoundCHN2 <> 0 Then StopStream_Strict(n\SoundCHN2)
 		Else
-			StopChannel_Strict(n\SoundCHN2)
+			StopChannel(n\SoundCHN2) : n\SoundCHN2 = 0
 		EndIf
 	Next
 	
 	For d.Doors = Each Doors
-		StopChannel_Strict(d\SoundCHN)
-		StopChannel_Strict(d\SoundCHN2)
+		StopChannel(d\SoundCHN) : d\SoundCHN = 0
+		StopChannel(d\SoundCHN2) : d\SoundCHN2 = 0
 	Next
 	
-	StopChannel_Strict(AmbientSFXCHN)
-	StopChannel_Strict(BreathCHN)
-	StopChannel_Strict(BreathGasRelaxedCHN)
-	StopChannel_Strict(VomitCHN)
-	StopChannel_Strict(CoughCHN)
-	StopChannel_Strict(SCRAMBLECHN)
+	StopChannel(AmbientSFXCHN) : AmbientSFXCHN = 0
+	StopChannel(BreathCHN) : BreathCHN = 0
+	StopChannel(BreathGasRelaxedCHN) : BreathGasRelaxedCHN = 0
+	StopChannel(VomitCHN) : VomitCHN = 0
+	StopChannel(CoughCHN) : CoughCHN = 0
+	StopChannel(SCRAMBLECHN) : SCRAMBLECHN = 0
 	
 	For i = 0 To 1
-		StopChannel_Strict(LowBatteryCHN[i])
+		StopChannel(LowBatteryCHN[i]) : LowBatteryCHN[i] = 0
 	Next
 		
 	For i = 0 To 6
-		StopChannel_Strict(RadioCHN[i])
+		StopChannel(RadioCHN[i]) : RadioCHN[i] = 0
 	Next
 	
-	If IntercomStreamCHN <> 0 Then StopStream_Strict(IntercomStreamCHN)
+	If IntercomStreamCHN <> 0 Then StopStream_Strict(IntercomStreamCHN) : IntercomStreamCHN = 0
 	
 	If opt\EnableSFXRelease Then
 		For snd.Sound = Each Sound
-			FreeSound_Strict(snd\InternalHandle)
+			If snd\InternalHandle <> 0 Then FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
 			snd\ReleaseTime = 0
 		Next
 	EndIf
 	
 	For snd.Sound = Each Sound
 		For i = 0 To MaxChannelsAmount - 1
-			StopChannel_Strict(snd\Channels[i])
+			StopChannel(snd\Channels[i]) : snd\Channels[i] = 0
 		Next
 	Next
 	
@@ -339,8 +339,8 @@ Function KillSounds%()
 End Function
 
 Function StopBreathSound%()
-	If ChannelPlaying(BreathCHN) Then StopChannel_Strict(BreathCHN)
-	If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel_Strict(BreathGasRelaxedCHN)
+	If ChannelPlaying(BreathCHN) Then StopChannel(BreathCHN) : BreathCHN = 0
+	If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel(BreathGasRelaxedCHN) : BreathGasRelaxedCHN = 0
 End Function
 
 Function GetStepSound%(Entity%)
@@ -398,7 +398,7 @@ Function GetStepSound%(Entity%)
 End Function
 
 Function PlayAnnouncement%(File$) ; ~ This function streams the announcement currently playing
-	If IntercomStreamCHN <> 0 Then StopStream_Strict(IntercomStreamCHN)
+	If IntercomStreamCHN <> 0 Then StopStream_Strict(IntercomStreamCHN) : IntercomStreamCHN = 0
 	IntercomStreamCHN = StreamSound_Strict(File, opt\SFXVolume * opt\MasterVolume, 0)
 End Function
 
@@ -424,17 +424,17 @@ Function UpdateStreamSounds%()
 		Local RN$ = PlayerRoom\RoomTemplate\Name
 		
 		If RN <> "gate_b" And RN <> "gate_a" Then
-			If IntercomStreamCHN <> 0 Then StopStream_Strict(IntercomStreamCHN)
+			If IntercomStreamCHN <> 0 Then StopStream_Strict(IntercomStreamCHN) : IntercomStreamCHN = 0
 			If RN <> "dimension_1499" Then
 				For e.Events = Each Events
 					If e\SoundCHN_IsStream Then
-						If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN)
+						If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
 					EndIf
 					If e\SoundCHN2_IsStream Then
-						If e\SoundCHN2 <> 0 Then StopStream_Strict(e\SoundCHN2)
+						If e\SoundCHN2 <> 0 Then StopStream_Strict(e\SoundCHN2) : e\SoundCHN2 = 0 : e\SoundCHN2_IsStream = False
 					EndIf
 					If e\SoundCHN3_IsStream Then
-						If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3)
+						If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0 : e\SoundCHN3_IsStream = False
 					EndIf
 				Next
 			EndIf

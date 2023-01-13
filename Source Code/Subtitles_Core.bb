@@ -59,7 +59,7 @@ Function ShowSubtitles%(Name$)
 	Local sub.Subtitles, CurrSub.Subtitles
 	Local Loc% = GetINISectionLocation(SubtitlesFile, Name)
 	Local Person% = GetINIString2(SubtitlesFile, Loc, "Person")
-	Local LinesAmount% = GetINIInt(SubtitlesFile, Loc, "LinesAmount")
+	Local LinesAmount% = GetINIInt2(SubtitlesFile, Loc, "LinesAmount")
 	Local SubID%, i%
 	
 	Select Person
@@ -94,7 +94,7 @@ Function ShowSubtitles%(Name$)
 			sub.Subtitles = CurrSub.Subtitles
 		EndIf
 		sub\Txt[SubID] = GetINIString2(SubtitlesFile, Loc, "Txt" + i)
-		sub\Timer[SubID] = 70.0 * GetINIFloat(SubtitlesFile, Loc, "Timer" + i)
+		sub\Timer[SubID] = 70.0 * GetINIFloat2(SubtitlesFile, Loc, "Timer" + i)
 	Next
 	
 	CatchErrors("ShowSubtitles")

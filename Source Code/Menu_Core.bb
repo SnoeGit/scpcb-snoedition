@@ -128,7 +128,7 @@ Function UpdateMainMenu%()
 			ShouldPlay = 66
 		ElseIf ShouldPlay = 66
 			If (Not ChannelPlaying(EndBreathCHN)) Then
-				FreeSound_Strict(EndBreathSFX)
+				FreeSound_Strict(EndBreathSFX) : EndBreathSFX = 0
 				ShouldPlay = 11
 			EndIf
 		Else
@@ -259,7 +259,7 @@ Function UpdateMainMenu%()
 						;[Block]
 						Txt = "QUIT"
 						If Temp Then
-							StopStream_Strict(MusicCHN)
+							StopStream_Strict(MusicCHN) : MusicCHN = 0
 							End()
 						EndIf
 						;[End Block]
@@ -689,9 +689,9 @@ Function UpdateMainMenu%()
 								If opt\EnableSFXRelease Then
 									For snd.Sound = Each Sound
 										For i = 0 To MaxChannelsAmount - 1
-											StopChannel_Strict(snd\Channels[i])
+											StopChannel(snd\Channels[i]) : snd\Channels[i] = 0
 										Next
-										FreeSound_Strict(snd\InternalHandle)
+										If snd\InternalHandle <> 0 Then FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
 										snd\ReleaseTime = 0
 									Next
 								Else
@@ -949,9 +949,7 @@ Function UpdateMainMenu%()
 								opt\EnableSubtitles = UpdateMainMenuTick(x, y, opt\EnableSubtitles)
 								
 								If PrevEnableSubtitles Then
-									If PrevEnableSubtitles <> opt\EnableSubtitles
-										mm\ShouldDeleteGadgets = True
-									EndIf
+									If PrevEnableSubtitles <> opt\EnableSubtitles Then mm\ShouldDeleteGadgets = True
 								EndIf
 								
 								y = y + (35 * MenuScale)
