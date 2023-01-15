@@ -1149,14 +1149,12 @@ Function UpdateNPCs%()
 							n\DropSpeed = 0.0
 							SetNPCFrame(n, 110.0)
 							
-							If (Not PlayerRoom\RoomTemplate\DisableDecals) Lor PlayerRoom\RoomTemplate\Name = "room2_bio" Lor (PlayerRoom\RoomTemplate\Name = "cont1_173" And EntityY(me\Collider) < (100.0) * RoomScale) Lor (PlayerRoom\RoomTemplate\Name = "cont2_012" And EntityY(me\Collider) > (0.0) * RoomScale) Lor (PlayerRoom\RoomTemplate\Name = "room2_test_hcz" And EntityY(me\Collider) < (-1150.0) * RoomScale) Then
+							If (Not PlayerRoom\RoomTemplate\DisableDecals) Lor PlayerRoom\RoomTemplate\Name = "room2_bio" Lor (PlayerRoom\RoomTemplate\Name = "cont1_173" And EntityY(me\Collider) < (100.0) * RoomScale) Lor (PlayerRoom\RoomTemplate\Name = "cont2_012" And EntityY(me\Collider) > (0.0) * RoomScale) Then
 								If PlayerRoom\RoomTemplate\Name <> "gate_a" And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
 									If SelectedDifficulty\AggressiveNPCs = VERY_AGGRESSIVE Then
 										n\State = n\State - (fps\Factor[0] * 2.0)
 									ElseIf PlayerRoom\RoomTemplate\Name = "cont1_035" Lor PlayerRoom\RoomTemplate\Name = "cont1_173" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_lcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_hcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_ez"
 										n\State = n\State - (fps\Factor[0] * (0.5 + (SelectedDifficulty\AggressiveNPCs * 0.25)))
-									ElseIf PlayerRoom\RoomTemplate\Name = "room2_servers_hcz"
-										n\State = n\State - (fps\Factor[0] * (0.75 + (SelectedDifficulty\AggressiveNPCs * 0.375)))
 									Else
 										n\State = n\State - (fps\Factor[0] * (1.0 + (SelectedDifficulty\AggressiveNPCs * 0.5)))
 									EndIf

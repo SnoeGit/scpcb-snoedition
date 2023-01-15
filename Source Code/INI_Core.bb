@@ -544,7 +544,7 @@ Function LoadOptionsINI%()
 	
 	opt\InvertMouseY = GetINIInt(OptionFile, "Controls", "Invert Mouse By Y-Axis", False)
 	
-	opt\MouseSmoothing = GetINIFloat(OptionFile, "Controls", "Mouse Smoothing", 1.0)
+	opt\MouseSmoothing = GetINIFloat(OptionFile, "Controls", "Mouse Smoothing", 0.5)
 	
 	key\MOVEMENT_UP = GetINIInt(OptionFile, "Controls", "Up Key", 17)
 	
@@ -782,7 +782,7 @@ Function ResetOptionsINI%()
 	
 	opt\InvertMouseY = False
 	
-	opt\MouseSmoothing = 1.0
+	opt\MouseSmoothing = 0.5
 	
 	key\MOVEMENT_UP = 17
 	

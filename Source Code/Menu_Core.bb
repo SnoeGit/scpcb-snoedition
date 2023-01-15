@@ -763,7 +763,7 @@ Function UpdateMainMenu%()
 								
 								y = y + (40 * MenuScale)
 								
-								opt\MouseSmoothing = UpdateMainMenuSlideBar(x, y, 150 * MenuScale, (opt\MouseSmoothing) * 50.0) / 50.0
+								opt\MouseSmoothing = UpdateMainMenuSlideBar(x, y, 150 * MenuScale, (opt\MouseSmoothing) * 100.0) / 100.0
 								
 								y = y + (40 * MenuScale)
 								
@@ -3569,7 +3569,7 @@ Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
 			;[Block]
 			Txt = "Adjusts the amount of smoothing of the mouse pointer."
 			R = 255 : G = 255
-			Txt2 = "Current value: " + Int(Value * 100.0) + "% (default is 100%)"
+			Txt2 = "Current value: " + Int(Value * 100.0) + "% (default is 50%)"
 			;[End Block]
 		Case Tooltip_ControlConfiguration
 			;[Block]
