@@ -6081,8 +6081,8 @@ Function UpdateEvents%()
 						EndIf
 						; ~ Reset the doors after leaving the forest
 						For i = 0 To 1
-							If fr\ForestDoors[i]\Open Then fr\ForestDoors[i]\Open = False
-							If fr\ForestDoors[i]\Locked <> 2 Then fr\ForestDoors[i]\Locked = 2
+							fr\ForestDoors[i]\Open = False
+							fr\ForestDoors[i]\Locked = 2
 						Next
 						
 						If e\room\RoomDoors[0]\Open Then
@@ -6206,7 +6206,7 @@ Function UpdateEvents%()
 						PointEntity(e\room\NPC[0]\Collider, me\Collider)
 						me\BlurTimer = Max(me\BlurTimer, 100.0)
 						
-						If e\EventState2 > 200.0 And e\EventState2 - fps\Factor[0] <= 200.0 Then 							
+						If e\EventState2 > 200.0 And e\EventState2 - fps\Factor[0] <= 200.0 Then
 							e\Sound = LoadSound_Strict("SFX\Music\Cont_1123.ogg")
 							e\SoundCHN = PlaySound_Strict(e\Sound)
 						EndIf
@@ -6232,8 +6232,10 @@ Function UpdateEvents%()
 						EndIf
 					ElseIf e\EventState = 3.0
 						If e\room\RoomDoors[0]\OpenState > 160.0 Then
-							If (Not e\Sound) Then e\Sound = LoadSound_Strict("SFX\Music\1123.ogg")
-							e\SoundCHN = PlaySound_Strict(e\Sound)
+							If (Not e\Sound) Then
+								e\Sound = LoadSound_Strict("SFX\Music\1123.ogg")
+								e\SoundCHN = PlaySound_Strict(e\Sound)
+							EndIf
 							
 							PositionEntity(e\room\NPC[0]\Collider, EntityX(e\room\Objects[4], True), EntityY(e\room\Objects[4], True), EntityZ(e\room\Objects[4], True))
 							ResetEntity(e\room\NPC[0]\Collider)
@@ -6258,7 +6260,7 @@ Function UpdateEvents%()
 								me\Bloodloss = 70.0
 								
 								PositionEntity(me\Collider, EntityX(e\room\OBJ, True), 0.3, EntityZ(e\room\OBJ, True), True)
-								ResetEntity(me\Collider)									
+								ResetEntity(me\Collider)
 								
 								e\EventState = 5.0
 								e\EventState2 = 0.0
@@ -6266,7 +6268,7 @@ Function UpdateEvents%()
 						EndIf
 					ElseIf e\EventState = 5.0
 						e\EventState2 = e\EventState2 + fps\Factor[0]
-						If e\EventState2 > 500.0 Then 
+						If e\EventState2 > 500.0 Then
 							For i = 2 To 3
 								e\room\RoomDoors[i]\Open = False
 								e\room\RoomDoors[i]\Locked = 2
@@ -6278,6 +6280,7 @@ Function UpdateEvents%()
 							me\Injuries = 1.5
 							me\Bloodloss = 70.0
 							me\BlinkTimer = -10.0
+							me\BlurTimer = 500.0
 							
 							PositionEntity(me\Collider, EntityX(e\room\Objects[6], True), EntityY(e\room\Objects[6], True), EntityZ(e\room\Objects[6], True), True)
 							ResetEntity(me\Collider)
@@ -6286,19 +6289,18 @@ Function UpdateEvents%()
 							EntityParent(de\OBJ, e\room\OBJ)
 							
 							e\room\NPC[0]\Sound = LoadSound_Strict("SFX\SCP\1123\Officer3.ogg")
+							e\room\NPC[0]\SoundCHN = PlaySound2(e\room\NPC[0]\Sound, Camera, e\room\NPC[0]\Collider, 7.0)
 							
 							e\EventState = 6.0
 						EndIf
 					ElseIf e\EventState = 6.0
 						PointEntity(e\room\NPC[0]\Collider, me\Collider)
-						AnimateNPC(e\room\NPC[0], 75.0, 128.0, 0.04, True)
-						e\EventState2 = e\EventState2 + fps\Factor[0]
-						If e\EventState2 > 1820.0 Then 
+						AnimateNPC(e\room\NPC[0], 75.0, 128.0, 0.04)
+						If (Not ChannelPlaying(e\room\NPC[0]\SoundCHN)) Then
 							PlaySound_Strict(LoadTempSound("SFX\SCP\1123\Gunshot.ogg"))
 							If e\room\NPC[0]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[0]\Sound) : e\room\NPC[0]\Sound = 0
 							e\EventState = 7.0
 						EndIf
-						If e\room\NPC[0]\Sound <> 0 Then e\room\NPC[0]\SoundCHN = LoopSound2(e\room\NPC[0]\Sound, e\room\NPC[0]\SoundCHN, Camera, e\room\NPC[0]\Collider, 7.0)
 					ElseIf e\EventState = 7.0
 						PositionEntity(me\Collider, EntityX(e\room\OBJ, True), 0.3, EntityZ(e\room\OBJ, True), True)
 						ResetEntity(me\Collider)

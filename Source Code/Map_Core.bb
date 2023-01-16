@@ -3042,25 +3042,26 @@ Function OpenCloseDoor%(d.Doors, PlaySFX% = True)
 		d\TimerState = d\Timer
 	EndIf
 	
-	Local SoundRand% = Rand(0, 2)
 	Local DoorType% = d\DoorType
 	
-	If d\DoorType = WOODEN_DOOR Then
-		If PlayerRoom\RoomTemplate\Name = "cont2_860_1" Then
-			SoundRand = 2
-		Else
-			SoundRand = Rand(0, 1)
-		EndIf
-	ElseIf d\DoorType = ONE_SIDED_DOOR
-		DoorType = DEFAULT_DOOR
-	EndIf
-	
-	Local SoundOpen% = OpenDoorSFX(DoorType, SoundRand)
-	Local SoundClose% = CloseDoorSFX(DoorType, SoundRand)
-	
-	If d\Locked = 2 Then SoundOpen = BigDoorErrorSFX[Rand(0, 2)]
+	If d\DoorType = ONE_SIDED_DOOR Then DoorType = DEFAULT_DOOR
 	
 	If PlaySFX Then
+		Local SoundRand% = Rand(0, 2)
+		
+		If DoorType = WOODEN_DOOR Then
+			If PlayerRoom\RoomTemplate\Name = "cont2_860_1" Then
+				SoundRand = 2
+			Else
+				SoundRand = Rand(0, 1)
+			EndIf
+		EndIf
+		
+		Local SoundOpen% = OpenDoorSFX(DoorType, SoundRand)
+		Local SoundClose% = CloseDoorSFX(DoorType, SoundRand)
+		
+		If DoorType = BIG_DOOR And d\Locked = 2 Then SoundOpen = BigDoorErrorSFX[Rand(0, 2)]
+		
 		If d\Open Then
 			d\SoundCHN = PlaySound2(SoundOpen, Camera, d\OBJ)
 		Else
