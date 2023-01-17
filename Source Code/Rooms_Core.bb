@@ -1314,7 +1314,7 @@ Function FillRoom%(r.Rooms)
 			ScaleEntity(r\Objects[0], 2.0, 2.0, 2.0)
 			RotateEntity(r\Objects[0], 0.0, 0.0, 0.0)
 
-			it.Items = CreateItem("Clipboard", "clipboard", r\x + 916.0 * RoomScale, r\y + 210.0 * RoomScale, r\z - 830.0 * RoomScale)
+			it.Items = CreateItem("Clipboard", "clipboard", r\x + 919.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 855.0 * RoomScale)
 			; ~ A hacky fix for clipboard's model and icon
 			it\InvImg = it\ItemTemplate\InvImg
 			SetAnimTime(it\Model, 0.0)
