@@ -4002,9 +4002,9 @@ Function UpdateEvents%()
 							If wi\HazmatSuit = 0 Then
 								InjurePlayer(fps\Factor[0] / 15000.0)
 							ElseIf wi\HazmatSuit <> 4
-								InjurePlayer(fps\Factor[0] / 20000.0)
-							Else
 								InjurePlayer(fps\Factor[0] / 25000.0)
+							Else
+								InjurePlayer(fps\Factor[0] / 30000.0)
 							EndIf
 							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (2.0 + SelectedDifficulty\AggressiveNPCs))
 						EndIf
@@ -8229,9 +8229,9 @@ Function UpdateDimension106%()
 				If wi\HazmatSuit = 0 Then
 					InjurePlayer(fps\Factor[0] / 15000.0)
 				ElseIf wi\HazmatSuit <> 4
-					InjurePlayer(fps\Factor[0] / 20000.0)
-				Else
 					InjurePlayer(fps\Factor[0] / 25000.0)
+				Else
+					InjurePlayer(fps\Factor[0] / 30000.0)
 				EndIf
 				PrevSecondaryLightOn = SecondaryLightOn : SecondaryLightOn = True
 				
