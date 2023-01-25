@@ -11,6 +11,7 @@ Bug Fixes:
 - Fixed Old Badge and Ticket HUD images not having transparency.
 - Fixed SCP-588's achievement name being the same as SCP-513's.
 - Fix SCP-106 Chamber Femur Breaker audio.
+- Fix holiday events for SCP-173.
 
 v1.8
 
