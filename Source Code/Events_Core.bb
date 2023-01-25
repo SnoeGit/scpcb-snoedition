@@ -5580,9 +5580,9 @@ Function UpdateEvents%()
 				;[Block]
 				; ~ EventState2: Are the magnets on
 				
-				If SoundTransmission Then 
+				If SoundTransmission Then
 					If e\EventState = 1.0 Then e\EventState3 = Min(e\EventState3 + fps\Factor[0], 4000.0)
-					If (Not ChannelPlaying(e\SoundCHN3)) Then e\SoundCHN3 = PlaySound_Strict(RadioStatic)   
+					If (Not ChannelPlaying(e\SoundCHN3)) Then e\SoundCHN3 = PlaySound_Strict(RadioStatic)
 				EndIf
 				
 				If PlayerRoom = e\room Then
@@ -5595,7 +5595,7 @@ Function UpdateEvents%()
 								AnimateNPC(e\room\NPC[0], 17.0, 19.0, 0.01, False)
 								If e\room\NPC[0]\Frame = 19.0 Then e\room\NPC[0]\Idle = 1
 							Else
-								AnimateNPC(e\room\NPC[0], 19.0, 17.0, -0.01, False)	
+								AnimateNPC(e\room\NPC[0], 19.0, 17.0, -0.01, False)
 								If e\room\NPC[0]\Frame = 17.0 Then e\room\NPC[0]\Idle = 0
 							EndIf
 							
@@ -5609,28 +5609,22 @@ Function UpdateEvents%()
 							
 							If GrabbedEntity = e\room\Objects[1] And ga\DrawHandIcon = True Then e\EventState2 = LeverState
 							
-							If e\EventState2 <> Temp Then 
+							If e\EventState2 <> Temp Then
 								If e\EventState2 = 0.0 Then
 									PlaySound_Strict(MagnetDownSFX)
 								Else
-									PlaySound_Strict(MagnetUpSFX)	
+									PlaySound_Strict(MagnetUpSFX)
 								EndIf
 							EndIf
 							
-							If ((e\EventState3 > 3200.0) Lor (e\EventState3 < 2500.0)) Lor (e\EventState <> 1.0) Then
-								SoundTransmission = UpdateLever(e\room\Objects[3])
-							EndIf
+							If ((e\EventState3 > 3200.0) Lor (e\EventState3 < 2500.0)) Lor (e\EventState <> 1.0) Then SoundTransmission = UpdateLever(e\room\Objects[3])
 							If (Not SoundTransmission) Then
 								If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 								If ChannelPlaying(e\SoundCHN3) Then StopChannel(e\SoundCHN3) : e\SoundCHN3 = 0
 							EndIf
 							
-							If e\EventState = 0.0 Then 
+							If e\EventState = 0.0 Then
 								If SoundTransmission And Rand(100) = 1 Then
-									If (Not e\SoundCHN2) Then
-										LoadEventSound(e, "SFX\Character\LureSubject\Idle" + Rand(6) + ".ogg", 1)
-										e\SoundCHN2 = PlaySound_Strict(e\Sound2)								
-									EndIf
 									If (Not ChannelPlaying(e\SoundCHN2)) Then
 										LoadEventSound(e, "SFX\Character\LureSubject\Idle" + Rand(6) + ".ogg", 1)
 										e\SoundCHN2 = PlaySound_Strict(e\Sound2)
@@ -5643,15 +5637,12 @@ Function UpdateEvents%()
 										If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 										FemurBreakerSFX = LoadSound_Strict("SFX\Room\106Chamber\FemurBreaker.ogg")
 										e\SoundCHN2 = PlaySound_Strict(FemurBreakerSFX)
+										
 										e\EventState = 1.0 ; ~ Start the femur breaker
 									EndIf
 								EndIf
 							ElseIf e\EventState = 1.0 ; ~ Bone was broken
 								If SoundTransmission And e\EventState3 < 2000.0 Then 
-									If (Not e\SoundCHN2) Then 
-										LoadEventSound(e, "SFX\Character\LureSubject\Sniffling.ogg", 1)
-										e\SoundCHN2 = PlaySound_Strict(e\Sound2)								
-									EndIf
 									If (Not ChannelPlaying(e\SoundCHN2)) Then
 										LoadEventSound(e, "SFX\Character\LureSubject\Sniffling.ogg", 1)
 										e\SoundCHN2 = PlaySound_Strict(e\Sound2)
@@ -5701,7 +5692,6 @@ Function UpdateEvents%()
 											n_I\Curr106\Contained = True
 										Else
 											PositionEntity(n_I\Curr106\Collider, EntityX(e\room\Objects[6], True), EntityY(e\room\Objects[6], True), EntityZ(e\room\Objects[6], True))
-											
 											ResetEntity(n_I\Curr106\Collider)
 											n_I\Curr106\Contained = False
 											ShowEntity(n_I\Curr106\OBJ)
@@ -5710,8 +5700,8 @@ Function UpdateEvents%()
 											e\EventState = 2.0
 											Exit
 										EndIf
-									EndIf	
-								EndIf 	
+									EndIf
+								EndIf
 							EndIf
 							
 							If e\EventState2 Then
@@ -5739,13 +5729,8 @@ Function UpdateEvents%()
 					EndIf
 				Else
 					If (Not PlayerInReachableRoom()) Then
-						If e\SoundCHN2 <> 0 Then If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2)
-						If e\SoundCHN3 <> 0 Then If ChannelPlaying(e\SoundCHN3) Then StopChannel(e\SoundCHN3)
-					ElseIf forest_event <> Null
-						If forest_event\EventState = 1.0 Then
-							If e\SoundCHN2 <> 0 Then If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2)
-							If e\SoundCHN3 <> 0 Then If ChannelPlaying(e\SoundCHN3) Then StopChannel(e\SoundCHN3)
-						EndIf
+						If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
+						If ChannelPlaying(e\SoundCHN3) Then StopChannel(e\SoundCHN3) : e\SoundCHN3 = 0
 					EndIf
 				EndIf
 				;[End Block]
