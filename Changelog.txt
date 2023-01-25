@@ -1,3 +1,16 @@
+v1.81
+
+General:
+
+- Nerf Super Hazmat Suit to have double stamina instead of infinite stamina.
+- Improved Heavy Gas Mask texture.
+- Removed Super Electronical Components. Normal Components can be used to craft S-NAV Navigator Ultimate instead.
+
+Bug Fixes:
+
+- Fixed Old Badge and Ticket HUD images not having transparency.
+- Fixed SCP-588's achievement name being the same as SCP-513's.
+
 v1.8
 
 General:
