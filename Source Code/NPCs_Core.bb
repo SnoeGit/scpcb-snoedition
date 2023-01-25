@@ -6915,7 +6915,7 @@ Function MoveToPocketDimension%()
 			TeleportToRoom(r)
 			
 			me\BlinkTimer = -10.0 : me\FallTimer = 0.0 : me\DropSpeed = 0.0
-			InjurePlayer(0.5, 0.0, 1500.0)
+			InjurePlayer(0.5, 0.0, 1100.0)
 			
 			wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0
 			If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0

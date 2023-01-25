@@ -746,12 +746,7 @@ Function UpdateGame%()
 			If me\Sanity < 0.0 Then
 				If me\RestoreSanity Then me\Sanity = Min(me\Sanity + fps\Factor[0], 0.0)
 				If me\Sanity < -200.0 Then
-					If SelectedDifficulty\SaveType => SAVE_ON_SCREENS Then
-						CanSave = False
-					ElseIf me\Sanity < -475.0
-						CanSave = False
-					EndIf
-						
+					If me\Sanity < -475.0 Then CanSave = False
 					DarkAlpha = Max(Min((-me\Sanity - 200.0) / 700.0, 0.6), DarkAlpha)
 					If (Not me\Terminated) Then 
 						me\HeartBeatVolume = Min(Abs(me\Sanity + 20.00) / 500.0, 1.0)
@@ -1254,7 +1249,7 @@ Function UpdateMoving%()
 	
 	If I_714\Using = 3 Then
 		me\Stamina = Min(me\Stamina, 10.0)
-		me\Sanity = Max(-720.0, me\Sanity)
+		me\Sanity = Max(-760.0, me\Sanity)
 	ElseIf I_714\Using = 2
 		me\Stamina = Min(me\Stamina, 25.0)
 	ElseIf n_I\Curr513_1 <> Null Lor I_035\Sad
@@ -1665,8 +1660,11 @@ Function UpdateMouseLook%()
 	
 	If wi\GasMask > 0 Lor wi\HazmatSuit > 0 Lor I_1499\Using > 0 Then
 		If I_714\Using = 1 And PlayerRoom\RoomTemplate\Name <> "dimension_106" Then
-			If wi\GasMask = 3 Lor wi\HazmatSuit = 3 Lor I_1499\Using = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.005 * fps\Factor[0])
-			If wi\GasMask = 2 Lor wi\GasMask = 4 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.002 * fps\Factor[0])
+			If wi\GasMask = 3 Lor I_1499\Using = 2 Then
+				me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.005 * fps\Factor[0])
+			ElseIf wi\GasMask = 2 Lor wi\GasMask = 4 Lor wi\HazmatSuit = 3
+				me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.002 * fps\Factor[0])
+			EndIf
 		EndIf
 		If (Not me\Terminated) Then
 			If (Not ChannelPlaying(BreathCHN)) Then
@@ -1677,7 +1675,7 @@ Function UpdateMouseLook%()
 		EndIf
 		
 		If wi\HazmatSuit > 0 Then
-			If wi\HazmatSuit = 1 Then me\Stamina = Min(60.0, me\Stamina)
+			If wi\HazmatSuit = 1 Then me\Stamina = Min(me\Stamina, 60.0)
 			If EntityHidden(t\OverlayID[2]) Then ShowEntity(t\OverlayID[2])
 		Else
 			If EntityHidden(t\OverlayID[1]) Then ShowEntity(t\OverlayID[1])
@@ -4167,8 +4165,8 @@ Function UpdateGUI%()
 								CreateMsg("You put on the ring.")
 								GiveAchievement(Achv714)
 							EndIf
-							SelectedItem = Null	
 						EndIf
+						SelectedItem = Null
 					;[End Block]
 				Case "kill714", "ring"
 					;[Block]
@@ -4180,8 +4178,8 @@ Function UpdateGUI%()
 							Else
 								CreateMsg("The ring is too small to fit on your fingers")
 							EndIf
-							SelectedItem = Null
 						EndIf
+						SelectedItem = Null
 					;[End Block]
 				Case "scp1025"
 					;[Block]
@@ -4314,7 +4312,7 @@ Function RenderHUD%()
 	y = opt\GraphicHeight - (95 * MenuScale)
 	
 	Color(255, 255, 255)
-	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) And (I_268\Timer =< 0.0 Lor I_268\Using = 0) Then
+	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) And (I_268\Timer =< 0.0 Lor I_268\Using = 0) And TakeOffTimer < 500.0 Then
 		For i = 0 To MaxItemAmount - 1
 			If Inventory(i) <> Null Then
 				If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") Then
@@ -5242,17 +5240,17 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					EndIf
 					;[End Block]
-				Case "badge", "oldbadge", "ticket"
+				Case "badge", "ticket"
 					;[Block]
 					If (Not SelectedItem\ItemTemplate\Img) Then
-						SelectedItem\ItemTemplate\Img = LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath)	
+						SelectedItem\ItemTemplate\Img = LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath)
 						SelectedItem\ItemTemplate\Img = ScaleImage2(SelectedItem\ItemTemplate\Img, MenuScale, MenuScale)
 						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						If SelectedItem\ItemTemplate\TempName <> "badge" Then MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
+						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
 					EndIf
 					
-					DrawBlock(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
+					DrawImage(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
 					;[End Block]
 			End Select
 			
