@@ -6,6 +6,7 @@ General:
 - Improved Heavy Gas Mask texture.
 - Removed Super Electronical Components. Normal Electrical Components can be used to craft S-NAV Navigator Ultimate instead.
 - Nerf rings and Heavy equipment against bird planes.
+- Blue First Aid Kit takes less time to finish.
 
 Bug Fixes:
 
