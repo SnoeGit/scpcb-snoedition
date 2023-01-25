@@ -8443,7 +8443,7 @@ Function UpdateDimension106%()
 							If I_714\Using = 1 Then
 								InjurePlayer((8.0 - Sqr(Dist)) * (fps\Factor[0] * 0.0003))
 							Else
-								InjurePlayer((8.0 - Sqr(Dist)) * (fps\Factor[0] * 0.00015))
+								InjurePlayer((8.0 - Sqr(Dist)) * (fps\Factor[0] * 0.0002))
 							EndIf
 							
 							If Dist < 49.0 Then 
@@ -8457,7 +8457,8 @@ Function UpdateDimension106%()
 								FreeEntity(Pvt)
 							EndIf
 						ElseIf Dist < 64.0 Then
-							InjurePlayer((8.0 - Sqr(Dist)) * (fps\Factor[0] * 0.0001))
+							EntityTexture(e\room\Objects[19], e\room\Textures[0])
+							InjurePlayer((8.0 - Sqr(Dist)) * (fps\Factor[0] * 0.00015))
 						EndIf
 						
 						me\CameraShake = Max(4.0 + ((Not Safe) * 4.0) - Sqr(Dist), 0.0)

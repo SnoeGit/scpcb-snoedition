@@ -4,7 +4,8 @@ General:
 
 - Nerf Super Hazmat Suit to have double stamina instead of infinite stamina.
 - Improved Heavy Gas Mask texture.
-- Removed Super Electronical Components. Normal Components can be used to craft S-NAV Navigator Ultimate instead.
+- Removed Super Electronical Components. Normal Electrical Components can be used to craft S-NAV Navigator Ultimate instead.
+- Nerf rings and Heavy equipment against bird planes.
 
 Bug Fixes:
 
@@ -12,6 +13,7 @@ Bug Fixes:
 - Fixed SCP-588's achievement name being the same as SCP-513's.
 - Fix SCP-106 Chamber Femur Breaker audio.
 - Fix holiday events for SCP-173.
+- Bird plane's eye now close when wearing SCP-714 or Heavy equipment. Doesn't close when using Augelite Ring.
 
 v1.8
 
