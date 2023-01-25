@@ -279,7 +279,19 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Electronical Components", "superelectronics", x, y, z)
+					For it.Items = Each Items
+						If it <> item And it\Collider <> 0 And (Not it\Picked) Then
+							If DistanceSquared(EntityX(it\Collider, True), x, EntityZ(it\Collider, True), z) < PowTwo(180.0 * RoomScale)
+								If it\ItemTemplate\TempName = "nav" Lor it\ItemTemplate\TempName = "nav300" Lor it\ItemTemplate\TempName = "nav310" Then
+									RemoveItem(it)
+									it2.Items = CreateItem("S-NAV Navigator Ultimate", "navulti", x, y, z)
+									Exit
+								EndIf
+							EndIf
+						EndIf
+					Next
+					
+					If it2 = Null Then Remove = False
 					;[End Block]
 			End Select
 			;[End Block]
@@ -328,36 +340,6 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										Exit
 										;[End Block]
 								End Select
-							EndIf
-						EndIf
-					Next
-					
-					If it2 = Null Then Remove = False
-					;[End Block]
-			End Select
-			;[End Block]
-		Case "superelectronics"
-			;[Block]
-			Select Setting
-				Case ROUGH, COARSE
-					;[Block]
-					de.Decals = CreateDecal(DECAL_BLOOD_2, x, 8.0 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.12)
-					EntityParent(de\OBJ, PlayerRoom\OBJ)
-					;[End Block]
-				Case ONETOONE
-					;[Block]
-					Remove = False
-					;[End Block]
-				Case FINE, VERYFINE
-					;[Block]
-					For it.Items = Each Items
-						If it <> item And it\Collider <> 0 And (Not it\Picked) Then
-							If DistanceSquared(EntityX(it\Collider, True), x, EntityZ(it\Collider, True), z) < PowTwo(180.0 * RoomScale)
-								If it\ItemTemplate\TempName = "nav" Lor it\ItemTemplate\TempName = "nav300" Lor it\ItemTemplate\TempName = "nav310" Then
-									RemoveItem(it)
-									it2.Items = CreateItem("S-NAV Navigator Ultimate", "navulti", x, y, z)
-									Exit
-								EndIf
 							EndIf
 						EndIf
 					Next
