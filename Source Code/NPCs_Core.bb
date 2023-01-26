@@ -3080,9 +3080,9 @@ Function UpdateNPCs%()
 				;[End Block]
 			Case NPCType035_Tentacle
 				;[Block]
-				If Dist < PowTwo(HideDistance) Then
+				If (Not n\IsDead) Then
 					Dist = EntityDistanceSquared(n\Collider, me\Collider)
-					If (Not n\IsDead) Then
+					If Dist < PowTwo(HideDistance) Then
 						Select n\State 
 							Case 0.0 ; ~ Spawns
 								;[Block]
@@ -3100,7 +3100,7 @@ Function UpdateNPCs%()
 										n\State = 1.0
 									EndIf
 								Else
-									If Dist < 6.25 Then 
+									If Dist < 6.25 Then
 										SetNPCFrame(n, 284.0)
 										n\Sound = LoadSound_Strict("SFX\SCP\035_Tentacle\TentacleSpawn.ogg")
 										PlaySound_Strict(n\Sound)
@@ -3109,16 +3109,12 @@ Function UpdateNPCs%()
 								;[End Block]
 							Case 1.0 ; ~ Idles
 								;[Block]
-								If (Not n\Sound) Then
-									FreeSound_Strict(n\Sound) : n\Sound = 0
-									n\Sound = LoadSound_Strict("SFX\SCP\035_Tentacle\TentacleIdle.ogg")
-								EndIf
+								If (Not n\Sound) Then n\Sound = LoadSound_Strict("SFX\SCP\035_Tentacle\TentacleIdle.ogg")
 								n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider)
 								
 								If Dist < 3.24 And (Not chs\NoTarget) And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
-									If Abs(DeltaYaw(n\Collider, me\Collider)) < 20.0 Then 
+									If Abs(DeltaYaw(n\Collider, me\Collider)) < 20.0 Then
 										n\State = 2.0
-										If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0 
 									EndIf
 									
 									PointEntity(n\OBJ, me\Collider)
@@ -3139,7 +3135,7 @@ Function UpdateNPCs%()
 									AnimateNPC(n, 33.0, 174.0, 2.0, False)
 								Else
 									PointEntity(n\OBJ, me\Collider)
-									RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 10.0), 0.0)							
+									RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 10.0), 0.0)
 									
 									If n\Frame > 33.0 Then n\Frame = 2.0
 									
@@ -3147,7 +3143,7 @@ Function UpdateNPCs%()
 									
 									If n\Frame >= 5.0 And n\Frame < 6.0 Then
 										If Dist < 3.24 Then
-											If Abs(DeltaYaw(n\Collider, me\Collider)) < 20.0 Then 
+											If Abs(DeltaYaw(n\Collider, me\Collider)) < 20.0 Then
 												If wi\HazmatSuit > 0 Then
 													PlaySound_Strict(LoadTempSound("SFX\General\BodyFall.ogg"))
 													InjurePlayer(Rnd(0.5))
@@ -3185,14 +3181,16 @@ Function UpdateNPCs%()
 								EndIf
 								;[End Block]
 						End Select
-					Else
-						; ~ The NPC was killed
-						AnimateNPC(n, 515.0, 551.0, 0.15, False)
-						If n\Frame >= 550.0 Then
-							HideEntity(n\OBJ)
-							HideEntity(n\Collider)
+					EndIf
+				Else
+					; ~ The NPC was killed
+					AnimateNPC(n, 515.0, 551.0, 0.15, False)
+					If n\Frame >= 550.0 Then
+						If (Not EntityHidden(n\OBJ)) Then
 							StopChannel(n\SoundCHN) : n\SoundCHN = 0
 							If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
+							HideEntity(n\Collider)
+							HideEntity(n\OBJ)
 						EndIf
 					EndIf
 				EndIf
