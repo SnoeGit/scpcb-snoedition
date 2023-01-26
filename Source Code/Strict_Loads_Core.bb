@@ -412,6 +412,7 @@ Function LoadImage_Strict%(File$)
 		If FileType(File) <> 1 Then RuntimeError("Image " + Chr(34) + File + Chr(34) + " not found. ")
 		Tmp = LoadImage(File)
 		If (Not Tmp) Then RuntimeError("Failed to load Image: " + Chr(34) + File + Chr(34))
+		BufferDirty(ImageBuffer(Tmp))
 	EndIf
 	Return(Tmp)
 End Function
@@ -423,6 +424,7 @@ Function LoadAnimImage_Strict%(File$, Width%, Height%, FirstFrame%, Count%)
 		If FileType(File) <> 1 Then RuntimeError("Animated Image " + Chr(34) + File + Chr(34) + " not found. ")
 		Tmp = LoadAnimImage(File, Width, Height, FirstFrame, Count)
 		If (Not Tmp) Then RuntimeError("Failed to load Animated Image: " + Chr(34) + File + Chr(34))
+		BufferDirty(ImageBuffer(Tmp))
 	EndIf
 	Return(Tmp)
 End Function

@@ -1683,12 +1683,10 @@ Function LoadEntities%()
 		
 		achv\AchvIMG[i] = LoadImage_Strict("GFX\menu\achievements\" + Image + ".png")
 		achv\AchvIMG[i] = ScaleImage2(achv\AchvIMG[i], opt\GraphicHeight / 768.0, opt\GraphicHeight / 768.0)
-		BufferDirty(ImageBuffer(achv\AchvIMG[i]))
 	Next
 	
 	achv\AchvLocked = LoadImage_Strict("GFX\menu\achievements\AchvLocked.png")
 	achv\AchvLocked = ScaleImage2(achv\AchvLocked, opt\GraphicHeight / 768.0, opt\GraphicHeight / 768.0)
-	BufferDirty(ImageBuffer(achv\AchvLocked))
 	
 	t\ImageID[0] = LoadImage_Strict("GFX\menu\pause_menu.png")
 	t\ImageID[0] = ScaleImage2(t\ImageID[0], MenuScale, MenuScale)
