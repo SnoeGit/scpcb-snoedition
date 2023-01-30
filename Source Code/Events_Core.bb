@@ -2311,16 +2311,18 @@ Function UpdateEvents%()
 						
 						If EntityDistanceSquared(me\Collider, e\room\Objects[1]) < 16.0 Then
 							For i = 0 To MaxItemAmount - 1
-								If Inventory(i)\ItemTemplate\Name = "SCP-268" Then
-									I_268\Using = 0
-									RemoveItem(Inventory(i))
-									Inventory(i) = CreateItem("L.S.'s Drawing", "paper", 1.0, 1.0, 1.0)
-									HideEntity(Inventory(i)\Collider)
-									Inventory(i)\Picked = True
-									Inventory(i)\ItemTemplate\Found = True
-									EntityType(Inventory(i)\Collider, HIT_ITEM)
-									ItemAmount = ItemAmount + 1
-									Exit
+								If Inventory(i) <> Null Then
+									If Inventory(i)\ItemTemplate\Name = "SCP-268" Then
+										I_268\Using = 0
+										RemoveItem(Inventory(i))
+										Inventory(i) = CreateItem("L.S.'s Drawing", "paper", 1.0, 1.0, 1.0)
+										HideEntity(Inventory(i)\Collider)
+										Inventory(i)\Picked = True
+										Inventory(i)\ItemTemplate\Found = True
+										EntityType(Inventory(i)\Collider, HIT_ITEM)
+										ItemAmount = ItemAmount + 1
+										Exit
+									EndIf
 								EndIf
 							Next
 							gateb\RoomDoors[1]\Locked = 1
@@ -2374,16 +2376,18 @@ Function UpdateEvents%()
 						
 						If EntityDistanceSquared(me\Collider, e\room\Objects[1]) < 16.0 Then
 							For i = 0 To MaxItemAmount - 1
-								If Inventory(i)\ItemTemplate\Name = "SCP-268" Then
-									I_268\Using = 0
-									RemoveItem(Inventory(i))
-									Inventory(i) = CreateItem("L.S.'s Drawing", "paper", 1.0, 1.0, 1.0)
-									HideEntity(Inventory(i)\Collider)
-									Inventory(i)\Picked = True
-									Inventory(i)\ItemTemplate\Found = True
-									EntityType(Inventory(i)\Collider, HIT_ITEM)
-									ItemAmount = ItemAmount + 1
-									Exit
+								If Inventory(i) <> Null Then
+									If Inventory(i)\ItemTemplate\Name = "SCP-268" Then
+										I_268\Using = 0
+										RemoveItem(Inventory(i))
+										Inventory(i) = CreateItem("L.S.'s Drawing", "paper", 1.0, 1.0, 1.0)
+										HideEntity(Inventory(i)\Collider)
+										Inventory(i)\Picked = True
+										Inventory(i)\ItemTemplate\Found = True
+										EntityType(Inventory(i)\Collider, HIT_ITEM)
+										ItemAmount = ItemAmount + 1
+										Exit
+									EndIf
 								EndIf
 							Next
 							gatea\RoomDoors[1]\Locked = 1
