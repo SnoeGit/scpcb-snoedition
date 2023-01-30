@@ -1382,6 +1382,7 @@ Function LoadGameQuick%(File$)
 	me\Deaf = False
 	me\DeafTimer = 0.0
 	me\Playable = True
+	me\Controllable = True
 	msg\Txt = ""
 	msg\Timer = 0.0
 	msg\HintTxt = ""

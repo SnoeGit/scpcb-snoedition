@@ -1,3 +1,16 @@
+v1.83
+
+General:
+
+- Buff damage caused by corrosion in SCP-035 Chamber and when near dead host.
+
+Big Fixes:
+
+- Clean up sound issues.
+- Fix MTF interaction with SCP-268.
+- Fix SCP-714 and Heavy Equipment not freeing you from SCP-012's control.
+- Fix being stuck when loading while controlled by SCP-012.
+
 v1.82
 
 General:
