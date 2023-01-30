@@ -2805,11 +2805,11 @@ Function UpdateEvents%()
 						EndIf
 						If EntityDistanceSquared(e\room\NPC[0]\Collider, me\Collider) < 6.25 Then
 							If wi\HazmatSuit = 0 Then
-								InjurePlayer(fps\Factor[0] / 12000.0)
+								InjurePlayer(fps\Factor[0] / 10000.0)
 							ElseIf wi\HazmatSuit <> 4
-								InjurePlayer(fps\Factor[0] / 24000.0)
+								InjurePlayer(fps\Factor[0] / 20000.0)
 							Else
-								InjurePlayer(fps\Factor[0] / 36000.0)
+								InjurePlayer(fps\Factor[0] / 30000.0)
 							EndIf
 							If e\room\NPC[1] = Null Then
 								e\room\NPC[1] = CreateNPC(NPCType035_Tentacle, EntityX(e\room\NPC[0]\Collider), 0.13, EntityZ(e\room\NPC[0]\Collider))
@@ -4003,9 +4003,9 @@ Function UpdateEvents%()
 							If wi\HazmatSuit = 0 Then
 								InjurePlayer(fps\Factor[0] / 15000.0)
 							ElseIf wi\HazmatSuit <> 4
-								InjurePlayer(fps\Factor[0] / 25000.0)
+								InjurePlayer(fps\Factor[0] / 20000.0)
 							Else
-								InjurePlayer(fps\Factor[0] / 30000.0)
+								InjurePlayer(fps\Factor[0] / 25000.0)
 							EndIf
 							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (2.0 + SelectedDifficulty\AggressiveNPCs))
 						EndIf
@@ -4716,8 +4716,8 @@ Function UpdateEvents%()
 							If n_I\Curr049 <> Null Then
 								If n_I\Curr049\State = 2.0 And EntityDistanceSquared(me\Collider, n_I\Curr049\Collider) > 256.0 Then
 									n_I\Curr049\PathStatus = 0 : n_I\Curr049\State = 4.0 : n_I\Curr049\State2 = 0.0 : n_I\Curr049\State3 = 0.0
-									TFormVector(368.0, 528.0, 176.0, e\room\OBJ, 0)
-									PositionEntity(n_I\Curr049\Collider, EntityX(e\room\OBJ) + TFormedX(), TFormedY(), EntityZ(e\room\OBJ) + TFormedZ())
+									TFormPoint(368.0, 528.0, 176.0, e\room\OBJ, 0)
+									PositionEntity(n_I\Curr049\Collider, TFormedX(), TFormedY(), TFormedZ())
 									ResetEntity(n_I\Curr049\Collider)
 									RemoveEvent(e)
 								EndIf
@@ -4873,13 +4873,15 @@ Function UpdateEvents%()
 										FreeEntity(Pvt)
 									EndIf
 								EndIf
+							Else
+								me\Controllable = True
 							EndIf
 						EndIf
 					Else
 						me\Controllable = True
-						If ChannelPlaying(e\SoundCHN) Then StopChannel(e\SoundCHN)
+						If ChannelPlaying(e\SoundCHN) Then StopChannel(e\SoundCHN) : e\SoundCHN = 0
 						If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
-						If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2)
+						If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 						If e\Sound2 <> 0 Then FreeSound_Strict(e\Sound2) : e\Sound2 = 0
 					EndIf
 				Else
@@ -5192,11 +5194,11 @@ Function UpdateEvents%()
 										EndIf
 										
 										If wi\HazmatSuit = 0 Then
-											InjurePlayer(fps\Factor[0] / 6000.0)
+											InjurePlayer(fps\Factor[0] / 5000.0)
 										ElseIf wi\HazmatSuit <> 4
-											InjurePlayer(fps\Factor[0] / 12000.0)
+											InjurePlayer(fps\Factor[0] / 10000.0)
 										Else
-											InjurePlayer(fps\Factor[0] / 18000.0)
+											InjurePlayer(fps\Factor[0] / 15000.0)
 										EndIf
 										
 										If me\Terminated And me\Bloodloss >= 100.0 Then
@@ -6559,8 +6561,8 @@ Function UpdateEvents%()
 							e\EventState2 = 1.0
 						EndIf
 						If (Not e\SoundCHN2) Then
-							StopChannel(e\SoundCHN)
-							FreeSound_Strict(e\Sound)
+							StopChannel(e\SoundCHN) : e\SoundCHN = 0
+							If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
 							e\room\NPC[0]\Sound = LoadSound_Strict("SFX\Character\Guard\SuicideGuard2.ogg")
 							e\SoundCHN2 = PlaySound2(e\room\NPC[0]\Sound, Camera, e\room\NPC[0]\Collider, 15.0)
 						EndIf
@@ -7177,7 +7179,7 @@ Function UpdateEvents%()
 								LoadEventSound(e, "SFX\Door\DoorSparks.ogg", 1)
 								e\SoundCHN2 = PlaySound2(e\Sound2, Camera, e\room\Objects[1], 5.0)
 							EndIf
-							If e\Sound <> 0 Then StopChannel(e\SoundCHN) : e\SoundCHN = 0
+							StopChannel(e\SoundCHN) : e\SoundCHN = 0
 							LoadEventSound(e, "SFX\Door\Airlock.ogg")
 							For i = 0 To 1
 								OpenCloseDoor(e\room\RoomDoors[i])
@@ -8209,9 +8211,9 @@ Function UpdateDimension106%()
 				If wi\HazmatSuit = 0 Then
 					InjurePlayer(fps\Factor[0] / 15000.0)
 				ElseIf wi\HazmatSuit <> 4
-					InjurePlayer(fps\Factor[0] / 25000.0)
+					InjurePlayer(fps\Factor[0] / 20000.0)
 				Else
-					InjurePlayer(fps\Factor[0] / 30000.0)
+					InjurePlayer(fps\Factor[0] / 25000.0)
 				EndIf
 				PrevSecondaryLightOn = SecondaryLightOn : SecondaryLightOn = True
 				
@@ -9854,21 +9856,23 @@ End Function
 
 Function RemoveEvent%(e.Events)
 	If e\SoundCHN_IsStream Then
-		If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
+		If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN_IsStream = False
 	Else
-		StopChannel(e\SoundCHN) : e\SoundCHN = 0
+		StopChannel(e\SoundCHN)
 	EndIf
+	e\SoundCHN = 0
 	If e\SoundCHN2_IsStream Then
-		If e\SoundCHN2 <> 0 Then StopStream_Strict(e\SoundCHN2) : e\SoundCHN2 = 0 : e\SoundCHN2_IsStream = False
+		If e\SoundCHN2 <> 0 Then StopStream_Strict(e\SoundCHN2) : e\SoundCHN2_IsStream = False
 	Else
-		StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
+		StopChannel(e\SoundCHN2)
 	EndIf
+	e\SoundCHN2 = 0
 	If e\SoundCHN3_IsStream Then
-		If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0 : e\SoundCHN3_IsStream = False
+		If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3) : e\SoundCHN3_IsStream = False
 	Else
-		StopChannel(e\SoundCHN3) : e\SoundCHN3 = 0
+		StopChannel(e\SoundCHN3)
 	EndIf
-	
+	e\SoundCHN3 = 0
 	If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
 	If e\Sound2 <> 0 Then FreeSound_Strict(e\Sound2) : e\Sound2 = 0
 	If e\Sound3 <> 0 Then FreeSound_Strict(e\Sound3) : e\Sound3 = 0

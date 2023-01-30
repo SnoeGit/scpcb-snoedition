@@ -1661,8 +1661,8 @@ Function UpdateMouseLook%()
 	If wi\GasMask > 0 Lor wi\HazmatSuit > 0 Lor I_1499\Using > 0 Then
 		If I_714\Using = 1 And PlayerRoom\RoomTemplate\Name <> "dimension_106" Then
 			If wi\GasMask = 3 Lor I_1499\Using = 2 Then
-				me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.005 * fps\Factor[0])
-			ElseIf wi\GasMask = 2 Lor wi\GasMask = 4 Lor wi\HazmatSuit = 3
+				me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.01 * fps\Factor[0])
+			ElseIf wi\GasMask > 1 Lor wi\HazmatSuit = 3
 				me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.002 * fps\Factor[0])
 			EndIf
 		EndIf
