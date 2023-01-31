@@ -8,6 +8,7 @@ Big Fixes:
 
 - Clean up sound issues.
 - Fix MTF interaction with SCP-268.
+- Push MTF spawn further into Entrance Zone so player doesn't activate them in Heavy Containment Zone rooms that leak into Entrance Zone area.
 - Fix SCP-714 and Heavy Equipment not freeing you from SCP-012's control.
 - Fix being stuck when loading while controlled by SCP-012.
 
