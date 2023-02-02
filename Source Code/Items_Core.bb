@@ -529,6 +529,7 @@ Function PickItem%(item.Items)
 							me\CameraShake = 0.5
 							CreateMsg("Ouch! The coin bit your finger.")
 						EndIf
+						GiveAchievement(Achv588)
 						;[End Block]
 					Case "scp148"
 						;[Block]
@@ -570,15 +571,13 @@ Function PickItem%(item.Items)
 						;[End Block]
 					Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 						;[Block]
-						CanPickItem = True
+						CanPickItem = 1
 						For z = 0 To MaxItemAmount - 1
 							If Inventory(z) <> Null Then
 								If Inventory(z)\ItemTemplate\TempName = "hazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "finehazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "superhazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "heavyhazmatsuit" Then
 									CanPickItem = 0
-									Return
 								ElseIf Inventory(z)\ItemTemplate\TempName = "vest" Lor Inventory(z)\ItemTemplate\TempName = "finevest"
 									CanPickItem = 2
-									Return
 								EndIf
 							EndIf
 						Next
@@ -595,15 +594,13 @@ Function PickItem%(item.Items)
 						;[End Block]
 					Case "vest", "finevest"
 						;[Block]
-						CanPickItem = True
+						CanPickItem = 1
 						For z = 0 To MaxItemAmount - 1
 							If Inventory(z) <> Null Then
 								If Inventory(z)\ItemTemplate\TempName = "vest" Lor Inventory(z)\ItemTemplate\TempName = "finevest" Then
 									CanPickItem = 0
-									Return
 								ElseIf Inventory(z)\ItemTemplate\TempName = "hazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "finehazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "superhazmatsuit" Lor Inventory(z)\ItemTemplate\TempName = "heavyhazmatsuit"
 									CanPickItem = 2
-									Return
 								EndIf
 							EndIf
 						Next
