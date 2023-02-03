@@ -1,9 +1,0 @@
-1. Download the game's source code
- 
-2. Download and install Blitz3D TSS
-
-3. Copy the decls from Source Code\userlibs into C:\Program Files (x86)\Blitz3D TSS\userlibs
-
-4. Open Blitz3D TSS, open the file game.bb, select Program and click Create Executable... then save the exe.
-
-5. Open 4gb_patch.exe and select your exe you made previously.
