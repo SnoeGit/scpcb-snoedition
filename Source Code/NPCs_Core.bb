@@ -1133,7 +1133,7 @@ Function UpdateNPCs%()
 				Dist = EntityDistanceSquared(me\Collider, n\Collider)
 				Angle = WrapAngle(DeltaYaw(n\Collider, me\Collider))
 				
-				If wi\SCRAMBLE And Dist < PowTwo(opt\CameraFogFar * LightVolume) And (Angle < 135.0 Lor Angle > 225.0) And EntityVisible(Camera, n\OBJ2) Then
+				If wi\SCRAMBLE > 0 And Dist < PowTwo(opt\CameraFogFar * LightVolume) And (Angle < 135.0 Lor Angle > 225.0) And EntityVisible(Camera, n\OBJ2) Then
 					If EntityHidden(n\OBJ2) Then ShowEntity(n\OBJ2)
 					ScaleSprite(n\OBJ2, Rnd(0.06, 0.08), Rnd(0.07, 0.09))
 					PositionEntity(n\OBJ2, Rnd(0.1) - 0.05, Rnd(0.1) - 0.05, Rnd(0.1) - 0.05)
@@ -1174,7 +1174,7 @@ Function UpdateNPCs%()
 							
 							If (Not chs\NoTarget) Then
 								If Dist < PowTwo(opt\CameraFogFar * LightVolume) Then
-									If (Not wi\SCRAMBLE) And (Angle < 135.0 Lor Angle > 225.0) And (EntityVisible(Camera, n\OBJ2) And EntityInView(n\OBJ2, Camera)) Then
+									If wi\SCRAMBLE = 0 And (Angle < 135.0 Lor Angle > 225.0) And (EntityVisible(Camera, n\OBJ2) And EntityInView(n\OBJ2, Camera)) Then
 										If (me\BlinkTimer < -16.0 Lor me\BlinkTimer > -6.0) And me\LightBlink <= 0.0
 											PlaySound_Strict(LoadTempSound("SFX\SCP\096\Triggered.ogg"))
 											
@@ -1445,7 +1445,7 @@ Function UpdateNPCs%()
 							
 							If (Not chs\NoTarget) Then
 								If Dist < PowTwo(opt\CameraFogFar * LightVolume) Then
-									If (Not wi\SCRAMBLE) And (Angle < 135.0 Lor Angle > 225.0) And (EntityVisible(Camera, n\OBJ2) And EntityInView(n\OBJ2, Camera)) Then
+									If wi\SCRAMBLE = 0 And (Angle < 135.0 Lor Angle > 225.0) And (EntityVisible(Camera, n\OBJ2) And EntityInView(n\OBJ2, Camera)) Then
 										If (me\BlinkTimer < -16.0 Lor me\BlinkTimer > -6.0) And me\LightBlink <= 0.0
 											PlaySound_Strict(LoadTempSound("SFX\SCP\096\Triggered.ogg"))
 											
@@ -1551,12 +1551,16 @@ Function UpdateNPCs%()
 									RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 10.0), 0.0)
 									
 									If Dist < 0.25 Then
-										If wi\HazmatSuit > 0 Lor I_714\Using Then
-											TakeOffTimer = TakeOffTimer - (fps\Factor[0] * 1.5)
+										If wi\HazmatSuit > 0 Lor I_714\Using > 1 Then
+											If I_714\Using <> 2 Then
+												TakeOffTimer = TakeOffTimer - (fps\Factor[0] * 1.5)
+											Else
+												TakeOffTimer = TakeOffTimer - (fps\Factor[0] * 3.0)
+											EndIf
 											If TakeOffTimer < 400.0 And TakeOffTimer + (fps\Factor[0] * 1.5) >= 400.0 And (Not ChannelPlaying(n\SoundCHN2)) Then
 												If wi\HazmatSuit > 0 Then
 													n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\TakeOffHazmat.ogg"))
-												ElseIf I_714\Using
+												ElseIf I_714\Using = 3
 													n\SoundCHN2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\714Equipped.ogg"))
 												EndIf
 											ElseIf TakeOffTimer <= 0.0
@@ -1575,9 +1579,13 @@ Function UpdateNPCs%()
 																TakeOffTimer = 500.0
 																Exit
 															EndIf
-														ElseIf I_714\Using
-															CreateMsg(GetLocalString("msg", "ring.forceremoved"))
-															I_714\Using = 0
+														ElseIf I_714\Using > 1
+															If I_714\Using = 3 Then
+																CreateMsg(GetLocalString("msg", "ring.forceremoved"))
+															Else
+																CreateMsg(GetLocalString("msg", "ring.resistfail"))
+															EndIf
+															I_714\Using = 1
 															PlaySound_Strict(PickSFX[3])
 															TakeOffTimer = 500.0
 															Exit
@@ -3884,7 +3892,7 @@ Function UpdateNPCs%()
 									If n\State3 < 900.0 Then
 										me\BlurTimer = Float(((Sin(MilliSecs2() / 50.0) + 1.0) * 200.0) / Sqr(Dist))
 										
-										If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 And Dist < 256.0 Then
+										If I_714\Using <> 3 And wi\GasMask <> 4 And wi\HazmatSuit <> 4 And Dist < 256.0 Then
 											If me\StaminaEffect < 1.5 Then
 												Select Rand(4)
 													Case 1
@@ -3905,10 +3913,18 @@ Function UpdateNPCs%()
 														;[End Block]
 												End Select
 											EndIf
-											me\BlinkEffect = Max(me\BlinkEffect, 1.5)
+											If I_714\Using = 2 Then
+												me\BlinkEffect = Max(me\BlinkEffect, 1.3)
+											Else
+												me\BlinkEffect = Max(me\BlinkEffect, 1.6)
+											EndIf
 											me\BlinkEffectTimer = 1000.0
 											
-											me\StaminaEffect = 2.0
+											If I_714\Using = 2 Then
+												me\StaminaEffect = 1.5
+											Else
+												me\StaminaEffect = 2.0
+											EndIf
 											me\StaminaEffectTimer = 1000.0
 										EndIf
 									EndIf

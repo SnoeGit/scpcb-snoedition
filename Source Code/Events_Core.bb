@@ -2108,12 +2108,12 @@ Function UpdateEvents%()
 						EndIf
 					EndIf
 					
-					If wi\NightVision > 0 Lor wi\SCRAMBLE Then
+					If wi\NightVision > 0 Lor wi\SCRAMBLE > 0 Then
 						Local HasBatteryFor895% = False
 						
 						For i = 0 To MaxItemAmount - 1
 							If Inventory(i) <> Null Then
-								If (wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "veryfinenvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg")) Lor (wi\SCRAMBLE And Inventory(i)\ItemTemplate\TempName = "scramble") Then
+								If (wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "veryfinenvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg")) Lor (wi\SCRAMBLE And (Inventory(i)\ItemTemplate\TempName = "scramble" Lor Inventory(i)\ItemTemplate\TempName = "finescramble")) Then
 									If Inventory(i)\State > 0.0 Lor (wi\NightVision = 3 And Inventory(i)\ItemTemplate\TempName = "finenvg") Then
 										HasBatteryFor895 = True
 										Exit
@@ -2121,11 +2121,11 @@ Function UpdateEvents%()
 								EndIf
 							EndIf
 						Next
-						If CoffinDistance < 4.0 And HasBatteryFor895 And (Not I_714\Using) Then
+						If CoffinDistance < 4.0 And HasBatteryFor895 And I_714\Using <> 3 Then
 							TurnEntity(me\Collider, 0.0, AngleDist(PointDirection(EntityX(me\Collider, True), EntityZ(me\Collider, True), EntityX(e\room\Objects[1], True), EntityZ(e\room\Objects[1], True)) + 90.0 + Sin(WrapAngle(e\EventState3 / 10.0)), EntityYaw(me\Collider)) / 4.0, 0.0, True)
 							CameraPitch = (CameraPitch * 0.8) + (((-60.0) * Min(Max((2.0 - Distance(EntityX(me\Collider, True), EntityX(e\room\Objects[1], True), EntityZ(me\Collider, True), EntityZ(e\room\Objects[1], True))) / 2.0, 0.0), 1.0)) * 0.2)
 							
-							me\Sanity = me\Sanity - (fps\Factor[0] * 1.1 / (wi\NightVision + wi\SCRAMBLE))
+							me\Sanity = me\Sanity - (fps\Factor[0] * 1.1 / (wi\NightVision + wi\SCRAMBLE) / I_714\Using)
 							me\RestoreSanity = False
 							me\BlurTimer = Sin(MilliSecs2() / 10) * Abs(me\Sanity)
 							
@@ -2137,7 +2137,7 @@ Function UpdateEvents%()
 							If me\Sanity < -1000.0 Then
 								If wi\NightVision > 1 Then
 									msg\DeathMsg = GetLocalString("death", "895.nvg.914")
-								ElseIf wi\SCRAMBLE
+								ElseIf wi\SCRAMBLE > 0
 									msg\DeathMsg = GetLocalString("death", "895.nvg.096")
 								Else
 									msg\DeathMsg = GetLocalString("death", "895.nvg")
@@ -2150,7 +2150,7 @@ Function UpdateEvents%()
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
 									For i = 0 To MaxItemAmount - 1
 										If Inventory(i) <> Null Then
-											If (wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "veryfinenvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg")) Lor (wi\SCRAMBLE And Inventory(i)\ItemTemplate\TempName = "scramble") Then
+											If (wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "veryfinenvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg")) Lor (wi\SCRAMBLE And (Inventory(i)\ItemTemplate\TempName = "scramble" Lor Inventory(i)\ItemTemplate\TempName = "finescramble")) Then
 												If Inventory(i)\State2 = 1.0 Then PlaySound_Strict(HorrorSFX[1])
 												Inventory(i)\State2 = 2.0
 												Exit
@@ -2166,7 +2166,7 @@ Function UpdateEvents%()
 									EntityTexture(t\OverlayID[4], mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_6)])
 									For i = 0 To MaxItemAmount - 1
 										If Inventory(i) <> Null Then
-											If (wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "veryfinenvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg")) Lor (wi\SCRAMBLE And Inventory(i)\ItemTemplate\TempName = "scramble") Then
+											If (wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "veryfinenvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg")) Lor (wi\SCRAMBLE And (Inventory(i)\ItemTemplate\TempName = "scramble" Lor Inventory(i)\ItemTemplate\TempName = "finescramble")) Then
 												If Inventory(i)\State2 = 0.0 Then PlaySound_Strict(HorrorSFX[0])
 												Inventory(i)\State2 = 1.0
 												Exit
@@ -2178,7 +2178,7 @@ Function UpdateEvents%()
 								EntityTexture(t\OverlayID[4], t\OverlayTextureID[4])
 								For i = 0 To MaxItemAmount - 1
 									If Inventory(i) <> Null Then
-										If (wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "veryfinenvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg")) Lor (wi\SCRAMBLE And Inventory(i)\ItemTemplate\TempName = "scramble") Then
+										If (wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "veryfinenvg" Lor Inventory(i)\ItemTemplate\TempName = "finenvg")) Lor (wi\SCRAMBLE And (Inventory(i)\ItemTemplate\TempName = "scramble" Lor Inventory(i)\ItemTemplate\TempName = "finescramble")) Then
 											Inventory(i)\State2 = 0.0
 											Exit
 										EndIf
@@ -4700,7 +4700,7 @@ Function UpdateEvents%()
 							
 							UpdateRedLight(e\room\Objects[1], 100, 50)
 							
-							If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
+							If I_714\Using <> 3 And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
 								If EntityVisible(e\room\Objects[0], Camera) Then
 									e\SoundCHN2 = LoopSound2(e\Sound2, e\SoundCHN2, Camera, e\room\Objects[1], 10.0, e\EventState3 / (86.0 * 70.0))
 									
@@ -5108,8 +5108,8 @@ Function UpdateEvents%()
 										e\EventState2 = Min(e\EventState2 + (fps\Factor[0] / 6000.0), 1.0)
 										e\EventState3 = CurveValue(e\EventState2, e\EventState3, 50.0)
 										
-										If (Not I_714\Using) And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then
-											me\Sanity = me\Sanity - (fps\Factor[0] * 1.1)
+										If I_714\Using <> 3 And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then
+											me\Sanity = me\Sanity - (fps\Factor[0] / I_714\Using)
 											me\BlurTimer = Sin(MilliSecs2() / 10.0) * Abs(me\Sanity)
 										EndIf
 										
@@ -5143,7 +5143,7 @@ Function UpdateEvents%()
 							e\EventState3 = Max(e\EventState3 - (fps\Factor[0] / 100.0), 0.0)
 						EndIf
 						
-						If e\EventState3 > 0.0 And (Not I_714\Using) And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then 
+						If e\EventState3 > 0.0 And I_714\Using <> 3 And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then 
 							e\SoundCHN = LoopSound2(e\Sound, e\SoundCHN, Camera, e\room\OBJ, 10.0, e\EventState3)
 							e\SoundCHN2 = LoopSound2(e\Sound2, e\SoundCHN2, Camera, e\room\OBJ, 10.0, (e\EventState3 - 0.5) * 2.0)
 						EndIf
@@ -6025,7 +6025,7 @@ Function UpdateEvents%()
 			Case e_cont2_1123
 				;[Block]
 				If PlayerRoom = e\room Then
-					If (Not I_714\Using) And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then
+					If I_714\Using = 1 And wi\HazmatSuit <> 4 And wi\GasMask <> 4 Then
 						If EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 0.81 Lor e\EventState > 0.0 Then
 							If e\EventState = 0.0 Then me\BlurTimer = 1000.0
 							me\CameraShake = 1.0
@@ -8233,12 +8233,16 @@ Function UpdateDimension106%()
 						
 						If Safe Lor chs\NoTarget Then
 							EntityTexture(e\room\Objects[19], e\room\Textures[0])
-						ElseIf Dist < 64.0
+						ElseIf Dist < 64.0 And I_714\Using <> 3 And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
 							e\SoundCHN = LoopSound2(e\Sound, e\SoundCHN, Camera, e\room\Objects[19], 8.0)
 							EntityTexture(e\room\Objects[19], e\room\Textures[1])
-							InjurePlayer((8.0 - Sqr(Dist)) * (fps\Factor[0] * 0.0003))
+							If I_714\Using = 1 Then
+								InjurePlayer((8.0 - Sqr(Dist)) * (fps\Factor[0] * 0.0003))
+							Else
+								InjurePlayer((8.0 - Sqr(Dist)) * (fps\Factor[0] * 0.0002))
+							EndIf
 							
-							If Dist < 49.0 Then
+							If Dist < 49.0 Then 
 								Pvt = CreatePivot()
 								PositionEntity(Pvt, EntityX(Camera), EntityY(Camera), EntityZ(Camera))
 								PointEntity(Pvt, e\room\Objects[19])
@@ -8248,6 +8252,9 @@ Function UpdateDimension106%()
 								RotateEntity(me\Collider, EntityPitch(me\Collider), CurveAngle(EntityYaw(Pvt), EntityYaw(me\Collider), 10.0), 0.0)
 								FreeEntity(Pvt)
 							EndIf
+						ElseIf Dist < 64.0 Then
+							EntityTexture(e\room\Objects[19], e\room\Textures[0])
+							InjurePlayer((8.0 - Sqr(Dist)) * (fps\Factor[0] * 0.00015))
 						EndIf
 						
 						me\CameraShake = Max(4.0 + ((Not Safe) * 4.0) - Sqr(Dist), 0.0)

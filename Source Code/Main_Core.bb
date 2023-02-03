@@ -2236,7 +2236,7 @@ Function UpdateGame%()
 				me\BlinkTimer = me\BlinkTimer - fps\Factor[0]
 			Else
 				me\BlinkTimer = me\BlinkTimer - (fps\Factor[0] * 0.6 * me\BlinkEffect)
-				If wi\NightVision = 0 And (Not wi\SCRAMBLE) Then
+				If wi\NightVision = 0 And wi\SCRAMBLE = 0 Then
 					If me\EyeIrritation > 0.0 Then me\BlinkTimer = me\BlinkTimer - Min((me\EyeIrritation / 100.0) + 1.0, 4.0) * fps\Factor[0]
 				EndIf
 			EndIf
@@ -2673,14 +2673,16 @@ Function UpdateMoving%()
 		EndIf
 	EndIf
 	
-	If I_714\Using Then
-		me\Stamina = CurveValue(Min(10.0, me\Stamina), me\Stamina, 10.0)
-		me\Sanity = Max(-850.0, me\Sanity)
-	Else
-		If wi\BallisticVest = 2 Then me\Stamina = CurveValue(Min(60.0, me\Stamina), me\Stamina, 20.0)
-		If wi\HazmatSuit = 1 Then me\Stamina = CurveValue(Min(60.0, me\Stamina), me\Stamina, 20.0)
-		If wi\GasMask = 3 Lor wi\HazmatSuit = 3 Lor I_1499\Using = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.002 * fps\Factor[0])
+	If I_714\Using = 3 Then
+		me\Stamina = Min(me\Stamina, 10.0)
+		me\Sanity = Max(-760.0, me\Sanity)
+	ElseIf I_714\Using = 2
+		me\Stamina = Min(me\Stamina, 25.0)
+	ElseIf n_I\Curr513_1 <> Null Lor I_035\Sad
+		me\Sanity = Min(me\Sanity, -100.5)
 	EndIf
+	
+	If wi\BallisticVest = 2 Then me\Stamina = Min(me\Stamina, 60.0)
 	
 	If me\Zombie Then
 		If me\Crouch Then SetCrouch(False)
@@ -3073,7 +3075,14 @@ Function UpdateMouseLook%()
 	EndIf
 	
 	If wi\GasMask > 0 Lor wi\HazmatSuit > 0 Lor I_1499\Using > 0 Then
+		If wi\GasMask = 3 Lor I_1499\Using = 2 Then
+			me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.01 * fps\Factor[0])
+		ElseIf wi\GasMask > 1 Lor wi\HazmatSuit = 3
+			me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.002 * fps\Factor[0])
+		EndIf
+		
 		If wi\HazmatSuit > 0 Then
+			If wi\HazmatSuit = 1 Then me\Stamina = Min(me\Stamina, 60.0)
 			If EntityHidden(t\OverlayID[2]) Then ShowEntity(t\OverlayID[2])
 		Else
 			If EntityHidden(t\OverlayID[1]) Then ShowEntity(t\OverlayID[1])
@@ -3119,7 +3128,7 @@ Function UpdateMouseLook%()
 		If (Not EntityHidden(t\OverlayID[8])) Then HideEntity(t\OverlayID[8])
 	EndIf
 	
-	If wi\NightVision > 0 Lor wi\SCRAMBLE Then
+	If wi\NightVision > 0 Lor wi\SCRAMBLE > 0 Then
 		If EntityHidden(t\OverlayID[4]) Then ShowEntity(t\OverlayID[4])
 		If wi\NightVision = 2 Then
 			EntityColor(t\OverlayID[4], 0.0, 100.0, 200.0)
@@ -3470,19 +3479,6 @@ Function UpdateGUI%()
 								ClosedInv = True
 								InvOpen = False
 								mo\DoubleClick = False
-								
-								If Rand(100 - Int((-me\Stamina * Rnd(5.0, 10.0)))) = 1 Then
-									If SelectedItem\ItemTemplate\TempName = "paper" Lor SelectedItem\ItemTemplate\TempName = "oldpaper" Then
-										CreateMsg(GetLocalString("msg", "droprnd.paper"))
-									ElseIf SelectedItem\ItemTemplate\TempName = "badge" Lor SelectedItem\ItemTemplate\TempName = "oldbadge"
-										CreateMsg(Format(GetLocalString("msg", "droprnd.badge"), SelectedItem\ItemTemplate\Name))
-									Else
-										CreateMsg(Format(GetLocalString("msg", "droprnd.others"), SelectedItem\ItemTemplate\Name))
-									EndIf
-									DropItem(SelectedItem, False)
-									SelectedItem = Null
-									Return
-								EndIf
 							EndIf
 						EndIf
 					EndIf
@@ -3717,7 +3713,7 @@ Function UpdateGUI%()
 								If (Not mo\MouseHit2) Then InvOpen = False
 							EndIf
 							;[End Block]
-						Case "scramble"
+						Case "scramble", "finescramble"
 							;[Block]
 							If wi\SCRAMBLE Then
 								CreateHintMsg(GetLocalString("msg", "takeoff"))
@@ -3907,6 +3903,10 @@ Function UpdateGUI%()
 										Inventory(MouseSlot)\State = Rnd(500.0)
 										CreateMsg(GetLocalString("msg", "gear.bat"))
 										;[End Block]
+									Case "finescramble"
+										;[Block]
+										CreateMsg(GetLocalString("msg", "gear.bat.notfit"))
+										;[End Block]
 									Default
 										;[Block]
 										For z = 0 To MaxItemAmount - 1
@@ -3975,6 +3975,10 @@ Function UpdateGUI%()
 										Inventory(MouseSlot)\State = Rnd(1000.0)
 										CreateMsg(GetLocalString("msg", "gear.bat"))
 										;[End Block]
+									Case "finescramble"
+										;[Block]
+										CreateMsg(GetLocalString("msg", "gear.bat.notfit"))
+										;[End Block]
 									Default
 										;[Block]
 										For z = 0 To MaxItemAmount - 1
@@ -3999,7 +4003,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(200.0)
+										Inventory(MouseSlot)\State = Rnd(100.0)
 										CreateMsg(GetLocalString("msg", "nav.bat"))
 										;[End Block]
 									Case "navulti", "nav300"
@@ -4014,7 +4018,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(200.0)
+										Inventory(MouseSlot)\State = Rnd(100.0)
 										CreateMsg(GetLocalString("msg", "radio.bat"))
 										;[End Block]
 									Case "fineradio", "veryfineradio"
@@ -4033,12 +4037,19 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Rnd(2000.0)
+										Inventory(MouseSlot)\State = Rnd(1000.0)
 										CreateMsg(GetLocalString("msg", "nvg.bat"))
 										;[End Block]
 									Case "scramble"
 										;[Block]
 										CreateMsg(GetLocalString("msg", "gear.bat.notfit"))
+										;[End Block]
+									Case "finescramble"
+										;[Block]
+										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+										RemoveItem(SelectedItem)
+										Inventory(MouseSlot)\State = Rnd(1000.0)
+										CreateMsg(GetLocalString("msg", "gear.bat"))
 										;[End Block]
 									Default
 										;[Block]
@@ -4108,6 +4119,10 @@ Function UpdateGUI%()
 										Inventory(MouseSlot)\State = Rnd(10000.0)
 										CreateMsg(GetLocalString("msg", "gear.bat"))
 										;[End Block]
+									Case "finescramble"
+										;[Block]
+										CreateMsg(GetLocalString("msg", "gear.bat.notfit"))
+										;[End Block]
 									Default
 										;[Block]
 										For z = 0 To MaxItemAmount - 1
@@ -4162,7 +4177,7 @@ Function UpdateGUI%()
 						
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
-						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.6), 100.0)
+						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.5), 100.0)
 						
 						If SelectedItem\State3 = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
@@ -4462,7 +4477,7 @@ Function UpdateGUI%()
 					EndIf
 					
 					If SelectedItem\State3 = 0.0 Then
-						If (Not I_714\Using) And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
+						If I_714\Using = 1 And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then
 							If SelectedItem\State = 7.0 Then
 								If I_008\Timer = 0.0 Then I_008\Timer = 1.0
 							Else
@@ -4611,7 +4626,8 @@ Function UpdateGUI%()
 						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
 					EndIf
 					
-					If SelectedItem\ItemTemplate\TempName <> "fineradio" And SelectedItem\ItemTemplate\TempName <> "veryfineradio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.004)
+					If SelectedItem\ItemTemplate\TempName = "radio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.006)
+					If SelectedItem\ItemTemplate\TempName = "18vradio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.003)
 					
 					; ~ RadioState[5] = Has the "use the number keys" -message been shown yet (True / False)
 					; ~ RadioState[6] = A timer for the "code channel"
@@ -4993,7 +5009,7 @@ Function UpdateGUI%()
 				Case "scp420j"
 					;[Block]
 					If CanUseItem(True) Then
-						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 4 Then
+						If I_714\Using > 1 Then
 							CreateMsg(GetLocalString("msg", "420j.no"))
 						Else
 							CreateMsg(GetLocalString("msg", "420j.yeah"))
@@ -5005,10 +5021,10 @@ Function UpdateGUI%()
 						RemoveItem(SelectedItem)
 					EndIf
 					;[End Block]
-				Case "joint"
+				Case "joint", "scp420s"
 					;[Block]
 					If CanUseItem(True) Then
-						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 4 Then
+						If I_714\Using > 1 Then
 							CreateMsg(GetLocalString("msg", "420j.no"))
 						Else
 							CreateMsg(GetLocalString("msg", "420j.dead"))
@@ -5018,39 +5034,43 @@ Function UpdateGUI%()
 						RemoveItem(SelectedItem)
 					EndIf
 					;[End Block]
-				Case "scp420s"
+				Case "scp714", "coarse714"
 					;[Block]
-					If CanUseItem(True) Then
-						If I_714\Using Lor wi\GasMask = 4 Lor wi\HazmatSuit = 4 Then
-							CreateMsg(GetLocalString("msg", "420j.no"))
-						Else
-							CreateMsg(GetLocalString("msg", "420s"))
-							msg\DeathMsg = Format(GetLocalString("death", "joint"), SubjectName)
-							Kill()
-						EndIf
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
-				Case "scp714"
-					;[Block]
-					If CanUseItem(True, True) Then
-						If I_714\Using Then
-							CreateMsg(GetLocalString("msg", "714.off"))
-							I_714\Using = False
-						Else
-							CreateMsg(GetLocalString("msg", "714.on"))
-							GiveAchievement(Achv714)
-							I_714\Using = True
+						If CanUseItem(True, True)
+							If (I_714\Using > 1 And (SelectedItem\ItemTemplate\TempName = "scp714" Lor SelectedItem\ItemTemplate\TempName = "coarse714")) Then
+								CreateMsg(GetLocalString("msg", "714.off"))
+								I_714\Using = 1 ; 1 is actually off! Done so I didn't need several If statements for sanity stuff
+							Else
+								If SelectedItem\ItemTemplate\TempName = "scp714" Then
+									I_714\Using = 3
+								Else
+									I_714\Using = 2
+								EndIf
+								CreateMsg(GetLocalString("msg", "714.on"))
+								GiveAchievement(Achv714)
+							EndIf
 						EndIf
 						SelectedItem = Null
-					EndIf
+					;[End Block]
+				Case "kill714", "ring"
+					;[Block]
+						If CanUseItem(True, True)
+							If SelectedItem\ItemTemplate\TempName = "kill714" Then
+								CreateMsg(GetLocalString("msg", "714.dead"))
+								Kill()
+								msg\DeathMsg = Format(GetLocalString("death", "ring"), SubjectName)
+							Else
+								CreateMsg(GetLocalString("msg", "714.small"))
+							EndIf
+						EndIf
+						SelectedItem = Null
 					;[End Block]
 				Case "hazmatsuit", "finehazmatsuit", "veryfinehazmatsuit", "hazmatsuit148"
 					;[Block]
 					If wi\BallisticVest = 0 Then
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
-						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 4.0), 100.0)
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 3.75), 100.0)
 						
 						If SelectedItem\State = 100.0 Then
 							If wi\HazmatSuit > 0 Then
@@ -5082,8 +5102,8 @@ Function UpdateGUI%()
 										;[End Block]
 								End Select
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
-								wi\GasMask = 0 : wi\BallisticHelmet = False : wi\SCRAMBLE = False
-								I_427\Using = False : I_714\Using = False : I_1499\Using = 0
+								wi\GasMask = 0 : wi\BallisticHelmet = False : wi\SCRAMBLE = 0
+								I_427\Using = False : I_714\Using = 1 : I_1499\Using = 0
 							EndIf
 							SelectedItem\State = 0.0
 							SelectedItem = Null
@@ -5144,7 +5164,7 @@ Function UpdateGUI%()
 						
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
-						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0]) / 1.6, 100.0)
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0]) / 1.5, 100.0)
 						
 						If SelectedItem\State = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
@@ -5183,7 +5203,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "nav", "nav310", "navulti", "nav300"
 					;[Block]
-					If SelectedItem\ItemTemplate\Name = "navulti" Lor SelectedItem\ItemTemplate\Name = "nav300" Then
+					If SelectedItem\ItemTemplate\TempName = "navulti" Lor SelectedItem\ItemTemplate\TempName = "nav300" Then
 						If (Not SelectedItem\ItemTemplate\Img) Then
 							SelectedItem\ItemTemplate\Img = LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath)
 							SelectedItem\ItemTemplate\Img = ScaleImage2(SelectedItem\ItemTemplate\Img, MenuScale, MenuScale)
@@ -5192,7 +5212,8 @@ Function UpdateGUI%()
 							MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
 						EndIf
 					Else
-						SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.005)
+						If SelectedItem\ItemTemplate\TempName = "nav" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.01)
+						If SelectedItem\ItemTemplate\TempName = "nav310" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.005)
 						
 						If SelectedItem\State > 0.0 And SelectedItem\State <= 20.0 Then
 							UpdateBatteryTimer()
@@ -5402,22 +5423,31 @@ Function UpdateGUI%()
 						EndIf
 					EndIf
 					;[End Block]
-				Case "scramble"
+				Case "scramble", "finescramble"
 					;[Block]
 					If (Not PreventItemOverlapping(False, False, False, False, True)) Then
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
-						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.6), 100.0)
+						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.5), 100.0)
 						
 						If SelectedItem\State3 = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 							
-							If wi\SCRAMBLE Then
+							If wi\SCRAMBLE > 0 Then
 								CreateMsg(GetLocalString("msg", "gear.off"))
-								wi\SCRAMBLE = False
+								wi\SCRAMBLE = 0
 							Else
 								CreateMsg(GetLocalString("msg", "gear.on"))
-								wi\SCRAMBLE = True
+								Select SelectedItem\ItemTemplate\TempName
+									Case "scramble"
+										;[Block]
+										wi\SCRAMBLE = 1
+										;[End Block]
+									Case "finescramble"
+										;[Block]
+										wi\SCRAMBLE = 2
+										;[End Block]
+								End Select
 							EndIf
 							SelectedItem\State3 = 0.0
 							SelectedItem = Null
@@ -5488,7 +5518,7 @@ Function UpdateGUI%()
 						SelectedItem\State = 0.0
 						If wi\HazmatSuit = 0 Then DropItem(SelectedItem, False)
 						;[End Block]
-					Case "nvg", "veryfinenvg", "finenvg", "scramble", "scp1025"
+					Case "nvg", "veryfinenvg", "finenvg", "scramble", "finescramble", "scp1025"
 						;[Block]
 						SelectedItem\State3 = 0.0
 						;[End Block]
@@ -5505,6 +5535,24 @@ Function UpdateGUI%()
 		EndIf
 	EndIf
 	
+	If SelectedDifficulty\InventorySlots > 3 Then
+		For i = 0 To (MaxItemAmount / 2) - 1
+			If KeyHit(i + 2) Then
+				If OtherOpen = Null And SelectedScreen = Null And (Not InvOpen) And (Not I_294\Using) And (Not MenuOpen) And (Not ConsoleOpen) Then
+					If me\Playable And (Not me\Zombie) And (Not me\Terminated) And me\SelectedEnding = -1 Then
+						If SelectedItem = Inventory(i) Then
+							If SelectedItem <> Null Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+							SelectedItem = Null
+						ElseIf SelectedItem = Null And Inventory(i) <> Null
+							SelectedItem = Inventory(i)
+							PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+						EndIf
+					EndIf
+				EndIf
+			EndIf
+		Next
+	EndIf
+	
 	For it.Items = Each Items
 		If it <> SelectedItem Then
 			Select it\ItemTemplate\TempName
@@ -5512,7 +5560,7 @@ Function UpdateGUI%()
 					;[Block]
 					it\State = 0.0
 					;[End Block]
-				Case "nvg", "veryfinenvg", "finenvg", "scramble", "scp1025"
+				Case "nvg", "veryfinenvg", "finenvg", "scramble", "finescramble", "scp1025"
 					;[Block]
 					it\State3 = 0.0
 					;[End Block]
@@ -5537,7 +5585,7 @@ Function RenderHUD%()
 	y = opt\GraphicHeight - (95 * MenuScale)
 	
 	Color(255, 255, 255)
-	If (I_714\Using Lor wi\HazmatSuit > 0) And TakeOffTimer < 500.0 Then
+	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) And TakeOffTimer < 500.0 Then
 		For i = 0 To MaxItemAmount - 1
 			If Inventory(i) <> Null Then
 				If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") Then
@@ -5595,10 +5643,10 @@ Function RenderHUD%()
 	Color(0, 0, 0)
 	Rect(x - (50 * MenuScale), y, 30 * MenuScale, 30 * MenuScale)
 	
-	If PlayerRoom\RoomTemplate\Name = "dimension_106" Lor I_714\Using Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor wi\HazmatSuit = 1 Lor wi\BallisticVest = 2 Lor I_409\Timer >= 55.0 Lor I_1025\State[0] > 0.0 Then
+	If PlayerRoom\RoomTemplate\Name = "dimension_106" Lor I_714\Using > 1 Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor wi\HazmatSuit = 1 Lor wi\BallisticVest = 2 Lor I_409\Timer >= 55.0 Lor I_1025\State[0] > 0.0 Then
 		Color(200, 0, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask = 3 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 3
+	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask > 1 Lor I_1499\Using = 2 Lor wi\HazmatSuit = 3
 		Color(0, 200, 0)
 		Rect(x - (53 * MenuScale), y - (3 * MenuScale), 36 * MenuScale, 36 * MenuScale)
 	EndIf
@@ -5822,66 +5870,71 @@ Function RenderGUI%()
 	
 	If I_294\Using Then Render294()
 	
-	If d_I\ClosestButton <> 0 And (Not InvOpen) And (Not I_294\Using) And OtherOpen = Null And d_I\SelectedDoor = Null And SelectedScreen = Null And (Not MenuOpen) And (Not ConsoleOpen) And SelectedDifficulty\OtherFactors <> EXTREME Then
-		Temp = CreatePivot()
-		PositionEntity(Temp, EntityX(Camera), EntityY(Camera), EntityZ(Camera))
-		PointEntity(Temp, d_I\ClosestButton)
-		YawValue = WrapAngle(EntityYaw(Camera) - EntityYaw(Temp))
-		If YawValue > 90.0 And YawValue <= 180.0 Then YawValue = 90.0
-		If YawValue > 180.0 And YawValue < 270.0 Then YawValue = 270.0
-		PitchValue = WrapAngle(EntityPitch(Camera) - EntityPitch(Temp))
-		If PitchValue > 90.0 And PitchValue <= 180.0 Then PitchValue = 90.0
-		If PitchValue > 180.0 And PitchValue < 270.0 Then PitchValue = 270.0
-		
-		FreeEntity(Temp)
-		
-		DrawBlock(t\IconID[5], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
-	EndIf
-	
-	If ClosestItem <> Null And (Not me\Terminated) And (Not InvOpen) And (Not I_294\Using) And OtherOpen = Null And d_I\SelectedDoor = Null And SelectedScreen = Null And (Not MenuOpen) And (Not ConsoleOpen) And SelectedDifficulty\OtherFactors <> EXTREME Then
-		YawValue = -DeltaYaw(Camera, ClosestItem\Collider)
-		If YawValue > 90.0 And YawValue <= 180.0 Then YawValue = 90.0
-		If YawValue > 180.0 And YawValue < 270.0 Then YawValue = 270.0
-		PitchValue = -DeltaPitch(Camera, ClosestItem\Collider)
-		If PitchValue > 90.0 And PitchValue <= 180.0 Then PitchValue = 90.0
-		If PitchValue > 180.0 And PitchValue < 270.0 Then PitchValue = 270.0
-		
-		DrawBlock(t\IconID[6], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
-	EndIf
-	
-	If (Not InvOpen) And (Not I_294\Using) And OtherOpen = Null And d_I\SelectedDoor = Null And SelectedScreen = Null And (Not MenuOpen) And (Not ConsoleOpen) And SelectedDifficulty\OtherFactors <> EXTREME Then
-		If ga\DrawHandIcon Then DrawBlock(t\IconID[5], mo\Viewport_Center_X - (32 * MenuScale), mo\Viewport_Center_Y - (32 * MenuScale))
-		For i = 0 To 3
-			If ga\DrawArrowIcon[i] Then
-				x = mo\Viewport_Center_X - (32 * MenuScale)
-				y = mo\Viewport_Center_Y - (32 * MenuScale)
-				Select i
-					Case 0
-						;[Block]
-						y = y - (69 * MenuScale)
-						;[End Block]
-					Case 1
-						;[Block]
-						x = x + (69 * MenuScale)
-						;[End Block]
-					Case 2
-						;[Block]
-						y = y + (69 * MenuScale)
-						;[End Block]
-					Case 3
-						;[Block]
-						x = x - (69 * MenuScale)
-						;[End Block]
-				End Select
-				DrawBlock(t\IconID[5], x, y)
-				Color(0, 0, 0)
-				Rect(x + (4 * MenuScale), y + (4 * MenuScale), 56 * MenuScale, 56 * MenuScale)
-				DrawBlock(ga\ArrowIMG[i], x + (21 * MenuScale), y + (21 * MenuScale))
+	If SelectedDifficulty\OtherFactors <> EXTREME And opt\HUDEnabled Then
+		If (Not InvOpen) And (Not I_294\Using) And OtherOpen = Null And d_I\SelectedDoor = Null And SelectedScreen = Null And (Not MenuOpen) And (Not ConsoleOpen) Then
+			
+			If d_I\ClosestButton <> 0 Then
+				Temp = CreatePivot()
+				PositionEntity(Temp, EntityX(Camera), EntityY(Camera), EntityZ(Camera))
+				PointEntity(Temp, d_I\ClosestButton)
+				YawValue = WrapAngle(EntityYaw(Camera) - EntityYaw(Temp))
+				If YawValue > 90.0 And YawValue <= 180.0 Then YawValue = 90.0
+				If YawValue > 180.0 And YawValue < 270.0 Then YawValue = 270.0
+				PitchValue = WrapAngle(EntityPitch(Camera) - EntityPitch(Temp))
+				If PitchValue > 90.0 And PitchValue <= 180.0 Then PitchValue = 90.0
+				If PitchValue > 180.0 And PitchValue < 270.0 Then PitchValue = 270.0
+				
+				FreeEntity(Temp)
+				
+				DrawBlock(t\IconID[5], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
 			EndIf
-		Next
-	EndIf
 	
-	If opt\HUDEnabled And SelectedDifficulty\OtherFactors <> EXTREME Then RenderHUD()
+			If ClosestItem <> Null And (Not me\Terminated) Then
+				YawValue = -DeltaYaw(Camera, ClosestItem\Collider)
+				If YawValue > 90.0 And YawValue <= 180.0 Then YawValue = 90.0
+				If YawValue > 180.0 And YawValue < 270.0 Then YawValue = 270.0
+				PitchValue = -DeltaPitch(Camera, ClosestItem\Collider)
+				If PitchValue > 90.0 And PitchValue <= 180.0 Then PitchValue = 90.0
+				If PitchValue > 180.0 And PitchValue < 270.0 Then PitchValue = 270.0
+				Text(mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (64 * MenuScale), ClosestItem\ItemTemplate\Name, True, False)
+				DrawBlock(t\IconID[6], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
+			EndIf
+			
+			If ga\DrawHandIcon Then DrawBlock(t\IconID[5], mo\Viewport_Center_X - (32 * MenuScale), mo\Viewport_Center_Y - (32 * MenuScale))
+			For i = 0 To 3
+				If ga\DrawArrowIcon[i] Then
+					x = mo\Viewport_Center_X - (32 * MenuScale)
+					y = mo\Viewport_Center_Y - (32 * MenuScale)
+					Select i
+						Case 0
+							;[Block]
+							y = y - (69 * MenuScale)
+							;[End Block]
+						Case 1
+							;[Block]
+							x = x + (69 * MenuScale)
+							;[End Block]
+						Case 2
+							;[Block]
+							y = y + (69 * MenuScale)
+							;[End Block]
+						Case 3
+							;[Block]
+							x = x - (69 * MenuScale)
+							;[End Block]
+					End Select
+					DrawBlock(t\IconID[5], x, y)
+					Color(0, 0, 0)
+					Rect(x + (4 * MenuScale), y + (4 * MenuScale), 56 * MenuScale, 56 * MenuScale)
+					DrawBlock(ga\ArrowIMG[i], x + (21 * MenuScale), y + (21 * MenuScale))
+				EndIf
+			Next
+				
+		EndIf
+	
+		RenderHUD()
+	
+	EndIf
 	If chs\DebugHUD <> 0 Then RenderDebugHUD()
 	
 	If SelectedScreen <> Null Then
@@ -6056,7 +6109,11 @@ Function RenderGUI%()
 						;[End Block]
 					Case "scp714"
 						;[Block]
-						If I_714\Using Then ShouldDrawRect = True
+						If I_714\Using = 3 Then ShouldDrawRect = True
+						;[End Block]
+					Case "coarse714"
+						;[Block]
+						If I_714\Using = 2 Then ShouldDrawRect = True
 						;[End Block]
 					Case "nvg"
 						;[Block]
@@ -6072,7 +6129,11 @@ Function RenderGUI%()
 						;[End Block]
 					Case "scramble"
 						;[Block]
-						If wi\SCRAMBLE Then ShouldDrawRect = True
+						If wi\SCRAMBLE = 1 Then ShouldDrawRect = True
+						;[End Block]
+					Case "finescramble"
+						;[Block]
+						If wi\SCRAMBLE = 2 Then ShouldDrawRect = True
 						;[End Block]
 					Case "scp1499"
 						;[Block]
@@ -6100,7 +6161,11 @@ Function RenderGUI%()
 			RenderFrame(x, y, INVENTORY_GFX_SIZE, INVENTORY_GFX_SIZE, (x Mod 64), (x Mod 64))
 			
 			If Inventory(n) <> Null Then
-				If IsMouseOn = n Lor SelectedItem <> Inventory(n) Then DrawBlock(Inventory(n)\InvImg, x + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale), y + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale))
+				If IsMouseOn = n Lor SelectedItem <> Inventory(n) Then
+					DrawBlock(Inventory(n)\InvImg, x + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale), y + (INVENTORY_GFX_SIZE / 2) - (32 * MenuScale))
+					SetFont(fo\FontID[Font_Default])
+					If n < MaxItemAmount / 2 Then Text(x + (32 * MenuScale), y - (9 * MenuScale), n + 1, True, True)
+				EndIf
 			EndIf
 			
 			If Inventory(n) <> Null And SelectedItem <> Inventory(n) Then
@@ -6607,7 +6672,7 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					EndIf
 					;[End Block]
-				Case "scramble"
+				Case "scramble", "finescramble"
 					;[Block]
 					If (Not PreventItemOverlapping(False, False, False, False, True)) Then
 						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
