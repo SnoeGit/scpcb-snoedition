@@ -865,7 +865,7 @@ CreateItemTemplate(GetLocalString("items", "doc005"), "Document SCP-005", "paper
 	CreateItemTemplate(GetLocalString("items", "radio"), "Radio Transceiver", "veryfineradio", "radio.b3d", "INV_radio.png", "radio.png", 1.0, 1)
 	CreateItemTemplate(GetLocalString("items", "radio"), "Radio Transceiver", "18vradio", "radio.b3d", "INV_radio.png", "radio.png", 1.02, 1)
 	
-	CreateItemTemplate(GetLocalString("items", "hand_1"), "Severed Hand", "hand", "severed_hand.b3d", "INV_severed_hand(1).png", "", 0.03, 2)
+	CreateItemTemplate(GetLocalString("items", "hand_1"), "White Severed Hand", "hand", "severed_hand.b3d", "INV_severed_hand(1).png", "", 0.03, 2)
 	CreateItemTemplate(GetLocalString("items", "hand_2"), "Black Severed Hand", "hand2", "severed_hand.b3d", "INV_severed_hand(2).png", "", 0.03, 2, "severed_hand(2).png")
 	
 	CreateItemTemplate(GetLocalString("items", "nav"), "S-NAV Navigator", "nav", "navigator.b3d", "INV_navigator.png", "navigator.png", 0.0008, 1)

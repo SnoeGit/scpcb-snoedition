@@ -10,7 +10,9 @@
 <Folders>
 </Folders>
 <Files>
+ AbsPath="\Source Code\914_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Achievements_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
+ AbsPath="\Source Code\Console_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Difficulty_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Events_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Game.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
@@ -18,7 +20,7 @@
  AbsPath="\Source Code\INI_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Items_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\KeyBinds_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
- AbsPath="\Source Code\Language_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
+ AbsPath="\Source Code\Launcher_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Loading_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Main_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Map_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
@@ -27,6 +29,7 @@
  AbsPath="\Source Code\Menu_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\NPCs_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Particles_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
+ AbsPath="\Source Code\Rooms_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Save_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Sky_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Sounds_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"

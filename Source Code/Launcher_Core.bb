@@ -1,3 +1,186 @@
+Const LauncherWidth% = 640
+Const LauncherHeight% = 480
+
+Global LauncherBG%
+
+Function UpdateLauncher%(lnchr.Launcher)
+	Local i%, n%
+	
+	MenuScale = 1
+	
+	Graphics3D(LauncherWidth, LauncherHeight, 32, 2)
+	
+	SetBuffer(BackBuffer())
+	
+	opt\RealGraphicWidth = opt\GraphicWidth
+	opt\RealGraphicHeight = opt\GraphicHeight
+	
+	fo\FontID[Font_Default] = LoadFont_Strict(FontsPath + GetFileLocalString(FontsFile, "Default", "File"), GetFileLocalString(FontsFile, "Default", "Size"), True)
+	SetFont2(fo\FontID[Font_Default])
+	
+	MenuWhite = LoadImage_Strict("GFX\Menu\menu_white.png")
+	MenuBlack = LoadImage_Strict("GFX\Menu\menu_black.png")
+	
+	Local LauncherIMG%[2]
+	Local LauncherMediaWidth%
+	
+	LauncherIMG[0] = LoadAnimImage_Strict("GFX\menu\launcher_media.png", 64, 64, 0, 3)
+	LauncherMediaWidth = ImageWidth(LauncherIMG[0]) / 2
+	LauncherIMG[1] = LoadAnimImage_Strict("GFX\menu\language_button.png", 40, 40, 0, 2)
+	
+	For i = 1 To lnchr\TotalGFXModes
+		Local SameFound% = False
+		
+		For n = 0 To lnchr\TotalGFXModes - 1
+			If lnchr\GFXModeWidths[n] = GfxModeWidth(i) And lnchr\GFXModeHeights[n] = GfxModeHeight(i) Then
+				SameFound = True
+				Exit
+			EndIf
+		Next
+		If (Not SameFound) Then
+			If GfxModeWidth(i) >= 800 And GfxModeHeight(i) >= 600 Then
+				If opt\GraphicWidth = GfxModeWidth(i) And opt\GraphicHeight = GfxModeHeight(i) Then lnchr\SelectedGFXMode = lnchr\GFXModes
+				lnchr\GFXModeWidths[lnchr\GFXModes] = GfxModeWidth(i)
+				lnchr\GFXModeHeights[lnchr\GFXModes] = GfxModeHeight(i)
+				lnchr\GFXModes = lnchr\GFXModes + 1
+			EndIf
+		EndIf
+	Next
+	
+	AppTitle(GetLocalString("launcher", "title"))
+	
+	Local Quit% = False
+	
+	Repeat
+		Cls()
+		
+		mo\MouseHit1 = MouseHit(1)
+		
+		Color(255, 255, 255)
+		If (Not LauncherBG) Then LauncherBG = LoadImage_Strict("GFX\menu\launcher.png")
+		DrawBlock(LauncherBG, 0, 0)
+		
+		; ~ Resolution selector
+		Text2(LauncherWidth - 620, LauncherHeight - 303, GetLocalString("launcher", "resolution"))
+		
+		Local x% = LauncherWidth - 600
+		Local y% = LauncherHeight - 269
+		
+		For i = 0 To lnchr\GFXModes - 1
+			Color(0, 0, 0)
+			If lnchr\SelectedGFXMode = i Then Rect(x - 1, y - 5, 100, 20, False)
+			
+			Text2(x, y, (lnchr\GFXModeWidths[i] + "x" + lnchr\GFXModeHeights[i]))
+			If MouseOn(x - 1, y - 5, 100, 20) Then
+				Color(100, 100, 100)
+				Rect(x - 1, y - 5, 100, 20, False)
+				If mo\MouseHit1 Then lnchr\SelectedGFXMode = i
+			EndIf
+			
+			y = y + 20
+			If y >= LauncherHeight - 155 Then
+				y = LauncherHeight - 269
+				x = x + 100
+			EndIf
+		Next
+		; ~ Display selector
+		Color(255, 255, 255)
+		Text2(LauncherWidth - 185, LauncherHeight - 245, GetLocalString("launcher", "display"))
+		
+		Local Txt$
+		
+		Select opt\DisplayMode
+			Case 0
+				;[Block]
+				Txt = GetLocalString("launcher", "display.fullscreen")
+				;[End Block]
+			Case 1
+				;[Block]
+				Txt = GetLocalString("launcher", "display.borderless")
+				If lnchr\GFXModeWidths[lnchr\SelectedGFXMode] < DesktopWidth() Then
+					Text2(LauncherWidth - 290, LauncherHeight - 68, Format(Format(GetLocalString("launcher", "upscale"), DesktopWidth(), "{0}"), DesktopHeight(), "{1}"))
+				ElseIf lnchr\GFXModeWidths[lnchr\SelectedGFXMode] > DesktopWidth() Then
+					Text2(LauncherWidth - 290, LauncherHeight - 68, Format(Format(GetLocalString("launcher", "downscale"), DesktopWidth(), "{0}"), DesktopHeight(), "{1}"))
+				EndIf
+				;[End Block]
+			Case 2
+				;[Block]
+				Txt = GetLocalString("launcher", "display.windowed")
+				;[End Block]
+		End Select
+		
+		Text2(LauncherWidth - 162, LauncherHeight - 133, Format(Format(GetLocalString("launcher", "currres"), lnchr\GFXModeWidths[lnchr\SelectedGFXMode], "{0}"), lnchr\GFXModeHeights[lnchr\SelectedGFXMode], "{1}"), True)
+		RenderFrame(LauncherWidth - 185, LauncherHeight - 226, 145, 30)
+		Text2(LauncherWidth - 112.5, LauncherHeight - 216, Txt, True)
+		If UpdateLauncherButton(LauncherWidth - 40, LauncherHeight - 226, 30, 30, ">", False) Then opt\DisplayMode = ((opt\DisplayMode + 1) Mod 3)
+		; ~ Launcher tick
+		Text2(LauncherWidth - 155, LauncherHeight - 275, GetLocalString("launcher", "launcher"))
+		opt\LauncherEnabled = UpdateLauncherTick(LauncherWidth - 185, LauncherHeight - 278, opt\LauncherEnabled)
+		; ~ Media buttons
+		If MouseOn(LauncherWidth - 620, LauncherHeight - 86, 64, 64) Then
+			Rect(LauncherWidth - 621, LauncherHeight - 87, 66, 66, False)
+			Text2(LauncherWidth - 620 + LauncherMediaWidth, LauncherHeight - 106, "DISCORD", True)
+			If mo\MouseHit1 Then PlaySound_Strict(ButtonSFX) : ExecFile_Strict("https://discord.gg/n7KdW4u")
+		EndIf
+		DrawBlock(LauncherIMG[0], LauncherWidth - 620, LauncherHeight - 86, 0)
+		If MouseOn(LauncherWidth - 510, LauncherHeight - 86, 64, 64) Then
+			Rect(LauncherWidth - 511, LauncherHeight - 87, 66, 66, False)
+			Text2(LauncherWidth - 510 + LauncherMediaWidth, LauncherHeight - 106, "MODDB", True)
+			If mo\MouseHit1 Then PlaySound_Strict(ButtonSFX) : ExecFile_Strict("https://www.moddb.com/mods/scp-containment-breach-ultimate-edition")
+		EndIf
+		DrawBlock(LauncherIMG[0], LauncherWidth - 510, LauncherHeight - 86, 1)
+		If MouseOn(LauncherWidth - 400, LauncherHeight - 86, 64, 64) Then
+			Rect(LauncherWidth - 401, LauncherHeight - 87, 66, 66, False)
+			Text2(LauncherWidth - 400 + LauncherMediaWidth, LauncherHeight - 106, "YOUTUBE", True)
+			If mo\MouseHit1 Then PlaySound_Strict(ButtonSFX) : ExecFile_Strict("https://www.youtube.com/channel/UCPqWOCPfKooDnrLNzA67Acw")
+		EndIf
+		DrawBlock(LauncherIMG[0], LauncherWidth - 400, LauncherHeight - 86, 2)
+		; ~ Language selector
+		If MouseOn(LauncherWidth - 185, LauncherHeight - 186, 40, 40) Then
+			DrawImage(LauncherIMG[1], LauncherWidth - 185, LauncherHeight - 186, 1)
+			Rect(LauncherWidth - 185, LauncherHeight - 186, 40, 40, False)
+			Text2(LauncherWidth - 185 + 45, LauncherHeight - 166, GetLocalString("launcher", "language"), False, True)
+			If mo\MouseHit1 Then PlaySound_Strict(ButtonSFX) : LanguageSelector()
+		Else
+			DrawImage(LauncherIMG[1], LauncherWidth - 185, LauncherHeight - 186, 0)
+		EndIf
+		; ~ Report button
+		If UpdateLauncherButton(LauncherWidth - 300, LauncherHeight - 105, 165, 30, GetLocalString("launcher", "report"), False, False) Then ExecFile_Strict("https://www.moddb.com/mods/scp-containment-breach-ultimate-edition/news/bug-reports1")
+		; ~ Changelog button
+		If UpdateLauncherButton(LauncherWidth - 300, LauncherHeight - 50, 165, 30, GetLocalString("launcher", "changelog"), False, False) Then ExecFile_Strict("Changelog.txt")
+		; ~ Launch button
+		If UpdateLauncherButton(LauncherWidth - 120, LauncherHeight - 105, 100, 30, GetLocalString("launcher", "launch"), False, False) Then
+			If opt\DisplayMode = 1 Then
+				opt\GraphicWidth = DesktopWidth()
+				opt\GraphicHeight = DesktopHeight()
+			Else
+				opt\GraphicWidth = lnchr\GFXModeWidths[lnchr\SelectedGFXMode]
+				opt\GraphicHeight = lnchr\GFXModeHeights[lnchr\SelectedGFXMode]
+			EndIf
+			opt\RealGraphicWidth = opt\GraphicWidth
+			opt\RealGraphicHeight = opt\GraphicHeight
+			Exit
+		EndIf
+		; ~ Exit button
+		If UpdateLauncherButton(LauncherWidth - 120, LauncherHeight - 50, 100, 30, GetLocalString("launcher", "exit"), False, False) Then
+			Quit = True
+			Exit
+		EndIf
+		Flip()
+	Forever
+	
+	IniWriteString(OptionFile, "Global", "Width", lnchr\GFXModeWidths[lnchr\SelectedGFXMode])
+	IniWriteString(OptionFile, "Global", "Height", lnchr\GFXModeHeights[lnchr\SelectedGFXMode])
+	IniWriteString(OptionFile, "Advanced", "Launcher Enabled", opt\LauncherEnabled)
+	IniWriteString(OptionFile, "Global", "Display Mode", opt\DisplayMode)
+	
+	For i = 0 To 1
+		FreeImage(LauncherIMG[i]) : LauncherIMG[i] = 0
+	Next
+	
+	If Quit Then End()
+End Function
+
 Type Language ; ~ Game Language
 	Field CurrentLanguage$
 	Field LanguagePath$
@@ -6,6 +189,7 @@ End Type
 Type ListLanguage ; ~ Languages in the list
 	Field Name$
 	Field ID$
+	Field WeblateID$
 	Field Author$
 	Field LastModify$
 	Field Flag$
@@ -71,6 +255,7 @@ Function LanguageSelector%()
 				lan.ListLanguage = New ListLanguage
 				lan\Name = ParseDomainTXT(l, "name") ; ~ Name of localization
 				lan\ID = ParseDomainTXT(l, "id") ; ~ Language ID of localization
+				lan\WeblateID = ParseDomainTXT(l, "weblate") ; ~ Language ID in ZiYue Weblate
 				lan\Author = ParseDomainTXT(l, "author") ; ~ Author of translation
 				lan\LastModify = ParseDomainTXT(l, "mod") ; ~ Last modify date
 				lan\Full = Int(ParseDomainTXT(l, "full")) ; ~ Full complete translation
@@ -98,7 +283,7 @@ Function LanguageSelector%()
 	Local SelectedLanguage.ListLanguage = Null
 	Local MouseHoverLanguage.ListLanguage = Null
 	Local CurrentStatus% = LANGUAGE_STATUS_NULL
-	Local RequestLanguageID$ = ""
+	Local RequestLanguage.ListLanguage = Null
 	Local StatusTimer% = 0
 	
 	AppTitle(GetLocalString("language", "title"))
@@ -107,13 +292,16 @@ Function LanguageSelector%()
 		Select CurrentStatus
 			Case LANGUAGE_STATUS_DOWNLOAD_START
 				;[Block]
-				DownloadFile("https://files.ziyuesinicization.site/cbue/" + RequestLanguageID + ".zip", BasePath + "/local.zip")
+				DownloadFile("https://files.ziyuesinicization.site/cbue/" + RequestLanguage\ID + ".zip", BasePath + "/local.zip")
+				DownloadFile("http://weblate.ziyuesinicization.site/api/translations/scpcb-ue/local-ini/" + RequestLanguage\WeblateID + "/file/", BasePath + "/local.ini") ; ~ Download local.ini from ZiYue Weblate
 				CurrentStatus = LANGUAGE_STATUS_UNPACK_REQUEST
 				;[End Block]
 			Case LANGUAGE_STATUS_UNPACK_START
 				;[Block]
-				CreateDir(LocalizaitonPath + RequestLanguageID)
-				Unzip(BasePath + "/local.zip", LocalizaitonPath + RequestLanguageID)
+				; ~ Unzip function will delete everything in the directory, so we need move local.ini to directory after unziping
+				CreateDir(LocalizaitonPath + RequestLanguage\ID)
+				Unzip(BasePath + "/local.zip", LocalizaitonPath + RequestLanguage\ID)
+				CopyFile(BasePath + "/local.ini", LocalizaitonPath + RequestLanguage\ID + "/Data/local.ini")
 				StatusTimer = MilliSecs2()
 				CurrentStatus = LANGUAGE_STATUS_DONE
 				;[End Block]
@@ -139,19 +327,23 @@ Function LanguageSelector%()
 		Color(255, 255, 255)
 		If (Not LanguageBG) Then LanguageBG = LoadImage_Strict("GFX\Menu\Language.png")
 		DrawBlock(LanguageBG, 0, 0)
-		Rect(479, 195, 155, 110)
+		Rect(LauncherWidth - 161, LauncherHeight - 285, 155, 110)
 		
 		If LinesAmount > 13 Then
-			y = 200 - (20 * ScrollMenuHeight * ScrollBarY)
+			y = LauncherHeight - 280 - (20 * ScrollMenuHeight * ScrollBarY)
 			SetBuffer(ImageBuffer(LanguageIMG))
 			DrawImage(LanguageBG, -20, -195)
 			LinesAmount = 0
 			For lan.ListLanguage = Each ListLanguage
 				Color(0, 0, 0)
 				LimitTextWithImage(lan\Name + "(" + lan\ID + ")", 2, y - 195, 432, lan\FlagImg)
-				If MouseOn(20, y - CurrFontHeight, 430, 20) Then
-					DrawImage(ButtonImages, 405, y - 199, 5)
-					If MouseOn(425, y - 4, 21, 21) Then MouseHoverLanguage = lan
+				If MouseOn(LauncherWidth - 620, y - CurrFontHeight, 430, 20) Then
+					DrawImage(ButtonImages, LauncherWidth - 235, y - 199, 5)
+					If MouseOn(LauncherWidth - 215, y - 4, 21, 21) Then
+						Color(150, 150, 150)
+						Rect(LauncherWidth - 215, y - 4, 20, 20, False)
+						MouseHoverLanguage = lan
+					EndIf
 				EndIf
 				If lan\ID = opt\Language Then
 					Color(200, 0, 0)
@@ -161,7 +353,7 @@ Function LanguageSelector%()
 					Color(0, 0, 0)
 					Rect(0, y - 195 - CurrFontHeight, 430, 20, False)
 				EndIf
-				If MouseOn(20, y - CurrFontHeight, 432, 20) Then
+				If MouseOn(LauncherWidth - 620, y - CurrFontHeight, 432, 20) Then
 					Color(150, 150, 150)
 					Rect(0, y - 195 - CurrFontHeight, 430, 20, False)
 					If mo\MouseHit1 Then SelectedLanguage = lan
@@ -170,32 +362,36 @@ Function LanguageSelector%()
 				LinesAmount = LinesAmount + 1
 			Next
 			SetBuffer(BackBuffer())
-			DrawBlock(LanguageIMG, 20, 195)
+			DrawBlock(LanguageIMG, LauncherWidth - 620, LauncherHeight - 285)
 			Color(10, 10, 10)
-			Rect(452, 195, 20, 254, True)
+			Rect(LauncherWidth - 188, LauncherHeight - 285, 20, 254, True)
 			ScrollMenuHeight = LinesAmount - 12
 			ScrollBarY = UpdateLauncherScrollBar(452, 195, 20, 254, 452, 195 + (254 - (254 - (4 * ScrollMenuHeight))) * ScrollBarY, 20, 254 - (4 * ScrollMenuHeight), ScrollBarY, 1)
 		Else
-			y = 200
+			y = LauncherHeight - 280
 			LinesAmount = 0
 			For lan.ListLanguage = Each ListLanguage
 				Color(0, 0, 0)
-				LimitTextWithImage(lan\Name + "(" + lan\ID + ")", 21, y, 432, lan\FlagImg)
-				If MouseOn(20, y - CurrFontHeight, 430, 20) Then
-					DrawImage(ButtonImages, 425, y - 4, 5)
-					If MouseOn(425, y - 4, 21, 21) Then MouseHoverLanguage = lan
+				LimitTextWithImage(lan\Name + "(" + lan\ID + ")", LauncherWidth - 619, y, 432, lan\FlagImg)
+				If MouseOn(LauncherWidth - 620, y - CurrFontHeight, 430, 20) Then
+					DrawImage(ButtonImages, LauncherWidth - 215, y - 4, 5)
+					If MouseOn(LauncherWidth - 215, y - 4, 21, 21) Then
+						Color(150, 150, 150)
+						Rect(LauncherWidth - 215, y - 4, 20, 20, False)
+						MouseHoverLanguage = lan
+					EndIf
 				EndIf
 				If lan\ID = opt\Language Then
 					Color(200, 0, 0)
-					Rect(20, y - CurrFontHeight, 430, 20, False)
+					Rect(LauncherWidth - 620, y - CurrFontHeight, 430, 20, False)
 				EndIf
 				If SelectedLanguage <> Null And lan = SelectedLanguage Then
 					Color(0, 0, 0)
-					Rect(20, y - CurrFontHeight, 430, 20, False)
+					Rect(LauncherWidth - 620, y - CurrFontHeight, 430, 20, False)
 				EndIf
-				If MouseOn(20, y - CurrFontHeight, 432, 20) Then
+				If MouseOn(LauncherWidth - 620, y - CurrFontHeight, 432, 20) Then
 					Color(150, 150, 150)
-					Rect(20, y - CurrFontHeight, 430, 20, False)
+					Rect(LauncherWidth - 620, y - CurrFontHeight, 430, 20, False)
 					If mo\MouseHit1 Then SelectedLanguage = lan
 				EndIf
 				y = y + 20
@@ -220,41 +416,41 @@ Function LanguageSelector%()
 		EndIf
 		
 		Color(0, 0, 0)
-		RowText(InfoBoxContent, 481, 199, 151, 102)
+		RowText(InfoBoxContent, LauncherWidth - 159, LauncherHeight - 281, 151, 102)
 		
 		If SelectedLanguage <> Null Then
 			If SelectedLanguage\ID = opt\Language Then
-				; ~ Just save this line, okay?
+				If UpdateLauncherButtonWithImage(LauncherWidth - 161, LauncherHeight - 115, 155, 30, GetLocalString("language", "contribute"), ButtonImages, 4) Then ExecFile_Strict("https://github.com/Jabka666/scpcb-ue-my/wiki/How-to-contribute-a-language")
 			ElseIf SelectedLanguage\Name = "English"
-				If UpdateLauncherButtonWithImage(479, LauncherHeight - 115, 155, 30, GetLocalString("language", "set"), ButtonImages, 2) Then
+				If UpdateLauncherButtonWithImage(LauncherWidth - 161, LauncherHeight - 115, 155, 30, GetLocalString("language", "set"), ButtonImages, 2) Then
 					SetLanguage(SelectedLanguage\ID)
+					; ~ Reload some stuff manually
 					fo\FontID[Font_Default] = LoadFont_Strict(FontsPath + GetFileLocalString(FontsFile, "Default", "File"), GetFileLocalString(FontsFile, "Default", "Size"), True)
 					AppTitle(GetLocalString("language", "title"))
 					FreeImage(LanguageBG) : LanguageBG = 0
 				EndIf
 			ElseIf FileType(LocalizaitonPath + SelectedLanguage\ID) = 2
 				If SelectedLanguage\ID <> opt\Language Then
-					If UpdateLauncherButtonWithImage(479, LauncherHeight - 165, 155, 30, GetLocalString("language", "uninstall"), ButtonImages, 3) Then
+					If UpdateLauncherButtonWithImage(LauncherWidth - 161, LauncherHeight - 165, 155, 30, GetLocalString("language", "uninstall"), ButtonImages, 3) Then
 						CurrentStatus = LANGUAGE_STATUS_UNINSTALLING_REQUEST
-						RequestLanguageID = SelectedLanguage\ID
+						RequestLanguage = SelectedLanguage
 					EndIf
-					If UpdateLauncherButtonWithImage(479, LauncherHeight - 115, 155, 30, GetLocalString("language", "set"), ButtonImages, 2) Then
+					If UpdateLauncherButtonWithImage(LauncherWidth - 161, LauncherHeight - 115, 155, 30, GetLocalString("language", "set"), ButtonImages, 2) Then
 						SetLanguage(SelectedLanguage\ID)
+						; ~ Reload some stuff manually
 						fo\FontID[Font_Default] = LoadFont_Strict(FontsPath + GetFileLocalString(FontsFile, "Default", "File"), GetFileLocalString(FontsFile, "Default", "Size"), True)
 						AppTitle(GetLocalString("language", "title"))
 						FreeImage(LanguageBG) : LanguageBG = 0
 					EndIf
 				EndIf
 			Else
-				If UpdateLauncherButtonWithImage(479, LauncherHeight - 115, 155, 30, GetLocalString("language", "download"), ButtonImages, 1) Then
+				If UpdateLauncherButtonWithImage(LauncherWidth - 161, LauncherHeight - 115, 155, 30, GetLocalString("language", "download"), ButtonImages, 1) Then
 					CurrentStatus = LANGUAGE_STATUS_DOWNLOAD_REQUEST
-					RequestLanguageID = SelectedLanguage\ID
+					RequestLanguage = SelectedLanguage
 				EndIf
 			EndIf
-		Else
-			If UpdateLauncherButtonWithImage(479, LauncherHeight - 115, 155, 30, GetLocalString("language", "contribute"), ButtonImages, 4) Then ExecFile_Strict("https://github.com/Jabka666/scpcb-ue-my/wiki/How-to-contribute-a-language")
 		EndIf
-		If UpdateLauncherButtonWithImage(479, LauncherHeight - 65, 155, 30, GetLocalString("menu", "back"), ButtonImages) Then Exit
+		If UpdateLauncherButtonWithImage(LauncherWidth - 161, LauncherHeight - 65, 155, 30, GetLocalString("menu", "back"), ButtonImages) Then Exit
 		
 		If MouseHoverLanguage <> Null Then
 			Local Name$ = Format(GetLocalString("language", "name"), MouseHoverLanguage\Name)
@@ -301,7 +497,6 @@ Function LanguageSelector%()
 			EndIf
 			If mo\MouseHit1 Then ExecFile("https://wiki.ziyuesinicization.site/index.php?title=How_to_contribute_a_language/Language_List")
 		EndIf
-		
 		MouseHoverLanguage = Null
 		
 		Flip()
@@ -321,6 +516,8 @@ Function LanguageSelector%()
 	
 	AppTitle(GetLocalString("launcher", "title"))
 	FreeImage(LauncherBG) : LauncherBG = 0
+	
+	IniWriteString(OptionFile, "Global", "Language", opt\Language)
 End Function
 
 Global OnScrollBar%

@@ -295,12 +295,6 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Heavy Gas Mask", "gasmask148", x, y, z)
 										Exit
 										;[End Block]
-									Case "vest"
-										;[Block]
-										RemoveItem(it)
-										it2.Items = CreateItem("Heavy Ballistic Vest", "finevest", x, y, z)
-										Exit
-										;[End Block]
 									Case "hazmatsuit", "finehazmatsuit", "veryfinehazmatsuit"
 										;[Block]
 										RemoveItem(it)
@@ -312,11 +306,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						EndIf
 					Next
 					
-					If it2 = Null Then it2.Items = CreateItem("Metal Panel", "scp148", x, y, z)
+					If it2 = Null Then Remove = False
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "hand", "hand2", "hand3"
+		Case "hand", "hand2"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -324,27 +318,18 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					de.Decals = CreateDecal(DECAL_BLOOD_2, x, 8.0 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.12)
 					EntityParent(de\OBJ, PlayerRoom\OBJ)
 					;[End Block]
-				Case ONETOONE, FINE, VERYFINE
+				Case ONETOONE, FINE
 					;[Block]
 					If item\ItemTemplate\TempName = "hand" Then
-						If Rand(2) = 1 Then
-							it2.Items = CreateItem("Black Severed Hand", "hand2", x, y, z)
-						Else
-							it2.Items = CreateItem("Severed Hand", "hand3", x, y, z)
-						EndIf
-					ElseIf item\ItemTemplate\TempName = "hand2"
-						If Rand(2) = 1 Then
-							it2.Items = CreateItem("Severed Hand", "hand", x, y, z)
-						Else
-							it2.Items = CreateItem("Severed Hand", "hand3", x, y, z)
-						EndIf
+						it2.Items = CreateItem("Black Severed Hand", "hand2", x, y, z)
 					Else
-						If Rand(2) = 1 Then
-							it2.Items = CreateItem("Severed Hand", "hand", x, y, z)
-						Else
-							it2.Items = CreateItem("Black Severed Hand", "hand2", x, y, z)
-						EndIf
+						it2.Items = CreateItem("White Severed Hand", "hand", x, y, z)
 					EndIf
+					;[End Block]
+				Case VERYFINE
+					;[Block]
+					n.NPCs = CreateNPC(NPCTypeGuard, x, y, z)
+					n\State = 11.0 : n\State3 = 1.0
 					;[End Block]
 			End Select
 			;[End Block]
