@@ -161,7 +161,7 @@ Type Player
 	Field CameraShakeTimer#, Shake#, CameraShake#, BigCameraShake#
 	Field Vomit%, VomitTimer#, Regurgitate%
 	Field HeartBeatRate#, HeartBeatTimer#, HeartBeatVolume#
-	Field Injuries#, Bloodloss#, PrevInjuries#, PrevBloodloss#, HealTimer#
+	Field Injuries#, Bloodloss#, PrevInjuries#, PrevBloodloss#, HealTimer#, QuickHealTimer#
 	Field DropSpeed#, HeadDropSpeed#, CurrSpeed#
 	Field Crouch%, CrouchState#
 	Field SndVolume#
@@ -2202,6 +2202,7 @@ Function UpdateGame%()
 			EndIf
 			
 			If me\BlinkTimer < 0.0 Then
+				If me\BlinkTimer <= -10.0 And (RN = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor RN <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - (fps\Factor[0] / 1.6), 0.0)
 				If me\BlinkTimer > -5.0 Then
 					DarkAlpha = Max(DarkAlpha, Sin(Abs(me\BlinkTimer * 18.0)))
 				ElseIf me\BlinkTimer > -15.0
@@ -2231,7 +2232,7 @@ Function UpdateGame%()
 							;[End Block]
 					End Select
 					me\BlinkTimer = me\BLINKFREQ
-					If RN <> "room3_storage" Lor EntityY(me\Collider) > (-4100.0) * RoomScale Then me\BlurTimer = Max(me\BlurTimer - Rnd(0.0, 150.0), 0.0)
+					If (RN = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor RN <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - Rnd(60.0, 100.0), 0.0)
 				EndIf
 				me\BlinkTimer = me\BlinkTimer - fps\Factor[0]
 			Else
@@ -2761,7 +2762,7 @@ Function UpdateMoving%()
 				Sprint = 0.5
 			EndIf
 		EndIf
-		If KeyHit(key\CROUCH) And me\Playable And (Not me\Zombie) And me\Bloodloss < 60.0 And I_427\Timer < 70.0 * 390.0 And (Not chs\NoClip) And (SelectedItem = Null Lor (SelectedItem\ItemTemplate\TempName <> "firstaid" And SelectedItem\ItemTemplate\TempName <> "finefirstaid" And SelectedItem\ItemTemplate\TempName <> "firstaid2")) Then SetCrouch((Not me\Crouch))
+		If KeyHit(key\CROUCH) And me\Playable And (Not me\Zombie) And me\Bloodloss < 65.0 And I_427\Timer < 70.0 * 390.0 And (Not chs\NoClip) And (SelectedItem = Null Lor (SelectedItem\ItemTemplate\TempName <> "firstaid" And SelectedItem\ItemTemplate\TempName <> "finefirstaid" And SelectedItem\ItemTemplate\TempName <> "firstaid2")) Then SetCrouch((Not me\Crouch))
 		
 		Local Temp2# = (Speed * Sprint) / (1.0 + me\CrouchState)
 		
@@ -2892,8 +2893,8 @@ Function UpdateMoving%()
 	If me\Injuries > 1.0 Then
 		Temp2 = me\Bloodloss
 		me\BlurTimer = Max(Max(Sin(MilliSecs2() / 100.0) * me\Bloodloss * 30.0, me\Bloodloss * 2.0 * (2.0 - me\CrouchState)), me\BlurTimer)
-		If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0 Then me\Bloodloss = Min(me\Bloodloss + (Min(me\Injuries, 3.5) / 300.0) * fps\Factor[0], 100.0)
-		If Temp2 <= 60.0 And me\Bloodloss > 60.0 Then CreateMsg(GetLocalString("msg", "bloodloss"))
+		If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0 Then me\Bloodloss = Min(me\Bloodloss + (Min(me\Injuries, 4.0) / 300.0) * fps\Factor[0], 100.0)
+		If Temp2 <= 65.0 And me\Bloodloss > 65.0 Then CreateMsg(GetLocalString("msg", "bloodloss"))
 	EndIf
 	
 	Update008()
@@ -2918,7 +2919,7 @@ Function UpdateMoving%()
 		
 		me\CurrCameraZoom = Max(me\CurrCameraZoom, (Sin(Float(MilliSecs2()) / 20.0) + 1.0) * me\Bloodloss * 0.2)
 		
-		If me\Bloodloss > 60.0 Then
+		If me\Bloodloss > 65.0 Then
 			If (Not me\Crouch) Then SetCrouch(True)
 		EndIf
 		If me\Bloodloss >= 100.0 Then
@@ -2934,9 +2935,14 @@ Function UpdateMoving%()
 	EndIf
 	
 	If me\HealTimer > 0.0 Then
-		me\HealTimer = me\HealTimer - (fps\Factor[0] / 70.0)
-		me\Bloodloss = Min(me\Bloodloss + (2.0 / 400.0) * fps\Factor[0], 100.0)
+		me\HealTimer = Max(me\HealTimer - (fps\Factor[0] / 70.0), 0.0)
+		me\Bloodloss = Min(me\Bloodloss + (1.0 / 200.0) * fps\Factor[0], 100.0)
 		me\Injuries = Max(me\Injuries - (fps\Factor[0] / 70.0) / 30.0, 0.0)
+	EndIf
+	
+	If me\QuickHealTimer > 0.0 Then
+		me\QuickHealTimer = Max(me\QuickHealTimer - (fps\Factor[0] / 70.0), 0.0)
+		me\Injuries = Max(me\Injuries - (fps\Factor[0] / 70.0) / 5.0, 0.0)
 	EndIf
 		
 	If me\Playable Then
@@ -3534,7 +3540,7 @@ Function UpdateGUI%()
 								If OtherOpen\SecondInv[z] <> Null Then
 									Local Name$ = OtherOpen\SecondInv[z]\ItemTemplate\TempName
 									
-									If Name <> "25ct" And Name <> "coin" And Name <> "key" And Name <> "scp860" And Name <> "scp500pill" And Name <> "scp500pilldeath" And Name <> "pill" Then
+									If Name <> "25ct" And Name <> "coin" And Name <> "scp588" And Name <> "key" And Name <> "scp860" And Name <> "scp500pill" And Name <> "scp500pilldeath" And Name <> "pill" Then
 										IsEmpty = False
 										Exit
 									EndIf
@@ -3765,7 +3771,7 @@ Function UpdateGUI%()
 						PrevItem = Inventory(MouseSlot)
 						
 						Select SelectedItem\ItemTemplate\TempName
-							Case "paper", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "playcard", "mastercard", "oldpaper", "badge", "oldbadge", "ticket", "25ct", "coin", "key", "scp860", "scp500pill", "scp500pilldeath", "pill"
+							Case "paper", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "playcard", "mastercard", "oldpaper", "badge", "oldbadge", "ticket", "25ct", "coin", "scp588", "key", "scp860", "scp500pill", "scp500pilldeath", "pill"
 								;[Block]
 								If Inventory(MouseSlot)\ItemTemplate\TempName = "clipboard" Then
 									; ~ Add an item to wallet
@@ -3773,7 +3779,7 @@ Function UpdateGUI%()
 									Local b$ = SelectedItem\ItemTemplate\TempName
 									Local c%, ri%
 									
-									If b <> "25ct" And b <> "coin" And b <> "key" And b <> "scp860" And b <> "scp500pill" And b <> "scp500pilldeath" And b <> "pill" Then
+									If b <> "25ct" And b <> "coin" And b <> "scp588" And b <> "key" And b <> "scp860" And b <> "scp500pill" And b <> "scp500pilldeath" And b <> "pill" Then
 										For c = 0 To Inventory(MouseSlot)\InvSlots - 1
 											If Inventory(MouseSlot)\SecondInv[c] = Null Then
 												If SelectedItem <> Null Then
@@ -3825,7 +3831,7 @@ Function UpdateGUI%()
 												If SelectedItem <> Null Then
 													Inventory(MouseSlot)\SecondInv[c] = SelectedItem
 													Inventory(MouseSlot)\State = 1.0
-													If b <> "25ct" And b <> "coin" And b <> "key" And b <> "scp860" And b <> "scp500pill" And b <> "scp500pilldeath" And b <> "pill" Then SetAnimTime(Inventory(MouseSlot)\Model, 3.0)
+													If b <> "25ct" And b <> "coin" And b <> "scp588" And b <> "key" And b <> "scp860" And b <> "scp500pill" And b <> "scp500pilldeath" And b <> "pill" Then SetAnimTime(Inventory(MouseSlot)\Model, 3.0)
 													Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
 													
 													For ri = 0 To MaxItemAmount - 1
@@ -4527,6 +4533,7 @@ Function UpdateGUI%()
 						EndIf
 						me\CameraShakeTimer = GetFileLocalString(SCP294File, Drink, "Camera Shake", "", False)
 						me\Injuries = Max(me\Injuries + Int(GetFileLocalString(SCP294File, Drink, "Damage", "", False)), 0.0)
+						me\QuickHealTimer = Max(me\QuickHealTimer + Int(GetFileLocalString(SCP294File, Drink, "Heal", "", False)), 0.0)
 						me\Bloodloss = Max(me\Bloodloss + Int(GetFileLocalString(SCP294File, Drink, "Blood Loss", "", False)), 0.0)
 						StrTemp = GetFileLocalString(SCP294File, Drink, "Sound", "", False)
 						If StrTemp <> "" Then PlaySound_Strict(LoadTempSound(StrTemp))
@@ -5461,7 +5468,7 @@ Function UpdateGUI%()
 					Use1123()
 					SelectedItem = Null
 					;[End Block]
-				Case "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "scp860", "hand", "hand2", "hand3", "25ct", "scp005", "key", "coin", "mastercard", "paper"
+				Case "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "scp860", "hand", "hand2", "25ct", "scp005", "key", "coin", "scp588", "mastercard", "paper"
 					;[Block]
 					; ~ Skip this line
 					;[End Block]
@@ -5726,7 +5733,9 @@ Function RenderDebugHUD%()
 			Text2(x, y + (360 * MenuScale), Format(GetLocalString("console", "debug_2.stameff"), me\StaminaEffect))
 			Text2(x, y + (380 * MenuScale), Format(GetLocalString("console", "debug_2.stamtimer"), me\StaminaEffectTimer))
 			
-			Text2(x, y + (420 * MenuScale), Format(GetLocalString("console", "debug_2.deaf"), me\DeafTimer))
+			Text2(x, y + (420 * MenuScale), Format(GetLocalString("console", "debug_2.sanity"), me\Sanity))
+			
+			Text2(x, y + (460 * MenuScale), Format(GetLocalString("console", "debug_2.deaf"), me\DeafTimer))
 			
 			If me\Terminated Then
 				Text2(x + (380 * MenuScale), y, Format(GetLocalString("console", "debug_2.terminated"), "True"))
@@ -5739,26 +5748,28 @@ Function RenderDebugHUD%()
 			
 			Text2(x + (380 * MenuScale), y + (80 * MenuScale), Format(GetLocalString("console", "debug_2.heal"), me\HealTimer))
 			
-			Text2(x + (380 * MenuScale), y + (120 * MenuScale), Format(GetLocalString("console", "debug_2.heartbeat"), me\HeartBeatTimer))
+			Text2(x + (380 * MenuScale), y + (100 * MenuScale), Format(GetLocalString("console", "debug_2.quickheal"), me\QuickHealTimer))
 			
-			Text2(x + (380 * MenuScale), y + (160 * MenuScale), Format(GetLocalString("console", "debug_2.explosion"), me\ExplosionTimer))
+			Text2(x + (380 * MenuScale), y + (140 * MenuScale), Format(GetLocalString("console", "debug_2.heartbeat"), me\HeartBeatTimer))
 			
-			Text2(x + (380 * MenuScale), y + (200 * MenuScale), Format(GetLocalString("console", "debug_2.speed"), me\CurrSpeed))
+			Text2(x + (380 * MenuScale), y + (180 * MenuScale), Format(GetLocalString("console", "debug_2.explosion"), me\ExplosionTimer))
 			
-			Text2(x + (380 * MenuScale), y + (240 * MenuScale), Format(GetLocalString("console", "debug_2.camshake"), me\CameraShakeTimer))
-			Text2(x + (380 * MenuScale), y + (260 * MenuScale), Format(GetLocalString("console", "debug_2.camzoom"), me\CurrCameraZoom))
+			Text2(x + (380 * MenuScale), y + (220 * MenuScale), Format(GetLocalString("console", "debug_2.speed"), me\CurrSpeed))
 			
-			Text2(x + (380 * MenuScale), y + (300 * MenuScale), Format(GetLocalString("console", "debug_2.vomit"), me\VomitTimer))
+			Text2(x + (380 * MenuScale), y + (260 * MenuScale), Format(GetLocalString("console", "debug_2.camshake"), me\CameraShakeTimer))
+			Text2(x + (380 * MenuScale), y + (280 * MenuScale), Format(GetLocalString("console", "debug_2.camzoom"), me\CurrCameraZoom))
+			
+			Text2(x + (380 * MenuScale), y + (320 * MenuScale), Format(GetLocalString("console", "debug_2.vomit"), me\VomitTimer))
 			
 			If me\Playable Then
-				Text2(x + (380 * MenuScale), y + (340 * MenuScale), Format(GetLocalString("console", "debug_2.playable"), "True"))
+				Text2(x + (380 * MenuScale), y + (360 * MenuScale), Format(GetLocalString("console", "debug_2.playable"), "True"))
 			Else
-				Text2(x + (380 * MenuScale), y + (340 * MenuScale), Format(GetLocalString("console", "debug_2.playable"), "False"))
+				Text2(x + (380 * MenuScale), y + (360 * MenuScale), Format(GetLocalString("console", "debug_2.playable"), "False"))
 			EndIf
 			
-			Text2(x + (380 * MenuScale), y + (380 * MenuScale), Format(GetLocalString("console", "debug_2.refitems"), me\RefinedItems))
-			Text2(x + (380 * MenuScale), y + (400 * MenuScale), Format(GetLocalString("console", "debug_2.funds"), me\Funds))
-			Text2(x + (380 * MenuScale), y + (420 * MenuScale), Format(GetLocalString("console", "debug_2.escape"), me\EscapeTimer))
+			Text2(x + (380 * MenuScale), y + (400 * MenuScale), Format(GetLocalString("console", "debug_2.refitems"), me\RefinedItems))
+			Text2(x + (380 * MenuScale), y + (420 * MenuScale), Format(GetLocalString("console", "debug_2.funds"), me\Funds))
+			Text2(x + (380 * MenuScale), y + (440 * MenuScale), Format(GetLocalString("console", "debug_2.escape"), me\EscapeTimer))
 			;[End Block]
 		Case 3
 			;[Block]
@@ -6188,7 +6199,7 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State3)
 					EndIf
 					;[End Block]
-				Case "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "scp860", "hand", "hand2", "hand3", "25ct", "scp005", "key", "coin", "mastercard"
+				Case "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "scp860", "hand", "hand2", "25ct", "scp005", "key", "coin", "scp588", "mastercard"
 					;[Block]
 					DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 					;[End Block]

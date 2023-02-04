@@ -344,7 +344,7 @@ Function RemoveWearableItems%(item.Items)
 			;[Block]
 			If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 			;[End Block]
-		Case "scp714"
+		Case "scp714", "coarse714"
 			;[Block]
 			I_714\Using = 1
 			;[End Block]
@@ -517,6 +517,15 @@ Function PickItem%(item.Items)
 					Case "scp148"
 						;[Block]
 						GiveAchievement(Achv148)
+						;[End Block]
+					Case "scp588"
+						;[Block]
+						If wi\HazmatSuit = 0 Then
+							InjurePlayer(0.1)
+							me\CameraShake = 0.5
+							CreateMsg(GetLocalString("msg", "bite"))
+						EndIf
+						;GiveAchievement(Achv588)
 						;[End Block]
 					Case "scp860"
 						;[Block]
@@ -801,7 +810,6 @@ Const KEY_005% = 9
 
 Const KEY_HAND_WHITE% = -1
 Const KEY_HAND_BLACK% = -2
-Const KEY_HAND_YELLOW% = -3
 
 Const KEY_860% = -4
 
@@ -853,10 +861,6 @@ Function GetUsingItem%(item.Items)
 		Case "hand2"
 			;[Block]
 			Return(KEY_HAND_BLACK)
-			;[End Block]
-		Case "hand3"
-			;[Block]
-			Return(KEY_HAND_YELLOW)
 			;[End Block]
 		Case "scp860"
 			;[Block]

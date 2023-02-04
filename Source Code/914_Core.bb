@@ -65,7 +65,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "vest"
+		Case "vest", "finevest"
 			;[Block]
 			Select Setting
 				Case ROUGH
@@ -389,6 +389,8 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					If Level = 0 Then
 						de.Decals = CreateDecal(DECAL_CORROSIVE_1, x, 8.0 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.07)
 						EntityParent(de\OBJ, PlayerRoom\OBJ)
+					ElseIf Level = 6
+						it2.Items = CreateItem("Level 0 Key Card", "key0", x, y, z)
 					Else
 						it2.Items = CreateItem("Level " + (Level - 1) + " Key Card", "key" + (Level - 1), x, y, z)
 					EndIf
@@ -586,7 +588,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							Select SelectedDifficulty\OtherFactors
 								Case EASY
 									;[Block]
-									If Rand(0, ((MAXACHIEVEMENTS - 1) * 3) - ((CurrAchvAmount - 1) * 3)) = 0 Then
+									If Rand(0, ((MAXACHIEVEMENTS - 1) * 2) - ((CurrAchvAmount - 1) * 2)) = 0 Then
 										it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
 									Else
 										If Rand(10) = 1 Then
@@ -598,7 +600,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									;[End Block]
 								Case NORMAL
 									;[Block]
-									If Rand(0, ((MAXACHIEVEMENTS - 1) * 4) - ((CurrAchvAmount - 1) * 3)) = 0 Then
+									If Rand(0, ((MAXACHIEVEMENTS - 1) * 3) - ((CurrAchvAmount - 1) * 2)) = 0 Then
 										it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
 									Else
 										If Rand(15) = 1 Then
@@ -610,7 +612,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									;[End Block]
 								Case HARD
 									;[Block]
-									If Rand(0, ((MAXACHIEVEMENTS - 1) * 5) - ((CurrAchvAmount - 1) * 3)) = 0 Then
+									If Rand(0, ((MAXACHIEVEMENTS - 1) * 4) - ((CurrAchvAmount - 1) * 2)) = 0 Then
 										it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
 									Else
 										If Rand(20) = 1 Then
@@ -622,7 +624,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									;[End Block]
 								Case HARD
 									;[Block]
-									If Rand(0, ((MAXACHIEVEMENTS - 1) * 6) - ((CurrAchvAmount - 1) * 3)) = 0 Then
+									If Rand(0, ((MAXACHIEVEMENTS - 1) * 5) - ((CurrAchvAmount - 1) * 2)) = 0 Then
 										it2.Items = CreateItem("Key Card Omni", "keyomni", x, y, z)
 									Else
 										If Rand(25) = 1 Then
@@ -790,7 +792,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "playcard", "coin", "25ct"
+		Case "coin", "25ct", "scp588"
 			;[Block]
 			Select Setting
 				Case ROUGH, COARSE
@@ -800,15 +802,43 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Level 0 Key Card", "key0", x, y, z)
+					If Rand(2) = 1 Then
+						it2.Items = CreateItem("Quarter", "25ct", x, y, z)
+						EntityType(it3\Collider, HIT_ITEM)
+					Else
+						it2.Items = CreateItem("Coin", "coin", x, y, z)
+						EntityType(it3\Collider, HIT_ITEM)
+					EndIf
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Level 1 Key Card", "key1", x, y, z)
+					it2.Items = CreateItem("Level 0 Key Card", "key0", x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Level 2 Key Card", "key2", x, y, z)
+					it2.Items = CreateItem("SCP-588", "scp588", x, y, z)
+					;[End Block]
+			End Select
+			;[End Block]
+		Case "playcard"
+			;[Block]
+			Select Setting
+				Case ROUGH, COARSE
+					;[Block]
+					de.Decals = CreateDecal(DECAL_CORROSIVE_1, x, 8.0 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.07)
+					EntityParent(de\OBJ, PlayerRoom\OBJ)
+					;[End Block]
+				Case ONETOONE
+					;[Block]
+					it2.Items = CreateItem("Mastercard", "mastercard", x, y, z)
+					;[End Block]
+				Case FINE
+					;[Block]
+					it2.Items = CreateItem("Level 0 Key Card", "key0", x, y, z)
+					;[End Block]
+				Case VERYFINE
+					;[Block]
+					it2.Items = CreateItem("Level 1 Key Card", "key1", x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -841,15 +871,15 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Level 0 Key Card", "key0", x, y, z)
+					it2.Items = CreateItem("Playing Card", "playcard", x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Level 1 Key Card", "key1", x, y, z)
+					it2.Items = CreateItem("Level 0 Key Card", "key0", x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Level 2 Key Card", "key2", x, y, z)
+					it2.Items = CreateItem("Level 1 Key Card", "key1", x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]

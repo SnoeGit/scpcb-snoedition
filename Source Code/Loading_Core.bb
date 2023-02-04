@@ -636,7 +636,7 @@ Function LoadMaterials%(File$)
 			If opt\BumpEnabled Then
 				StrTemp = IniGetString(File, TemporaryString, "bump")
 				If StrTemp <> "" Then
-					mat\Bump = LoadTexture_Strict(StrTemp, 256)
+					mat\Bump = LoadTexture_Strict(StrTemp, 1 + (256 * opt\SaveTexturesInVRAM))
 					ApplyBumpMap(mat\Bump)
 				EndIf
 			EndIf
@@ -775,13 +775,6 @@ CreateItemTemplate(GetLocalString("items", "doc005"), "Document SCP-005", "paper
 	CreateItemTemplate(GetLocalString("items", "docun"), "Unknown Note", "paper", "note.b3d", "INV_note_bloody.png", "note_unknown.png", 0.003, 0, "note_unknown.png")
 	
 	; ~ [SCPs]
-	
-CreateItemTemplate(GetLocalString("items", "005"), "SCP-005", "scp005", "scp_005.b3d", "INV_scp_005.png", "", 0.0004, 1)
-	CreateItemTemplate(GetLocalString("items", "148"), "SCP-148 Ingot", "scp148ingot", "scp_148.b3d", "INV_scp_148.png", "", RoomScale, 2)
-	CreateItemTemplate(GetLocalString("items", "427"), "SCP-427", "scp427", "scp_427.b3d", "INV_scp_427.png", "", 0.001, 3)
-
-	it.ItemTemplates = CreateItemTemplate(GetLocalString("items", "5001"), "SCP-500-01", "scp500pill", "pill.b3d", "INV_scp_500_pill.png", "", 0.0001, 2)
-	EntityColor(it\OBJ, 255.0, 0.0, 0.0)
 
 	CreateItemTemplate("SCP-005", "SCP-005", "scp005", "scp_005.b3d", "INV_scp_005.png", "", 0.0004, 1)
 	CreateItemTemplate(GetLocalString("items", "148"), "SCP-148 Ingot", "scp148ingot", "scp_148.b3d", "INV_scp_148.png", "", RoomScale, 2)
@@ -792,6 +785,7 @@ CreateItemTemplate(GetLocalString("items", "005"), "SCP-005", "scp005", "scp_005
 	
 	CreateItemTemplate("SCP-500", "SCP-500", "scp500", "scp_500.b3d", "INV_scp_500.png", "", 0.035, 2)
 	CreateItemTemplate("SCP-513", "SCP-513", "scp513", "scp_513.b3d", "INV_scp_513.png", "", 0.1, 2)
+	CreateItemTemplate("SCP-588", "SCP-588", "scp588", "coin.b3d", "INV_coin.png", "", 0.0005, 3)
 	CreateItemTemplate("SCP-714", "SCP-714", "scp714", "scp_714.b3d", "INV_scp_714.png", "", 0.3, 3)
 	CreateItemTemplate("SCP-860", "SCP-860", "scp860", "scp_860.b3d", "INV_scp_860.png", "", 0.003, 3)
 	CreateItemTemplate("SCP-1025", "SCP-1025", "scp1025", "scp_1025.b3d", "INV_scp_1025.png", "", 0.1, 0)
@@ -1704,7 +1698,7 @@ Function LoadEntities%()
 	
 	LoadMissingTexture()
 	
-	AmbientLightRoomTex = CreateTextureUsingCacheSystem(1, 1)
+	AmbientLightRoomTex = CreateTextureUsingCacheSystem(2, 2)
 	TextureBlend(AmbientLightRoomTex, 3)
 	SetBuffer(TextureBuffer(AmbientLightRoomTex))
 	ClsColor(0, 0, 0)

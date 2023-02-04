@@ -2772,9 +2772,11 @@ Function UpdateEvents%()
 						EndIf
 						If EntityDistanceSquared(e\room\NPC[0]\Collider, me\Collider) < 6.25 Then
 							If wi\HazmatSuit = 0 Then
-								InjurePlayer(fps\Factor[0] / 5000.0)
-							Else
 								InjurePlayer(fps\Factor[0] / 10000.0)
+							ElseIf wi\HazmatSuit <> 4
+								InjurePlayer(fps\Factor[0] / 20000.0)
+							Else
+								InjurePlayer(fps\Factor[0] / 30000.0)
 							EndIf
 							If e\room\NPC[1] = Null Then
 								e\room\NPC[1] = CreateNPC(NPCType035_Tentacle, EntityX(e\room\NPC[0]\Collider), 0.13, EntityZ(e\room\NPC[0]\Collider))
@@ -3959,8 +3961,14 @@ Function UpdateEvents%()
 							me\HeartBeatVolume = CurveValue(0.5, me\HeartBeatVolume, 5.0)
 							me\HeartBeatRate = CurveValue(120.0, me\HeartBeatRate, 150.0) 
 							e\SoundCHN = LoopSound2(OldManSFX[4], e\SoundCHN, Camera, e\room\OBJ, 5.0, 0.3)
-							n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * 3.0)
-							InjurePlayer(fps\Factor[0] * 0.00005)
+							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (2.0 + SelectedDifficulty\AggressiveNPCs))
+							If wi\HazmatSuit = 0 Then
+								InjurePlayer(fps\Factor[0] / 15000.0)
+							ElseIf wi\HazmatSuit <> 4
+								InjurePlayer(fps\Factor[0] / 20000.0)
+							Else
+								InjurePlayer(fps\Factor[0] / 25000.0)
+							EndIf
 						EndIf
 					EndIf
 				EndIf
@@ -5114,9 +5122,11 @@ Function UpdateEvents%()
 										EndIf
 										
 										If wi\HazmatSuit = 0 Then
-											InjurePlayer(fps\Factor[0] / 5000.0)
-										Else
 											InjurePlayer(fps\Factor[0] / 10000.0)
+										ElseIf wi\HazmatSuit <> 4
+											InjurePlayer(fps\Factor[0] / 20000.0)
+										Else
+											InjurePlayer(fps\Factor[0] / 30000.0)
 										EndIf
 										
 										If me\Terminated And me\Bloodloss >= 100.0 Then msg\DeathMsg = Format(GetLocalString("death", "035"), SubjectName)
@@ -6745,6 +6755,7 @@ Function UpdateEvents%()
 						CanSave = 0
 						e\room\RoomDoors[1]\Open = False
 						If e\EventState > 70.0 * 2.0 Then
+							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (0.25 + (0.25 * SelectedDifficulty\AggressiveNPCs)))
 							If e\room\RoomDoors[0]\Open Then e\room\RoomDoors[0]\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\914\DoorClose.ogg"), Camera, e\room\RoomDoors[0]\OBJ)
 							e\room\RoomDoors[0]\Open = False
 						EndIf
@@ -8015,7 +8026,13 @@ Function UpdateDimension106%()
 				CurrStepSFX = 1
 				ShouldPlay = 3
 				
-				InjurePlayer(fps\Factor[0] * 0.00005)
+				If wi\HazmatSuit = 0 Then
+					InjurePlayer(fps\Factor[0] / 15000.0)
+				ElseIf wi\HazmatSuit <> 4
+					InjurePlayer(fps\Factor[0] / 20000.0)
+				Else
+					InjurePlayer(fps\Factor[0] / 25000.0)
+				EndIf
 				PrevSecondaryLightOn = SecondaryLightOn : SecondaryLightOn = True
 				
 				If e\EventState = 0.0 Then e\EventState = 0.1
@@ -8030,7 +8047,7 @@ Function UpdateDimension106%()
 				; ~ SCP-106 attacks if close enough to player
 				If EntityDistanceSquared(me\Collider, n_I\Curr106\Collider) < 0.09 Then n_I\Curr106\State = -10.0 : n_I\Curr106\Idle = 0
 				
-				Local Teleport% = False, Random% = Rand(30)
+				Local Teleport% = False, Random% = Rand(29)
 				
 				Select e\EventState2
 					Case PD_StartRoom
@@ -8111,7 +8128,7 @@ Function UpdateDimension106%()
 						If EntityY(me\Collider) < (-1600.0) * RoomScale Then
 							If EntityDistanceSquared(me\Collider, e\room\Objects[8]) > PowTwo(4750.0 * RoomScale) Then
 								Teleport = True
-								Random = Rand(11, 30)
+								Random = Rand(12, 29)
 							Else ; ~ The player is not at the exit, must've fallen down
 								If (Not me\Terminated) Then
 									PlaySound_Strict(HorrorSFX[8])
@@ -8142,7 +8159,7 @@ Function UpdateDimension106%()
 							If EntityHidden(e\room\Objects[i]) Then ShowEntity(e\room\Objects[i])
 						Next
 						
-						InjurePlayer(fps\Factor[0] / 4000.0)
+						InjurePlayer(fps\Factor[0] / 5000.0)
 						
 						me\Sanity = Max(me\Sanity - fps\Factor[0] / Sqr(Temp) / 8.0, -1000.0)
 						
@@ -8404,7 +8421,7 @@ Function UpdateDimension106%()
 							; ~ Player is at the exit
 							If DistanceSquared(EntityX(e\room\Objects[16], True), EntityX(me\Collider), EntityZ(e\room\Objects[16], True), EntityZ(me\Collider)) < PowTwo(144.0 * RoomScale) Then
 								Teleport = True
-								Random = Rand(11, 30)
+								Random = Rand(12, 29)
 							Else ; ~ Somewhere else, must've fallen down
 								If (Not me\Terminated) Then
 									PlaySound_Strict(HorrorSFX[8])
@@ -8438,7 +8455,7 @@ Function UpdateDimension106%()
 							
 							FreeEntity(Pvt)
 							;[End Block]
-						Case 5, 6, 7, 8, 9, 10 ; ~ The 4-way room
+						Case 5, 6, 7, 8, 9, 10, 11 ; ~ The 4-way room
 							;[Block]
 							PlaySound_Strict(OldManSFX[3])
 							
@@ -8451,7 +8468,7 @@ Function UpdateDimension106%()
 							e\EventState3 = 0.0
 							e\EventState2 = PD_FourWayRoom
 							;[End Block]
-						Case 11, 12 ; ~ Middle of the large starting room
+						Case 12, 13 ; ~ Middle of the large starting room
 							;[Block]
 							PositionEntity(me\Collider, EntityX(e\room\OBJ), 0.6, EntityZ(e\room\OBJ))
 							ResetEntity(me\Collider)
@@ -8459,7 +8476,7 @@ Function UpdateDimension106%()
 							e\EventState3 = 0.0
 							e\EventState2 = PD_StartRoom
 							;[End Block]
-						Case 13, 14, 15 ; ~ The exit room
+						Case 14, 15 ; ~ The exit room
 							;[Block]
 							PositionEntity(me\Collider, EntityX(e\room\Objects[8], True) - 400.0 * RoomScale, e\room\y - 300.0 * RoomScale, EntityZ(e\room\Objects[8], True))
 							ResetEntity(me\Collider)
@@ -8467,7 +8484,7 @@ Function UpdateDimension106%()
 							e\EventState3 = 0.0
 							e\EventState2 = PD_ExitRoom
 							;[End Block]
-						Case 16, 17, 18, 19, 20, 21, 22
+						Case 16, 17, 18, 19, 20, 21
 							;[Block]
 							Local RoomName$ = ""
 							Local LCZ% = False
@@ -8546,7 +8563,7 @@ Function UpdateDimension106%()
 								ResetEntity(me\Collider)
 							EndIf
 							;[End Block]
-						Case 23, 24, 25, 26 ; ~ The tower room
+						Case 22, 23, 24, 25 ; ~ The tower room
 							;[Block]
 							PositionEntity(me\Collider, EntityX(e\room\Objects[12], True), 0.6, EntityZ(e\room\Objects[12], True))
 							ResetEntity(me\Collider)
@@ -8554,7 +8571,7 @@ Function UpdateDimension106%()
 							e\EventState3 = 15.0
 							e\EventState2 = PD_TowerRoom
 							;[End Block]
-						Case 27, 28, 29, 30 ; ~ The fake HCZ tunnel
+						Case 26, 27, 28, 29 ; ~ The fake HCZ tunnel
 							;[Block]
 							PlaySound_Strict(OldManSFX[3])
 							
