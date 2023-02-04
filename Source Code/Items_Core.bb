@@ -653,8 +653,6 @@ Function DropItem%(item.Items, PlayDropSound% = True)
 	Next
 	ItemAmount = ItemAmount - 1
 	
-	RemoveWearableItems(item)
-	
 	CatchErrors("DropItem")
 End Function
 
@@ -720,41 +718,35 @@ Function CanUseItem%(CanUseWithEyewear% = False, CanUseWithGasMask% = False, Can
 End Function
 
 ; ~ Maybe re-work?
-Function PreventItemOverlapping%(GasMask% = False, NVG% = False, SCP1499% = False, Helmet% = False, SCRAMBLE% = False)
-	If (Not GasMask) And wi\GasMask > 0 Then
-		CreateMsg(GetLocalString("msg", "mask.use.off"))
+Function PreventItemOverlapping%(SCP1499% = False)
+	If wi\HazmatSuit > 0 Then
+		CreateMsg(GetLocalString("msg", "suit.use.off"))
 		SelectedItem = Null
-		Return(True)
+		Return(False)
+	ElseIf SCP1499
+		If wi\GasMask > 0
+			CreateMsg(GetLocalString("msg", "mask.use.off"))
+			SelectedItem = Null
+			Return(False)
+		ElseIf wi\NightVision > 0
+			CreateMsg(GetLocalString("msg", "goggle.use.off"))
+			SelectedItem = Null
+			Return(False)
+		ElseIf  wi\BallisticHelmet
+			CreateMsg(GetLocalString("msg", "helmet.use.off"))
+			SelectedItem = Null
+			Return(False)
+		ElseIf wi\SCRAMBLE > 0
+			CreateMsg(GetLocalString("msg", "gear.use.off"))
+			SelectedItem = Null
+			Return(False)
+		EndIf
 	ElseIf (Not SCP1499) And I_1499\Using > 0
 		CreateMsg(GetLocalString("msg", "1499.use.off"))
 		SelectedItem = Null
-		Return(True)
-	ElseIf (Not NVG) And wi\NightVision > 0 Then
-		CreateMsg(GetLocalString("msg", "goggle.use.off"))
-		SelectedItem = Null
-		Return(True)
-	ElseIf (Not Helmet) And wi\BallisticHelmet
-		CreateMsg(GetLocalString("msg", "helmet.use.off"))
-		SelectedItem = Null
-		Return(True)
-	ElseIf (Not SCRAMBLE) And wi\SCRAMBLE
-		CreateMsg(GetLocalString("msg", "gear.use.off"))
-		SelectedItem = Null
-		Return(True)
-	ElseIf wi\HazmatSuit > 0
-		CreateMsg(GetLocalString("msg", "suit.use.off"))
-		SelectedItem = Null
-		Return(True)
+		Return(False)
 	EndIf
-	Return(False)
-End Function
-
-Function IsDoubleItem%(Variable, ID, Msg$)
-	If Variable > 0 And Variable <> ID Then
-		SelectedItem = Null
-		Return(True)
-	EndIf
-	Return(False)
+	Return(True)
 End Function
 
 Include "Source Code\914_Core.bb"

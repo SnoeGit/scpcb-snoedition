@@ -1698,14 +1698,14 @@ End Type
 Global msg.Messages = New Messages
 
 Function CreateMsg%(Txt$, Sec# = 6.0)
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	msg\Txt = Txt
 	msg\Timer = 70.0 * Sec
 End Function
 
 Function UpdateMessages%()
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	If msg\Timer > 0.0 Then
 		msg\Timer = msg\Timer - fps\Factor[0]
@@ -1715,7 +1715,7 @@ Function UpdateMessages%()
 End Function
 
 Function RenderMessages%()
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	If msg\Timer > 0.0 Then
 		Local Temp% = False
@@ -1748,14 +1748,14 @@ Function RenderMessages%()
 End Function
 
 Function CreateHintMsg%(Txt$, Sec# = 6.0)
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	msg\HintTxt = Txt
 	msg\HintTimer = 70.0 * Sec
 End Function
 
 Function UpdateHintMessages%()
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	Local Scale# = opt\GraphicHeight / 768.0
 	Local Width = StringWidth(msg\HintTxt) + (20 * Scale)
@@ -1783,7 +1783,7 @@ Function UpdateHintMessages%()
 End Function
 
 Function RenderHintMessages%()
-	If SelectedDifficulty\OtherFactors = EXTREME Then Return
+	If SelectedDifficulty\Name = "Apollyon" Lor (Not opt\HUDEnabled) Then Return
 	
 	Local Scale# = opt\GraphicHeight / 768.0
 	Local Width = StringWidth(msg\HintTxt) + (20 * Scale)
@@ -2378,7 +2378,7 @@ Function UpdateGame%()
 		UpdateAutoSave()
 		
 		If KeyHit(key\CONSOLE) Then
-			If opt\CanOpenConsole Then
+			If opt\CanOpenConsole And SelectedDifficulty\Name <> "Apollyon" Then
 				If ConsoleOpen Then
 					UsedConsole = True
 					ResumeSounds()
@@ -3677,9 +3677,27 @@ Function UpdateGUI%()
 							;[Block]
 							CreateHintMsg(GetLocalString("msg", "takeoff"))
 							;[End Block]
+						Case "scp427"
+							;[Block]
+							If I_427\Using > 0 Then
+								CreateHintMsg(GetLocalString("msg", "takeoff"))
+							Else
+								DropItem(SelectedItem)
+								If (Not mo\MouseHit2) Then InvOpen = False
+							EndIf
+							;[End Block]
+						Case "scp714", "coarse714"
+							;[Block]
+							If (I_714\Using = 3 And SelectedItem\ItemTemplate\TempName = "scp714") Lor (I_714\Using = 2 And SelectedItem\ItemTemplate\TempName = "coarse714") Then
+								CreateHintMsg(GetLocalString("msg", "takeoff"))
+							Else
+								DropItem(SelectedItem)
+								If (Not mo\MouseHit2) Then InvOpen = False
+							EndIf
+							;[End Block]
 						Case "scp1499", "fine1499"
 							;[Block]
-							If I_1499\Using > 0 Then
+							If (I_1499\Using = 1 And SelectedItem\ItemTemplate\TempName = "scp1499") Lor (I_1499\Using = 2 And SelectedItem\ItemTemplate\TempName = "fine1499") Then
 								CreateHintMsg(GetLocalString("msg", "takeoff"))
 							Else
 								DropItem(SelectedItem)
@@ -3688,7 +3706,7 @@ Function UpdateGUI%()
 							;[End Block]
 						Case "gasmask", "finegasmask", "veryfinegasmask", "gasmask148"
 							;[Block]
-							If wi\GasMask > 0 Then
+							If (wi\GasMask = 1 And SelectedItem\ItemTemplate\TempName = "gasmask") Lor (wi\GasMask = 2 And SelectedItem\ItemTemplate\TempName = "finegasmask") Lor (wi\GasMask = 3 And SelectedItem\ItemTemplate\TempName = "veryfinegasmask") Lor (wi\GasMask = 4 And SelectedItem\ItemTemplate\TempName = "gasmask148") Then
 								CreateHintMsg(GetLocalString("msg", "takeoff"))
 							Else
 								DropItem(SelectedItem)
@@ -3706,7 +3724,7 @@ Function UpdateGUI%()
 							;[End Block] 
 						Case "nvg", "veryfinenvg", "finenvg"
 							;[Block]
-							If wi\NightVision > 0 Then
+							If (wi\NightVision = 1 And SelectedItem\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 3 And SelectedItem\ItemTemplate\TempName = "finenvg") Lor (wi\NightVision = 2 And SelectedItem\ItemTemplate\TempName = "veryfinenvg") Then
 								CreateHintMsg(GetLocalString("msg", "takeoff"))
 							Else
 								DropItem(SelectedItem)
@@ -3715,7 +3733,7 @@ Function UpdateGUI%()
 							;[End Block]
 						Case "scramble", "finescramble"
 							;[Block]
-							If wi\SCRAMBLE Then
+							If (wi\SCRAMBLE = 1 And SelectedItem\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And SelectedItem\ItemTemplate\TempName = "finescramble") Then
 								CreateHintMsg(GetLocalString("msg", "takeoff"))
 							Else
 								DropItem(SelectedItem)
@@ -4159,22 +4177,6 @@ Function UpdateGUI%()
 			Select SelectedItem\ItemTemplate\TempName
 				Case "nvg", "veryfinenvg", "finenvg"
 					;[Block]
-					If (Not PreventItemOverlapping(False, True)) Then
-						Select SelectedItem\ItemTemplate\TempName
-							Case "nvg"
-								;[Block]
-								If IsDoubleItem(wi\NightVision, 1, GetLocalString("msg", "weartwo.nvg")) Then Return
-								;[End Block]
-							Case "veryfinenvg"
-								;[Block]
-								If IsDoubleItem(wi\NightVision, 2, GetLocalString("msg", "weartwo.nvg")) Then Return
-								;[End Block]
-							Case "finenvg"
-								;[Block]
-								If IsDoubleItem(wi\NightVision, 3, GetLocalString("msg", "weartwo.nvg")) Then Return
-								;[End Block]
-						End Select
-						
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
 						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.5), 100.0)
@@ -4182,9 +4184,10 @@ Function UpdateGUI%()
 						If SelectedItem\State3 = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 							
-							If wi\NightVision > 0 Then
+							If (wi\NightVision = 1 And SelectedItem\ItemTemplate\TempName = "nvg") Lor (wi\NightVision = 2 And SelectedItem\ItemTemplate\TempName = "veryfinenvg") Lor (wi\NightVision = 3 And SelectedItem\ItemTemplate\TempName = "finenvg") Then
 								CreateMsg(GetLocalString("msg", "nvg.off"))
 								wi\NightVision = 0
+								wi\NVGTimer = 600.0 ;Reset timer
 								opt\CameraFogFar = opt\StoredCameraFogFar
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[1])
 							Else
@@ -4203,14 +4206,14 @@ Function UpdateGUI%()
 										wi\NightVision = 3
 										;[End Block]
 								End Select
-								opt\StoredCameraFogFar = opt\CameraFogFar
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+								If wi\NightVision = 0 Then opt\StoredCameraFogFar = opt\CameraFogFar
 								opt\CameraFogFar = HideDistance
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[0])
 							EndIf
 							SelectedItem\State3 = 0.0
 							SelectedItem = Null
 						EndIf
-					EndIf
 					;[End Block]
 				Case "scp513"
 					;[Block]
@@ -4418,6 +4421,7 @@ Function UpdateGUI%()
 						me\BlinkEffect = 0.6
 						me\BlinkEffectTimer = Rnd(20.0, 30.0)
 						me\BlurTimer = 200.0
+						If SelectedItem\ItemTemplate\TempName = "eyedrops2" Then me\Bloodloss = Max(me\Bloodloss - 10.0, 0.0)
 						
 						CreateMsg(GetLocalString("msg", "eyedrop.moisturized"))
 						
@@ -5087,7 +5091,7 @@ Function UpdateGUI%()
 										;[End Block]
 									Case "finehazmatsuit"
 										;[Block]
-										CreateMsg(GetLocalString("msg", "suit.on"))
+										CreateMsg(GetLocalString("msg", "suit.on.dry"))
 										wi\HazmatSuit = 2
 										;[End Block]
 									Case "veryfinehazmatsuit"
@@ -5097,7 +5101,7 @@ Function UpdateGUI%()
 										;[End Block]
 									Case "hazmatsuit148"
 										;[Block]
-										CreateMsg(GetLocalString("msg", "suit.on"))
+										CreateMsg(GetLocalString("msg", "suit.on.dry"))
 										wi\HazmatSuit = 4
 										;[End Block]
 								End Select
@@ -5142,26 +5146,6 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "gasmask", "finegasmask", "veryfinegasmask", "gasmask148"
 					;[Block]
-					If (Not PreventItemOverlapping(True)) Then
-						Select SelectedItem\ItemTemplate\TempName
-							Case "gasmask"
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 1, GetLocalString("msg", "weartwo.gas")) Then Return
-								;[End Block]
-							Case "finegasmask"
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 2, GetLocalString("msg", "weartwo.gas")) Then Return
-								;[End Block]
-							Case "veryfinegasmask"
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 3, GetLocalString("msg", "weartwo.gas")) Then Return
-								;[End Block]
-							Case "gasmask148"
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 4, GetLocalString("msg", "weartwo.gas")) Then Return
-								;[End Block]
-						End Select
-						
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
 						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0]) / 1.5, 100.0)
@@ -5169,10 +5153,12 @@ Function UpdateGUI%()
 						If SelectedItem\State = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 							
-							If wi\GasMask > 0 Then
+							If (wi\GasMask = 1 And SelectedItem\ItemTemplate\TempName = "gasmask") Lor (wi\GasMask = 2 And SelectedItem\ItemTemplate\TempName = "finegasmask") Lor (wi\GasMask = 3 And SelectedItem\ItemTemplate\TempName = "veryfinegasmask") Lor (wi\GasMask = 4 And SelectedItem\ItemTemplate\TempName = "gasmask148") Then
 								CreateMsg(GetLocalString("msg", "mask.off"))
 								wi\GasMask = 0
 							Else
+								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
+								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								Select SelectedItem\ItemTemplate\TempName
 									Case "gasmask"
 										;[Block]
@@ -5181,7 +5167,7 @@ Function UpdateGUI%()
 										;[End Block]
 									Case "finegasmask"
 										;[Block]
-										CreateMsg(GetLocalString("msg", "mask.on.easy"))
+										CreateMsg(GetLocalString("msg", "mask.on.dry"))
 										wi\GasMask = 2
 										;[End Block]
 									Case "veryfinegasmask"
@@ -5191,7 +5177,7 @@ Function UpdateGUI%()
 										;[End Block]
 									Case "gasmask148"
 										;[Block]
-										CreateMsg(GetLocalString("msg", "mask.on"))
+										CreateMsg(GetLocalString("msg", "mask.on.dry"))
 										wi\GasMask = 4
 										;[End Block]
 								End Select
@@ -5199,7 +5185,6 @@ Function UpdateGUI%()
 							SelectedItem\State = 0.0
 							SelectedItem = Null
 						EndIf
-					EndIf
 					;[End Block]
 				Case "nav", "nav310", "navulti", "nav300"
 					;[Block]
@@ -5225,21 +5210,11 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scp1499", "fine1499"
 					;[Block]
-					If (Not PreventItemOverlapping(False, False, True)) Then
-						Select SelectedItem\ItemTemplate\TempName
-							Case "scp1499"
-								;[Block]
-								If IsDoubleItem(I_1499\Using, 1, GetLocalString("misc", "twomask")) Then Return
-								;[End Block]
-							Case "fine1499"
-								;[Block]
-								If IsDoubleItem(I_1499\Using, 2, GetLocalString("misc", "twomask")) Then Return
-								;[End Block]
-						End Select
+					If PreventItemOverlapping(True) Then
 						
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
-						SelectedItem\State = Min(SelectedItem\State + fps\Factor[0] / 1.6, 100.0)
+						SelectedItem\State = Min(SelectedItem\State + fps\Factor[0] / 1.5, 100.0)
 						
 						If SelectedItem\State = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
@@ -5403,7 +5378,6 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "helmet"
 					;[Block]
-					If (Not PreventItemOverlapping(False, False, False, True)) Then
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
 						SelectedItem\State = Min(SelectedItem\State + fps\Factor[0], 100.0)
@@ -5416,16 +5390,16 @@ Function UpdateGUI%()
 								wi\BallisticHelmet = False
 							Else
 								CreateMsg(GetLocalString("msg", "helmet.on"))
+								wi\GasMask = 0 : wi\SCRAMBLE = 0
+								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								wi\BallisticHelmet = True
 							EndIf
 							SelectedItem\State = 0.0
 							SelectedItem = Null
 						EndIf
-					EndIf
 					;[End Block]
 				Case "scramble", "finescramble"
 					;[Block]
-					If (Not PreventItemOverlapping(False, False, False, False, True)) Then
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
 						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.5), 100.0)
@@ -5433,10 +5407,12 @@ Function UpdateGUI%()
 						If SelectedItem\State3 = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 							
-							If wi\SCRAMBLE > 0 Then
+							If (wi\SCRAMBLE = 1 And SelectedItem\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And SelectedItem\ItemTemplate\TempName = "finescramble") Then
 								CreateMsg(GetLocalString("msg", "gear.off"))
 								wi\SCRAMBLE = 0
 							Else
+								wi\GasMask = 0 : wi\BallisticHelmet = False
+								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								CreateMsg(GetLocalString("msg", "gear.on"))
 								Select SelectedItem\ItemTemplate\TempName
 									Case "scramble"
@@ -5452,11 +5428,10 @@ Function UpdateGUI%()
 							SelectedItem\State3 = 0.0
 							SelectedItem = Null
 						EndIf
-					EndIf
 					;[End Block]
 				Case "scp500"
 					;[Block]
-					If I_500\Taken < Rand(20) Then
+					If I_500\Taken < 3 Then
 						If ItemAmount < MaxItemAmount Then
 							For i = 0 To MaxItemAmount - 1
 								If Inventory(i) = Null Then
@@ -5477,8 +5452,8 @@ Function UpdateGUI%()
 						EndIf
 						SelectedItem = Null
 					Else
-						I_500\Taken = 0
-						RemoveItem(SelectedItem)
+						CreateMsg(GetLocalString("msg", "500empty"))
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "scp1123"
@@ -5870,7 +5845,7 @@ Function RenderGUI%()
 	
 	If I_294\Using Then Render294()
 	
-	If SelectedDifficulty\OtherFactors <> EXTREME And opt\HUDEnabled Then
+	If SelectedDifficulty\Name <> "Apollyon" And opt\HUDEnabled Then
 		If (Not InvOpen) And (Not I_294\Using) And OtherOpen = Null And d_I\SelectedDoor = Null And SelectedScreen = Null And (Not MenuOpen) And (Not ConsoleOpen) Then
 			
 			If d_I\ClosestButton <> 0 Then
@@ -6199,23 +6174,9 @@ Function RenderGUI%()
 	Else
 		If SelectedItem <> Null Then
 			Select SelectedItem\ItemTemplate\TempName
-				Case "nvg", "veryfinenvg", "finenvg"
+				Case "nvg", "veryfinenvg", "finenvg", "scramble", "finescramble"
 					;[Block]
-					If (Not PreventItemOverlapping(False, True)) Then
-						Select SelectedItem\ItemTemplate\TempName
-							Case "nvg"
-								;[Block]
-								If IsDoubleItem(wi\NightVision, 1, "pairs of goggles") Then Return
-								;[End Block]
-							Case "veryfinenvg"
-								;[Block]
-								If IsDoubleItem(wi\NightVision, 2, "pairs of goggles") Then Return
-								;[End Block]
-							Case "finenvg"
-								;[Block]
-								If IsDoubleItem(wi\NightVision, 3, "pairs of goggles") Then Return
-								;[End Block]
-						End Select
+					If PreventItemOverlapping() Then
 						
 						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
@@ -6410,27 +6371,9 @@ Function RenderGUI%()
 					
 					RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					;[End Block]
-				Case "gasmask", "finegasmask", "veryfinegasmask", "gasmask148"
+				Case "gasmask", "finegasmask", "veryfinegasmask", "gasmask148", "helmet"
 					;[Block]
-					If (Not PreventItemOverlapping(True)) Then
-						Select SelectedItem\ItemTemplate\TempName
-							Case "gasmask"
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 1, GetLocalString("misc", "twomask")) Then Return
-								;[End Block]
-							Case "finegasmask"
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 2, GetLocalString("misc", "twomask")) Then Return
-								;[End Block]
-							Case "veryfinegasmask"
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 3, GetLocalString("misc", "twomask")) Then Return
-								;[End Block]
-							Case "gasmask148"
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 4, "gas masks") Then Return
-								;[End Block]
-						End Select
+					If PreventItemOverlapping() Then
 						
 						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
@@ -6616,17 +6559,7 @@ Function RenderGUI%()
 					;[End Block]
 				Case "scp1499", "fine1499"
 					;[Block]
-					If (Not PreventItemOverlapping(False, False, True)) Then
-						Select SelectedItem\ItemTemplate\TempName
-							Case "gasmask"
-								;[Block]
-								If IsDoubleItem(I_1499\Using, 1, GetLocalString("misc", "twomask")) Then Return
-								;[End Block]
-							Case "fine1499"
-								;[Block]
-								If IsDoubleItem(I_1499\Using, 2, GetLocalString("misc", "twomask")) Then Return
-								;[End Block]
-						End Select
+					If PreventItemOverlapping(True) Then
 						
 						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 						
@@ -6658,32 +6591,6 @@ Function RenderGUI%()
 						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
 					EndIf
 					DrawImage(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
-					;[End Block]
-				Case "helmet"
-					;[Block]
-					If (Not PreventItemOverlapping(False, False, False, True)) Then
-						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
-						
-						Width = 300 * MenuScale
-						Height = 20 * MenuScale
-						x = mo\Viewport_Center_X - (Width / 2)
-						y = mo\Viewport_Center_Y + (80 * MenuScale)
-						
-						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
-					EndIf
-					;[End Block]
-				Case "scramble", "finescramble"
-					;[Block]
-					If (Not PreventItemOverlapping(False, False, False, False, True)) Then
-						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
-						
-						Width = 300 * MenuScale
-						Height = 20 * MenuScale
-						x = mo\Viewport_Center_X - (Width / 2)
-						y = mo\Viewport_Center_Y + (80 * MenuScale)
-						
-						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State3)
-					EndIf
 					;[End Block]
 			End Select
 			
