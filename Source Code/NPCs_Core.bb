@@ -607,9 +607,13 @@ Function UpdateNPCs%()
 			;[Block]
 			DifficultyDMGMult = 1.3
 			;[End Block]
-		Case EXTREME
+		Case HARDER
 			;[Block]
 			DifficultyDMGMult = 1.45
+			;[End Block]
+		Case EXTREME
+			;[Block]
+			DifficultyDMGMult = 1.6
 			;[End Block]
 	End Select
 	
@@ -1808,7 +1812,7 @@ Function UpdateNPCs%()
 							ElseIf n\Idle = 0
 								If ChannelPlaying(n\SoundCHN) Then StopChannel(n\SoundCHN) : n\SoundCHN = 0
 								If PlayerInReachableRoom(True) And InFacility = 1 Then ; ~ Player is in a room where SCP-049 can teleport to
-									If Rand(3 - SelectedDifficulty\OtherFactors) = 1 Then
+									If Rand(3 - SelectedDifficulty\AggressiveNPCs) = 1 Then
 										TeleportCloser(n)
 									Else
 										n\Idle = 70.0 * 60.0
@@ -1822,6 +1826,7 @@ Function UpdateNPCs%()
 							
 							PositionEntity(n\Collider, CurveValue(EntityX(me\Collider), EntityX(n\Collider), 20.0), EntityY(n\Collider), CurveValue(EntityZ(me\Collider), EntityZ(n\Collider), 20.0))
 							RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(me\Collider) - 180.0, EntityYaw(n\Collider), 40.0), 0.0)
+							If (Not me\Terminated) Then n\State = 2.0
 							;[End Block]
 						Case 4.0 ; ~ Standing on catwalk
 							;[Block]
@@ -6502,9 +6507,13 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 			;[Block]
 			DifficultyDMGMult = 1.3
 			;[End Block]
-		Case EXTREME
+		Case HARDER
 			;[Block]
 			DifficultyDMGMult = 1.45
+			;[End Block]
+		Case EXTREME
+			;[Block]
+			DifficultyDMGMult = 1.6
 			;[End Block]
 	End Select
 	
@@ -6866,9 +6875,13 @@ Function NPCSpeedChange%(n.NPCs)
 					;[Block]
 					n\Speed = n\Speed * 1.2
 					;[End Block]
-				Case EXTREME
+				Case HARDER
 					;[Block]
 					n\Speed = n\Speed * 1.3
+					;[End Block]
+				Case EXTREME
+					;[Block]
+					n\Speed = n\Speed * 1.4
 					;[End Block]
 			End Select
 	End Select

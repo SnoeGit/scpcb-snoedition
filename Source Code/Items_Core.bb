@@ -890,9 +890,13 @@ Function CreateRandomBattery.Items(x#, y#, z#)
 			;[Block]
 			BatteryChance = 20
 			;[End Block]
-		Case EXTREME
+		Case HARD
 			;[Block]
 			BatteryChance = 25
+			;[End Block]
+		Case EXTREME
+			;[Block]
+			BatteryChance = 30
 			;[End Block]
 	End Select
 	

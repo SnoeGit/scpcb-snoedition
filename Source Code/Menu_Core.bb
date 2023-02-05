@@ -302,7 +302,7 @@ Function UpdateMainMenu%()
 					For i = SAFE To ESOTERIC
 						Local PrevSelectedDifficulty.Difficulty = SelectedDifficulty
 						
-						If UpdateMainMenuTick(x + (20 * MenuScale), y + ((180 + 30 * i) * MenuScale), (SelectedDifficulty = difficulties[i])) Then SelectedDifficulty = difficulties[i]
+						If UpdateMainMenuTick(x + (20 * MenuScale), y + ((175 + 28 * i) * MenuScale), (SelectedDifficulty = difficulties[i])) Then SelectedDifficulty = difficulties[i]
 						
 						If PrevSelectedDifficulty <> SelectedDifficulty Then
 							If PrevSelectedDifficulty = difficulties[ESOTERIC] Then mm\ShouldDeleteGadgets = True
@@ -319,7 +319,7 @@ Function UpdateMainMenu%()
 							EndIf
 						EndIf
 						
-						; ~ Agressive NPCs
+						; ~ Aggressive NPCs
 						SelectedDifficulty\AggressiveNPCs = UpdateMainMenuTick(x + (160 * MenuScale), y + (210 * MenuScale), SelectedDifficulty\AggressiveNPCs)
 						
 						; ~ Inventory slots
@@ -874,7 +874,7 @@ Function UpdateMainMenu%()
 								
 								y = y + (30 * MenuScale)
 								
-								opt\AutoSaveEnabled = UpdateMainMenuTick(x, y, opt\AutoSaveEnabled, SelectedDifficulty\SaveType <> SAVE_ANYWHERE)
+								opt\AutoSaveEnabled = UpdateMainMenuTick(x, y, opt\AutoSaveEnabled)
 								
 								y = y + (30 * MenuScale)
 								
@@ -1175,7 +1175,7 @@ Function RenderMainMenu%()
 				Text2(x + (20 * MenuScale), y + (155 * MenuScale), GetLocalString("menu", "new.diff"))
 				For i = SAFE To ESOTERIC
 					Color(difficulties[i]\R, difficulties[i]\G, difficulties[i]\B)
-					Text2(x + (50 * MenuScale), y + ((185 + 30 * i) * MenuScale), difficulties[i]\Name)
+					Text2(x + (50 * MenuScale), y + ((180 + 28 * i) * MenuScale), difficulties[i]\Name)
 				Next
 				
 				Color(255, 255, 255)
@@ -1192,9 +1192,9 @@ Function RenderMainMenu%()
 							;[Block]
 							TempStr = GetLocalString("menu", "new.savescreen")
 							;[End Block]
-						Case SAVE_ON_QUIT
+						Case DELETE_ON_DEATH
 							;[Block]
-							TempStr = GetLocalString("menu", "new.savequit")
+							TempStr = GetLocalString("menu", "new.deletedeath")
 							;[End Block]
 						Case NO_SAVES
 							;[Block]
@@ -1203,7 +1203,7 @@ Function RenderMainMenu%()
 					End Select
 					Text2(x + (200 * MenuScale), y + (186 * MenuScale), GetLocalString("menu", "new.savetype") + TempStr)
 					
-					; ~ Agressive NPCs
+					; ~ Aggressive NPCs
 					Text2(x + (200 * MenuScale), y + (215 * MenuScale), GetLocalString("menu", "new.dangernpc"))
 					; ~ Inventory slots
 					Text2(x + (200 * MenuScale), y + (246 * MenuScale), Format(GetLocalString("menu", "new.invslots"), SelectedDifficulty\InventorySlots))
@@ -1221,6 +1221,10 @@ Function RenderMainMenu%()
 						Case HARD
 							;[Block]
 							TempStr = GetLocalString("menu", "new.hard")
+							;[End Block]
+						Case HARDER
+							;[Block]
+							TempStr = GetLocalString("menu", "new.harder")
 							;[End Block]
 						Case EXTREME
 							;[Block]

@@ -784,6 +784,10 @@ Function UpdateGame%()
 							;[Block]
 							me\BLINKFREQ = Rnd(420.0, 630.0)
 							;[End Block]
+						Case HARDER
+							;[Block]
+							me\BLINKFREQ = Rnd(385.0, 595.0)
+							;[End Block]
 						Case EXTREME
 							;[Block]
 							me\BLINKFREQ = Rnd(200.0, 400.0)
@@ -902,7 +906,7 @@ Function UpdateGame%()
 		EndIf
 		
 		If KeyHit(key\SAVE) Then
-			If SelectedDifficulty\SaveType < SAVE_ON_QUIT Then
+			If SelectedDifficulty\SaveType < NO_SAVES Then
 				If QuickLoadPercent > -1 Then CanSave = 0
 				If CanSave = 0 Then ; ~ Scripted location
 					CreateHintMsg(GetLocalString("save", "failed.now"))
@@ -5575,7 +5579,7 @@ Function UpdateMenu%()
 		ElseIf mm\AchievementsMenu <= 0 And OptionsMenu <= 0 And QuitMsg > 0
 			Local QuitButton% = 85
 			
-			If SelectedDifficulty\SaveType = SAVE_ON_QUIT Lor SelectedDifficulty\SaveType = SAVE_ANYWHERE Then
+			If SelectedDifficulty\SaveType = SAVE_ANYWHERE Then
 				Local AbleToSave% = True
 				
 				If CanSave < 2 Then AbleToSave = False
