@@ -5898,10 +5898,10 @@ Function UpdateEvents%()
 							If e\room\NPC[0]\State = 0.0 Lor EntityDistanceSquared(me\Collider, e\room\NPC[0]\Collider) > 400.0 Then
 								e\EventState3 = e\EventState3 + (1.0 + me\CurrSpeed) * fps\Factor[0]
 								If (e\EventState3 Mod 500.0) < 10.0 And ((e\EventState3 - (1.0 + me\CurrSpeed) * fps\Factor[0]) Mod 500.0) > 490.0 Then
-									If e\EventState3 > 3000.0 - (500.0 * SelectedDifficulty\AggressiveNPCs) And Rnd(10000 + (500.0 * SelectedDifficulty\AggressiveNPCs)) < e\EventState3
+									If e\EventState3 > 3000.0 - (250.0 * SelectedDifficulty\AggressiveNPCs) And Rnd(10000 + (250.0 * SelectedDifficulty\AggressiveNPCs)) < e\EventState3
 										e\room\NPC[0]\State = 2.0
 										PositionEntity(e\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
-										e\EventState3 = e\EventState3 - Rnd(1000.0, 2000.0 - (500.0 * SelectedDifficulty\AggressiveNPCs))
+										e\EventState3 = e\EventState3 - Rnd(1000.0, 2000.0 - (250.0 * SelectedDifficulty\AggressiveNPCs))
 									Else
 										e\room\NPC[0]\State = 1.0
 										PositionEntity(e\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
@@ -6751,7 +6751,7 @@ Function UpdateEvents%()
 						CanSave = 0
 						e\room\RoomDoors[1]\Open = False
 						If e\EventState > 70.0 * 2.0 Then
-							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (0.25 + (0.25 * SelectedDifficulty\AggressiveNPCs)))
+							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (0.25 + (0.125 * SelectedDifficulty\AggressiveNPCs)))
 							If e\room\RoomDoors[0]\Open Then e\room\RoomDoors[0]\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\914\DoorClose.ogg"), Camera, e\room\RoomDoors[0]\OBJ)
 							e\room\RoomDoors[0]\Open = False
 						EndIf
@@ -7763,7 +7763,7 @@ Function UpdateEvents%()
 					EndIf
 				Else
 					If e\EventState = 2.0
-						If Rand(-1, 1 + (2 * SelectedDifficulty\AggressiveNPCs)) > 0 Then
+						If Rand(-1, 1 + SelectedDifficulty\AggressiveNPCs) > 0 Then
 							e\EventState = 0.0
 						Else
 							e\EventState = 3.0

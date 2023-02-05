@@ -3942,7 +3942,7 @@ Function UpdateGUI%()
 					
 					me\VomitTimer = 70.0 * 1.0
 					
-					I_008\Timer = I_008\Timer + (1.0 + (1.0 * SelectedDifficulty\AggressiveNPCs))
+					I_008\Timer = I_008\Timer + (1.0 + SelectedDifficulty\AggressiveNPCs)
 					RemoveItem(SelectedItem)
 					;[End Block]
 				Case "helmet"
@@ -4151,7 +4151,7 @@ Function RenderHUD%()
 	EndIf
 	
 	Color(255, 255, 255)
-	If me\BlinkTimer < 150.0 Then
+	If me\BlinkTimer < me\BLINKFREQ / 4.0 Then
 		RenderBar(t\ImageID[1], x, y, Width, Height, me\BlinkTimer, me\BLINKFREQ, 100, 0, 0)
 	Else
 		RenderBar(BlinkMeterIMG, x, y, Width, Height, me\BlinkTimer, me\BLINKFREQ)

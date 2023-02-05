@@ -1309,12 +1309,12 @@ Function LoadEvents%()
 	CreateEvent("dimension_106", "dimension_106", 0)
 	
 	; ~ There's a 7% chance that SCP-106 appears in the rooms named "room2_5_hcz"
-	CreateEvent("room2_5_hcz_106", "room2_5_hcz", 0, 0.07 + (0.1 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("room2_5_hcz_106", "room2_5_hcz", 0, 0.07 + (0.05 * SelectedDifficulty\AggressiveNPCs))
 	
 	; ~ The chance for SCP-173 appearing in the first room2c_gw_lcz is about 66%
 	; ~ There's a 30% chance that it appears in the later room2c_gw_lcz
 	If Rand(3) < 3 Then CreateEvent("room2c_gw_lcz_173", "room2c_gw_lcz", 0)
-	CreateEvent("room2c_gw_lcz_173", "room2c_gw_lcz", 0, 0.3 + (0.5 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("room2c_gw_lcz_173", "room2c_gw_lcz", 0, 0.3 + (0.25 * SelectedDifficulty\AggressiveNPCs))
 	
 	CreateEvent("trick", "room2_lcz", 0, 0.15)
 	
@@ -1337,10 +1337,10 @@ Function LoadEvents%()
 	CreateEvent("room3_storage", "room3_storage", 0)
 	
 	CreateEvent("room2_6_hcz_smoke", "room2_6_hcz", 0, 0.2)
-	CreateEvent("room2_6_hcz", "room2_6_hcz", 0, (0.2 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("room2_6_hcz", "room2_6_hcz", 0, (0.1 * SelectedDifficulty\AggressiveNPCs))
 	
 	; ~ SCP-173 appears in half of the "room2_6_lcz"-rooms
-	CreateEvent("room2_6_lcz_173", "room2_6_lcz", 0, 0.5 + (0.4 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("room2_6_lcz_173", "room2_6_lcz", 0, 0.5 + (0.2 * SelectedDifficulty\AggressiveNPCs))
 	
 	; ~ The anomalous duck in "room2_2_ez"-rooms
 	CreateEvent("room2_2_ez", "room2_2_ez", 0, 0.7)
@@ -1423,7 +1423,7 @@ Function LoadEvents%()
 	
 	CreateEvent("room2_2_hcz_106", "room2_2_hcz", Rand(0, 3))
 	
-	CreateEvent("room2_4_hcz", "room2_4_hcz", 0, 0.4 + (0.4 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("room2_4_hcz", "room2_4_hcz", 0, 0.4 + (0.2 * SelectedDifficulty\AggressiveNPCs))
 	
 	CreateEvent("room2_test_hcz", "room2_test_hcz", 0)
 	CreateEvent("room2_test_lcz_173", "room2_test_lcz", 0, 1.0)
@@ -1467,21 +1467,21 @@ Function LoadEvents%()
 	
 	CreateEvent("room2_shaft", "room2_shaft", 0)
 	
-	CreateEvent("096_spawn", "room2_3_hcz", 0, 0.4 + (0.2 * SelectedDifficulty\AggressiveNPCs))
-	CreateEvent("096_spawn", "room2_4_hcz", 0, 0.5 + (0.2 * SelectedDifficulty\AggressiveNPCs))
-	CreateEvent("096_spawn", "room2_5_hcz", 0, 0.6 + (0.2 * SelectedDifficulty\AggressiveNPCs))
-	CreateEvent("096_spawn", "room2_6_hcz", 0, 0.4 + (0.2 * SelectedDifficulty\AggressiveNPCs))
-	CreateEvent("096_spawn", "room3_hcz", 0, 0.6 + (0.2 * SelectedDifficulty\AggressiveNPCs))
-	CreateEvent("096_spawn", "room3_2_hcz", 0, 0.6 + (0.2 * SelectedDifficulty\AggressiveNPCs))
-	CreateEvent("096_spawn", "room3_3_hcz", 0, 0.7 + (0.2 * SelectedDifficulty\AggressiveNPCs))
-	CreateEvent("096_spawn", "room4_hcz", 0, 0.6 + (0.2 * SelectedDifficulty\AggressiveNPCs))
-	CreateEvent("096_spawn", "room4_2_hcz", 0, 0.7 + (0.2 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("096_spawn", "room2_3_hcz", 0, 0.4 + (0.1 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("096_spawn", "room2_4_hcz", 0, 0.5 + (0.1 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("096_spawn", "room2_5_hcz", 0, 0.6 + (0.1 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("096_spawn", "room2_6_hcz", 0, 0.4 + (0.1 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("096_spawn", "room3_hcz", 0, 0.6 + (0.1 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("096_spawn", "room3_2_hcz", 0, 0.6 + (0.1 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("096_spawn", "room3_3_hcz", 0, 0.7 + (0.1 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("096_spawn", "room4_hcz", 0, 0.6 + (0.1 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("096_spawn", "room4_2_hcz", 0, 0.7 + (0.1 * SelectedDifficulty\AggressiveNPCs))
 	
-	CreateEvent("room2_4_hcz", "room2_4_lcz", 0, 0.4 + (0.4 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("room2_4_hcz", "room2_4_lcz", 0, 0.4 + (0.2 * SelectedDifficulty\AggressiveNPCs))
 	
 	CreateEvent("room2_ez_035", "room2_ez", 0)
 	
-	CreateEvent("room2_4_hcz_106", "room2_4_hcz", 0, 0.07 + (0.1 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent("room2_4_hcz_106", "room2_4_hcz", 0, 0.07 + (0.05 * SelectedDifficulty\AggressiveNPCs))
 	
 	CreateEvent("room4_ic", "room4_ic", 0)
 	

@@ -1125,12 +1125,14 @@ Function UpdateNPCs%()
 							n\DropSpeed = 0.0
 							SetNPCFrame(n, 110.0)
 							
-							If (Not PlayerRoom\RoomTemplate\DisableDecals) Then
-								If PlayerRoom\RoomTemplate\Name <> "gate_a" Then
-									If SelectedDifficulty\AggressiveNPCs Then
+							If (Not PlayerRoom\RoomTemplate\DisableDecals) Lor PlayerRoom\RoomTemplate\Name = "room2_bio" Lor (PlayerRoom\RoomTemplate\Name = "cont1_173" And EntityY(me\Collider) < (100.0) * RoomScale) Lor (PlayerRoom\RoomTemplate\Name = "cont2_012" And EntityY(me\Collider) > (0.0) * RoomScale) Then
+								If PlayerRoom\RoomTemplate\Name <> "gate_a" And (I_268\Using = 0 Lor I_268\Timer =< 0.0) Then
+									If SelectedDifficulty\AggressiveNPCs = VERY_AGGRESSIVE Then
 										n\State = n\State - (fps\Factor[0] * 2.0)
+									ElseIf PlayerRoom\RoomTemplate\Name = "cont1_035" Lor PlayerRoom\RoomTemplate\Name = "cont1_173" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_lcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_hcz" Lor PlayerRoom\RoomTemplate\Name = "room2_tesla_ez"
+										n\State = n\State - (fps\Factor[0] * (0.5 + (SelectedDifficulty\AggressiveNPCs * 0.25)))
 									Else
-										n\State = n\State - fps\Factor[0]
+										n\State = n\State - (fps\Factor[0] * (1.0 + (SelectedDifficulty\AggressiveNPCs * 0.5)))
 									EndIf
 								EndIf
 							EndIf
@@ -1522,7 +1524,7 @@ Function UpdateNPCs%()
 				
 				If n\Idle > 0.1 Then
 					If PlayerRoom\RoomTemplate\Name <> "cont2_049" Then
-						n\Idle = Max(n\Idle - (1 + SelectedDifficulty\AggressiveNPCs) * fps\Factor[0], 0.1)
+						n\Idle = Max(n\Idle - (1 + (0.5 * SelectedDifficulty\AggressiveNPCs)) * fps\Factor[0], 0.1)
 					EndIf
 					n\DropSpeed = 0.0
 					If ChannelPlaying(n\SoundCHN) Then StopChannel(n\SoundCHN) : n\SoundCHN = 0
@@ -1703,7 +1705,7 @@ Function UpdateNPCs%()
 										EndIf
 									Else ; ~ Stands still and tries to find a path
 										n\PathTimer = n\PathTimer + fps\Factor[0]
-										If n\PathTimer > 70.0 * (5.0 - (2.0 * SelectedDifficulty\AggressiveNPCs)) Then
+										If n\PathTimer > 70.0 * (5.0 - SelectedDifficulty\AggressiveNPCs) Then
 											n\PathStatus = FindPath(n, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider))
 											n\PathTimer = 0.0
 											n\State3 = 0.0
@@ -2030,7 +2032,7 @@ Function UpdateNPCs%()
 									
 									n\PathTimer = n\PathTimer - fps\Factor[0]
 									If n\PathTimer < 70.0 * 5.0
-										n\PathTimer = n\PathTimer + Rnd(1.0, 2.0 + (2.0 * SelectedDifficulty\AggressiveNPCs)) * fps\Factor[0]
+										n\PathTimer = n\PathTimer + Rnd(1.0, 2.0 + SelectedDifficulty\AggressiveNPCs) * fps\Factor[0]
 									Else
 										n\EnemyX = 0.0
 										n\EnemyY = 0.0
@@ -2162,14 +2164,14 @@ Function UpdateNPCs%()
 						If (Not me\Terminated) Then
 							Dist = EntityDistanceSquared(n\Collider, me\Collider)
 							
-							Local ShootAccuracy# = 0.4 + 0.5 * SelectedDifficulty\AggressiveNPCs
+							Local ShootAccuracy# = 0.4 + 0.25 * SelectedDifficulty\AggressiveNPCs
 							Local DetectDistance# = 121.0
 							
 							; ~ If at Gate B increase his distance so that he can shoot the player from a distance after they are spotted.
 							If PlayerRoom\RoomTemplate\Name = "gate_b" Then
 								DetectDistance = 441.0
 								ShootAccuracy = 0.0
-								If Rand(8 - SelectedDifficulty\AggressiveNPCs * 4) < 2 Then ShootAccuracy = 0.03
+								If Rand(8 - SelectedDifficulty\AggressiveNPCs * 2) < 2 Then ShootAccuracy = 0.03
 								
 								; ~ Increase accuracy if the player is going slow
 								ShootAccuracy = ShootAccuracy + (0.5 - me\CurrSpeed * 20.0)
@@ -3719,7 +3721,7 @@ Function UpdateNPCs%()
 												;[Block]
 												If (Not n\Sound2) Then n\Sound2 = LoadSound_Strict("SFX\SCP\066\Beethoven.ogg")
 												n\SoundCHN2 = PlaySound2(n\Sound2, Camera, n\Collider)
-												me\DeafTimer = 70.0 * (45.0 + (15.0 * SelectedDifficulty\AggressiveNPCs))
+												me\DeafTimer = 70.0 * (45.0 + (7.5 * SelectedDifficulty\AggressiveNPCs))
 												me\Deaf = True
 												me\BigCameraShake = 10.0
 												;[End Block]
@@ -4563,7 +4565,7 @@ Function UpdateNPCs%()
 									
 									n\PathTimer = n\PathTimer - fps\Factor[0]
 									If n\PathTimer < 70.0 * 5.0
-										n\PathTimer = n\PathTimer + Rnd(1.0, 2.0 + (2.0 * SelectedDifficulty\AggressiveNPCs)) * fps\Factor[0]
+										n\PathTimer = n\PathTimer + Rnd(1.0, 2.0 + SelectedDifficulty\AggressiveNPCs) * fps\Factor[0]
 									Else
 										n\EnemyX = 0.0
 										n\EnemyY = 0.0
@@ -4602,7 +4604,7 @@ Function UpdateNPCs%()
 								EndIf
 								
 								If EntityDistanceSquared(n\Collider, me\Collider) > PowTwo(HideDistance)
-									If n\State3 < 70.0 * (15.0 + (10.0 * SelectedDifficulty\AggressiveNPCs))
+									If n\State3 < 70.0 * (15.0 + (5.0 * SelectedDifficulty\AggressiveNPCs))
 										n\State3 = n\State3 + fps\Factor[0]
 									Else
 										n\State3 = 70.0 * (6.0 * 60.0)
@@ -4655,10 +4657,10 @@ Function UpdateNPCs%()
 								ResetEntity(n\Collider)
 							EndIf
 							If n\Idle > 0
-								n\Idle = Max(n\Idle - (1 + (1 * SelectedDifficulty\AggressiveNPCs)) * fps\Factor[0], 0.0)
+								n\Idle = Max(n\Idle - (1 + (0.5 * SelectedDifficulty\AggressiveNPCs)) * fps\Factor[0], 0.0)
 							Else
 								If PlayerInReachableRoom() ; ~ Player is in a room where SCP-008-1 can teleport to
-									If Rand(50 - (20 * SelectedDifficulty\AggressiveNPCs)) = 1
+									If Rand(50 - (10 * SelectedDifficulty\AggressiveNPCs)) = 1
 										If EntityHidden(n\OBJ) Then
 											ShowEntity(n\OBJ)
 											ShowEntity(n\Collider)
@@ -5046,7 +5048,7 @@ Function UpdateMTFUnit%(n.NPCs)
 						n\State2 = 70.0 * (15.0 * Temp) ; ~ Give up after 15 seconds (30 seconds if detected by loud noise, over camera: 45)
 						n\PathTimer = 0.0
 						n\PathStatus = 0
-						n\Reload = 200.0 - (100.0 * SelectedDifficulty\AggressiveNPCs)
+						n\Reload = 200.0 - (50.0 * SelectedDifficulty\AggressiveNPCs)
 					EndIf
 					
 					; ~ B3D doesn't do short-circuit evaluation, so this retarded nesting is an optimization
@@ -5232,7 +5234,7 @@ Function UpdateMTFUnit%(n.NPCs)
 											n2\State2 = n\State2
 											n2\PathTimer = 0.0
 											n2\PathStatus = 0
-											n2\Reload = 200.0 - (100.0 * SelectedDifficulty\AggressiveNPCs)
+											n2\Reload = 200.0 - (50.0 * SelectedDifficulty\AggressiveNPCs)
 											n2\PrevState = 0
 										EndIf
 									EndIf
@@ -5363,7 +5365,7 @@ Function UpdateMTFUnit%(n.NPCs)
 						If n\MTFLeader = Null Then
 							PlayMTFSound(LoadTempSound("SFX\Character\MTF\Targetlost" + Rand(3) + ".ogg"), n)
 							If MTFCameraCheckTimer = 0.0 Then
-								If Rand(15 - (7 * SelectedDifficulty\AggressiveNPCs)) = 1 ; ~ Maybe change this to another chance -- ENDSHN
+								If Rand(15 - (4 * SelectedDifficulty\AggressiveNPCs)) = 1 ; ~ Maybe change this to another chance -- ENDSHN
 									If PlayerInReachableRoom() Then PlayAnnouncement("SFX\Character\MTF\AnnouncCameraCheck.ogg")
 									MTFCameraCheckTimer = fps\Factor[0]
 								EndIf
@@ -6235,7 +6237,7 @@ Function TeleportCloser%(n.NPCs)
 			If xTemp < 10.0 And xTemp > 1.0 Then
 				zTemp = Abs(EntityZ(w\OBJ, True) - EntityZ(n\Collider, True))
 				If zTemp < 10.0 And zTemp > 1.0 Then
-					If EntityDistanceSquared(me\Collider, w\OBJ) > PowTwo(16.0 - (8.0 * SelectedDifficulty\AggressiveNPCs)) Then
+					If EntityDistanceSquared(me\Collider, w\OBJ) > PowTwo(16.0 - (4.0 * SelectedDifficulty\AggressiveNPCs)) Then
 						; ~ Teleports to the nearby waypoint that takes it closest to the player
 						Local NewDist# = EntityDistanceSquared(me\Collider, w\OBJ)
 						
@@ -6252,7 +6254,7 @@ Function TeleportCloser%(n.NPCs)
 	Local ShouldTeleport% = False
 	
 	If closestWaypoint <> Null Then
-		If n\InFacility <> 1 Lor SelectedDifficulty\AggressiveNPCs Then
+		If n\InFacility <> 1 Lor SelectedDifficulty\AggressiveNPCs = VERY_AGGRESSIVE Then
 			ShouldTeleport = True
 		ElseIf EntityY(closestWaypoint\OBJ, True) <= 7.0 And EntityY(closestWaypoint\OBJ, True) >= -10.0
 			ShouldTeleport = True
@@ -6910,7 +6912,7 @@ Function PlayerInReachableRoom%(CanSpawnIn049Chamber% = False, Intro% = False)
 	EndIf
 	
 	If (Not CanSpawnIn049Chamber) Then
-		If (Not SelectedDifficulty\AggressiveNPCs) Then
+		If SelectedDifficulty\AggressiveNPCs < 2 Then
 			If RN = "cont2_049" And EntityY(me\Collider) <= (-2848.0) * RoomScale Then Return(False)
 		EndIf
 	EndIf
