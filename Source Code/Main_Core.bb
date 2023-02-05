@@ -4055,7 +4055,7 @@ Function UpdateGUI%()
 					Case "vest", "finevest"
 						;[Block]
 						SelectedItem\State = 0.0
-						If (Not wi\BallisticVest) Then DropItem(SelectedItem, False)
+						If wi\BallisticVest = 0 Then DropItem(SelectedItem, False)
 						;[End Block]
 					Case "hazmatsuit", "finehazmatsuit", "veryfinehazmatsuit", "hazmatsuit148"
 						;[Block]

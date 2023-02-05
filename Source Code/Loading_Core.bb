@@ -880,9 +880,9 @@ CreateItemTemplate(GetLocalString("items", "doc005"), "Document SCP-005", "paper
 	CreateItemTemplate(GetLocalString("items", "killbat"), "Strange Battery", "killbat", "battery.b3d", "INV_strange_battery.png", "", 0.01, 1, "strange_battery.png")
 	
 	CreateItemTemplate(GetLocalString("items", "syringe"), "Syringe", "syringe", "syringe.b3d", "INV_syringe.png", "", 0.005, 2)
-	CreateItemTemplate(GetLocalString("items", "finesyringe"), "Syringe", "finesyringe", "syringe.b3d", "INV_syringe.png", "", 0.005, 2)
-	CreateItemTemplate(GetLocalString("items", "vfsyringe"), "Syringe", "veryfinesyringe", "syringe.b3d", "INV_syringe.png", "", 0.005, 2)
-	CreateItemTemplate(GetLocalString("items", "syringeinf"), "Syringe", "syringeinf", "syringe.b3d", "INV_syringe_infect.png", "", 0.005, 2, "syringe_infect.png")
+	CreateItemTemplate(GetLocalString("items", "syringe"), "Syringe", "finesyringe", "syringe.b3d", "INV_syringe.png", "", 0.005, 2)
+	CreateItemTemplate(GetLocalString("items", "syringe"), "Syringe", "veryfinesyringe", "syringe.b3d", "INV_syringe.png", "", 0.005, 2)
+	CreateItemTemplate(GetLocalString("items", "syringe"), "Syringe", "syringeinf", "syringe.b3d", "INV_syringe_infect.png", "", 0.005, 2, "syringe_infect.png")
 	
 	CreateItemTemplate(GetLocalString("items", "wallet"), "Wallet", "wallet", "wallet.b3d", "INV_wallet.png", "", 0.0006, 2, "", "", 1)
 	
@@ -2031,7 +2031,7 @@ Function InitNewGame%()
 				EntityType(it\Collider, HIT_ITEM)
 				EntityParent(it\Collider, 0)
 				ItemAmount = ItemAmount + 1
-				it.Items = CreateItem("Janitorial Document SCP-173", "paper", 1.0, 1.0, 1.0)
+				it.Items = CreateItem("Document SCP-173", "paper", 1.0, 1.0, 1.0)
 				it\Picked = True : it\Dropped = -1 : it\ItemTemplate\Found = True
 				Inventory(1) = it
 				HideEntity(it\Collider)
