@@ -31,9 +31,8 @@ Function LoadTextureCheckingIfInCache%(TexName$, TexFlags% = 1, DeleteType% = De
 	tic.TextureInCache = New TextureInCache
 	tic\TexName = StripPath(TexName)
 	tic\TexDeleteType = DeleteType
-	If (Not tic\Tex) Then
-		tic\Tex = LoadTexture(CurrPath, TexFlags)
-	EndIf
+	If (Not tic\Tex) Then tic\Tex = LoadTexture(CurrPath, TexFlags)
+	If tic\Tex <> 0 And TextureBuffer(tic\Tex) <> 0 Then BufferDirty(TextureBuffer(tic\Tex))
 	Return(tic\Tex)
 End Function
 
@@ -56,9 +55,8 @@ Function LoadAnimTextureCheckingIfInCache%(TexName$, TexFlags% = 1, Width%, Heig
 	tic.TextureInCache = New TextureInCache
 	tic\TexName = StripPath(TexName)
 	tic\TexDeleteType = DeleteType
-	If (Not tic\Tex) Then
-		tic\Tex = LoadAnimTexture(CurrPath, TexFlags, Width, Height, FirstFrame, Count)
-	EndIf
+	If (Not tic\Tex) Then tic\Tex = LoadAnimTexture(CurrPath, TexFlags, Width, Height, FirstFrame, Count)
+	If tic\Tex <> 0 And TextureBuffer(tic\Tex) <> 0 Then BufferDirty(TextureBuffer(tic\Tex))
 	Return(tic\Tex)
 End Function
 

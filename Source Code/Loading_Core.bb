@@ -881,7 +881,7 @@ Function LoadItems%()
 	CreateItemTemplate("Radio Transceiver", "veryfineradio", ItemsPath + "radio.b3d", INVPath + "INV_radio.png", ItemsPath + "radio_HUD.png", 1.0, 1)
 	CreateItemTemplate("Radio Transceiver", "18vradio", ItemsPath + "radio.b3d", INVPath + "INV_radio.png", ItemsPath + "radio_HUD.png", 1.02, 1)
 	
-	CreateItemTemplate("Severed Hand", "hand", ItemsPath + "severed_hand.b3d", INVPath + "INV_severed_hand(1).png", "", 0.03, 2)
+	CreateItemTemplate("White Severed Hand", "hand", ItemsPath + "severed_hand.b3d", INVPath + "INV_severed_hand(1).png", "", 0.03, 2)
 	CreateItemTemplate("Black Severed Hand", "hand2", ItemsPath + "severed_hand.b3d", INVPath + "INV_severed_hand(2).png", "", 0.03, 2, ItemsPath + "severed_hand(2).png")
 	
 	CreateItemTemplate("S-NAV Navigator", "nav", ItemsPath + "navigator.b3d", INVPath + "INV_navigator.png", ItemsPath + "navigator_HUD.png", 0.0008, 1)

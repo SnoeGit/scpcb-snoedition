@@ -361,7 +361,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					If item\ItemTemplate\TempName = "hand" Then
 						it2.Items = CreateItem("Black Severed Hand", "hand2", x, y, z)
 					Else
-						it2.Items = CreateItem("Severed Hand", "hand", x, y, z)
+						it2.Items = CreateItem("White Severed Hand", "hand", x, y, z)
 					EndIf
 					;[End Block]
 				Case VERYFINE
