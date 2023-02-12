@@ -187,7 +187,6 @@ Type WearableItems
 	Field BallisticHelmet%
 	Field NightVision%, NVGTimer#, IsNVGBlinking%
 	Field SCRAMBLE%
-	Field Cap%
 End Type
 
 Global wi.WearableItems = New WearableItems
@@ -2282,18 +2281,9 @@ Function UpdateGUI%()
 								If (Not mo\MouseHit2) Then InvOpen = False
 							EndIf
 							;[End Block]
-						Case "scp268", "super268"
+						Case "cap", "scp268", "super268"
 							;[Block]
-							If (I_268\Using = 1 And SelectedItem\ItemTemplate\TempName = "scp268") Lor (I_268\Using = 2 And SelectedItem\ItemTemplate\TempName = "super268") Then
-								CreateHintMsg("Double click on the cap to take it off.")
-							Else
-								DropItem(SelectedItem)
-								If (Not mo\MouseHit2) Then InvOpen = False
-							EndIf
-							;[End Block]
-						Case "cap"
-							;[Block]
-							If wi\Cap Then
+							If (I_268\Using = 1 And SelectedItem\ItemTemplate\TempName = "cap") Lor (I_268\Using = 2 And SelectedItem\ItemTemplate\TempName = "scp268") Lor (I_268\Using = 3 And SelectedItem\ItemTemplate\TempName = "super268") Then
 								CreateHintMsg("Double click on the cap to take it off.")
 							Else
 								DropItem(SelectedItem)
@@ -2879,7 +2869,7 @@ Function UpdateGUI%()
 								opt\CameraFogFar = opt\StoredCameraFogFar
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[1])
 							Else
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = False
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0
 								If wi\NightVision = 0 Then opt\StoredCameraFogFar = opt\CameraFogFar
 								CreateMsg("You put on the goggles.")
 								Select SelectedItem\ItemTemplate\TempName
@@ -2916,7 +2906,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the gas mask.")
 								wi\GasMask = 0
 							Else
-								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = False
+								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								Select SelectedItem\ItemTemplate\TempName
 									Case "gasmask"
@@ -2945,7 +2935,7 @@ Function UpdateGUI%()
 							SelectedItem = Null
 						EndIf
 					;[End Block]
-				Case "scp268", "super268"
+				Case "cap", "scp268", "super268"
 					;[Block]
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
 						
@@ -2954,7 +2944,7 @@ Function UpdateGUI%()
 						If SelectedItem\State = 100.0 Then
 							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 							
-							If (I_268\Using = 1 And SelectedItem\ItemTemplate\TempName = "scp268") Lor (I_268\Using = 2 And SelectedItem\ItemTemplate\TempName = "super268") Then
+							If (I_268\Using = 1 And SelectedItem\ItemTemplate\TempName = "cap") Lor (I_268\Using = 2 And SelectedItem\ItemTemplate\TempName = "scp268") Lor (I_268\Using = 3 And SelectedItem\ItemTemplate\TempName = "super268") Then
 								CreateMsg("You removed the cap.")
 								I_268\Using = 0
 								PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOff.ogg"))
@@ -2962,40 +2952,22 @@ Function UpdateGUI%()
 								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								Select SelectedItem\ItemTemplate\TempName
-									Case "scp268"
+									Case "cap"
 										;[Block]
 										I_268\Using = 1
 										;[End Block]
-									Case "super268"
+									Case "scp268"
 										;[Block]
 										I_268\Using = 2
+										;[End Block]
+									Case "super268"
+										;[Block]
+										I_268\Using = 3
 										;[End Block]
 								End Select
 								GiveAchievement(Achv268)
 								CreateMsg("You put on the cap.")
 								PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOn.ogg"))
-							EndIf
-							SelectedItem\State = 0.0
-							SelectedItem = Null
-						EndIf
-					;[End Block]
-				Case "cap"
-					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
-						
-						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.5), 100.0)
-						
-						If SelectedItem\State = 100.0 Then
-							If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
-							
-							If wi\Cap Then
-								CreateMsg("You removed the cap.")
-								wi\Cap = False
-							Else
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0
-								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
-								wi\Cap = True
-								CreateMsg("You put on the cap.")
 							EndIf
 							SelectedItem\State = 0.0
 							SelectedItem = Null
@@ -3082,7 +3054,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the helmet.")
 								wi\BallisticHelmet = False
 							Else
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : I_268\Using = 0 : wi\Cap = False
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : I_268\Using = 0
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								wi\BallisticHelmet = True
 								CreateMsg("You put on the helmet.")
@@ -3104,7 +3076,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the gear.")
 								wi\SCRAMBLE = 0
 							Else
-								wi\GasMask = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = False
+								wi\GasMask = 0 : wi\BallisticHelmet = False : I_268\Using = 0
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								Select SelectedItem\ItemTemplate\TempName
 									Case "scramble"
@@ -4004,7 +3976,7 @@ Function UpdateGUI%()
 										wi\HazmatSuit = 4
 										;[End Block]
 								End Select
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : wi\Cap = False
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False
 								I_268\Using = 0 : I_427\Using = False : I_714\Using = 1 : I_1499\Using = 0
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 							EndIf
@@ -4232,7 +4204,7 @@ Function UpdateGUI%()
 			
 			If mo\MouseHit2 Then
 				Select SelectedItem\ItemTemplate\TempName
-					Case "firstaid", "finefirstaid", "bluefirstaid", "scp1499", "super1499", "scp268", "super268", "cap", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
+					Case "firstaid", "finefirstaid", "bluefirstaid", "scp1499", "super1499", "cap", "scp268", "super268", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
 						;[Block]
 						SelectedItem\State = 0.0
 						;[End Block]
@@ -4284,7 +4256,7 @@ Function UpdateGUI%()
 	For it.Items = Each Items
 		If it <> SelectedItem Then
 			Select it\ItemTemplate\TempName
-				Case "firstaid", "finefirstaid", "bluefirstaid", "vest", "finevest", "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit", "scp1499", "super1499", "scp268", "super268", "cap", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
+				Case "firstaid", "finefirstaid", "bluefirstaid", "vest", "finevest", "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit", "scp1499", "super1499", "cap", "scp268", "super268", "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet"
 					;[Block]
 					it\State = 0.0
 					;[End Block]
@@ -4312,7 +4284,7 @@ Function RenderHUD%()
 	y = opt\GraphicHeight - (95 * MenuScale)
 	
 	Color(255, 255, 255)
-	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) And (I_268\Timer =< 0.0 Lor I_268\Using = 0) And TakeOffTimer < 500.0 Then
+	If (I_714\Using > 1 Lor wi\HazmatSuit > 0) And (I_268\Timer =< 0.0 Lor I_268\Using < 2) And TakeOffTimer < 500.0 Then
 		For i = 0 To MaxItemAmount - 1
 			If Inventory(i) <> Null Then
 				If Instr(Inventory(i)\ItemTemplate\TempName, "hazmatsuit") Then
@@ -4331,7 +4303,7 @@ Function RenderHUD%()
 			RenderBar(BlinkMeterIMG, x, y - (40 * MenuScale), Width, Height, TakeOffTimer, 500.0)
 		EndIf
 		DrawBlock(t\IconID[8], x - (50 * MenuScale), y - (40 * MenuScale))
-	ElseIf I_268\Using > 0 Then
+	ElseIf I_268\Using > 1 Then
 		If I_268\Timer =< 0.0 Then
 			Color(150, 150, 0)
 			Rect(x - (53 * MenuScale), y - (43 * MenuScale), 36 * MenuScale, 36 * MenuScale)
@@ -4736,17 +4708,17 @@ Function RenderGUI%()
 						;[Block]
 						If I_1499\Using = 2 Then ShouldDrawRect = True
 						;[End Block]
-					Case "scp268"
+					Case "cap"
 						;[Block]
 						If I_268\Using = 1 Then ShouldDrawRect = True
 						;[End Block]
-					Case "super268"
+					Case "scp268"
 						;[Block]
 						If I_268\Using = 2 Then ShouldDrawRect = True
 						;[End Block]
-					Case "cap"
+					Case "super268"
 						;[Block]
-						If wi\Cap Then ShouldDrawRect = True
+						If I_268\Using = 3 Then ShouldDrawRect = True
 						;[End Block]
 					Case "scp427"
 						;[Block]
@@ -5227,7 +5199,7 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					EndIf
 					;[End Block]
-				Case "scp268", "super268", "cap"
+				Case "cap", "scp268", "super268"
 					;[Block]
 					If PreventItemOverlapping("cap") Then
 						
@@ -7478,8 +7450,8 @@ End Function
 
 Function Use268()
 	
-    If I_268\Using > 0 Then
-        If I_268\Using = 2 Then 
+    If I_268\Using > 1 Then
+        If I_268\Using = 3 Then 
             I_268\Timer = Max(I_268\Timer - ((fps\Factor[0] / 1.5) * I_714\Using), 0)
         Else
             I_268\Timer = Max(I_268\Timer - (fps\Factor[0] * I_714\Using), 0)

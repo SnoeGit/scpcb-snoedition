@@ -344,13 +344,9 @@ Function RemoveWearableItems%(item.Items)
 			;[Block]
 			wi\SCRAMBLE = 0
 			;[End Block]
-		Case "scp268", "super268"
+		Case "cap", "scp268", "super268"
 			;[Block]
 			I_268\Using = 0
-			;[End Block]
-		Case "cap"
-			;[Block]
-			wi\Cap = False
 			;[End Block]
 		Case "scp427"
 			;[Block]
@@ -742,24 +738,20 @@ Function PreventItemOverlapping%(Msg$, SCP1499% = False)
 		If wi\GasMask > 0
 			CreateMsg("You need to take off the gas mask in order to use SCP-1499.")
 			SelectedItem = Null
-			Return(False)
 		ElseIf wi\NightVision > 0
 			CreateMsg("You need to take off the goggles in order to use SCP-1499.")
 			SelectedItem = Null
-			Return(False)
-		ElseIf  wi\BallisticHelmet
+		ElseIf wi\BallisticHelmet
 			CreateMsg("You need to take off the helmet in order to use SCP-1499.")
 			SelectedItem = Null
-			Return(False)
 		ElseIf wi\SCRAMBLE > 0
 			CreateMsg("You need to take off the gear in order to use SCP-1499.")
 			SelectedItem = Null
-			Return(False)
-		ElseIf I_268\Using > 0 Lor wi\Cap
+		ElseIf I_268\Using > 0
 			CreateMsg("You need to take off the cap in order to use SCP-1499.")
 			SelectedItem = Null
-			Return(False)
 		EndIf
+		If SelectedItem = Null Then Return(False)
 	ElseIf (Not SCP1499) And I_1499\Using > 0
 		CreateMsg("You need to take off SCP-1499 in order to use " + Msg + ".")
 		SelectedItem = Null
