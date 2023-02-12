@@ -18,6 +18,11 @@ Bug Fixes:
 - Fix SCP-1123 crash.
 - Fix Hazmat Suit drop animation state.
 
+Rooms:
+
+- SCP-1499 Dimension is darker.
+- SCP-914 causing SCP-106 to spawn sooner is increased.
+
 v1.83
 
 General:

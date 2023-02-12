@@ -6896,7 +6896,7 @@ Function UpdateEvents%()
 						CanSave = False
 						e\room\RoomDoors[1]\Open = False
 						If e\EventState > 70.0 * 2.0 Then
-							If n_I\Curr106\State > 1.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (0.25 + (0.125 * SelectedDifficulty\AggressiveNPCs)))
+							If n_I\Curr106\State > 0.0 Then n_I\Curr106\State = n_I\Curr106\State - (fps\Factor[0] * (0.5 + (0.25 * SelectedDifficulty\AggressiveNPCs)))
 							If e\room\RoomDoors[0]\Open Then
 								e\room\RoomDoors[0]\SoundCHN = PlaySound2(LoadTempSound("SFX\SCP\914\DoorClose.ogg"), Camera, e\room\RoomDoors[0]\OBJ)
 							EndIf
