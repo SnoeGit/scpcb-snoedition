@@ -8926,8 +8926,8 @@ Function UpdateDimension1499%()
 					Next
 				EndIf
 				
-				CameraFogRange(Camera, 40.0, 80.0)
-				CameraRange(Camera, 0.05, 90.0)
+				CameraFogRange(Camera, 15.0, 60.0)
+				CameraRange(Camera, 0.05, 80.0)
 				
 				For r.Rooms = Each Rooms
 					If (Not EntityHidden(r\OBJ)) Then HideEntity(r\OBJ)
