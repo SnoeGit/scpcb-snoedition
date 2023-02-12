@@ -541,7 +541,6 @@ End Function
 
 Repeat
 	Cls()
-	
 	Local ElapsedMilliSecs%
 	
 	fps\CurrTime = MilliSecs2()
@@ -3267,55 +3266,32 @@ Function UpdateGUI%()
 				Case "firstaid", "finefirstaid", "bluefirstaid"
 					;[Block]
 					If CanUseItem("first aid kit", True, True) Then
-					If me\Bloodloss = 0.0 And me\Injuries = 0.0 Then
-						CreateMsg("You don't need to use a first aid kit right now.")
-						SelectedItem = Null
-						Return
-					Else
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
-						If (Not me\Crouch) Then SetCrouch(True)
-						
-						If SelectedItem\ItemTemplate\TempName = "firstaid" Then
-							SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 5.0), 100.0)
+						If me\Bloodloss = 0.0 And me\Injuries = 0.0 Then
+							CreateMsg("You don't need to use a first aid kit right now.")
+							SelectedItem = Null
+							Return
 						Else
-							SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 4.0), 100.0)
-						EndIf
-						
-						If SelectedItem\State = 100.0 Then
-							If SelectedItem\ItemTemplate\TempName = "finefirstaid" Then
-								me\Bloodloss = 0.0
-								me\Injuries = Max(0.0, me\Injuries - 2.0)
-								If me\Injuries = 0.0 Then
-									CreateMsg("You bandaged the wounds and took a painkiller. You feel fine.")
-								ElseIf me\Injuries > 1.0
-									CreateMsg("You bandaged the wounds and took a painkiller, but you were not able to stop the bleeding.")
-								Else
-									CreateMsg("You bandaged the wounds and took a painkiller, but you still feel sore.")
-								EndIf
-								RemoveItem(SelectedItem)
+							me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
+							If (Not me\Crouch) Then SetCrouch(True)
+							
+							If SelectedItem\ItemTemplate\TempName = "firstaid" Then
+								SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 5.0), 100.0)
 							Else
-								me\Bloodloss = Max(0.0, me\Bloodloss - Rnd(10.0, 20.0))
-								If me\Injuries >= 2.5 Then
-									CreateMsg("The wounds were way too severe to staunch the bleeding completely.")
-									me\Injuries = Max(2.5, me\Injuries - Rnd(0.3, 0.7))
-								ElseIf me\Injuries > 1.0
-									me\Injuries = Max(0.5, me\Injuries - Rnd(0.5, 1.0))
-									If me\Injuries > 1.0 Then
-										CreateMsg("You bandaged the wounds but were unable to staunch the bleeding completely.")
+								SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 4.0), 100.0)
+							EndIf
+							
+							If SelectedItem\State = 100.0 Then
+								If SelectedItem\ItemTemplate\TempName = "finefirstaid" Then
+									me\Bloodloss = 0.0
+									me\Injuries = Max(0.0, me\Injuries - 2.0)
+									If me\Injuries = 0.0 Then
+										CreateMsg("You bandaged the wounds and took a painkiller. You feel fine.")
+									ElseIf me\Injuries > 1.0
+										CreateMsg("You bandaged the wounds and took a painkiller, but you were not able to stop the bleeding.")
 									Else
-										CreateMsg("You managed to stop the bleeding.")
+										CreateMsg("You bandaged the wounds and took a painkiller, but you still feel sore.")
 									EndIf
-								Else
-									If me\Injuries > 0.5 Then
-										me\Injuries = 0.5
-										CreateMsg("You took a painkiller, easing the pain slightly.")
-									Else
-										me\Injuries = me\Injuries / 2.0
-										CreateMsg("You took a painkiller, but it still hurts to walk.")
-									EndIf
-								EndIf
-								
-								If SelectedItem\ItemTemplate\TempName = "bluefirstaid" Then 
+								ElseIf SelectedItem\ItemTemplate\TempName = "bluefirstaid" Then 
 									Select Rand(6)
 										Case 1
 											;[Block]
@@ -3350,11 +3326,31 @@ Function UpdateGUI%()
 											me\Injuries = 3.5
 											;[End Block]
 									End Select
+								Else
+									me\Bloodloss = Max(0.0, me\Bloodloss - Rnd(10.0, 20.0))
+									If me\Injuries >= 2.5 Then
+										CreateMsg("The wounds were way too severe to staunch the bleeding completely.")
+										me\Injuries = Max(2.5, me\Injuries - Rnd(0.3, 0.7))
+									ElseIf me\Injuries > 1.0
+										me\Injuries = Max(0.5, me\Injuries - Rnd(0.5, 1.0))
+										If me\Injuries > 1.0 Then
+											CreateMsg("You bandaged the wounds but were unable to staunch the bleeding completely.")
+										Else
+											CreateMsg("You managed to stop the bleeding.")
+										EndIf
+									Else
+										If me\Injuries > 0.5 Then
+											me\Injuries = 0.5
+											CreateMsg("You took a painkiller, easing the pain slightly.")
+										Else
+											me\Injuries = me\Injuries / 2.0
+											CreateMsg("You took a painkiller, but it still hurts to walk.")
+										EndIf
+									EndIf
 								EndIf
 								RemoveItem(SelectedItem)
 							EndIf
 						EndIf
-					EndIf
 					EndIf
 					;[End Block]
 				Case "eyedrops", "redeyedrops"

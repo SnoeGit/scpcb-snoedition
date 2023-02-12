@@ -1184,7 +1184,6 @@ Function UpdateEvents%()
 							Else
 								e\room\NPC[3]\State3 = Max(e\room\NPC[3]\State3 + fps\Factor[0], 50.0)
 								If e\room\NPC[3]\State3 >= 70.0 * 8.0 And e\room\NPC[3]\State3 - fps\Factor[0] < 70.0 * 8.0 And e\room\NPC[3]\State = 7.0 Then
-									
 									If e\room\NPC[3]\State2 < 2.0 Then
 										For i = 3 To 4
 											StopChannel(e\room\NPC[i]\SoundCHN) : e\room\NPC[i]\SoundCHN = 0
@@ -1196,7 +1195,7 @@ Function UpdateEvents%()
 										e\room\NPC[3]\State2 = 3.0 : e\room\NPC[3]\State3 = 50.0
 									ElseIf e\room\NPC[3]\State2 = 3.0
 										For i = 3 To 4
-											If ChannelPlaying(e\room\NPC[i]\SoundCHN) Then StopChannel(e\room\NPC[i]\SoundCHN)
+											StopChannel(e\room\NPC[i]\SoundCHN) : e\room\NPC[i]\SoundCHN = 0
 											If e\room\NPC[i]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[i]\Sound) : e\room\NPC[i]\Sound = 0
 										Next
 										
@@ -1205,7 +1204,7 @@ Function UpdateEvents%()
 										e\room\NPC[3]\State2 = 4.0 : e\room\NPC[3]\State3 = 50.0
 									ElseIf e\room\NPC[3]\State2 = 4.0
 										For i = 3 To 4
-											If ChannelPlaying(e\room\NPC[i]\SoundCHN) Then StopChannel(e\room\NPC[i]\SoundCHN)
+											StopChannel(e\room\NPC[i]\SoundCHN) : e\room\NPC[i]\SoundCHN = 0
 											If e\room\NPC[i]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[i]\Sound) : e\room\NPC[i]\Sound = 0
 										Next
 										
@@ -1261,7 +1260,7 @@ Function UpdateEvents%()
 										e\room\NPC[3]\PathStatus = 2
 										If e\room\NPC[3]\State2 = 0.0 Then
 											For i = 3 To 4
-												If ChannelPlaying(e\room\NPC[i]\SoundCHN) Then StopChannel(e\room\NPC[i]\SoundCHN)
+												StopChannel(e\room\NPC[i]\SoundCHN) : e\room\NPC[i]\SoundCHN = 0
 												If e\room\NPC[i]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[i]\Sound) : e\room\NPC[i]\Sound = 0
 											Next
 											
@@ -1305,7 +1304,7 @@ Function UpdateEvents%()
 								DeleteSingleTextureEntryFromCache(n_I\NPCTextureID[NPC_CLASS_D_D9341_TEXTURE])
 								
 								For i = 3 To 4
-									If ChannelPlaying(e\room\NPC[i]\SoundCHN) Then StopChannel(e\room\NPC[i]\SoundCHN)
+									StopChannel(e\room\NPC[i]\SoundCHN) : e\room\NPC[i]\SoundCHN = 0
 									If e\room\NPC[i]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[i]\Sound) : e\room\NPC[i]\Sound = 0
 									e\room\NPC[i]\State = 9.0	
 								Next
@@ -1331,7 +1330,6 @@ Function UpdateEvents%()
 							EndIf
 						ElseIf e\EventState3 <= 905.0
 							If (Not ChannelPlaying(e\room\NPC[3]\SoundCHN)) And e\room\NPC[3]\Frame < 358.0 Then
-								e\room\NPC[3]\State = 8.0
 								LoadNPCSound(e\room\NPC[3], "SFX\Room\Intro\Guard\Ulgrin\OhAndByTheWay.ogg")
 								e\room\NPC[3]\SoundCHN = PlaySound2(e\room\NPC[3]\Sound, Camera, e\room\NPC[3]\Collider)
 								SetNPCFrame(e\room\NPC[3], 358.0)
@@ -1374,19 +1372,19 @@ Function UpdateEvents%()
 									Temp = 1.0
 									If SelectedItem <> Null Then Temp = 3.0
 									e\room\NPC[3]\State3 = Max(e\room\NPC[3]\State3 + fps\Factor[0] / Temp, 50.0)
-									If e\room\NPC[3]\State3 >= 70.0 * 8.0 And e\room\NPC[3]\State3 - fps\Factor[0] / Temp < 70.0 * 8.0 And e\room\NPC[3]\State = 9.0 Then
+									If e\room\NPC[3]\State3 >= 70.0 * 8.0 And e\room\NPC[3]\State3 - (fps\Factor[0] / Temp) < 70.0 * 8.0 And e\room\NPC[3]\State = 9.0 Then
 										If e\room\NPC[3]\State2 < 2.0 Then
-											If ChannelPlaying(e\room\NPC[3]\SoundCHN) Then StopChannel(e\room\NPC[3]\SoundCHN)
+											StopChannel(e\room\NPC[3]\SoundCHN) : e\room\NPC[3]\SoundCHN = 0
 											LoadNPCSound(e\room\NPC[3], "SFX\Room\Intro\Guard\Ulgrin\EscortRefuse" + Rand(2) + ".ogg")
 											e\room\NPC[3]\SoundCHN = PlaySound2(e\room\NPC[3]\Sound, Camera, e\room\NPC[3]\Collider)
 											e\room\NPC[3]\State2 = 3.0 : e\room\NPC[3]\State3 = 50.0
 										ElseIf e\room\NPC[3]\State2 = 3.0
-											If ChannelPlaying(e\room\NPC[3]\SoundCHN) Then StopChannel(e\room\NPC[3]\SoundCHN)
+											StopChannel(e\room\NPC[3]\SoundCHN) : e\room\NPC[3]\SoundCHN = 0
 											LoadNPCSound(e\room\NPC[3], "SFX\Room\Intro\Guard\Ulgrin\EscortPissedOff" + Rand(2) + ".ogg")
 											e\room\NPC[3]\SoundCHN = PlaySound2(e\room\NPC[3]\Sound, Camera, e\room\NPC[3]\Collider)
 											e\room\NPC[3]\State2 = 4.0 : e\room\NPC[3]\State3 = 50.0
 										ElseIf e\room\NPC[3]\State2 = 4.0
-											If ChannelPlaying(e\room\NPC[3]\SoundCHN) Then StopChannel(e\room\NPC[3]\SoundCHN)
+											StopChannel(e\room\NPC[3]\SoundCHN) : e\room\NPC[3]\SoundCHN = 0
 											LoadNPCSound(e\room\NPC[3], "SFX\Room\Intro\Guard\Ulgrin\EscortKill" + Rand(2) + ".ogg")
 											e\room\NPC[3]\SoundCHN = PlaySound2(e\room\NPC[3]\Sound, Camera, e\room\NPC[3]\Collider)
 											e\room\NPC[3]\State2 = 5.0 : e\room\NPC[3]\State3 = 50.0 + (70.0 * 2.5)
@@ -1407,7 +1405,7 @@ Function UpdateEvents%()
 											e\room\NPC[i]\State = 0.0
 										Next
 										
-										If ChannelPlaying(e\room\NPC[3]\SoundCHN) Then StopChannel(e\room\NPC[3]\SoundCHN)
+										StopChannel(e\room\NPC[3]\SoundCHN) : e\room\NPC[3]\SoundCHN = 0
 										
 										e\EventState3 = 0.0
 									EndIf
@@ -1692,7 +1690,7 @@ Function UpdateEvents%()
 									Animate2(e\room\NPC[2]\OBJ, AnimTime(e\room\NPC[2]\OBJ), 406.0, 382.0, (-0.01) * 15.0)
 									MoveEntity(e\room\NPC[2]\Collider, 0.0, 0.0, (-0.01) * fps\Factor[0])
 									
-									If ChannelPlaying(e\room\NPC[0]\SoundCHN) Then StopChannel(e\room\NPC[0]\SoundCHN)
+									StopChannel(e\room\NPC[0]\SoundCHN) : e\room\NPC[0]\SoundCHN = 0
 									
 									LoadNPCSound(e\room\NPC[0], "SFX\Room\Intro\Guard\Balcony\WTF" + Rand(2) + ".ogg")
 									e\room\NPC[0]\State = 12.0 : e\room\NPC[0]\State2 = 0.0 : e\room\NPC[0]\Angle = 180.0
@@ -1754,7 +1752,7 @@ Function UpdateEvents%()
 										PositionEntity(e\room\NPC[0]\Collider, EntityX(e\room\OBJ) - 160.0 * RoomScale, EntityY(e\room\NPC[0]\Collider) + 0.1, EntityZ(e\room\OBJ) + 1280.0 * RoomScale)
 										ResetEntity(e\room\NPC[0]\Collider)										
 										
-										If ChannelPlaying(e\room\NPC[0]\SoundCHN) Then StopChannel(e\room\NPC[0]\SoundCHN)
+										StopChannel(e\room\NPC[0]\SoundCHN) : e\room\NPC[0]\SoundCHN = 0
 										LoadNPCSound(e\room\NPC[0], "SFX\Room\Intro\Guard\Balcony\OhShit.ogg")
 										e\room\NPC[0]\SoundCHN = PlaySound2(e\room\NPC[0]\Sound, Camera, e\room\NPC[0]\Collider, 20.0)
 									EndIf
@@ -2021,7 +2019,7 @@ Function UpdateEvents%()
 					ElseIf CoffinDistance > 4.5
 						If e\room\NPC[0] <> Null Then
 							If e\room\NPC[0]\PrevState = 0 Then
-								If ChannelPlaying(e\room\NPC[0]\SoundCHN) Then StopChannel(e\room\NPC[0]\SoundCHN)
+								StopChannel(e\room\NPC[0]\SoundCHN) : e\room\NPC[0]\SoundCHN = 0
 								LoadNPCSound(e\room\NPC[0], "SFX\Room\895Chamber\GuardScream" + Rand(3) + ".ogg")
 								e\room\NPC[0]\SoundCHN = PlaySound2(e\room\NPC[0]\Sound, Camera, e\room\NPC[0]\Collider, 100.0)
 								e\room\NPC[0]\State2 = 0.0 : e\room\NPC[0]\PrevState = 1
@@ -5339,7 +5337,7 @@ Function UpdateEvents%()
 									Next
 								Else
 									SecondaryLightOn = CurveValue(0.0, SecondaryLightOn, 10.0)
-									If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2)
+									If ChannelPlaying(e\SoundCHN2) Then StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
 									For i = 4 To 6
 										e\room\RoomDoors[i]\Locked = 1
 									Next
@@ -6300,15 +6298,17 @@ Function UpdateEvents%()
 						PrevSecondaryLightOn = 0.0
 						If (Not me\Crouch) Then SetCrouch(True)
 						For i = 0 To MaxItemAmount - 1
-							If Inventory(i)\ItemTemplate\Name = "Leaflet" Then
-								RemoveItem(Inventory(i))
-								Inventory(i) = CreateItem("Strange Note", "paper", 1.0, 1.0, 1.0)
-								HideEntity(Inventory(i)\Collider)
-								Inventory(i)\Picked = True
-								Inventory(i)\ItemTemplate\Found = True
-								EntityType(Inventory(i)\Collider, HIT_ITEM)
-								ItemAmount = ItemAmount + 1
-								Exit
+							If Inventory(i) <> Null Then
+								If Inventory(i)\ItemTemplate\Name = "Leaflet" Then
+									RemoveItem(Inventory(i))
+									Inventory(i) = CreateItem("Strange Note", "paper", 1.0, 1.0, 1.0)
+									HideEntity(Inventory(i)\Collider)
+									Inventory(i)\Picked = True
+									Inventory(i)\ItemTemplate\Found = True
+									EntityType(Inventory(i)\Collider, HIT_ITEM)
+									ItemAmount = ItemAmount + 1
+									Exit
+								EndIf
 							EndIf
 						Next
 						GiveAchievement(Achv1123)
