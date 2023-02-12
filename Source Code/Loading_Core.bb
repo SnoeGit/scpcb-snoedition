@@ -794,7 +794,7 @@ Function LoadItems%()
 	EntityColor(it\OBJ, 255.0, 0.0, 0.0)
 	
 	it.ItemTemplates = CreateItemTemplate("SCP-2022-01", "scp2022pill", ItemsPath + "scps\pill.b3d", INVPath + "INV_scp_2022_pill.png", "", 0.0001, 2)
-	EntityColor(it\OBJ, 224.0, 160.0, 0.0)
+	EntityColor(it\OBJ, 224.0, 195.0, 0.0)
 	
 	CreateItemTemplate("SCP-500", "scp500", ItemsPath + "scps\scp_500.b3d", INVPath + "INV_scp_500.png", "", 0.035, 2)
 	CreateItemTemplate("SCP-513", "scp513", ItemsPath + "scps\scp_513.b3d", INVPath + "INV_scp_513.png", "", 0.1, 2)
@@ -810,11 +810,11 @@ Function LoadItems%()
 	CreateItemTemplate("SCP-1499", "scp1499", ItemsPath + "scps\scp_1499.b3d", INVPath + "INV_scp_1499.png", "", 0.022, 2)
 	CreateItemTemplate("SCP-1499", "super1499", ItemsPath + "scps\scp_1499.b3d", INVPath + "INV_scp_1499.png", "", 0.022, 2)
 	
-	CreateItemTemplate("Joint", "joint", ItemsPath + "scps\scp_420_j.b3d", INVPath + "INV_scp_420_j.png", "", 0.0004, 2)
-	
 	CreateItemTemplate("Blue Key", "bluekey", ItemsPath + "scps\scp_860.b3d", INVPath + "INV_scp_860.png", "", 0.003, 3)
 	
 	CreateItemTemplate("Metal Panel", "scp148", ItemsPath + "scps\metal_panel.b3d", INVPath + "INV_metal_panel.png", "", RoomScale, 2)
+	
+	CreateItemTemplate("Joint", "joint", ItemsPath + "scps\scp_420_j.b3d", INVPath + "INV_scp_420_j.png", "", 0.0004, 2)
 	
 	CreateItemTemplate("Smelly Joint", "scp420s", ItemsPath + "scps\scp_420_j.b3d", INVPath + "INV_scp_420_j.png", "", 0.0004, 2)
 	
@@ -828,8 +828,8 @@ Function LoadItems%()
 	CreateItemTemplate("Ballistic Helmet", "helmet", ItemsPath + "ballistic_helmet.b3d", INVPath + "INV_ballistic_helmet.png", "", 0.018, 2)
 	
 	CreateItemTemplate("Ballistic Vest", "vest", ItemsPath + "ballistic_vest.b3d", INVPath + "INV_ballistic_vest.png", "", 0.02, 2)
-	CreateItemTemplate("Bulky Ballistic Vest", "veryfinevest", ItemsPath + "ballistic_vest.b3d", INVPath + "INV_ballistic_vest.png", "", 0.025, 2)
 	CreateItemTemplate("Heavy Ballistic Vest", "finevest", ItemsPath + "ballistic_vest.b3d", INVPath + "INV_ballistic_vest.png", "", 0.022, 2)
+	CreateItemTemplate("Bulky Ballistic Vest", "veryfinevest", ItemsPath + "ballistic_vest.b3d", INVPath + "INV_ballistic_vest.png", "", 0.025, 2)
 	CreateItemTemplate("Corrosive Ballistic Vest", "corrvest", ItemsPath + "ballistic_vest.b3d", INVPath + "INV_ballistic_vest.png", "", 0.02, 2, ItemsPath + "ballistic_vest_corrosive.png")
 	
 	CreateItemTemplate("Book", "book", ItemsPath + "scps\scp_1025.b3d", INVPath + "INV_book.png", "", 0.07, 0, ItemsPath + "book.png")
@@ -839,6 +839,8 @@ Function LoadItems%()
 	CreateItemTemplate("Cup", "cup", ItemsPath + "cup.b3d", INVPath + "INV_cup.png", "", 0.04, 2)
 	
 	CreateItemTemplate("Clipboard", "clipboard", ItemsPath + "clipboard.b3d", INVPath + "INV_clipboard.png", "", 0.003, 1, "", INVPath + "INV_clipboard(2).png", 1)
+	
+	CreateItemTemplate("Wallet", "wallet", ItemsPath + "wallet.b3d", INVPath + "INV_wallet.png", "", 0.0006, 2, "", "", 1)
 	
 	CreateItemTemplate("Electronical Components", "electronics", ItemsPath + "circuits.b3d", INVPath + "INV_circuits.png", "", 0.0011, 1)
 	
@@ -884,10 +886,10 @@ Function LoadItems%()
 	CreateItemTemplate("White Severed Hand", "hand", ItemsPath + "severed_hand.b3d", INVPath + "INV_severed_hand(1).png", "", 0.03, 2)
 	CreateItemTemplate("Black Severed Hand", "hand2", ItemsPath + "severed_hand.b3d", INVPath + "INV_severed_hand(2).png", "", 0.03, 2, ItemsPath + "severed_hand(2).png")
 	
-	CreateItemTemplate("S-NAV Navigator", "nav", ItemsPath + "navigator.b3d", INVPath + "INV_navigator.png", ItemsPath + "navigator_HUD.png", 0.0008, 1)
-	CreateItemTemplate("S-NAV Navigator Ultimate", "navulti", ItemsPath + "navigator.b3d", INVPath + "INV_navigator.png", ItemsPath + "navigator_HUD.png", 0.0008, 1)
 	CreateItemTemplate("S-NAV 300 Navigator", "nav300", ItemsPath + "navigator.b3d", INVPath + "INV_navigator.png", ItemsPath + "navigator_HUD.png", 0.0008, 1)
 	CreateItemTemplate("S-NAV 310 Navigator", "nav310", ItemsPath + "navigator.b3d", INVPath + "INV_navigator.png", ItemsPath + "navigator_HUD.png", 0.0008, 1)
+	CreateItemTemplate("S-NAV Navigator", "nav", ItemsPath + "navigator.b3d", INVPath + "INV_navigator.png", ItemsPath + "navigator_HUD.png", 0.0008, 1)
+	CreateItemTemplate("S-NAV Navigator Ultimate", "navulti", ItemsPath + "navigator.b3d", INVPath + "INV_navigator.png", ItemsPath + "navigator_HUD.png", 0.0008, 1)
 	
 	CreateItemTemplate("9V Battery", "bat", ItemsPath + "battery.b3d", INVPath + "INV_battery_9v.png", "", 0.008, 1)
 	CreateItemTemplate("4.5V Battery", "coarsebat", ItemsPath + "battery.b3d", INVPath + "INV_battery_4.5v.png", "", 0.008, 1, ItemsPath + "battery_4.5V.png")
@@ -899,8 +901,6 @@ Function LoadItems%()
 	CreateItemTemplate("Syringe", "finesyringe", ItemsPath + "syringe.b3d", INVPath + "INV_syringe.png", "", 0.005, 2)
 	CreateItemTemplate("Syringe", "veryfinesyringe", ItemsPath + "syringe.b3d", INVPath + "INV_syringe.png", "", 0.005, 2)
 	CreateItemTemplate("Syringe", "syringeinf", ItemsPath + "syringe.b3d", INVPath + "INV_syringe_infect.png", "", 0.005, 2, ItemsPath + "syringe_infect.png")
-	
-	CreateItemTemplate("Wallet", "wallet", ItemsPath + "wallet.b3d", INVPath + "INV_wallet.png", "", 0.0006, 2, "", "", 1)
 	
 	; ~ [KEYCARDS, KEYS, CARDS, COINS]
 	

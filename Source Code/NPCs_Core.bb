@@ -980,13 +980,7 @@ Function UpdateNPCs%()
 								If Dist > 0.5 Then
 									If (Dist > 625.0 Lor PlayerRoom\RoomTemplate\Name = "dimension_106" Lor Visible Lor n\PathStatus <> 1) And PlayerRoom\RoomTemplate\Name <> "gate_a" Then 
 										If (Dist > 1600.0 Lor PlayerRoom\RoomTemplate\Name = "dimension_106") Then TranslateEntity(n\Collider, 0.0, ((EntityY(me\Collider) - 0.14) - EntityY(n\Collider)) / 50.0, 0.0)
-										If Dist <= 4.5 Then
-											n\CurrSpeed = CurveValue(n\Speed * 1.15, n\CurrSpeed, 10.0)
-										ElseIf Dist < 9.0
-											n\CurrSpeed = CurveValue(n\Speed * 1.075, n\CurrSpeed, 10.0)
-										Else
-											n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
-										EndIf
+										n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
 										
 										PointEntity(n\OBJ, me\Collider)
 										RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 10.0), 0.0)
@@ -1037,13 +1031,7 @@ Function UpdateNPCs%()
 													Dist2 = EntityDistanceSquared(n\Collider, n\Path[n\PathLocation]\OBJ)
 													
 													RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), Min(20.0, Sqr(Dist2) * 10.0)), 0.0)
-													If Dist <= 4.5 Then
-														n\CurrSpeed = CurveValue(n\Speed * 1.15, n\CurrSpeed, 10.0)
-													ElseIf Dist < 9.0
-														n\CurrSpeed = CurveValue(n\Speed * 1.075, n\CurrSpeed, 10.0)
-													Else
-														n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
-													EndIf
+													n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
 													
 													PrevFrame = AnimTime(n\OBJ)
 													AnimateNPC(n, 284.0, 333.0, n\CurrSpeed * 43.0)
@@ -1110,12 +1098,10 @@ Function UpdateNPCs%()
 							
 							If me\FallTimer < -1.0 Then
 								CanSave = False
-								Sprint = 0.0
-							EndIf
-							
-							If me\FallTimer < -250.0 Then
-								MoveToPocketDimension()
-								n\State = 250.0 ; ~ Make SCP-106 idle for a while
+								If me\FallTimer < -250.0 Then
+									MoveToPocketDimension()
+									n\State = 250.0 ; ~ Make SCP-106 idle for a while
+								EndIf
 							EndIf
 							
 							If n\Reload = 0.0 Then

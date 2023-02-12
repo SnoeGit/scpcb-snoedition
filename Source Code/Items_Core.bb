@@ -324,10 +324,9 @@ Function RemoveWearableItems%(item.Items)
 			;[Block]
 			wi\GasMask = 0
 			;[End Block]
-		Case "hazmatsuit", "finehazmatsuit",  "superhazmatsuit", "heavyhazmatsuit"
+		Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 			;[Block]
 			wi\HazmatSuit = 0
-			SetAnimTime(item\Model, 4.0)
 			;[End Block]
 		Case "vest", "finevest"
 			;[Block]
@@ -351,7 +350,7 @@ Function RemoveWearableItems%(item.Items)
 			;[End Block]
 		Case "cap"
 			;[Block]
-			wi\Cap = 0
+			wi\Cap = False
 			;[End Block]
 		Case "scp427"
 			;[Block]
@@ -510,7 +509,6 @@ Function PickItem%(item.Items)
 					Case "scp1123"
 						;[Block]
 						Use1123()
-						If I_714\Using = 1 And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then Return
 						;[End Block]
 					Case "killbat"
 						;[Block]

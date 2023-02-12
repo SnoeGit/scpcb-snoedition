@@ -1,3 +1,23 @@
+v1.9
+
+General:
+
+- Severed Hand name changed to White Severed Hand.
+- More subtitles from Ultimate Edition.
+- Several optimizations to textures.
+
+NPCs:
+
+- Improved textures for SCPs.
+- Buff MTF speed. 2.1 -> 2.2
+- Make SCP-106's speed consistent and not scale by distance anymore.
+
+Bug Fixes:
+
+- Fix Vest and Hazmat Suit interaction messages.
+- Fix SCP-1123 crash.
+- Fix Hazmat Suit drop animation state.
+
 v1.83
 
 General:

@@ -1768,7 +1768,7 @@ Function UpdateFog%()
 	If PlayerRoom\RoomTemplate\Name = "cont1_173_intro" Lor PlayerRoom\RoomTemplate\Name = "gate_b" Lor PlayerRoom\RoomTemplate\Name = "gate_a" Then
 		CameraFogMode(Camera, 0)
 		CameraFogRange(Camera, 5.0, 30.0)
-		CameraRange(Camera, 0.05, 60.0)
+		CameraRange(Camera, 0.05, 50.0)
 		If (Not EntityHidden(t\OverlayID[0])) Then HideEntity(t\OverlayID[0])
 	Else
 		CameraFogMode(Camera, 1)
@@ -2879,7 +2879,7 @@ Function UpdateGUI%()
 								opt\CameraFogFar = opt\StoredCameraFogFar
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(NVGSFX[1])
 							Else
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = 0
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = False
 								If wi\NightVision = 0 Then opt\StoredCameraFogFar = opt\CameraFogFar
 								CreateMsg("You put on the goggles.")
 								Select SelectedItem\ItemTemplate\TempName
@@ -2916,7 +2916,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the gas mask.")
 								wi\GasMask = 0
 							Else
-								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = 0
+								wi\SCRAMBLE = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = False
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
 								Select SelectedItem\ItemTemplate\TempName
 									Case "gasmask"
@@ -3082,9 +3082,9 @@ Function UpdateGUI%()
 								CreateMsg("You removed the helmet.")
 								wi\BallisticHelmet = False
 							Else
-								wi\GasMask = 0 : wi\SCRAMBLE = 0 : I_268\Using = 0 : wi\Cap = 0
-								wi\BallisticHelmet = True
+								wi\GasMask = 0 : wi\SCRAMBLE = 0 : I_268\Using = 0 : wi\Cap = False
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
+								wi\BallisticHelmet = True
 								CreateMsg("You put on the helmet.")
 							EndIf
 							SelectedItem\State = 0.0
@@ -3104,9 +3104,8 @@ Function UpdateGUI%()
 								CreateMsg("You removed the gear.")
 								wi\SCRAMBLE = 0
 							Else
-								wi\GasMask = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = 0
+								wi\GasMask = 0 : wi\BallisticHelmet = False : I_268\Using = 0 : wi\Cap = False
 								If wi\NightVision > 0 Then opt\CameraFogFar = opt\StoredCameraFogFar : wi\NightVision = 0
-								CreateMsg("You put on the gear.")
 								Select SelectedItem\ItemTemplate\TempName
 									Case "scramble"
 										;[Block]
@@ -3124,6 +3123,7 @@ Function UpdateGUI%()
 										Kill()
 										;[End Block]
 								End Select
+								CreateMsg("You put on the gear.")
 							EndIf
 							SelectedItem\State3 = 0.0
 							SelectedItem = Null
@@ -3979,6 +3979,7 @@ Function UpdateGUI%()
 								CreateMsg("You removed the hazmat suit.")
 								wi\HazmatSuit = 0
 								DropItem(SelectedItem)
+								SetAnimTime(SelectedItem\Model, 4.0)
 							Else
 								If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
 								Select SelectedItem\ItemTemplate\TempName
@@ -4238,7 +4239,7 @@ Function UpdateGUI%()
 					Case "vest", "finevest"
 						;[Block]
 						SelectedItem\State = 0.0
-						If (Not wi\BallisticVest) Then DropItem(SelectedItem, False)
+						If wi\BallisticVest = 0 Then DropItem(SelectedItem, False)
 						;[End Block]
 					Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 						;[Block]
@@ -4481,6 +4482,7 @@ Function RenderGUI%()
 				PitchValue = -DeltaPitch(Camera, ClosestItem\Collider)
 				If PitchValue > 90.0 And PitchValue <= 180.0 Then PitchValue = 90.0
 				If PitchValue > 180.0 And PitchValue < 270.0 Then PitchValue = 270.0
+				SetFont(fo\FontID[Font_Default])
 				Text(mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (64 * MenuScale), ClosestItem\ItemTemplate\Name, True, False)
 				DrawBlock(t\IconID[6], mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - (32 * MenuScale), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - (32 * MenuScale))
 			EndIf
