@@ -4235,8 +4235,8 @@ Function UpdateGUI%()
 		EndIf		
 	EndIf
 	
-	If SelectedDifficulty\InventorySlots > 3 Then
-		For i = 0 To (MaxItemAmount / 2) - 1
+	If SelectedDifficulty\InventorySlots > 2 Then
+		For i = 0 To (SelectedDifficulty\InventorySlots / 2) - 1
 			If KeyHit(i + 2) Then
 				If OtherOpen = Null And SelectedScreen = Null And (Not InvOpen) And (Not I_294\Using) And (Not MenuOpen) And (Not ConsoleOpen) Then
 					If me\Playable And (Not me\Zombie) And (Not me\Terminated) And me\SelectedEnding = -1 Then
@@ -4310,7 +4310,7 @@ Function RenderHUD%()
 		ElseIf I_714\Using > 1
 			Color(200, 0, 0)
 			Rect(x - (53 * MenuScale), y - (43 * MenuScale), 36 * MenuScale, 36 * MenuScale)
-		ElseIf I_268\Using = 2
+		ElseIf I_268\Using = 3
 			Color(0, 200, 0)
 			Rect(x - (53 * MenuScale), y - (43 * MenuScale), 36 * MenuScale, 36 * MenuScale)
 		EndIf
