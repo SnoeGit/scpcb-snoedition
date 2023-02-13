@@ -1286,23 +1286,29 @@ Function FillRoom%(r.Rooms)
 					;[Block]
 					xTemp = 2312.0
 					zTemp = -952.0
+					xTemp2 = 2204.0
+					zTemp2 = 2933.0
 					;[End Block]
 				Case 2
 					;[Block]
 					xTemp = 3032.0
 					zTemp = 1288.0
+					xTemp2 = 1015.5
+					zTemp2 = 2964.0
 					;[End Block]
 				Case 3
 					;[Block]
 					xTemp = 2824.0
 					zTemp = 2808.0
+					xTemp2 = 1936.0
+					zTemp2 = -944.0
 					;[End Block]
 			End Select
 			
-			it.Items = CreateItem("Black Severed Hand", "hand2", r\x + xTemp * RoomScale, r\y - 5596.0 * RoomScale + 1.0, r\z + zTemp * RoomScale)
+			it.Items = CreateItem("Black Severed Hand", "hand2", r\x + xTemp * RoomScale, r\y - 5600.0 * RoomScale + 1.0, r\z + zTemp * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Level 1 Key Card", "key1", r\x + 2204.0 * RoomScale, r\y - 5540.0 * RoomScale, r\z + 2933.0 * RoomScale)
+			it.Items = CreateItem("Level 1 Key Card", "key1", r\x + xTemp2 * RoomScale, r\y - 5600.0 * RoomScale, r\z + zTemp2 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			de.Decals = CreateDecal(DECAL_BLOOD_2, r\x + xTemp * RoomScale, r\y - 5632.0 * RoomScale + 0.01, r\z + zTemp * RoomScale, 90.0, Rnd(360.0), 0.0, 0.5)

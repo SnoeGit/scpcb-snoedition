@@ -3807,7 +3807,7 @@ Function UpdateEvents%()
 								PositionEntity(Pvt, EntityX(n_I\Curr106\Collider), EntityY(n_I\Curr106\Collider), EntityZ(n_I\Curr106\Collider))
 								PointEntity(Pvt, me\Collider)
 								If WrapAngle(EntityYaw(Pvt) - EntityYaw(n_I\Curr106\Collider)) < 80.0 Then
-									If n_I\Curr106\State > 0.0 Then n_I\Curr106\State = -11.0 : n_I\Curr106\Idle = 0
+									If n_I\Curr106\State > 0.0 Then n_I\Curr106\State = -10.0 : n_I\Curr106\Idle = 0
 									PlaySound_Strict(HorrorSFX[10])
 									e\EventState = 260.0
 								EndIf
@@ -5651,7 +5651,7 @@ Function UpdateEvents%()
 										ResetEntity(n_I\Curr106\Collider)
 										n_I\Curr106\Contained = False
 										ShowEntity(n_I\Curr106\OBJ)
-										n_I\Curr106\State = -11.0 : n_I\Curr106\Idle = 0
+										n_I\Curr106\State = -10.0 : n_I\Curr106\Idle = 0
 										e\EventState = 2.0
 										Exit
 									EndIf
@@ -5663,7 +5663,7 @@ Function UpdateEvents%()
 									If (Not EntityHidden(n_I\Curr106\OBJ2)) Then HideEntity(n_I\Curr106\OBJ2)
 									
 									RotateEntity(n_I\Curr106\Collider, 0.0, EntityYaw(e\room\Objects[5], True) + 180.0, 0.0, True)
-									n_I\Curr106\State = -11.0 : n_I\Curr106\Idle = 1
+									n_I\Curr106\State = -10.0 : n_I\Curr106\Idle = 1
 									AnimateNPC(n_I\Curr106, 206.0, 250.0, 0.1)
 									
 									If e\EventState3 - fps\Factor[0] < 2500.0 Then 
@@ -5691,7 +5691,7 @@ Function UpdateEvents%()
 											ResetEntity(n_I\Curr106\Collider)
 											n_I\Curr106\Contained = False
 											ShowEntity(n_I\Curr106\OBJ)
-											n_I\Curr106\State = -11.0 : n_I\Curr106\Idle = 0
+											n_I\Curr106\State = -10.0 : n_I\Curr106\Idle = 0
 											
 											e\EventState = 2.0
 											Exit
@@ -8118,7 +8118,7 @@ Function UpdateEvents%()
 								
 								PositionEntity(n_I\Curr106\Collider, EntityX(e\room\Objects[2], True), EntityY(e\room\Objects[2], True), EntityZ(e\room\Objects[2], True))
 								ResetEntity(n_I\Curr106\Collider)
-								n_I\Curr106\State = -11.0
+								n_I\Curr106\State = -10.0
 								ShowEntity(n_I\Curr106\OBJ)
 								
 								e\EventState = 1.0
