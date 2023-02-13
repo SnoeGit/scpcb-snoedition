@@ -4609,7 +4609,7 @@ Function UpdateEvents%()
 							e\room\NPC[5]\State = 8.0
 							ChangeNPCTextureID(e\room\NPC[5], NPC_CLASS_D_VICTIM_939_2_TEXTURE)
 							SetNPCFrame(e\room\NPC[5], 19.0)
-							TurnEntity(e\room\NPC[5]\Collider, 0.0, e\room\Angle + 90.0, 0.0)
+							TurnEntity(e\room\NPC[5]\Collider, 0.0, e\room\Angle, 0.0)
 						Else
 							If e\EventState = 0.0 Then
 								; ~ Instance # 1

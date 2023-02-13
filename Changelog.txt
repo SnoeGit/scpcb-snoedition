@@ -24,6 +24,7 @@ Rooms:
 - SCP-1499 Dimension is darker.
 - SCP-914 causing SCP-106 to spawn sooner is increased.
 - Randomized the position of the Level 1 Key Card in Room3_Storage(Storage Area 6) based on where the hand itself spawns.
+- Move Maintenance Worker body in Room3_Storage(Storage Area 6) to a different location.
 
 v1.83
 

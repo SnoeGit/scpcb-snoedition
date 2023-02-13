@@ -1249,7 +1249,7 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\Objects[17], r\x + 2200.0 * RoomScale, r\y - 5540.0 * RoomScale, r\z + 2932.0 * RoomScale)
 			
 			r\Objects[18] = CreatePivot()
-			PositionEntity(r\Objects[18], r\x + 1015.5 * RoomScale, r\y - 5540.0 * RoomScale, r\z + 2964.0 * RoomScale)
+			PositionEntity(r\Objects[18], r\x + 1150.0 * RoomScale, r\y - 5540.0 * RoomScale, r\z + 1000.0 * RoomScale)
 			
 			For i = 0 To 18
 				EntityParent(r\Objects[i], r\OBJ)
@@ -1287,14 +1287,14 @@ Function FillRoom%(r.Rooms)
 					xTemp = 2312.0
 					zTemp = -952.0
 					xTemp2 = 2204.0
-					zTemp2 = 2933.0
+					zTemp2 = 2887.0
 					;[End Block]
 				Case 2
 					;[Block]
 					xTemp = 3032.0
 					zTemp = 1288.0
-					xTemp2 = 1015.5
-					zTemp2 = 2964.0
+					xTemp2 = 1050.0
+					zTemp2 = 1040.0
 					;[End Block]
 				Case 3
 					;[Block]
@@ -1317,7 +1317,7 @@ Function FillRoom%(r.Rooms)
 			de.Decals = CreateDecal(DECAL_BLOOD_2, r\x + 2268.0 * RoomScale, r\y - 5510.0 * RoomScale, r\z + 2932.0 * RoomScale, 0.0, r\Angle + 270.0, 0.0, 0.3)
 			EntityParent(de\OBJ, r\OBJ)
 			
-			de.Decals = CreateDecal(DECAL_BLOOD_6, r\x + 1215.5 * RoomScale, r\y - 5632.0 * RoomScale + 0.01, r\z + 2964.0 * RoomScale, 90.0, r\Angle + 180.0, 0.0, 0.4)
+			de.Decals = CreateDecal(DECAL_BLOOD_6, r\x + 1150.0 * RoomScale, r\y - 5632.0 * RoomScale + 0.01, r\z + 800.0 * RoomScale, 90.0, r\Angle + 90.0, 0.0, 0.4)
 			EntityParent(de\OBJ, r\OBJ)
 			;[End Block]
 		Case "room4_ic"
