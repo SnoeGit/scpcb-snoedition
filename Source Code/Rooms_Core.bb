@@ -3662,21 +3662,21 @@ Function FillRoom%(r.Rooms)
 			sc\Angle = 130.0 : sc\Turn = 40.0
 			TurnEntity(sc\CameraOBJ, 20.0, 0.0, 0.0)
 			
-			it.Items = CreateItem("Gas Mask", "gasmask", r\x + 736.0 * RoomScale, r\y + 176.0 * RoomScale, r\z + 544.0 * RoomScale)
+			it.Items = CreateItem("Gas Mask", "gasmask", r\x - 604.0 * RoomScale, r\y - 50.0 * RoomScale, r\z - 350.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("9V Battery", "bat", r\x + 736.0 * RoomScale, r\y + 100.0 * RoomScale, r\z - 448.0 * RoomScale)
+			it.Items = CreateItem("9V Battery", "bat", r\x + 736.0 * RoomScale, r\y + 176.0 * RoomScale, r\z + 544.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			If Rand(2) = 1 Then
-				it.Items = CreateItem("9V Battery", "bat", r\x + 730.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 580.0 * RoomScale)
+				it.Items = CreateItem("9V Battery", "bat", r\x + 736.0 * RoomScale, r\y + 100.0 * RoomScale, r\z - 448.0 * RoomScale)
 			Else
-				it.Items = CreateItem("4.5V Battery", "coarsebat", r\x + 730.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 580.0 * RoomScale)
+				it.Items = CreateItem("4.5V Battery", "coarsebat", r\x + 736.0 * RoomScale, r\y + 100.0 * RoomScale, r\z - 448.0 * RoomScale)
 			EndIf
 			EntityParent(it\Collider, r\OBJ)
 			
 			If Rand(2) = 1 Then
-				it.Items = CreateItem("4.5V Battery", "coarsebat", r\x + 740.0 * RoomScale, r\y + 240.0 * RoomScale, r\z - 750.0 * RoomScale)
+				it.Items = CreateItem("4.5V Battery", "coarsebat", r\x + 730.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 580.0 * RoomScale)
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			
