@@ -1594,9 +1594,9 @@ Function RenderDebugHUD%()
 			
 			If I_005\ChanceToSpawn = 1 Then
 				Text(x, y + (540 * MenuScale), "SCP-005 Spawned in the Chamber!")
-			ElseIf I_005\ChanceToSpawn = 2
+			ElseIf I_005\ChanceToSpawn > 3
 				Text(x, y + (540 * MenuScale), "SCP-005 Spawned in Dr.Maynard's Office!")
-			ElseIf I_005\ChanceToSpawn = 3
+			Else
 				Text(x, y + (540 * MenuScale), "SCP-005 Spawned in SCP-409's Containment Chamber!")
 			EndIf
 			;[End Block]

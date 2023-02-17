@@ -1962,7 +1962,7 @@ Function InitNewGame%()
 	
 	me\BlinkTimer = -10.0 : me\BlinkEffect = 1.0 : me\Stamina = 100.0 : me\StaminaEffect = 1.0 : me\HeartBeatRate = 70.0 : me\Funds = Rand(4)
 	
-	I_005\ChanceToSpawn = Rand(3) : I_714\Using = 1
+	I_005\ChanceToSpawn = Rand(6) : I_714\Using = 1
 	
 	TakeOffTimer = 500.0
 	
