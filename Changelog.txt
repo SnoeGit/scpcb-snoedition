@@ -1,3 +1,18 @@
+v1.91
+
+General:
+
+- Can place the rings in wallet but you cannot use them while'st they're in the wallet.
+- Nerfed heal time of SCP-2022-01 from 50 seconds to 40 seconds.
+
+Rooms:
+
+- Moved Gas Mask in room2_closets down stairs.
+
+Bug Fixes:
+
+- Fixed certain items not being unselected when they failed to be used.
+
 v1.9
 
 General:
