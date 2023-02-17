@@ -2059,6 +2059,14 @@ Function UpdateGUI%()
 								ClosedInv = True
 								InvOpen = False
 								mo\DoubleClick = False
+								Select SelectedItem\ItemTemplate\TempName
+									Case "scp714", "coarse714", "kill714", "ring"
+									;[Block]
+									CreateMsg("You can't use the ring from the wallet.")
+									SelectedItem = Null
+									Return
+									;[End Block]
+								End Select
 							EndIf
 						EndIf
 					EndIf
@@ -2114,7 +2122,7 @@ Function UpdateGUI%()
 								If OtherOpen\SecondInv[z] <> Null Then
 									Local Name$ = OtherOpen\SecondInv[z]\ItemTemplate\TempName
 									
-									If Name <> "25ct" And Name <> "coin" And Name <> "scp588" And Name <> "key" And Name <> "scp860" And Name <> "bluekey" And Name <> "scp500pill" And Name <> "scp500pilldeath" And Name <> "pill" And Name <> "scp2022pill" And Name <> "ring" Then
+									If Name <> "25ct" And Name <> "coin" And Name <> "scp588" And Name <> "key" And Name <> "scp860" And Name <> "bluekey" And Name <> "scp500pill" And Name <> "scp500pilldeath" And Name <> "pill" And Name <> "scp2022pill" And Name <> "scp714" And Name <> "coarse714" And Name <> "kill714" And Name <> "ring" Then
 										IsEmpty = False
 										Exit
 									EndIf
@@ -2350,15 +2358,15 @@ Function UpdateGUI%()
 						PrevItem = Inventory(MouseSlot)
 						
 						Select SelectedItem\ItemTemplate\TempName
-							Case "paper", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "playcard", "mastercard", "oldpaper", "badge", "oldbadge", "ticket", "25ct", "coin", "scp588", "key", "scp860", "bluekey", "scp500pill", "scp500pilldeath", "pill", "scp2022pill", "ring"
+							Case "paper", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "keyomni", "playcard", "mastercard", "oldpaper", "badge", "oldbadge", "ticket", "25ct", "coin", "scp588", "key", "scp860", "bluekey", "scp500pill", "scp500pilldeath", "pill", "scp2022pill", "scp714", "coarse714", "kill714", "ring"
 								;[Block]
 								If Inventory(MouseSlot)\ItemTemplate\TempName = "clipboard" Then
-									; ~ Add an item to wallet
+									; ~ Add an item to clipboard
 									Local added.Items = Null
 									Local b$ = SelectedItem\ItemTemplate\TempName
 									Local c%, ri%
 									
-									If b <> "25ct" And b <> "coin" And b <> "scp588" And b <> "key" And b <> "scp860" And b <> "bluekey" And b <> "scp500pill" And b <> "scp500pilldeath" And b <> "pill" And b <> "scp2022pill" And b <> "ring" Then
+									If b <> "25ct" And b <> "coin" And b <> "scp588" And b <> "key" And b <> "scp860" And b <> "bluekey" And b <> "scp500pill" And b <> "scp500pilldeath" And b <> "pill" And b <> "scp2022pill" And b <> "scp714" And b <> "coarse714" And b <> "kill714" And b <> "ring" Then
 										For c = 0 To Inventory(MouseSlot)\InvSlots - 1
 											If Inventory(MouseSlot)\SecondInv[c] = Null Then
 												If SelectedItem <> Null Then
@@ -2401,31 +2409,29 @@ Function UpdateGUI%()
 										Inventory(MouseSlot) = SelectedItem
 									EndIf
 								ElseIf Inventory(MouseSlot)\ItemTemplate\TempName = "wallet" Then
-									; ~ Add an item to clipboard
+									; ~ Add an item to wallet
 									added.Items = Null
 									b = SelectedItem\ItemTemplate\TempName
 									If b <> "paper" And b <> "oldpaper" Then
 										For c = 0 To Inventory(MouseSlot)\InvSlots - 1
 											If Inventory(MouseSlot)\SecondInv[c] = Null Then
-												If SelectedItem <> Null Then
-													Inventory(MouseSlot)\SecondInv[c] = SelectedItem
-													Inventory(MouseSlot)\State = 1.0
-													If b <> "25ct" And b <> "coin" And b <> "scp588" And b <> "key" And b <> "scp860" And b <> "bluekey" And b <> "scp500pill" And b <> "scp500pilldeath" And b <> "pill" And b <> "scp2022pill" And b <> "ring" Then
-														SetAnimTime(Inventory(MouseSlot)\Model, 3.0)
-													EndIf
-													Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
-													
-													For ri = 0 To MaxItemAmount - 1
-														If Inventory(ri) = SelectedItem Then
-															Inventory(ri) = Null
-															PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
-															Exit
-														EndIf
-													Next
-													added = SelectedItem
-													SelectedItem = Null
-													Exit
+												Inventory(MouseSlot)\SecondInv[c] = SelectedItem
+												Inventory(MouseSlot)\State = 1.0
+												If b <> "25ct" And b <> "coin" And b <> "scp588" And b <> "key" And b <> "scp860" And b <> "bluekey" And b <> "scp500pill" And b <> "scp500pilldeath" And b <> "pill" And b <> "scp2022pill" And b <> "scp714" And b <> "coarse714" And b <> "kill714" And b <> "ring" Then
+													SetAnimTime(Inventory(MouseSlot)\Model, 3.0)
 												EndIf
+												Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
+												
+												For ri = 0 To MaxItemAmount - 1
+													If Inventory(ri) = SelectedItem Then
+														Inventory(ri) = Null
+														PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])
+														Exit
+													EndIf
+												Next
+												added = SelectedItem
+												SelectedItem = Null
+												Exit
 											EndIf
 										Next
 										If SelectedItem <> Null Then
@@ -3160,6 +3166,8 @@ Function UpdateGUI%()
 							EndIf
 						Next
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf	
 					;[End Block]
 				Case "veryfinefirstaid"
@@ -3233,6 +3241,8 @@ Function UpdateGUI%()
 								;[End Block]
 						End Select
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "firstaid", "finefirstaid", "bluefirstaid"
@@ -3323,6 +3333,8 @@ Function UpdateGUI%()
 								RemoveItem(SelectedItem)
 							EndIf
 						EndIf
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "eyedrops", "redeyedrops"
@@ -3336,6 +3348,8 @@ Function UpdateGUI%()
 						CreateMsg("You used the eyedrops. Your eyes feel moisturized.")
 						
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "fineeyedrops"
@@ -3349,6 +3363,8 @@ Function UpdateGUI%()
 						CreateMsg("You used the eyedrops. Your eyes feel very moisturized.")
 						
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "supereyedrops"
@@ -3362,6 +3378,8 @@ Function UpdateGUI%()
 						CreateMsg("You used the eyedrops. Your eyes feel extremely moisturized.")
 						
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "cup"
@@ -3459,6 +3477,8 @@ Function UpdateGUI%()
 						CreateMsg("You injected yourself with the syringe and feel a slight adrenaline rush.")
 					
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "finesyringe"
@@ -3472,6 +3492,8 @@ Function UpdateGUI%()
 						CreateMsg("You injected yourself with the syringe and feel an adrenaline rush.")
 					
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "veryfinesyringe"
@@ -3498,6 +3520,8 @@ Function UpdateGUI%()
 						End Select
 						me\Bloodloss = me\Bloodloss + 5.0
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "radio", "18vradio", "fineradio", "veryfineradio"
@@ -3907,6 +3931,8 @@ Function UpdateGUI%()
 								;[End Block]
 						End Select
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "scp420j"
@@ -3922,6 +3948,8 @@ Function UpdateGUI%()
 							PlaySound_Strict(LoadTempSound("SFX\Music\Using420J.ogg"))
 						EndIf
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "joint", "scp420s"
@@ -3937,6 +3965,8 @@ Function UpdateGUI%()
 							Kill()						
 						EndIf
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
@@ -4062,6 +4092,8 @@ Function UpdateGUI%()
 						Else
 							CreateMsg("You can't reach the locket anymore.")
 						EndIf
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "pill", "scp2022pill"
@@ -4077,12 +4109,12 @@ Function UpdateGUI%()
 						
 						If SelectedItem\ItemTemplate\TempName = "scp2022pill" Then
 							GiveAchievement(Achv2022)
-							me\HealTimer = 50.0
+							me\HealTimer = 40.0
 						EndIf
 						
-						
-						
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf	
 					;[End Block]
 				Case "scp500pilldeath"
@@ -4093,6 +4125,8 @@ Function UpdateGUI%()
 						If I_427\Timer < 70.0 * 360.0 Then I_427\Timer = 70.0 * 360.0
 						
 						RemoveItem(SelectedItem)
+					Else
+						SelectedItem = Null
 					EndIf
 					;[End Block]
 				Case "scp500"
@@ -4137,8 +4171,9 @@ Function UpdateGUI%()
 								CreateMsg("You put on the ring.")
 								GiveAchievement(Achv714)
 							EndIf
+						Else
+							SelectedItem = Null
 						EndIf
-						SelectedItem = Null
 					;[End Block]
 				Case "kill714", "ring"
 					;[Block]
@@ -4150,8 +4185,9 @@ Function UpdateGUI%()
 							Else
 								CreateMsg("The ring is too small to fit on your fingers")
 							EndIf
+						Else
+							SelectedItem = Null
 						EndIf
-						SelectedItem = Null
 					;[End Block]
 				Case "scp1025"
 					;[Block]
