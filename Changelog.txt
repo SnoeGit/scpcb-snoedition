@@ -8,6 +8,7 @@ General:
 Rooms:
 
 - Moved Gas Mask in room2_closets down stairs.
+- Adjust SCP-005's spawn chances in rooms.
 
 Bug Fixes:
 
