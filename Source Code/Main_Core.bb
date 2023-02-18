@@ -4171,9 +4171,8 @@ Function UpdateGUI%()
 								CreateMsg("You put on the ring.")
 								GiveAchievement(Achv714)
 							EndIf
-						Else
-							SelectedItem = Null
 						EndIf
+						SelectedItem = Null
 					;[End Block]
 				Case "kill714", "ring"
 					;[Block]
@@ -4185,9 +4184,8 @@ Function UpdateGUI%()
 							Else
 								CreateMsg("The ring is too small to fit on your fingers")
 							EndIf
-						Else
-							SelectedItem = Null
 						EndIf
+						SelectedItem = Null
 					;[End Block]
 				Case "scp1025"
 					;[Block]
