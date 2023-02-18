@@ -7970,6 +7970,10 @@ Function UpdateEvents%()
 							me\LightBlink = 9.0
 							PlaySound_Strict(LightSFX)
 							e\room\NPC[0]\State = 1.0
+							If RemoteDoorOn Then
+								e\room\RoomDoors[0]\Locked = 1
+								e\room\RoomDoors[0]\Open = True
+							EndIf
 							e\EventState2 = 1.0
 						EndIf
 					EndIf

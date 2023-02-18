@@ -3765,7 +3765,7 @@ Function FillRoom%(r.Rooms)
 		Case "room2_medibay"
 			;[Block]
 			; ~ Doors
-			d.Doors = CreateDoor(r\x - 256.0 * RoomScale, r\y, r\z + 640.0 * RoomScale, 90.0, r, False, DEFAULT_DOOR, KEY_CARD_3)
+			r\RoomDoors.Doors[0] = CreateDoor(r\x - 256.0 * RoomScale, r\y, r\z + 640.0 * RoomScale, 90.0, r, False, DEFAULT_DOOR, KEY_CARD_3)
 			
 			d.Doors = CreateDoor(r\x - 512.0 * RoomScale, r\y, r\z + 378.0 * RoomScale, 0.0, r, False, OFFICE_DOOR)
 			
