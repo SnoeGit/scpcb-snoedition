@@ -5,10 +5,15 @@ General:
 - Can place the rings in wallet but you cannot use them while'st they're in the wallet.
 - Nerfed heal time of SCP-2022-01 from 50 seconds to 40 seconds.
 
+NPCs:
+
+- Can sneak around SCP-049-2 instances.
+
 Rooms:
 
 - Moved Gas Mask in room2_closets down stairs.
 - Adjust SCP-005's spawn chances in rooms.
+- Door of Medical Bay locks when the zombie wakes up
 
 Bug Fixes:
 

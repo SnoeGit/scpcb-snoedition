@@ -2006,7 +2006,7 @@ Function UpdateNPCs%()
 							;[Block]
 							If n\Frame <> 1.0 Then SetNPCFrame(n, 1.0)
 							
-							If Dist < 5.0 And (I_268\Using < 2 Lor I_268\Timer =< 0.0) Then n\State = 1.0
+							If Dist < 4.5 - (4.0 * me\Crouch) And (I_268\Using < 2 Lor I_268\Timer =< 0.0) Then n\State = 1.0
 							;[End Block]
 						Case 1.0 ; ~ Stands up
 							;[Block]
