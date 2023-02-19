@@ -13,7 +13,7 @@ Rooms:
 
 - Moved Gas Mask in room2_closets down stairs.
 - Adjust SCP-005's spawn chances in rooms.
-- Door of Medical Bay locks when the zombie wakes up
+- Door of Medical Bay locks when the SCP-008-1 entity wakes up.
 
 Bug Fixes:
 
