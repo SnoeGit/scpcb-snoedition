@@ -273,31 +273,36 @@ Function KillSounds%()
 		If e\SoundCHN_IsStream Then
 			If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN_IsStream = False
 		Else
-			StopChannel(e\SoundCHN) : e\SoundCHN = 0
+			StopChannel(e\SoundCHN)
 		EndIf
+		e\SoundCHN = 0
 		If e\SoundCHN2_IsStream Then
 			If e\SoundCHN2 <> 0 Then StopStream_Strict(e\SoundCHN2) : e\SoundCHN2_IsStream = False
 		Else
-			StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
+			StopChannel(e\SoundCHN2)
 		EndIf
+		e\SoundCHN2 = 0
 		If e\SoundCHN3_IsStream Then
 			If e\SoundCHN3 <> 0 Then StopStream_Strict(e\SoundCHN3) : e\SoundCHN3_IsStream = False
 		Else
-			StopChannel(e\SoundCHN3) : e\SoundCHN3 = 0
+			StopChannel(e\SoundCHN3)
 		EndIf
+		e\SoundCHN3 = 0
 	Next
 	
 	For n.NPCs = Each NPCs
 		If n\SoundCHN_IsStream Then
-			If n\SoundCHN <> 0 Then StopStream_Strict(n\SoundCHN)
+			If n\SoundCHN <> 0 Then StopStream_Strict(n\SoundCHN) : n\SoundCHN_IsStream = False
 		Else
-			StopChannel(n\SoundCHN) : n\SoundCHN = 0
+			StopChannel(n\SoundCHN)
 		EndIf
+		n\SoundCHN = 0
 		If n\SoundCHN2_IsStream Then
-			If n\SoundCHN2 <> 0 Then StopStream_Strict(n\SoundCHN2)
+			If n\SoundCHN2 <> 0 Then StopStream_Strict(n\SoundCHN2) : n\SoundCHN2_IsStream = False
 		Else
-			StopChannel(n\SoundCHN2) : n\SoundCHN2 = 0
+			StopChannel(n\SoundCHN2)
 		EndIf
+		n\SoundCHN2 = 0
 	Next
 	
 	For d.Doors = Each Doors

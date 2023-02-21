@@ -51,17 +51,13 @@ Function PlaySound_Strict%(SoundHandle%)
 					If (Not snd\InternalHandle) Then
 						If FileType(snd\Name) <> 1 Then
 							CreateConsoleMsg("Sound " + Chr(34) + snd\Name + Chr(34) + " not found.")
-							If opt\ConsoleOpening And opt\CanOpenConsole Then
-								ConsoleOpen = True
-							EndIf
+							If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 						Else
 							If opt\EnableSFXRelease Then snd\InternalHandle = LoadSound(snd\Name)
 						EndIf
 						If (Not snd\InternalHandle) Then
 							CreateConsoleMsg("Failed to load Sound: " + Chr(34) + snd\Name + Chr(34))
-							If opt\ConsoleOpening And opt\CanOpenConsole Then
-								ConsoleOpen = True
-							EndIf
+							If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 						EndIf
 					EndIf
 					If ConsoleFlush Then
@@ -80,18 +76,14 @@ Function PlaySound_Strict%(SoundHandle%)
 				If (Not snd\InternalHandle) Then
 					If FileType(snd\Name) <> 1 Then
 						CreateConsoleMsg("Sound " + Chr(34) + snd\Name + Chr(34) + " not found.")
-						If opt\ConsoleOpening And opt\CanOpenConsole Then
-							ConsoleOpen = True
-						EndIf
+						If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 					Else
 						If opt\EnableSFXRelease Then snd\InternalHandle = LoadSound(snd\Name)
 					EndIf
 						
 					If (Not snd\InternalHandle) Then
 						CreateConsoleMsg("Failed to load Sound: " + Chr(34) + snd\Name + Chr(34))
-						If opt\ConsoleOpening And opt\CanOpenConsole Then
-							ConsoleOpen = True
-						EndIf
+						If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 					EndIf
 				EndIf
 				If ConsoleFlushSnd Then
@@ -149,9 +141,7 @@ Const TwoD% = 8192
 Function StreamSound_Strict%(File$, Volume# = 1.0, CustomMode% = Mode)
 	If FileType(File) <> 1 Then
 		CreateConsoleMsg("Sound " + Chr(34) + File + Chr(34) + " not found.")
-		If opt\ConsoleOpening And opt\CanOpenConsole Then
-			ConsoleOpen = True
-		EndIf
+		If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 		Return(0)
 	EndIf
 	
@@ -161,9 +151,7 @@ Function StreamSound_Strict%(File$, Volume# = 1.0, CustomMode% = Mode)
 	
 	If st\CHN = -1 Then
 		CreateConsoleMsg("Failed to stream Sound (returned -1): " + Chr(34) + File + Chr(34))
-		If opt\ConsoleOpening And opt\CanOpenConsole Then
-			ConsoleOpen = True
-		EndIf
+		If opt\ConsoleOpening And opt\CanOpenConsole Then ConsoleOpen = True
 		Return(-1)
 	EndIf
 	ChannelVolume(st\CHN, Volume)

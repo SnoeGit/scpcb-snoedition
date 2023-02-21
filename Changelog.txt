@@ -8,6 +8,7 @@ General:
 NPCs:
 
 - Can sneak around SCP-049-2 instances.
+- SCP-1499-1 kills earlier.
 
 Rooms:
 
@@ -18,6 +19,7 @@ Rooms:
 Bug Fixes:
 
 - Fixed certain items not being unselected when they failed to be used.
+- Fix crash when dying from SCP-1499-1.
 
 v1.9
 

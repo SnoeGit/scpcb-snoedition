@@ -2171,10 +2171,9 @@ Function UpdateNPCs%()
 										If Dist =< 0.51 Then
 											If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 												PlaySound2(DamageSFX[Rand(5, 8)], Camera, n\Collider)
-
-													InjurePlayer(Rnd(0.55, 0.85) * DifficultyDMGMult, 0.0, 0.0, Rnd(0.25, 0.3) * DifficultyDMGMult, 0.2)
+												InjurePlayer(Rnd(0.55, 0.85) * DifficultyDMGMult, 0.0, 0.0, Rnd(0.25, 0.3) * DifficultyDMGMult, 0.2)
 												
-												If me\Injuries => 3.0 Then
+												If me\Injuries > 3.0 Then
 													msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2."
 													Kill(True)
 												EndIf
@@ -3134,7 +3133,7 @@ Function UpdateNPCs%()
 													PlaySound_Strict(DamageSFX[Rand(9, 10)])
 													InjurePlayer(Rnd(0.75, 1.15) * DifficultyDMGMult, 0.0, 100.0, Rnd(0.35, 0.4) * DifficultyDMGMult, 0.2)
 													
-													If me\Injuries => 3.0 Then
+													If me\Injuries > 3.0 Then
 														If PlayerRoom\RoomTemplate\Name = "room2_ez" Then
 															msg\DeathMsg = Chr(34) + "One large and highly active tentacle-like appendage seems "
 															msg\DeathMsg = msg\DeathMsg + "to have grown outside the dead body of a scientist within office area [DATA REDACTED]. It's level of aggression is "
@@ -3641,7 +3640,7 @@ Function UpdateNPCs%()
 										EndIf
 									EndIf
 									
-									If me\Injuries => 4.0 Then 
+									If me\Injuries > 4.0 Then 
 										msg\DeathMsg = Chr(34) + "All four (4) escaped SCP-939 specimens have been captured and recontained successfully. "
 										msg\DeathMsg = msg\DeathMsg + "They made quite a mess at Storage Area 6. A cleaning team has been dispatched." + Chr(34)
 										Kill(True)
@@ -3828,9 +3827,7 @@ Function UpdateNPCs%()
 													me\BigCameraShake = 5.0
 													de.Decals = CreateDecal(DECAL_CORROSIVE_2, EntityX(n\Collider), 0.005, EntityZ(n\Collider), 90.0, Rnd(360.0), 0.0, 0.3)
 													PlaySound_Strict(LoadTempSound("SFX\General\BodyFall.ogg"))
-													If DistanceSquared(EntityX(me\Collider), EntityX(n\Collider), EntityZ(me\Collider), EntityZ(n\Collider)) < 0.64 Then
-														InjurePlayer(Rnd(0.3, 0.5), 0.0, 200.0)
-													EndIf
+													If DistanceSquared(EntityX(me\Collider), EntityX(n\Collider), EntityZ(me\Collider), EntityZ(n\Collider)) < 0.64 Then InjurePlayer(Rnd(0.3, 0.5), 0.0, 200.0)
 												EndIf
 												;[End Block]
 											Case 5, 6 ; ~ No effect
@@ -4196,10 +4193,9 @@ Function UpdateNPCs%()
 									If Dist =< 0.65 Then
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
-											
 											InjurePlayer(Rnd(0.45, 0.75) * DifficultyDMGMult, 0.0, 500.0, Rnd(0.2, 0.25) * DifficultyDMGMult)
 													
-											If me\Injuries => 14.0 Then Kill(True)
+											If me\Injuries > 14.0 Then Kill(True)
 										EndIf
 									Else
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
@@ -4520,10 +4516,9 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.65, 1.1) * DifficultyDMGMult, 0.0, 500.0, Rnd(0.3, 0.35) * DifficultyDMGMult, 0.2)
-
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
-										If me\Injuries > 9.0 Then
+										InjurePlayer(Rnd(0.65, 1.1) * DifficultyDMGMult, 0.0, 500.0, Rnd(0.3, 0.35) * DifficultyDMGMult, 0.2)
+										If me\Injuries > 8.0 Then
 											Kill(True)
 											If PlayerRoom\RoomTemplate\Name = "dimension_1499"
 												msg\DeathMsg = "All personnel situated within Evacuation Shelter LC-2 during the breach have been administered "
@@ -4546,10 +4541,9 @@ Function UpdateNPCs%()
 									If Dist > 0.64 Lor Abs(DeltaYaw(n\Collider, me\Collider)) > 60.0 Then
 										PlaySound2(MissSFX, Camera, n\Collider, 2.5)
 									Else
-										InjurePlayer(Rnd(0.65, 1.1) * DifficultyDMGMult, 0.0, 500.0, Rnd(0.3, 0.35) * DifficultyDMGMult, 0.2)
-										
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
-										If me\Injuries > 9.0 Then
+										InjurePlayer(Rnd(0.65, 1.1) * DifficultyDMGMult, 0.0, 500.0, Rnd(0.3, 0.35) * DifficultyDMGMult, 0.2)
+										If me\Injuries > 8.0 Then
 											Kill(True)
 											If PlayerRoom\RoomTemplate\Name = "dimension_1499"
 												msg\DeathMsg = "All personnel situated within Evacuation Shelter LC-2 during the breach have been administered "
@@ -4746,10 +4740,9 @@ Function UpdateNPCs%()
 									If Dist =< 0.51 Then
 										If Abs(DeltaYaw(n\Collider, me\Collider)) <= 60.0 Then
 											PlaySound_Strict(DamageSFX[Rand(5, 8)])
-											
 											InjurePlayer(Rnd(0.4, 0.7) * DifficultyDMGMult, 1.0 + SelectedDifficulty\AggressiveNPCs, 0.0, Rnd(0.175, 0.225) * DifficultyDMGMult, 0.2)
 													
-											If me\Injuries => 3.0 Then
+											If me\Injuries > 3.0 Then
 												msg\DeathMsg = SubjectName + ". Cause of death: multiple lacerations and severe blunt force trauma caused by [DATA REDACTED], who was infected with SCP-008. Said subject was located by Nine-Tailed Fox and terminated."
 												Kill(True)
 											EndIf

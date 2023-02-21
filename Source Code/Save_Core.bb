@@ -1893,7 +1893,13 @@ Function LoadGameQuick%(File$)
 	Local e.Events
 	
 	For e.Events = Each Events
-		RemoveEvent(e)
+		If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
+		If e\Sound2 <> 0 Then FreeSound_Strict(e\Sound2) : e\Sound2 = 0
+		If e\Sound3 <> 0 Then FreeSound_Strict(e\Sound3) : e\Sound3 = 0
+	
+		If e\Img <> 0 Then FreeImage(e\Img)
+	
+		Delete(e)
 	Next
 	
 	Temp = ReadInt(f)
