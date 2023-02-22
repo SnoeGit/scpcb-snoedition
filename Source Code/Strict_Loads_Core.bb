@@ -126,7 +126,6 @@ Function FreeSound_Strict%(SoundHandle%)
 	If snd <> Null Then
 		If snd\InternalHandle <> 0 Then FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
 		snd\ReleaseTime = 0
-		If snd\InternalHandle <> 0 Then FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
 		Delete(snd)
 	EndIf
 End Function
