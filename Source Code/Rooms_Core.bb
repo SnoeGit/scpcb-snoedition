@@ -2439,19 +2439,19 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.061, True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.061, True)
 			
-			d = CreateDoor(r\x - 160 * RoomScale, r\y, r\z + 639.0 * RoomScale, 0, r, True, ONE_SIDED_DOOR, KEY_CARD_4)
+			d = CreateDoor(r\x + 190 * RoomScale, r\y, r\z + 609.0 * RoomScale, 0, r, False, ONE_SIDED_DOOR, KEY_CARD_3)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) + 0.056, True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.056, True)
 			
-			d = CreateDoor(r\x + 320 * RoomScale, r\y, r\z + 639.0 * RoomScale, 0, r, False, ONE_SIDED_DOOR, KEY_CARD_3)
+			d = CreateDoor(r\x - 290 * RoomScale, r\y, r\z + 609.0 * RoomScale, 0, r, True, ONE_SIDED_DOOR, KEY_CARD_4)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) + 0.056, True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.056, True)
 			
-			it.Items = CreateItem("L.S.'s Note", "paper", r\x - 160 * RoomScale,  r\y + 210.0 * RoomScale, r\z + 1240.0 * RoomScale)
+			it.Items = CreateItem("L.S.'s Note", "paper", r\x - 290 * RoomScale,  r\y + 210.0 * RoomScale, r\z + 1220.0 * RoomScale)
 			RotateEntity(it\Collider, 0.0, r\Angle, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Document SCP-268", "paper", r\x + 180 * RoomScale,  r\y + 210.0 * RoomScale, r\z + 955.0 * RoomScale)
+			it.Items = CreateItem("Document SCP-268", "paper", r\x + 40 * RoomScale,  r\y + 210.0 * RoomScale, r\z + 945.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case "cont2_1123"
