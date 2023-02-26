@@ -181,10 +181,14 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 		Case "nvg", "supernvg", "finenvg"
 			;[Block]
 			Select Setting
-				Case ROUGH, COARSE
+				Case ROUGH
 					;[Block]
 					de.Decals = CreateDecal(DECAL_CORROSIVE_1, x, 8 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.12)
 					EntityParent(de\OBJ, PlayerRoom\OBJ)
+					;[End Block]
+				Case COARSE
+					;[Block]
+					it2.Items = CreateItem("Electronical Components", "electronics", x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
@@ -210,10 +214,14 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 		Case "scramble", "finescramble", "killscramble"
 			;[Block]
 			Select Setting
-				Case ROUGH, COARSE
+				Case ROUGH
 					;[Block]
 					de.Decals = CreateDecal(DECAL_CORROSIVE_1, x, 8 * RoomScale + 0.005, z, 90.0, Rnd(360.0), 0.0, 0.12)
 					EntityParent(de\OBJ, PlayerRoom\OBJ)
+					;[End Block]
+				Case COARSE
+					;[Block]
+					it2.Items = CreateItem("Electronical Components", "electronics", x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
