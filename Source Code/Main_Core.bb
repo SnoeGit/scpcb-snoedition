@@ -2413,6 +2413,11 @@ Function UpdateGUI%()
 									added.Items = Null
 									b = SelectedItem\ItemTemplate\TempName
 									If b <> "paper" And b <> "oldpaper" Then
+										If (SelectedItem\ItemTemplate\TempName = "scp714" And I_714\Using = 3) Lor (SelectedItem\ItemTemplate\TempName = "coarse714" And I_714\Using = 2) Then
+											CreateHintMsg("Double click on the ring to take it off.")
+											SelectedItem = Null
+											Return
+										EndIf
 										For c = 0 To Inventory(MouseSlot)\InvSlots - 1
 											If Inventory(MouseSlot)\SecondInv[c] = Null Then
 												Inventory(MouseSlot)\SecondInv[c] = SelectedItem
