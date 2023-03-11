@@ -2866,7 +2866,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "nvg", "supernvg", "finenvg"
 					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
 						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.5), 100.0)
 						
@@ -2906,7 +2906,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "gasmask", "finegasmask", "supergasmask", "heavygasmask"
 					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
 						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.5), 100.0)
 						
@@ -2948,7 +2948,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "cap", "scp268", "super268"
 					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
 						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.5), 100.0)
 						
@@ -2988,7 +2988,7 @@ Function UpdateGUI%()
 					;[Block]
 					If PreventItemOverlapping("gas mask", True) Then
 						
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
 						SelectedItem\State = Min(SelectedItem\State + fps\Factor[0] / 1.5, 100.0)
 						
@@ -3054,7 +3054,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "helmet"
 					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
 						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 1.1), 100.0)
 						
@@ -3076,7 +3076,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "scramble", "finescramble", "killscramble"
 					;[Block]
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
 						SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 1.5), 100.0)
 						
@@ -3977,7 +3977,7 @@ Function UpdateGUI%()
 				Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 					;[Block]
 					If wi\BallisticVest = 0 Then
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
 						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 3.75), 100.0)
 						
@@ -4022,7 +4022,7 @@ Function UpdateGUI%()
 					;[End Block]
 				Case "vest", "finevest"
 					;[Block]
-					me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.5)
+					me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 					
 					SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / (2.0 + (0.5 * (SelectedItem\ItemTemplate\TempName = "finevest")))), 100)
 					
