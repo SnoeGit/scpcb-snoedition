@@ -4336,11 +4336,7 @@ Function RenderHUD%()
 		Next
 		Color(255, 255, 255)
 		Rect(x - (51 * MenuScale), y - (41 * MenuScale), 32 * MenuScale, 32 * MenuScale, False)
-		If TakeOffTimer < 125.0 Then
-			RenderBar(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, TakeOffTimer, 500.0, 100, 0, 0)
-		Else
-			RenderBar(BlinkMeterIMG, x, y - (40 * MenuScale), Width, Height, TakeOffTimer, 500.0)
-		EndIf
+		RenderBar2(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, TakeOffTimer, 500.0)
 		DrawBlock(t\IconID[8], x - (50 * MenuScale), y - (40 * MenuScale))
 	ElseIf I_268\Using > 1 Then
 		If I_268\Timer =< 0.0 Then
@@ -4355,20 +4351,12 @@ Function RenderHUD%()
 		EndIf
 		Color(255, 255, 255)
 		Rect(x - (51 * MenuScale), y - (41 * MenuScale), 32 * MenuScale, 32 * MenuScale, False)
-		If I_268\Timer < 150.0 Then
-			RenderBar(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, I_268\Timer, 600.0, 100, 0, 0)
-		Else
-			RenderBar(BlinkMeterIMG, x, y - (40 * MenuScale), Width, Height, I_268\Timer, 600.0)
-		EndIf
+		RenderBar2(t\ImageID[1], x, y - (40 * MenuScale), Width, Height, I_268\Timer, 600.0)
 		DrawBlock(t\IconID[7], x - (50 * MenuScale), y - (40 * MenuScale))
 	EndIf
 	
 	Color(255, 255, 255)
-	If me\BlinkTimer < me\BLINKFREQ / 4.0 Then
-		RenderBar(t\ImageID[1], x, y, Width, Height, me\BlinkTimer, me\BLINKFREQ, 100, 0, 0)
-	Else
-		RenderBar(BlinkMeterIMG, x, y, Width, Height, me\BlinkTimer, me\BLINKFREQ)
-	EndIf
+	RenderBar2(t\ImageID[1], x, y, Width, Height, me\BlinkTimer, me\BLINKFREQ)
 	Color(0, 0, 0)
 	Rect(x - (50 * MenuScale), y, 30 * MenuScale, 30 * MenuScale)
 	
@@ -4392,11 +4380,7 @@ Function RenderHUD%()
 	
 	y = opt\GraphicHeight - (55 * MenuScale)
 	
-	If me\Stamina <= 25.0 Then
-		RenderBar(t\ImageID[3], x, y, Width, Height, me\Stamina, 100.0, 50, 0, 0)
-	Else
-		RenderBar(t\ImageID[2], x, y, Width, Height, me\Stamina, 100.0, 50, 50, 50)
-	EndIf
+	RenderBar2(t\ImageID[3], x, y, Width, Height, me\Stamina, 100.0, 50)
 	Color(0, 0, 0)
 	Rect(x - (50 * MenuScale), y, 30 * MenuScale, 30 * MenuScale)
 	

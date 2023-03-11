@@ -2494,16 +2494,34 @@ Function RenderFrame%(x%, y%, Width%, Height%, xOffset% = 0, yOffset% = 0, Locke
 		IMG = MenuWhite
 	EndIf
 	RenderTiledImageRect(IMG, xOffset, yOffset, 512, 512, x, y, Width, Height)
-	RenderTiledImageRect(MenuBlack, xOffset, yOffset, 512, 512, x + (3 * MenuScale), y + (3 * MenuScale), Width - (6 * MenuScale), Height - (6 * MenuScale))	
+	RenderTiledImageRect(MenuBlack, xOffset, yOffset, 512, 512, x + (3 * MenuScale), y + (3 * MenuScale), Width - (6 * MenuScale), Height - (6 * MenuScale))
 End Function
 
-Function RenderBar%(Img%, x%, y%, Width%, Height%, Value1#, Value2# = 100.0, R% = 100, G% = 100, B% = 100)
+Function RenderBar%(Img%, x%, y%, Width%, Height%, Value1#)
 	Local i%
 	
 	Rect(x, y, Width + (4 * MenuScale), Height, False)
 	If opt\SmoothBars Then
-		Color(R, G, B)	
-		Rect(x + (3 * MenuScale), y + (3 * MenuScale), Float((Width - (2 * MenuScale)) * (Value1 / Value2)), Height - (6 * MenuScale))	
+		Color(100, 100, 100)
+		Rect(x + (3 * MenuScale), y + (3 * MenuScale), Float((Width - (2 * MenuScale)) * (Value1 / 100.0)), Height - (6 * MenuScale))
+	Else
+		For i = 1 To Int(((Width - (2 * MenuScale)) * ((Value1 / 100.0) / 10.0)) / MenuScale)
+			DrawBlock(Img, x + ((3 + (10 * (i - 1))) * MenuScale), y + (3 * MenuScale))
+		Next
+	EndIf
+End Function
+
+Function RenderBar2%(Img%, x%, y%, Width%, Height%, Value1#, Value2# = 100.0, RGB% = 100)
+	Local i%
+	
+	Rect(x, y, Width + (4 * MenuScale), Height, False)
+	If opt\SmoothBars Then
+		If Value1 < Value2 / 4.0 Then
+			Color(RGB, 0, 0)
+		Else
+			Color(RGB, RGB, RGB)
+		EndIf
+		Rect(x + (3 * MenuScale), y + (3 * MenuScale), Float((Width - (2 * MenuScale)) * (Value1 / Value2)), Height - (6 * MenuScale))
 	Else
 		For i = 1 To Int(((Width - (2 * MenuScale)) * ((Value1 / Value2) / 10.0)) / MenuScale)
 			DrawBlock(Img, x + ((3 + (10 * (i - 1))) * MenuScale), y + (3 * MenuScale))
