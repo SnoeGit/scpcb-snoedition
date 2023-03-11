@@ -4581,9 +4581,9 @@ Function UpdateEvents%()
 						
 						If wi\GasMask = 0 And wi\HazmatSuit = 0 Then
 							If I_714\Using = 1 Then
-								me\BlurTimer = Min(me\BlurTimer + (fps\Factor[0] * 1.055), 1500.0)
+								me\BlurTimer = Min(me\BlurTimer + (fps\Factor[0] * 1.05), 1500.0)
 							Else
-								me\BlurTimer = Min(me\BlurTimer + (fps\Factor[0] * 1.035), 1500.0)
+								me\BlurTimer = Min(me\BlurTimer + (fps\Factor[0] * 1.03), 1500.0)
 							EndIf
 							If me\BlurTimer >= 500.0 Then UpdateCough(1000)
 							If me\BlurTimer >= 1500.0 And me\FallTimer = 0.0 Then
