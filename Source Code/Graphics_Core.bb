@@ -84,7 +84,7 @@ Function ScaleImage2%(SrcImage%, ScaleX#, ScaleY#, ExactSize% = False)
 	EndIf
 	
 	; ~ If the image does not need to be scaled, just copy the image and exit the function
-	If (SrcWidth = DestWidth) And (SrcHeight = DestHeight) Then Return(CopyImage(SrcImage))
+	If (SrcWidth = DestWidth) And (SrcHeight = DestHeight) Then Return(SrcImage)
 	
 	; ~ Create a scratch image that is as tall as the source image, and as wide as the destination image
 	ScratchImage = CreateImage(DestWidth, SrcHeight)
@@ -195,7 +195,7 @@ Function UpdateWorld2%()
 		For i = 0 To MaxItemAmount - 1
 			If Inventory(i) <> Null Then
 				If wi\NightVision > 0 And (Inventory(i)\ItemTemplate\TempName = "nvg" Lor Inventory(i)\ItemTemplate\TempName = "supernvg") Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\TempName = "scramble") Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\TempName = "finescramble") Then
-					If wi\NightVision > 0 Then Inventory(i)\State = Max(0.0, Inventory(i)\State - (fps\Factor[0] * (0.025 * wi\NightVision)))
+					If wi\NightVision > 0 Then Inventory(i)\State = Max(0.0, Inventory(i)\State - (fps\Factor[0] * (0.02 * wi\NightVision)))
 					If wi\SCRAMBLE > 0 Then Inventory(i)\State = Max(0.0, Inventory(i)\State - (fps\Factor[0] * (0.16 / wi\SCRAMBLE)))
 					Power = Int(Inventory(i)\State)
 					If Power = 0 Then ; ~ This NVG or SCRAMBLE can't be used
@@ -240,7 +240,7 @@ Function UpdateWorld2%()
 	EndIf
 	
 	If fps\Factor[0] > 0.0 Then
-		If HasBattery = 1 And ((MilliSecs2() Mod 800) < 200) Then
+		If HasBattery = 1 And ((MilliSecs() Mod 800) < 200) Then
 			If (Not LowBatteryCHN[1]) Then
 				LowBatteryCHN[1] = PlaySound_Strict(LowBatterySFX[1])
 			ElseIf (Not ChannelPlaying(LowBatteryCHN[1]))
@@ -388,7 +388,7 @@ Function RenderWorld2%(Tween#)
 	CameraProjMode(ArkBlurCam, 0)
 	
 	If fps\Factor[0] > 0.0 Then
-		If HasBattery = 1 And ((MilliSecs2() Mod 800) < 400)
+		If HasBattery = 1 And ((MilliSecs() Mod 800) < 400)
 			Color(255, 0, 0)
 			SetFont(fo\FontID[Font_Digital])
 			

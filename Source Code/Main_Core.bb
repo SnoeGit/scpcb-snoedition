@@ -108,9 +108,9 @@ End Type
 
 Global fps.FramesPerSeconds = New FramesPerSeconds
 
-SeedRnd(MilliSecs2())
+SeedRnd(MilliSecs())
 
-fps\LoopDelay = MilliSecs2()
+fps\LoopDelay = MilliSecs()
 
 Global WireFrameState%
 
@@ -542,17 +542,17 @@ Repeat
 	Cls()
 	Local ElapsedMilliSecs%
 	
-	fps\CurrTime = MilliSecs2()
+	fps\CurrTime = MilliSecs()
 	
 	ElapsedMilliSecs = fps\CurrTime - fps\PrevTime
 	If (ElapsedMilliSecs > 0 And ElapsedMilliSecs < 500) Then fps\Accumulator = fps\Accumulator + Max(0.0, Float(ElapsedMilliSecs) * 70.0 / 1000.0)
 	fps\PrevTime = fps\CurrTime
 	
 	If opt\FrameLimit > 0.0 Then
-		Local WaitingTime% = (1000.0 / opt\FrameLimit) - (MilliSecs2() - fps\LoopDelay)
+		Local WaitingTime% = (1000.0 / opt\FrameLimit) - (MilliSecs() - fps\LoopDelay)
 		
 		Delay(WaitingTime)
-		fps\LoopDelay = MilliSecs2()
+		fps\LoopDelay = MilliSecs()
 	EndIf
 	
 	fps\Factor[0] = TICK_DURATION
@@ -569,10 +569,10 @@ Repeat
 	If KeyHit(key\SCREENSHOT) Then GetScreenshot()
 	
 	If opt\ShowFPS Then
-		If fps\Goal < MilliSecs2() Then
+		If fps\Goal < MilliSecs() Then
 			fps\FPS = fps\TempFPS
 			fps\TempFPS = 0
-			fps\Goal = MilliSecs2() + 1000
+			fps\Goal = MilliSecs() + 1000
 		Else
 			fps\TempFPS = fps\TempFPS + 1
 		EndIf
@@ -1467,7 +1467,7 @@ Function UpdateMoving%()
 	
 	If me\Injuries > 1.0 Then
 		Temp2 = me\Bloodloss
-		me\BlurTimer = Max(Max(Sin(MilliSecs2() / 100.0) * me\Bloodloss * 30.0, me\Bloodloss * 2.0 * (2.0 - me\CrouchState)), me\BlurTimer)
+		me\BlurTimer = Max(Max(Sin(MilliSecs() / 100.0) * me\Bloodloss * 30.0, me\Bloodloss * 2.0 * (2.0 - me\CrouchState)), me\BlurTimer)
 		If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0 Then me\Bloodloss = Min(me\Bloodloss + (Min(me\Injuries, 4.0) / 300.0) * fps\Factor[0], 100.0)
 		If Temp2 <= 65.0 And me\Bloodloss > 65.0 Then CreateMsg("You are feeling faint from the amount of blood you have lost.")
 	EndIf
@@ -1492,7 +1492,7 @@ Function UpdateMoving%()
 			FreeEntity(Pvt)
 		EndIf
 		
-		me\CurrCameraZoom = Max(me\CurrCameraZoom, (Sin(Float(MilliSecs2()) / 20.0) + 1.0) * me\Bloodloss * 0.2)
+		me\CurrCameraZoom = Max(me\CurrCameraZoom, (Sin(Float(MilliSecs()) / 20.0) + 1.0) * me\Bloodloss * 0.2)
 		
 		If me\Bloodloss > 65.0 Then 
 			If (Not me\Crouch) Then SetCrouch(True)
@@ -1546,8 +1546,8 @@ Function UpdateMouseInput()
 		mo\DoubleClick = False
 		mo\MouseHit1 = MouseHit(1)
 		If mo\MouseHit1 Then
-			If MilliSecs2() - mo\LastMouseHit1 < 800 Then mo\DoubleClick = True
-			mo\LastMouseHit1 = MilliSecs2()
+			If MilliSecs() - mo\LastMouseHit1 < 800 Then mo\DoubleClick = True
+			mo\LastMouseHit1 = MilliSecs()
 		EndIf
 		
 		Local PrevMouseDown1% = mo\MouseDown1
@@ -1620,7 +1620,7 @@ Function UpdateMouseLook%()
 		
 		If PlayerRoom\RoomTemplate\Name = "dimension_106" Then
 			If EntityY(me\Collider) < 2000.0 * RoomScale Lor EntityY(me\Collider) > 2608.0 * RoomScale Then
-				RotateEntity(Camera, WrapAngle(EntityPitch(Camera)), WrapAngle(EntityYaw(Camera)), Roll + WrapAngle(Sin(MilliSecs2() / 150.0) * 30.0)) ; ~ Pitch the user's camera up and down
+				RotateEntity(Camera, WrapAngle(EntityPitch(Camera)), WrapAngle(EntityYaw(Camera)), Roll + WrapAngle(Sin(MilliSecs() / 150.0) * 30.0)) ; ~ Pitch the user's camera up and down
 			EndIf
 		EndIf
 	Else
@@ -1685,11 +1685,11 @@ Function UpdateMouseLook%()
 		If wi\GasMask <> 2 And wi\GasMask <> 4 And wi\HazmatSuit <> 2 And wi\HazmatSuit <> 4 And I_1499\Using <> 2 Then
 			; ~ TODO: Make more realistic
 			If ChannelPlaying(BreathCHN) Then
-				wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * Rnd(0.5, 1.2)), 100.0)
+				wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * Rnd(0.5, 1.3)), 100.0)
 			Else
 				If wi\GasMask = 3 Lor wi\HazmatSuit = 3 Then
 					If me\CurrSpeed > 0.0 And (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) Then
-						wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * Rnd(0.15, 0.5)), 100.0)
+						wi\GasMaskFogTimer = Min(wi\GasMaskFogTimer + (fps\Factor[0] * Rnd(0.2, 0.5)), 100.0)
 					Else
 						wi\GasMaskFogTimer = Max(0.0, wi\GasMaskFogTimer - (fps\Factor[0] * 0.3))
 					EndIf
@@ -2543,7 +2543,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(10.0, 100.0), 100.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(25.0, 100.0), 100.0)
 										CreateMsg("You replaced the navigator's battery.")
 										;[End Block]
 									Case "nav310"
@@ -2558,7 +2558,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(10.0, 100.0), 100.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(25.0, 100.0), 100.0)
 										CreateMsg("You replaced the radio's battery.")
 										;[End Block]
 									Case "18vradio"
@@ -2573,7 +2573,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(100.0, 1000.0), 1000.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(250.0, 1000.0), 1000.0)
 										CreateMsg("You replaced the goggles' battery.")
 										;[End Block]
 									Case "finenvg"
@@ -2588,7 +2588,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(100.0, 1000.0), 1000.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(250.0, 1000.0), 1000.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
 									Case "finescramble", "killscramble"
@@ -2619,7 +2619,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(10.0, 100.0), 100.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(25.0, 100.0), 100.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
 									Case "navulti", "nav"
@@ -2634,7 +2634,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(10.0, 100.0), 100.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(25.0, 100.0), 100.0)
 										CreateMsg("You replaced the radio's battery.")
 										;[End Block]
 									Case "fineradio", "veryfineradio"
@@ -2649,7 +2649,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(100.0, 1000.0), 1000.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(250.0, 1000.0), 1000.0)
 										CreateMsg("You replaced the goggles' battery.")
 									Case "finenvg"
 										;[Block]
@@ -2663,7 +2663,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(100.0, 1000.0), 1000.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(250.0, 1000.0), 1000.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
 									Default
@@ -2686,7 +2686,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0, 500.0), 500.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(100.0, 500.0), 500.0)
 										CreateMsg("You replaced the navigator's battery.")
 										;[End Block]
 									Case "nav310"
@@ -2701,7 +2701,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0, 500.0), 500.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(100.0, 500.0), 500.0)
 										CreateMsg("You replaced the radio's battery.")
 										;[End Block]
 									Case "18vradio"
@@ -2716,7 +2716,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(500.0, 5000.0), 5000.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(1000.0, 5000.0), 5000.0)
 										CreateMsg("You replaced the goggles' battery.")
 										;[End Block]
 									Case "finenvg"
@@ -2731,7 +2731,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(500.0, 5000.0), 5000.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(1000.0, 5000.0), 5000.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
 									Case "finescramble", "killscramble"
@@ -2769,7 +2769,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0, 500.0), 500.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(100.0, 500.0), 500.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
 									Case "navulti", "nav"
@@ -2784,7 +2784,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(50.0, 500.0), 500.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(100.0, 500.0), 500.0)
 										CreateMsg("You replaced the radio's battery.")
 										;[End Block]
 									Case "fineradio", "veryfineradio"
@@ -2799,7 +2799,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(500.0, 5000.0), 5000.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(1000.0, 5000.0), 5000.0)
 										CreateMsg("You replaced the goggles' battery.")
 									Case "finenvg"
 										;[Block]
@@ -2813,7 +2813,7 @@ Function UpdateGUI%()
 										;[Block]
 										If SelectedItem\ItemTemplate\Sound <> 66 Then PlaySound_Strict(PickSFX[SelectedItem\ItemTemplate\Sound])	
 										RemoveItem(SelectedItem)
-										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(500.0, 5000.0), 5000.0)
+										Inventory(MouseSlot)\State = Min(Inventory(MouseSlot)\State + Rnd(1000.0, 5000.0), 5000.0)
 										CreateMsg("You replaced the gear's battery.")
 										;[End Block]
 									Default
@@ -3539,8 +3539,8 @@ Function UpdateGUI%()
 						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
 					EndIf
 					
-					If SelectedItem\ItemTemplate\TempName = "radio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.006)
-					If SelectedItem\ItemTemplate\TempName = "18vradio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.003)
+					If SelectedItem\ItemTemplate\TempName = "radio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.005)
+					If SelectedItem\ItemTemplate\TempName = "18vradio" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.0025)
 					
 					; ~ RadioState[5] = Has the "use the number keys" -message been shown yet (True / False)
 					; ~ RadioState[6] = A timer for the "code channel"
@@ -3878,7 +3878,7 @@ Function UpdateGUI%()
 						EndIf
 						
 						If SelectedItem\ItemTemplate\TempName = "radio" Lor SelectedItem\ItemTemplate\TempName = "18vradio" Then
-							If SelectedItem\State <= 20.0 And ((MilliSecs2() Mod 800) < 200) Then
+							If SelectedItem\State <= 20.0 And ((MilliSecs() Mod 800) < 200) Then
 								If (Not LowBatteryCHN[0]) Then LowBatteryCHN[0] = PlaySound_Strict(LowBatterySFX[0])
 							EndIf
 						EndIf
@@ -3893,11 +3893,11 @@ Function UpdateGUI%()
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
 						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
 					EndIf
-					If SelectedItem\ItemTemplate\TempName = "nav300" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.01)
-					If SelectedItem\ItemTemplate\TempName = "nav310" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.005)
+					If SelectedItem\ItemTemplate\TempName = "nav300" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.008)
+					If SelectedItem\ItemTemplate\TempName = "nav310" Then SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.004)
 					
 					If SelectedItem\State > 0.0 Then
-						If SelectedItem\State <= 20.0 And ((MilliSecs2() Mod 800) < 200) Then
+						If SelectedItem\State <= 20.0 And ((MilliSecs() Mod 800) < 200) Then
 							If (Not LowBatteryCHN[0]) Then
 								LowBatteryCHN[0] = PlaySound_Strict(LowBatterySFX[0])
 							ElseIf (Not ChannelPlaying(LowBatteryCHN[0]))
@@ -5002,7 +5002,7 @@ Function RenderGUI%()
 							
 							SetFont(fo\FontID[Font_Digital])
 							If StrTemp <> "" Then
-								StrTemp = Right(Left(StrTemp, (Int(MilliSecs2() / 300) Mod Len(StrTemp))), 10)
+								StrTemp = Right(Left(StrTemp, (Int(MilliSecs() / 300) Mod Len(StrTemp))), 10)
 								Text(x + (32 * MenuScale), y + (33 * MenuScale), StrTemp)
 							EndIf
 							SetFont(fo\FontID[Font_Default])
@@ -5039,7 +5039,7 @@ Function RenderGUI%()
 					
 					If (Not PlayerInReachableRoom()) Lor (PlayerRoom\RoomTemplate\Name = "room2_mt" And (EntityY(me\Collider, True) >= 8.0 And EntityY(me\Collider, True) <= 12.0)) Then NavWorks = False
 					If (Not NavWorks) Then
-						If (MilliSecs2() Mod 800) < 200 Then
+						If (MilliSecs() Mod 800) < 200 Then
 							Color(200, 0, 0)
 							Text(x, y + (NAV_HEIGHT / 2) - (80 * MenuScale), "ERROR 06", True)
 							Text(x, y + (NAV_HEIGHT / 2) - (60 * MenuScale), "LOCATION UNKNOWN", True)						
@@ -5092,7 +5092,7 @@ Function RenderGUI%()
 							Else
 								Color(30, 30, 30)
 							EndIf
-							If (MilliSecs2() Mod 800) < 200 Then ; ~ TODO: FIND THE WAY TO GET RID OF MILLISECS2
+							If (MilliSecs() Mod 800) < 200 Then ; ~ TODO: FIND THE WAY TO GET RID OF MILLISECS2
 								If Offline Then Text(x - (NAV_WIDTH / 2) + (10 * MenuScale), y - (NAV_HEIGHT / 2) + (10 * MenuScale), "MAP DATABASE OFFLINE")
 								
 								YawValue = EntityYaw(me\Collider) - 90.0
@@ -5107,7 +5107,7 @@ Function RenderGUI%()
 							
 							Local SCPs_Found% = 0, Dist#
 							
-							If SelectedItem\ItemTemplate\TempName = "navulti" And (MilliSecs2() Mod 600) < 400 Then
+							If SelectedItem\ItemTemplate\TempName = "navulti" And (MilliSecs() Mod 600) < 400 Then
 								If n_I\Curr173 <> Null Then
 									Dist = EntityDistanceSquared(Camera, n_I\Curr173\OBJ)
 									If Dist < 900.0 Then
@@ -7403,22 +7403,22 @@ Function UpdateVomit%()
 	If me\VomitTimer > 0.0 Then
 		me\VomitTimer = me\VomitTimer - (fps\Factor[0] / 70.0)
 		
-		If (MilliSecs2() Mod 1600) < Rand(200, 400) Then
+		If (MilliSecs() Mod 1600) < Rand(200, 400) Then
 			If me\BlurTimer = 0.0 Then me\BlurTimer = 70.0 * Rnd(10.0, 20.0)
 			me\CameraShake = Rnd(0.0, 2.0)
 		EndIf
 		
-		If Rand(50) = 50 And (MilliSecs2() Mod 4000) < 200 Then PlaySound_Strict(CoughSFX[Rand(0, 2)])
+		If Rand(50) = 50 And (MilliSecs() Mod 4000) < 200 Then PlaySound_Strict(CoughSFX[Rand(0, 2)])
 		
 		; ~ Regurgitate when timer is below 10 seconds
 		If me\VomitTimer < 10.0 And Rnd(0.0, 500.0 * me\VomitTimer) < 2.0 Then
 			If (Not ChannelPlaying(VomitCHN)) And (Not me\Regurgitate) Then
 				VomitCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\294\Retch" + Rand(2) + ".ogg"))
-				me\Regurgitate = MilliSecs2() + 50
+				me\Regurgitate = MilliSecs() + 50
 			EndIf
 		EndIf
 		
-		If me\Regurgitate > MilliSecs2() And me\Regurgitate <> 0 Then
+		If me\Regurgitate > MilliSecs() And me\Regurgitate <> 0 Then
 			mo\Mouse_Y_Speed_1 = mo\Mouse_Y_Speed_1 + 1.0
 		Else
 			me\Regurgitate = 0
@@ -7427,7 +7427,7 @@ Function UpdateVomit%()
 		me\VomitTimer = me\VomitTimer - (fps\Factor[0] / 70.0)
 		
 		If me\VomitTimer > -5.0 Then
-			If (MilliSecs2() Mod 400) < 50 Then me\CameraShake = 4.0 
+			If (MilliSecs() Mod 400) < 50 Then me\CameraShake = 4.0 
 			mo\Mouse_X_Speed_1 = 0.0
 			me\Playable = False
 		Else
@@ -7512,7 +7512,7 @@ Function Update008%()
 			me\HeartBeatRate = Max(me\HeartBeatRate, 100.0)
 			me\HeartBeatVolume = Max(me\HeartBeatVolume, I_008\Timer / 120.0)
 			
-			EntityAlpha(t\OverlayID[3], Min(((I_008\Timer * 0.2) ^ 2.0) / 1000.0, 0.5) * (Sin(MilliSecs2() / 8.0) + 2.0))
+			EntityAlpha(t\OverlayID[3], Min(((I_008\Timer * 0.2) ^ 2.0) / 1000.0, 0.5) * (Sin(MilliSecs() / 8.0) + 2.0))
 			
 			For i = 0 To 6
 				If I_008\Timer > (i * 15.0) + 10.0 And PrevI008Timer <= (i * 15.0) + 10.0 Then
@@ -7571,7 +7571,7 @@ Function Update008%()
 			
 			If TeleportForInfect Then
 				If I_008\Timer < 94.7 Then
-					EntityAlpha(t\OverlayID[3], 0.5 * (Sin(MilliSecs2() / 8.0) + 2.0))
+					EntityAlpha(t\OverlayID[3], 0.5 * (Sin(MilliSecs() / 8.0) + 2.0))
 					me\BlurTimer = 900.0
 					
 					If I_008\Timer > 94.5 Then me\BlinkTimer = Max(Min((-50.0) * (I_008\Timer - 94.5), me\BlinkTimer), -10.0)
@@ -7584,7 +7584,7 @@ Function Update008%()
 					
 					Animate2(PlayerRoom\NPC[0]\OBJ, AnimTime(PlayerRoom\NPC[0]\OBJ), 357.0, 381.0, 0.3)
 				ElseIf I_008\Timer < 98.5
-					EntityAlpha(t\OverlayID[3], 0.5 * (Sin(MilliSecs2() / 5.0) + 2.0))
+					EntityAlpha(t\OverlayID[3], 0.5 * (Sin(MilliSecs() / 5.0) + 2.0))
 					me\BlurTimer = 950.0
 					
 					me\ForceMove = 0.0
@@ -7622,9 +7622,9 @@ Function Update008%()
 					EndIf
 					
 					PositionEntity(me\Head, EntityX(PlayerRoom\NPC[0]\Collider, True), EntityY(PlayerRoom\NPC[0]\Collider, True) + 0.65, EntityZ(PlayerRoom\NPC[0]\Collider, True), True)
-					RotateEntity(me\Head, (1.0 + Sin(MilliSecs2() / 5.0)) * 15.0, PlayerRoom\Angle - 180.0, 0.0, True)
+					RotateEntity(me\Head, (1.0 + Sin(MilliSecs() / 5.0)) * 15.0, PlayerRoom\Angle - 180.0, 0.0, True)
 					MoveEntity(me\Head, 0.0, 0.0, -0.4)
-					TurnEntity(me\Head, 80.0 + (Sin(MilliSecs2() / 5.0)) * 30.0, (Sin(MilliSecs2() / 5.0)) * 40.0, 0.0)
+					TurnEntity(me\Head, 80.0 + (Sin(MilliSecs() / 5.0)) * 30.0, (Sin(MilliSecs() / 5.0)) * 40.0, 0.0)
 				EndIf
 			Else
 				Kill()
