@@ -1608,36 +1608,26 @@ Function RenderMainMenu%()
 						
 						Color(255, 255, 255)
 						Text(x, y + (5 * MenuScale), "Master volume:")
-						If MouseOn(x + (290 * MenuScale), y, 164 * MenuScale, 20 * MenuScale) Then
-							RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_MasterVolume, opt\MasterVolume)
-						EndIf
+						If MouseOn(x + (290 * MenuScale), y, 164 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_MasterVolume, opt\MasterVolume)
 						
 						y = y + (40 * MenuScale)
 						
 						Text(x, y + (5 * MenuScale), "Music volume:")
-						If MouseOn(x + (290 * MenuScale), y, 164 * MenuScale, 20 * MenuScale) Then
-							RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_MusicVolume, opt\MusicVolume)
-						EndIf
+						If MouseOn(x + (290 * MenuScale), y, 164 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_MusicVolume, opt\MusicVolume)
 						
 						y = y + (40 * MenuScale)
 						
 						Text(x, y + (5 * MenuScale), "Sound volume:")
-						If MouseOn(x + (290 * MenuScale), y, 164 * MenuScale, 20 * MenuScale) Then
-							RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SoundVolume, opt\SFXVolume)
-						EndIf
+						If MouseOn(x + (290 * MenuScale), y, 164 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SoundVolume, opt\SFXVolume)
 						
 						y = y + (40 * MenuScale)
 						
 						Text(x, y + (5 * MenuScale), "Sound auto-release:")
-						If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-							RenderOptionsTooltip(tX, tY, tW, tH + (220 * MenuScale), Tooltip_SoundAutoRelease)
-						EndIf
+						If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH + (220 * MenuScale), Tooltip_SoundAutoRelease)
 						y = y + (30 * MenuScale)
 						
 						Text(x, y + (5 * MenuScale), "Enable user tracks:")
-						If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then
-							RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_UserTracks)
-						EndIf
+						If MouseOn(x + (290 * MenuScale), y, 20 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_UserTracks)
 						
 						y = y + (30 * MenuScale)
 						
