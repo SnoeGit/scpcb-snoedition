@@ -1728,7 +1728,7 @@ Function UpdateMouseLook%()
 			EntityColor(t\OverlayID[4], 0.0, 255.0, 0.0)
 			AmbientLightRooms(15)
 		Else
-			EntityColor(t\OverlayID[4], 128.0, 128.0, 128.0)
+			EntityColor(t\OverlayID[4], 160.0, 160.0, 160.0)
 			AmbientLightRooms(0)
 		EndIf
 		EntityTexture(t\OverlayID[0], t\OverlayTextureID[12])

@@ -138,7 +138,6 @@ Function RenderGamma%()
 			Cls()
 			CopyRect(0, 0, opt\GraphicWidth, opt\GraphicHeight, SMALLEST_POWER_TWO_HALF - mo\Viewport_Center_X, SMALLEST_POWER_TWO_HALF - mo\Viewport_Center_Y, BackBuffer(), TextureBuffer(FresizeTexture))
 			SetBuffer(BackBuffer())
-			ClsColor(0, 0, 0)
 			Cls()
 			ScaleRender(0, 0, SMALLEST_POWER_TWO / Float(opt\GraphicWidth) * opt\AspectRatio, SMALLEST_POWER_TWO / Float(opt\GraphicWidth) * opt\AspectRatio)
 			; ~ Might want to replace Float(opt\GraphicWidth) with Max(opt\GraphicWidth, opt\GraphicHeight) if portrait sizes cause issues
@@ -250,8 +249,6 @@ Function UpdateWorld2%()
 	EndIf
 End Function
 
-Const BRIGHTNESS# = 30.0
-
 Global CurrTrisAmount%
 
 Function RenderWorld2%(Tween#)
@@ -261,12 +258,12 @@ Function RenderWorld2%(Tween#)
 	CameraProjMode(ArkBlurCam, 0)
 	CameraProjMode(Camera, 1)
 	
-	If wi\NightVision > 0 And wi\NightVision < 3 Then
-		AmbientLight(Min(BRIGHTNESS * 2.0, 255.0), Min(BRIGHTNESS * 2.0, 255.0), Min(BRIGHTNESS * 2.0, 255.0))
-	ElseIf wi\NightVision = 3
-		AmbientLight(255.0, 255.0, 255.0)
+	If wi\NightVision > 0 Then
+		AmbientLight(200.0, 200.0, 200.0)
+	ElseIf wi\SCRAMBLE > 0
+		AmbientLight(60.0, 60.0, 60.0)
 	ElseIf PlayerRoom <> Null
-		AmbientLight(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS)
+		AmbientLight(30.0, 30.0, 30.0)
 	EndIf
 	
 	CameraViewport(Camera, 0, 0, opt\GraphicWidth, opt\GraphicHeight)
@@ -314,8 +311,6 @@ Function RenderWorld2%(Tween#)
 			Local Temp2% = CreatePivot()
 			
 			PositionEntity(Temp, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider))
-			
-			Color(255, 255, 255)
 			
 			For np.NPCs = Each NPCs
 				If np\NVGName <> "" And (Not np\HideFromNVG) Then ; ~ Don't waste your time if the string is empty
