@@ -23,7 +23,7 @@ Function PlaySound2%(SoundHandle%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, 
 	Return(SoundCHN)
 End Function
 
-Function LoopSound2%(SoundHandle%, SoundCHN%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0)
+Function LoopSound2%(SoundHandle%, SoundCHN%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, IsVoice% = False)
 	Range = Max(Range, 1.0)
 	
 	If Volume > 0.0 Then
@@ -32,7 +32,11 @@ Function LoopSound2%(SoundHandle%, SoundCHN%, Cam%, Entity%, Range# = 10.0, Volu
 		
 		If (Not ChannelPlaying(SoundCHN)) Then SoundCHN = PlaySound_Strict(SoundHandle)
 		
-		ChannelVolume(SoundCHN, Volume * (1.0 - Dist) * opt\SFXVolume * opt\MasterVolume)
+		If IsVoice Then
+			ChannelVolume(SoundCHN, Volume * (1.0 - Dist) * opt\VoiceVolume * opt\MasterVolume)
+		Else
+			ChannelVolume(SoundCHN, Volume * (1.0 - Dist) * opt\SFXVolume * opt\MasterVolume)
+		EndIf
 		ChannelPan(SoundCHN, PanValue)
 	Else
 		If ChannelPlaying(SoundCHN) Then ChannelVolume(SoundCHN, 0.0)
@@ -40,7 +44,7 @@ Function LoopSound2%(SoundHandle%, SoundCHN%, Cam%, Entity%, Range# = 10.0, Volu
 	Return(SoundCHN)
 End Function
 
-Function UpdateSoundOrigin%(SoundCHN%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, SFXVolume% = True, IsVoice% = True)
+Function UpdateSoundOrigin%(SoundCHN%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, SFXVolume% = True, IsVoice% = False)
 	If ChannelPlaying(SoundCHN) Then
 		Range = Max(Range, 1.0)
 		

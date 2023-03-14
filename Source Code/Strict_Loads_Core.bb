@@ -38,7 +38,7 @@ Function AutoReleaseSounds%()
 	Next
 End Function
 
-Function PlaySound_Strict%(SoundHandle%)
+Function PlaySound_Strict%(SoundHandle%, IsVoice% = False)
 	Local snd.Sound = Object.Sound(SoundHandle)
 	
 	If snd <> Null Then
@@ -68,7 +68,11 @@ Function PlaySound_Strict%(SoundHandle%)
 					If opt\EnableSubtitles Then
 						If snd\HasSubtitles Then ShowSubtitles(snd\Name)
 					EndIf
-					ChannelVolume(snd\Channels[i], opt\SFXVolume * opt\MasterVolume)
+					If IsVoice Then
+						ChannelVolume(snd\Channels[i], opt\VoiceVolume * opt\MasterVolume)
+					Else
+						ChannelVolume(snd\Channels[i], opt\SFXVolume * opt\MasterVolume)
+					EndIf
 					snd\ReleaseTime = MilliSecs() + 5000 ; ~ Release after 5 seconds
 					Return(snd\Channels[i])
 				EndIf
@@ -94,7 +98,11 @@ Function PlaySound_Strict%(SoundHandle%)
 				If opt\EnableSubtitles Then 
 					If snd\HasSubtitles Then ShowSubtitles(snd\Name)
 				EndIf
-				ChannelVolume(snd\Channels[i], opt\SFXVolume * opt\MasterVolume)
+				If IsVoice Then
+					ChannelVolume(snd\Channels[i], opt\VoiceVolume * opt\MasterVolume)
+				Else
+					ChannelVolume(snd\Channels[i], opt\SFXVolume * opt\MasterVolume)
+				EndIf
 				snd\ReleaseTime = MilliSecs() + 5000 ; ~ Release after 5 seconds
 				Return(snd\Channels[i])
 			EndIf

@@ -686,7 +686,7 @@ Function UpdateGame%()
 				
 				If Rand(50000) = 3 Then
 					me\LightBlink = Rnd(1.0, 2.0)
-					PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(8) + ".ogg"))
+					PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(8) + ".ogg"), True)
 				EndIf
 			EndIf
 			
@@ -3679,7 +3679,7 @@ Function UpdateGUI%()
 											Case 40
 												;[Block]
 												If (Not RadioState2[0]) Then
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random1.ogg"))
+													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random1.ogg"), True)
 													RadioState[3] = RadioState[3] + 1.0	
 													RadioState2[0] = True	
 												EndIf	
@@ -3687,7 +3687,7 @@ Function UpdateGUI%()
 											Case 400
 												;[Block]
 												If (Not RadioState2[1]) Then
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random2.ogg"))
+													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random2.ogg"), True)
 													RadioState[3] = RadioState[3] + 1.0	
 													RadioState2[1] = True	
 												EndIf	
@@ -3695,7 +3695,7 @@ Function UpdateGUI%()
 											Case 800
 												;[Block]
 												If (Not RadioState2[2]) Then
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random3.ogg"))
+													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random3.ogg"), True)
 													RadioState[3] = RadioState[3] + 1.0	
 													RadioState2[2] = True
 												EndIf		
@@ -3703,7 +3703,7 @@ Function UpdateGUI%()
 											Case 1200
 												;[Block]
 												If (Not RadioState2[3]) Then
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random4.ogg"))	
+													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random4.ogg"), True)	
 													RadioState[3] = RadioState[3] + 1.0	
 													RadioState2[3] = True
 												EndIf
@@ -3711,7 +3711,7 @@ Function UpdateGUI%()
 											Case 1600
 												;[Block]
 												If (Not RadioState2[4]) Then
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random5.ogg"))	
+													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random5.ogg"), True)	
 													RadioState[3] = RadioState[3] + 1.0
 													RadioState2[4] = True
 												EndIf
@@ -3719,7 +3719,7 @@ Function UpdateGUI%()
 											Case 2000
 												;[Block]
 												If (Not RadioState2[5]) Then
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random6.ogg"))	
+													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random6.ogg"), True)	
 													RadioState[3] = RadioState[3] + 1.0
 													RadioState2[5] = True
 												EndIf
@@ -3727,7 +3727,7 @@ Function UpdateGUI%()
 											Case 2400
 												;[Block]
 												If (Not RadioState2[6]) Then
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random7.ogg"))	
+													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random7.ogg"), True)	
 													RadioState[3] = RadioState[3] + 1.0
 													RadioState2[6] = True
 												EndIf
@@ -3747,7 +3747,7 @@ Function UpdateGUI%()
 									If (Not ChannelPlaying(RadioCHN[4])) Then
 										ResumeChannel(RadioCHN[4])
 										If (Not RemoteDoorOn) And RadioState[8] = 0 Then
-											RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter3.ogg"))	
+											RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter3.ogg"), True)	
 											RadioState[8] = 1
 										Else
 											RadioState[4] = RadioState[4] + Max(Rand(-10, 1), 0.0)
@@ -3757,7 +3757,7 @@ Function UpdateGUI%()
 													;[Block]
 													If (Not n_I\Curr106\Contained) Then
 														If (Not RadioState3[0]) Then
-															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\OhGod.ogg"))
+															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\OhGod.ogg"), True)
 															RadioState[4] = RadioState[4] + 1.0
 															RadioState3[0] = True
 														EndIf
@@ -3766,7 +3766,7 @@ Function UpdateGUI%()
 												Case 100
 													;[Block]
 													If (Not RadioState3[1]) Then
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter2.ogg"))
+														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter2.ogg"), True)
 														RadioState[4] = RadioState[4] + 1.0
 														RadioState3[1] = True
 													EndIf	
@@ -3774,7 +3774,7 @@ Function UpdateGUI%()
 												Case 158
 													;[Block]
 													If MTFTimer = 0.0 And (Not RadioState3[2]) Then 
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin1.ogg"))
+														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin1.ogg"), True)
 														RadioState[4] = RadioState[4] + 1.0
 														RadioState[2] = True
 													EndIf
@@ -3782,7 +3782,7 @@ Function UpdateGUI%()
 												Case 200
 													;[Block]
 													If (Not RadioState3[3]) Then
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter4.ogg"))
+														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter4.ogg"), True)
 														RadioState[4] = RadioState[4] + 1.0
 														RadioState3[3] = True
 													EndIf		
@@ -3790,7 +3790,7 @@ Function UpdateGUI%()
 												Case 260
 													;[Block]
 													If (Not RadioState3[4]) Then
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\SCP\035\RadioHelp1.ogg"))
+														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\SCP\035\RadioHelp1.ogg"), True)
 														RadioState[4] = RadioState[4] + 1.0
 														RadioState3[4] = True
 													EndIf		
@@ -3798,7 +3798,7 @@ Function UpdateGUI%()
 												Case 300
 													;[Block]
 													If (Not RadioState3[5]) Then
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter1.ogg"))	
+														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter1.ogg"), True)	
 														RadioState[4] = RadioState[4] + 1.0	
 														RadioState3[5] = True
 													EndIf		
@@ -3806,7 +3806,7 @@ Function UpdateGUI%()
 												Case 350
 													;[Block]
 													If (Not RadioState3[6]) Then
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin2.ogg"))
+														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin2.ogg"), True)
 														RadioState[4] = RadioState[4] + 1.0
 														RadioState3[6] = True
 													EndIf		
@@ -3814,7 +3814,7 @@ Function UpdateGUI%()
 												Case 400
 													;[Block]
 													If (Not RadioState3[7]) Then
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\SCP\035\RadioHelp2.ogg"))
+														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\SCP\035\RadioHelp2.ogg"), True)
 														RadioState[4] = RadioState[4] + 1.0
 														RadioState3[7] = True
 													EndIf		
@@ -3822,7 +3822,7 @@ Function UpdateGUI%()
 												Case 450
 													;[Block]
 													If (Not RadioState3[8]) Then
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin3.ogg"))	
+														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin3.ogg"), True)	
 														RadioState[4] = RadioState[4] + 1.0		
 														RadioState3[8] = True
 													EndIf		
@@ -3830,7 +3830,7 @@ Function UpdateGUI%()
 												Case 600
 													;[Block]
 													If (Not RadioState3[9]) Then
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin4.ogg"))	
+														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin4.ogg"), True)	
 														RadioState[4] = RadioState[4] + 1.0	
 														RadioState3[9] = True
 													EndIf		
