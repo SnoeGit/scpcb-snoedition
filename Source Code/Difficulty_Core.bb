@@ -104,7 +104,7 @@ SetDifficultyColor(APOLLYON, 200, 25, 25)
 
 difficulties[ESOTERIC] = New Difficulty
 difficulties[ESOTERIC]\Name = "Esoteric"
-difficulties[ESOTERIC]\AggressiveNPCs = 0
+difficulties[ESOTERIC]\AggressiveNPCs = NOT_AGGRESSIVE
 difficulties[ESOTERIC]\InventorySlots = 10
 difficulties[ESOTERIC]\Customizable = True
 difficulties[ESOTERIC]\SaveType = SAVE_ANYWHERE
