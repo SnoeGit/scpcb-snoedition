@@ -5,6 +5,7 @@ General:
 - Can place the rings in wallet but you cannot use them while'st they're in the wallet.
 - Nerfed heal time of SCP-2022-01 from 50 seconds to 40 seconds.
 - Can turn NVGs and SCRAMBLE Gear into Electronic Components.
+- Added Voice Volume slider.
 
 NPCs:
 

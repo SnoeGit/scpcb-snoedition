@@ -684,6 +684,10 @@ Function UpdateMainMenu%()
 							
 							y = y + (40 * MenuScale)
 							
+							opt\VoiceVolume = UpdateMainMenuSlideBar(x, y, 150 * MenuScale, opt\VoiceVolume * 100.0) / 100.0
+							
+							y = y + (40 * MenuScale)
+							
 							opt\EnableSFXRelease = UpdateMainMenuTick(x, y, opt\EnableSFXRelease)
 							If opt\PrevEnableSFXRelease <> opt\EnableSFXRelease
 								If opt\EnableSFXRelease Then
@@ -1576,9 +1580,9 @@ Function RenderMainMenu%()
 					Case MainMenuTab_Options_Audio
 						;[Block]
 						If opt\EnableUserTracks Then
-							Height = 280 * MenuScale
+							Height = 330 * MenuScale
 						Else
-							Height = 210 * MenuScale
+							Height = 250 * MenuScale
 						EndIf
 						RenderFrame(x - (20 * MenuScale), y, Width, Height)	
 						
@@ -1597,6 +1601,11 @@ Function RenderMainMenu%()
 						
 						Text(x, y + (5 * MenuScale), "Sound volume:")
 						If MouseOn(x + (290 * MenuScale), y, 164 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SoundVolume, opt\SFXVolume)
+						
+						y = y + (40 * MenuScale)
+						
+						Text(x, y + (5 * MenuScale), "Voice volume:")
+						If MouseOn(x + (290 * MenuScale), y, 164 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SoundVolume, opt\VoiceVolume)
 						
 						y = y + (40 * MenuScale)
 						
@@ -3316,36 +3325,37 @@ Const Tooltip_Atmosphere% = 10
 Const Tooltip_MasterVolume% = 11
 Const Tooltip_MusicVolume% = 12
 Const Tooltip_SoundVolume% = 13
-Const Tooltip_SoundAutoRelease% = 14
-Const Tooltip_UserTracks% = 15
-Const Tooltip_UserTracksMode% = 16
-Const Tooltip_UserTrackScan% = 17
+Const Tooltip_VoiceVolume% = 14
+Const Tooltip_SoundAutoRelease% = 15
+Const Tooltip_UserTracks% = 16
+Const Tooltip_UserTracksMode% = 17
+Const Tooltip_UserTrackScan% = 18
 ;[End Block]
 
 ; ~ Controls Tooltips Constants
 ;[Block]
-Const Tooltip_MouseSensitivity% = 18
-Const Tooltip_MouseInvertX% = 19
-Const Tooltip_MouseInvertY% = 20
-Const Tooltip_MouseSmoothing% = 21
-Const Tooltip_ControlConfiguration% = 22
+Const Tooltip_MouseSensitivity% = 19
+Const Tooltip_MouseInvertX% = 20
+Const Tooltip_MouseInvertY% = 21
+Const Tooltip_MouseSmoothing% = 22
+Const Tooltip_ControlConfiguration% = 23
 ;[End Block]
 
 ; ~ Advanced Tooltips Constants
 ;[Block]
-Const Tooltip_HUD% = 23
-Const Tooltip_Console% = 24
-Const Tooltip_ConsoleOnError% = 25
-Const Tooltip_AchievementPopups% = 26
-Const Tooltip_FPS% = 27
-Const Tooltip_FrameLimit% = 28
-Const Tooltip_AutoSave% = 29
-Const Tooltip_SmoothBars% = 30
-Const Tooltip_StartupVideos% = 31
-Const Tooltip_Launcher% = 32
-Const Tooltip_Subtitles% = 33
-Const Tooltip_SubtitlesColor% = 34
-Const Tooltip_ResetOptions% = 35
+Const Tooltip_HUD% = 24
+Const Tooltip_Console% = 25
+Const Tooltip_ConsoleOnError% = 26
+Const Tooltip_AchievementPopups% = 27
+Const Tooltip_FPS% = 28
+Const Tooltip_FrameLimit% = 29
+Const Tooltip_AutoSave% = 30
+Const Tooltip_SmoothBars% = 31
+Const Tooltip_StartupVideos% = 32
+Const Tooltip_Launcher% = 33
+Const Tooltip_Subtitles% = 34
+Const Tooltip_SubtitlesColor% = 35
+Const Tooltip_ResetOptions% = 36
 ;[End Block]
 
 Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
@@ -3453,6 +3463,12 @@ Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
 		Case Tooltip_SoundVolume
 			;[Block]
 			Txt = "Adjusts the volume of sound effects. Sliding the bar fully to the left will mute all sounds."
+			R = 255 : G = 255
+			Txt2 = "Current value: " + Int(Value * 100.0) + "% (default is 50%)"
+			;[End Block]
+		Case Tooltip_VoiceVolume
+			;[Block]
+			Txt = "Adjusts the volume of NPC voices. Sliding the bar fully to the left will mute all voices."
 			R = 255 : G = 255
 			Txt2 = "Current value: " + Int(Value * 100.0) + "% (default is 50%)"
 			;[End Block]

@@ -1232,12 +1232,13 @@ Function UpdateMoving%()
 			Temp3 = 0
 			If wi\GasMask > 0 Lor I_1499\Using > 0 Then Temp3 = 1
 			If (Not ChannelPlaying(BreathCHN)) Then BreathCHN = PlaySound_Strict(BreathSFX((Temp3), 0))
+			ChannelVolume(BreathCHN, 1.0 * opt\VoiceVolume * opt\MasterVolume)	
 		ElseIf me\Stamina < 40.0
 			If (Not ChannelPlaying(BreathCHN)) Then
 				Temp3 = 0
 				If wi\GasMask > 0 Lor I_1499\Using > 0 Then Temp3 = 1
 				BreathCHN = PlaySound_Strict(BreathSFX((Temp3), Rand(3)))
-				ChannelVolume(BreathCHN, Min((70.0 - me\Stamina) / 70.0, 1.0) * opt\SFXVolume * opt\MasterVolume)		
+				ChannelVolume(BreathCHN, Min((70.0 - me\Stamina) / 70.0, 1.0) * opt\VoiceVolume * opt\MasterVolume)		
 			EndIf
 		EndIf
 	EndIf
@@ -1669,7 +1670,10 @@ Function UpdateMouseLook%()
 		EndIf
 		If (Not me\Terminated) Then
 			If (Not ChannelPlaying(BreathCHN)) Then
-				If (Not ChannelPlaying(BreathGasRelaxedCHN)) Then BreathGasRelaxedCHN = PlaySound_Strict(BreathGasRelaxedSFX)
+				If (Not ChannelPlaying(BreathGasRelaxedCHN)) Then
+					BreathGasRelaxedCHN = PlaySound_Strict(BreathGasRelaxedSFX)
+					ChannelVolume(BreathCHN, 1.0 * opt\VoiceVolume * opt\MasterVolume)	
+				EndIf
 			Else
 				If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel(BreathGasRelaxedCHN) : BreathGasRelaxedCHN = 0
 			EndIf
@@ -5461,6 +5465,10 @@ Function UpdateMenu%()
 					
 					y = y + (40 * MenuScale)
 					
+					opt\VoiceVolume = UpdateMainMenuSlideBar(x, y, 100 * MenuScale, opt\VoiceVolume * 100.0) / 100.0
+					
+					y = y + (40 * MenuScale)
+					
 					opt\EnableSFXRelease = UpdateMainMenuTick(x, y, opt\EnableSFXRelease, True)
 					
 					y = y + (30 * MenuScale)
@@ -6011,6 +6019,11 @@ Function RenderMenu%()
 					
 					Text(x, y + (5 * MenuScale), "Sound volume:")
 					If MouseOn(x + (250 * MenuScale), y, 114 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SoundVolume, opt\SFXVolume)
+					
+					y = y + (40 * MenuScale)
+					
+					Text(x, y + (5 * MenuScale), "Voice volume:")
+					If MouseOn(x + (250 * MenuScale), y, 114 * MenuScale, 20 * MenuScale) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_VoiceVolume, opt\VoiceVolume)
 					
 					y = y + (40 * MenuScale)
 					

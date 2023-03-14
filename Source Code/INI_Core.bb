@@ -409,10 +409,10 @@ Type Options
 	Field Anisotropic%, AnisotropicLevel%
 	Field Atmosphere%
 	; ~ [AUDIO]
-	Field MasterVolume#, MusicVolume#, CurrMusicVolume#
+	Field MasterVolume#, MusicVolume#, SFXVolume#, VoiceVolume#
 	Field EnableUserTracks%
 	Field UserTrackMode%
-	Field SFXVolume#
+	Field CurrMusicVolume#
 	Field EnableSFXRelease%, PrevEnableSFXRelease%
 	; ~ [ADVANCED]
 	Field AchvMsgEnabled%
@@ -528,6 +528,8 @@ Function LoadOptionsINI%()
 	opt\CurrMusicVolume = 1.0
 	
 	opt\SFXVolume = GetINIFloat(OptionFile, "Audio", "Sound Volume", 0.5)
+	
+	opt\VoiceVolume = GetINIFloat(OptionFile, "Audio", "Voice Volume", 0.5)
 	
 	opt\EnableSFXRelease = GetINIInt(OptionFile, "Audio", "SFX Release", True)
 	opt\PrevEnableSFXRelease = opt\EnableSFXRelease
@@ -651,6 +653,8 @@ Function SaveOptionsINI%(SaveGlobal% = False)
 	
 	PutINIValue(OptionFile, "Audio", "Sound Volume", opt\SFXVolume)
 	
+	PutINIValue(OptionFile, "Audio", "Voice Volume", opt\VoiceVolume)
+	
 	PutINIValue(OptionFile, "Audio", "SFX Release", opt\EnableSFXRelease)
 	
 	PutINIValue(OptionFile, "Audio", "Enable User Tracks", opt\EnableUserTracks)
@@ -767,6 +771,8 @@ Function ResetOptionsINI%()
 	opt\MusicVolume = 0.5
 	
 	opt\SFXVolume = 0.5
+	
+	opt\VoiceVolume = 0.5
 	
 	opt\EnableSFXRelease = True
 	
