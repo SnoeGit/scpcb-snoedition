@@ -741,7 +741,7 @@ Function UpdateNPCs%()
 									n\State = CurveValue(SoundVol, n\State, 3.0)
 									
 									; ~ Tries to open doors
-									If Rand(20 - (5 * AggressiveNPCs) = 1 Then
+									If Rand(20 - (5 * AggressiveNPCs)) = 1 Then
 										For d.Doors = Each Doors
 											If d\Locked = 0 And (Not d\Open) And d\Code = "" And d\KeyCard = 0 Then
 												For i = 0 To 1

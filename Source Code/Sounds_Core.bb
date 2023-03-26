@@ -18,7 +18,7 @@ Function PlaySound2%(SoundHandle%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, 
 			ChannelPan(SoundCHN, PanValue)
 		EndIf
 	Else
-		If ChannelPlaying(SoundCHN) Then ChannelVolume(SoundCHN, 0.0)
+		ChannelVolume(SoundCHN, 0.0)
 	EndIf
 	Return(SoundCHN)
 End Function
@@ -39,7 +39,7 @@ Function LoopSound2%(SoundHandle%, SoundCHN%, Cam%, Entity%, Range# = 10.0, Volu
 		EndIf
 		ChannelPan(SoundCHN, PanValue)
 	Else
-		If ChannelPlaying(SoundCHN) Then ChannelVolume(SoundCHN, 0.0)
+		ChannelVolume(SoundCHN, 0.0)
 	EndIf
 	Return(SoundCHN)
 End Function
@@ -463,7 +463,7 @@ Function ControlSoundVolume%()
 	
 	For snd.Sound = Each Sound
 		For i = 0 To MaxChannelsAmount - 1
-			If ChannelPlaying(snd\Channels[i]) Then ChannelVolume(snd\Channels[i], opt\SFXVolume * opt\MasterVolume)
+			ChannelVolume(snd\Channels[i], opt\SFXVolume * opt\MasterVolume)
 		Next
 	Next
 End Function
