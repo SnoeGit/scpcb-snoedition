@@ -3594,7 +3594,7 @@ Function UpdateNPCs%()
 									EndIf
 									If Temp Then
 										LoadNPCSound(n, "SFX\SCP\939\" + (n\ID Mod 3) + "Lure" + Rand(10) + ".ogg")
-										n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider)
+										n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider, 10.0, 1.0, True)
 									EndIf
 								EndIf
 							EndIf

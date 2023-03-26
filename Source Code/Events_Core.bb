@@ -974,7 +974,7 @@ Function UpdateEvents%()
 									e\room\NPC[3]\Sound2 = LoadSound_Strict("SFX\Room\Intro\Guard\Ulgrin\BeforeDoorOpen.ogg")
 									e\room\NPC[3]\SoundCHN2 = PlaySound2(e\room\NPC[3]\Sound2, Camera, e\room\NPC[3]\Collider)
 								EndIf
-								UpdateSoundOrigin(e\room\NPC[3]\SoundCHN2, Camera, e\room\NPC[3]\Collider)
+								UpdateSoundOrigin(e\room\NPC[3]\SoundCHN2, Camera, e\room\NPC[3]\Collider, 10.0, 1.0, True, True)
 								
 								If (Not ChannelPlaying(e\room\NPC[3]\SoundCHN2)) Then
 									e\room\NPC[3]\Sound = LoadSound_Strict("SFX\Room\Intro\Guard\Ulgrin\ExitCell.ogg")
@@ -4033,7 +4033,7 @@ Function UpdateEvents%()
 						RotateEntity(n_I\Curr096\Collider, 0.0, e\room\Angle + 270.0, 0.0, True)
 						
 						LoadEventSound(e, "SFX\Character\Guard\096ServerRoom1.ogg")
-						e\SoundCHN = PlaySound2(e\Sound, Camera, n_I\Curr096\OBJ, 10.0, 1.0, True)
+						e\SoundCHN = PlaySound2(e\Sound, Camera, n_I\Curr096\OBJ)
 						
 						e\room\NPC[0] = CreateNPC(NPCTypeGuard, EntityX(e\room\Objects[7], True), EntityY(e\room\Objects[7], True), EntityZ(e\room\Objects[7], True))
 						
@@ -4117,7 +4117,7 @@ Function UpdateEvents%()
 						
 						If AnimTime(n_I\Curr096\OBJ) > 25.0 And AnimTime(n_I\Curr096\OBJ) < 150.0 Then
 							LoadEventSound(e, "SFX\Character\Guard\096ServerRoom2.ogg")
-							e\SoundCHN = PlaySound2(e\Sound, Camera, n_I\Curr096\OBJ, 10.0, 1.0, True)
+							e\SoundCHN = PlaySound2(e\Sound, Camera, n_I\Curr096\OBJ)
 							
 							ChangeNPCTextureID(n_I\Curr096, NPC_096_BLOODY_TEXTURE)
 							
@@ -4176,7 +4176,7 @@ Function UpdateEvents%()
 						EndIf
 					EndIf
 					
-					UpdateSoundOrigin(e\SoundCHN, Camera, n_I\Curr096\OBJ)
+					UpdateSoundOrigin(e\SoundCHN, Camera, n_I\Curr096\OBJ, 10.0, 1.0, True, True)
 				ElseIf PlayerRoom = e\room
 					Temp = UpdateLever(e\room\Objects[1]) ; ~ Power switch
 					x = UpdateLever(e\room\Objects[3]) ; ~ Fuel pump
@@ -6568,9 +6568,9 @@ Function UpdateEvents%()
 							StopChannel(e\SoundCHN) : e\SoundCHN = 0
 							If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
 							e\room\NPC[0]\Sound = LoadSound_Strict("SFX\Character\Guard\SuicideGuard2.ogg")
-							e\SoundCHN2 = PlaySound2(e\room\NPC[0]\Sound, Camera, e\room\NPC[0]\Collider, 15.0, 1.0, True)
+							e\SoundCHN2 = PlaySound2(e\room\NPC[0]\Sound, Camera, e\room\NPC[0]\Collider, 15.0)
 						EndIf
-						UpdateSoundOrigin(e\SoundCHN2, Camera, e\room\NPC[0]\Collider, 15.0)
+						UpdateSoundOrigin(e\SoundCHN2, Camera, e\room\NPC[0]\Collider, 15.0, 1.0, True)
 						If (Not ChannelPlaying(e\SoundCHN2)) Then RemoveEvent(e)
 					EndIf
 				EndIf
@@ -7024,13 +7024,9 @@ Function UpdateEvents%()
 							
 							Animate2(e\room\Objects[0], PrevFrame, 2.0, 647.0, 1.0, False)
 							
-							If PrevFrame <= 400.0 And AnimTime(e\room\Objects[0]) > 400.0 Then
-								e\SoundCHN = PlaySound_Strict(e\Sound)
-							EndIf
+							If PrevFrame <= 400.0 And AnimTime(e\room\Objects[0]) > 400.0 Then e\SoundCHN = PlaySound_Strict(e\Sound)
 							
-							If ChannelPlaying(e\SoundCHN) Then
-								UpdateSoundOrigin(e\SoundCHN, Camera, e\room\Objects[0], 6.0)
-							EndIf
+							If ChannelPlaying(e\SoundCHN) Then UpdateSoundOrigin(e\SoundCHN, Camera, e\room\Objects[0], 6.0, 1.0, True)
 							
 							Local Volume# = Max(1.0 - Abs(PrevFrame - 600.0) / 100.0, 0.0)
 							
@@ -7274,7 +7270,7 @@ Function UpdateEvents%()
 								e\EventState = 2.0
 								e\room\RoomDoors[0]\Locked = 0
 							Else
-								UpdateSoundOrigin(e\SoundCHN, Camera, e\room\Objects[0], 100.0, 1.0)
+								UpdateSoundOrigin(e\SoundCHN, Camera, e\room\Objects[0], 100.0)
 							EndIf
 						EndIf
 					Else
