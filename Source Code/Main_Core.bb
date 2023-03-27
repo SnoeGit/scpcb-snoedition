@@ -766,15 +766,14 @@ Function UpdateGame%()
 			EndIf
 			
 			If me\BlinkTimer < 0.0 Then
-				If me\BlinkTimer <= -10.0 And (RN = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor RN <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - (fps\Factor[0] / 1.6), 0.0)
 				If me\BlinkTimer > -5.0 Then
 					DarkAlpha = Max(DarkAlpha, Sin(Abs(me\BlinkTimer * 18.0)))
 				ElseIf me\BlinkTimer > -15.0
 					DarkAlpha = 1.0
+					If (RN = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor RN <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - (fps\Factor[0] / 1.6), 0.0)
 				Else
 					DarkAlpha = Max(DarkAlpha, Abs(Sin(me\BlinkTimer * 18.0)))
 				EndIf
-				
 				If me\BlinkTimer <= -20.0 Then
 					; ~ Randomizes the frequency of blinking. Scales with difficulty
 					Select SelectedDifficulty\OtherFactors
@@ -799,14 +798,14 @@ Function UpdateGame%()
 							me\BLINKFREQ = Rnd(210.0, 420.0)
 							;[End Block]
 					End Select 
-					me\BlinkTimer = me\BLINKFREQ
 					If (RN = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor RN <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - Rnd(60.0, 120.0), 0.0)
+					me\BlinkTimer = me\BLINKFREQ
 				EndIf
 				me\BlinkTimer = me\BlinkTimer - fps\Factor[0]
 			Else
 				me\BlinkTimer = me\BlinkTimer - (fps\Factor[0] * 0.6 * me\BlinkEffect)
 				If wi\NightVision = 0 And wi\SCRAMBLE = 0 Then
-					If me\EyeIrritation > 0.0 Then me\BlinkTimer = me\BlinkTimer - Min((me\EyeIrritation / 100.0) + 1.0, 4.0) * fps\Factor[0]
+					If me\EyeIrritation > 0.0 Then me\BlinkTimer = me\BlinkTimer - Min(me\EyeIrritation / (100.0 + (100.0 * wi\BallisticHelmet) + 0.1), 5.0) * fps\Factor[0]
 				EndIf
 			EndIf
 			
