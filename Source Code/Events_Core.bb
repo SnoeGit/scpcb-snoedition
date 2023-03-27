@@ -2908,8 +2908,8 @@ Function UpdateEvents%()
 										If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[i], True), EntityZ(me\Collider), EntityZ(e\room\Objects[i], True)) < PowTwo(250.0 * RoomScale) Then
 											me\LightFlash = 0.4
 											me\CameraShake = 1.0
-											Kill()
 											msg\DeathMsg = SubjectName + " killed by the Tesla Gate at [DATA REDACTED]."
+											Kill()
 										EndIf
 									Next
 								EndIf
@@ -4587,8 +4587,8 @@ Function UpdateEvents%()
 							EndIf
 							If me\BlurTimer >= 500.0 Then UpdateCough(1000)
 							If me\BlurTimer >= 1500.0 And me\FallTimer = 0.0 Then
-								Kill(False)
 								msg\DeathMsg = SubjectName + " found dead in Storage Area 6 having suffocated on the gas leak that happened during the breach. A repair team has been sent after recontainment of all four (4) SCP-939 specimens was completed."
+								Kill()
 							EndIf
 						EndIf
 						
@@ -4678,7 +4678,8 @@ Function UpdateEvents%()
 							
 							If EntityY(me\Collider) < -6400.0 * RoomScale And (Not me\Terminated) And me\FallTimer >= 0.0 And (Not chs\GodMode) Then
 								PlaySound_Strict(LoadTempSound("SFX\Room\PocketDimension\Impact.ogg"))
-								Kill(False)
+								msg\DeathMsg = SubjectName + "found dead inside the elevator shaft in Storage Area 6. Most likely the object got there while running away from one of the SCP-939 instances. A repair team has been sent after recontainment of all four (4) SCP-939 specimens was completed."
+								Kill()
 							EndIf
 						EndIf
 					Else
@@ -6008,9 +6009,9 @@ Function UpdateEvents%()
 						
 						; ~ The player fell
 						If (Not chs\NoClip) Then
-							If EntityY(me\Collider) <= 28.5 Then 
-								Kill() 
+							If EntityY(me\Collider) <= 28.5 Then
 								me\BlinkTimer = -2.0
+								Kill()
 							ElseIf EntityY(me\Collider) > EntityY(fr\Forest_Pivot, True) + 0.5
 								MoveEntity(me\Collider, 0.0, ((EntityY(fr\Forest_Pivot, True) + 0.5) - EntityY(me\Collider)) * fps\Factor[0], 0.0)
 							EndIf

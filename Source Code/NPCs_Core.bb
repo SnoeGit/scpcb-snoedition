@@ -1293,17 +1293,15 @@ Function UpdateNPCs%()
 												Pvt = CreatePivot()
 												me\CameraShake = 30.0
 												me\BlurTimer = 2000.0
+												PositionEntity(Pvt, EntityX(me\Collider) + Rnd(-0.1, 0.1), EntityY(me\Collider) - 0.05, EntityZ(me\Collider) + Rnd(-0.1, 0.1))
+												TurnEntity(Pvt, 90.0, 0.0, 0.0)
+												EntityPick(Pvt, 0.3)
+												
+												de.Decals = CreateDecal(Rand(DECAL_BLOOD_DROP_1, DECAL_BLOOD_DROP_2), PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.2, 0.6))
+												
 												msg\DeathMsg = "A large amount of blood found in [DATA REDACTED]. DNA indentified as " + SubjectName + ". Most likely [DATA REDACTED] by SCP-096."
-												Kill(True)
-												me\KillAnim = 1
-												For i = 0 To 6
-													PositionEntity(Pvt, EntityX(me\Collider) + Rnd(-0.1, 0.1), EntityY(me\Collider) - 0.05, EntityZ(me\Collider) + Rnd(-0.1, 0.1))
-													TurnEntity(Pvt, 90.0, 0.0, 0.0)
-													EntityPick(Pvt, 0.3)
-													
-													de.Decals = CreateDecal(Rand(DECAL_BLOOD_DROP_1, DECAL_BLOOD_DROP_2), PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.2, 0.6))
-												Next
 												FreeEntity(Pvt)
+												Kill(True) : me\KillAnim = 1
 											EndIf
 										EndIf				
 									EndIf
@@ -1649,7 +1647,7 @@ Function UpdateNPCs%()
 													Next
 												Else
 													msg\DeathMsg = "An active instance of SCP-049-2 was discovered in [REDACTED]. Terminated by Nine-Tailed Fox."
-													Kill() : me\KillAnim = 0
+													me\KillAnim = 0 : Kill()
 												EndIf
 												PlaySound_Strict(HorrorSFX[13])
 												LoadNPCSound(n, "SFX\SCP\049\Kidnap" + Rand(2) + ".ogg", 1)
@@ -1876,6 +1874,7 @@ Function UpdateNPCs%()
 							
 							PositionEntity(n\Collider, CurveValue(EntityX(me\Collider), EntityX(n\Collider), 20.0), EntityY(n\Collider), CurveValue(EntityZ(me\Collider), EntityZ(n\Collider), 20.0))
 							RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(me\Collider) - 180.0, EntityYaw(n\Collider), 40.0), 0.0)
+							If (Not me\Terminated) Then n\State = 2.0
 							;[End Block]
 						Case 4.0 ; ~ Standing on catwalk
 							;[Block]
@@ -3478,19 +3477,16 @@ Function UpdateNPCs%()
 									AnimateNPC(n, 451.0, 493.0, 0.5, False)
 									
 									If (PrevFrame < 461.0 And n\Frame >= 461.0) Then 
-										If (Not me\Terminated) Then Kill(True)
 										PlaySound_Strict(DamageSFX[11])
+										Kill(True)
 									EndIf
-									If (PrevFrame < 476.0 And n\Frame >= 476.0) Then PlaySound_Strict(DamageSFX[12])
-									If (PrevFrame < 486.0 And n\Frame >= 486.0) Then PlaySound_Strict(DamageSFX[12])
+									If (PrevFrame < 476.0 And n\Frame >= 476.0) Lor (PrevFrame < 486.0 And n\Frame >= 486.0) Then PlaySound_Strict(DamageSFX[12])
 								Else
 									n\CurrSpeed = CurveValue(n\Speed * 0.9, n\CurrSpeed, 10.0)
 									
 									AnimateNPC(n, 298.0, 316.0, n\CurrSpeed * 10.0)
 									
-									If (PrevFrame < 307.0 And n\Frame >= 307.0) Then
-										PlaySound2(Step2SFX[Rand(0, 2)], Camera, n\Collider, 10.0)
-									EndIf
+									If (PrevFrame < 307.0 And n\Frame >= 307.0) Then PlaySound2(Step2SFX[Rand(0, 2)], Camera, n\Collider, 10.0)
 								EndIf
 								MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 								
@@ -3643,8 +3639,8 @@ Function UpdateNPCs%()
 									If me\Injuries > 4.0 Then 
 										msg\DeathMsg = Chr(34) + "All four (4) escaped SCP-939 specimens have been captured and recontained successfully. "
 										msg\DeathMsg = msg\DeathMsg + "They made quite a mess at Storage Area 6. A cleaning team has been dispatched." + Chr(34)
-										Kill(True)
 										If (Not chs\GodMode) Then n\State = 5.0
+										Kill(True)
 									EndIf								
 								Else
 									If n\LastSeen = 70.0 * 1.0 Then 
@@ -4519,7 +4515,6 @@ Function UpdateNPCs%()
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 										InjurePlayer(Rnd(0.65, 1.1) * DifficultyDMGMult, 0.0, 500.0, Rnd(0.3, 0.35) * DifficultyDMGMult, 0.2)
 										If me\Injuries > 8.0 Then
-											Kill(True)
 											If PlayerRoom\RoomTemplate\Name = "dimension_1499"
 												msg\DeathMsg = "All personnel situated within Evacuation Shelter LC-2 during the breach have been administered "
 												msg\DeathMsg = msg\DeathMsg + "Class-B amnestics due to Incident 1499-E. The Class D subject involved in the event "
@@ -4529,6 +4524,7 @@ Function UpdateNPCs%()
 												msg\DeathMsg = msg\DeathMsg + "The man was described as highly agitated and seemed to only speak Russian. "
 												msg\DeathMsg = msg\DeathMsg + "He's been taken into a temporary holding area at [DATA REDACTED] while waiting for a translator to arrive."
 											EndIf
+											Kill(True)
 										EndIf
 									EndIf
 								ElseIf n\Frame >= 99.0
@@ -4544,7 +4540,6 @@ Function UpdateNPCs%()
 										PlaySound2(DamageSFX[Rand(11, 12)], Camera, n\Collider)
 										InjurePlayer(Rnd(0.65, 1.1) * DifficultyDMGMult, 0.0, 500.0, Rnd(0.3, 0.35) * DifficultyDMGMult, 0.2)
 										If me\Injuries > 8.0 Then
-											Kill(True)
 											If PlayerRoom\RoomTemplate\Name = "dimension_1499"
 												msg\DeathMsg = "All personnel situated within Evacuation Shelter LC-2 during the breach have been administered "
 												msg\DeathMsg = msg\DeathMsg + "Class-B amnestics due to Incident 1499-E. The Class D subject involved in the event "
@@ -4554,6 +4549,7 @@ Function UpdateNPCs%()
 												msg\DeathMsg = msg\DeathMsg + "The man was described as highly agitated and seemed to only speak Russian. "
 												msg\DeathMsg = msg\DeathMsg + "He's been taken into a temporary holding area at [DATA REDACTED] while waiting for a translator to arrive."
 											EndIf
+											Kill(True)
 										EndIf
 									EndIf
 								ElseIf n\Frame >= 201.0
@@ -6736,7 +6732,11 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 	
 	LightVolume = TempLightVolume * 1.2
 	
-	If InstaKill Then Kill(True) : PlaySound_Strict(BulletHitSFX) : Return
+	If InstaKill Then
+		PlaySound_Strict(BulletHitSFX)
+		Kill(True)
+		Return
+	EndIf
 	
 	If Rnd(1.0) <= HitProb Then
 		TurnEntity(Camera, Rnd(-3.0, 3.0), Rnd(-3.0, 3.0), 0.0)
@@ -6801,13 +6801,11 @@ Function Shoot%(x#, y#, z#, HitProb# = 1.0, Particles% = True, InstaKill% = Fals
 				;[End Block]
 		End Select	
 		
-		If msg\Timer < 70.0 * 5.0 Then
-			CreateMsg(ShotMessageUpdate)
-		EndIf
-		
-		If me\Injuries >= 6.0 Then Kill(True)
+		If msg\Timer < 70.0 * 5.0 Then CreateMsg(ShotMessageUpdate)
 		
 		PlaySound_Strict(BulletHitSFX)
+		
+		If me\Injuries >= 6.0 Then Kill(True)
 	ElseIf Particles And opt\ParticleAmount > 0
 		Pvt = CreatePivot()
 		PositionEntity(Pvt, EntityX(me\Collider), (EntityY(me\Collider) + EntityY(Camera)) / 2.0, EntityZ(me\Collider))

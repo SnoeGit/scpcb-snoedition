@@ -766,7 +766,7 @@ Function UpdateGame%()
 			EndIf
 			
 			If me\BlinkTimer < 0.0 Then
-				If me\BlinkTimer <= -10.0 And (RN = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor RN <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - (fps\Factor[0] / 1.75), 0.0)
+				If me\BlinkTimer <= -10.0 And (RN = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor RN <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - (fps\Factor[0] / 1.6), 0.0)
 				If me\BlinkTimer > -5.0 Then
 					DarkAlpha = Max(DarkAlpha, Sin(Abs(me\BlinkTimer * 18.0)))
 				ElseIf me\BlinkTimer > -15.0
@@ -788,7 +788,7 @@ Function UpdateGame%()
 							;[End Block]
 						Case HARD
 							;[Block]
-							me\BLINKFREQ = Rnd(415.0, 625.0)
+							me\BLINKFREQ = Rnd(420.0, 630.0)
 							;[End Block]
 						Case HARDER
 							;[Block]
@@ -796,11 +796,11 @@ Function UpdateGame%()
 							;[End Block]
 						Case EXTREME
 							;[Block]
-							me\BLINKFREQ = Rnd(205.0, 405.0)
+							me\BLINKFREQ = Rnd(210.0, 420.0)
 							;[End Block]
 					End Select 
 					me\BlinkTimer = me\BLINKFREQ
-					If (RN = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor RN <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - Rnd(60.0, 100.0), 0.0)
+					If (RN = "room3_storage" And EntityY(me\Collider) > (-4100.0) * RoomScale) Lor RN <> "room3_storage" Then me\BlurTimer = Max(me\BlurTimer - Rnd(60.0, 120.0), 0.0)
 				EndIf
 				me\BlinkTimer = me\BlinkTimer - fps\Factor[0]
 			Else
@@ -3408,7 +3408,7 @@ Function UpdateGUI%()
 						
 						If GetINIInt2(SCP294File, Loc, "Lethal")
 							msg\DeathMsg = GetINIString2(SCP294File, Loc, "Death Message")
-							If GetINIInt2(SCP294File, Loc, "Lethal") Then Kill()
+							Kill()
 						EndIf
 						me\BlurTimer = Max(GetINIInt2(SCP294File, Loc, "Blur") * 70.0, 0.0)
 						If me\VomitTimer = 0.0 Then
@@ -3417,6 +3417,8 @@ Function UpdateGUI%()
 							me\VomitTimer = Min(me\VomitTimer, GetINIInt2(SCP294File, Loc, "Vomit"))
 						EndIf
 						me\CameraShakeTimer = GetINIString2(SCP294File, Loc, "Camera Shake")
+						me\Deaf = GetINIInt2(SCP294File, Loc, "Deaf")
+						me\DeafTimer = GetINIFloat2(SCP294File, Loc, "Deaf Timer")
 						me\Injuries = Max(me\Injuries + GetINIInt2(SCP294File, Loc, "Damage"), 0.0)
 						me\QuickHealTimer = GetINIFloat2(SCP294File, Loc, "Heal")
 						me\Bloodloss = Max(me\Bloodloss + GetINIInt2(SCP294File, Loc, "Blood Loss"), 0.0)
@@ -3429,6 +3431,8 @@ Function UpdateGUI%()
 						If GetINIInt2(SCP294File, Loc, "Infection") Then I_008\Timer = I_008\Timer + 1.0
 						
 						If GetINIInt2(SCP294File, Loc, "Crystallization") Then I_409\Timer = I_409\Timer + 1.0
+						
+						If GetINIInt2(SCP294File, Loc, "Mutation") Then I_427\Timer = 70.0 * 360.0
 						
 						If GetINIInt2(SCP294File, Loc, "Revitalize") Then
 							For i = 0 To 6
@@ -4188,8 +4192,8 @@ Function UpdateGUI%()
 						If CanUseItem("ring", True, True)
 							If SelectedItem\ItemTemplate\TempName = "kill714" Then
 								CreateMsg("You feel a sudden need to sleep and never wake up.")
-								Kill()
 								msg\DeathMsg = SubjectName + " found in a comatose state caused by an enhanced SCP-714 produced from SCP-914. Subject was terminated."
+								Kill()
 							Else
 								CreateMsg("The ring is too small to fit on your fingers")
 							EndIf
@@ -5297,22 +5301,18 @@ Function UpdateMenu%()
 	Local x%, y%, z%, Width%, Height%, i%
 	
 	If MenuOpen Then
-		If PlayerRoom\RoomTemplate\Name <> "gate_b" And PlayerRoom\RoomTemplate\Name <> "gate_a" Then
+		If PlayerRoom\RoomTemplate\Name <> "gate_b" And PlayerRoom\RoomTemplate\Name <> "gate_a"  And (Not me\Terminated) Then
 			If me\StopHidingTimer = 0.0 Then
-				If n_I\Curr106 <> Null Then
-					If EntityDistanceSquared(n_I\Curr106\Collider, me\Collider) < 16.0 Then me\StopHidingTimer = 1.0
-				EndIf
-			ElseIf me\StopHidingTimer < 40.0
-				If (Not me\Terminated) Then 
-					me\StopHidingTimer = me\StopHidingTimer + fps\Factor[0]
-					If me\StopHidingTimer >= 40.0 Then
-						PlaySound_Strict(HorrorSFX[15])
-						CreateMsg("STOP HIDING!")
-						mm\ShouldDeleteGadgets = True
-						MenuOpen = False
-						Return
-					EndIf
-				EndIf
+				If n_I\Curr106 <> Null And EntityDistanceSquared(n_I\Curr106\Collider, me\Collider) < 16.0 Then me\StopHidingTimer = 1.0
+			ElseIf me\StopHidingTimer < 10.0
+				me\StopHidingTimer = me\StopHidingTimer + 1.0
+			ElseIf me\StopHidingTimer = 10.0 Then
+				PlaySound_Strict(HorrorSFX[15])
+				CreateMsg("STOP HIDING!")
+				mm\ShouldDeleteGadgets = True
+				me\StopHidingTimer = 0.0
+				MenuOpen = False
+				Return
 			EndIf
 		EndIf
 		
@@ -7147,13 +7147,13 @@ Function Use427%()
 			Next
 			If (Not I_427\Sound[0]) Then I_427\Sound[0] = LoadSound_Strict("SFX\SCP\427\Effect.ogg")
 			If (Not ChannelPlaying(I_427\SoundCHN[0])) Then I_427\SoundCHN[0] = PlaySound_Strict(I_427\Sound[0])
-			If I_427\Timer >= 70.0 * 180.0 Then
+			If I_427\Timer >= 70.0 * 210.0 Then
 				If (Not I_427\Sound[1]) Then I_427\Sound[1] = LoadSound_Strict("SFX\SCP\427\Transform.ogg")
 				If (Not ChannelPlaying(I_427\SoundCHN[1])) Then I_427\SoundCHN[1] = PlaySound_Strict(I_427\Sound[1])
 			EndIf
 			If PrevI427Timer < 70.0 * 60.0 And I_427\Timer >= 70.0 * 60.0 Then
 				CreateMsg("You feel refreshed and energetic.")
-			ElseIf PrevI427Timer < 70.0 * 180.0 And I_427\Timer >= 70.0 * 180.0
+			ElseIf PrevI427Timer < 70.0 * 210.0 And I_427\Timer >= 70.0 * 210.0
 				CreateMsg("You feel gentle muscle spasms all over your body.")
 			EndIf
 		Else
@@ -7168,6 +7168,7 @@ Function Use427%()
 			CreateMsg("You can't feel your legs. But you don't need legs anymore.")
 		EndIf
 		I_427\Timer = I_427\Timer + fps\Factor[0]
+		
 		
 		If (Not I_427\Sound[0]) Then I_427\Sound[0] = LoadSound_Strict("SFX\SCP\427\Effect.ogg")
 		If (Not I_427\Sound[1]) Then I_427\Sound[1] = LoadSound_Strict("SFX\SCP\427\Transform.ogg")
@@ -7190,8 +7191,8 @@ Function Use427%()
 			me\BlurTimer = 800.0
 		EndIf
 		If I_427\Timer >= 70.0 * 420.0 Then
-			Kill()
 			msg\DeathMsg = Chr(34) + "Requesting support from MTF Nu-7. We need more firepower to take this thing down." + Chr(34)
+			Kill()
 		ElseIf I_427\Timer >= 70.0 * 390.0
 			If (Not me\Crouch) Then SetCrouch(True)
 		EndIf
@@ -7540,11 +7541,11 @@ Function Update008%()
 						PlayerRoom\NPC[0]\Sound = LoadSound_Strict("SFX\SCP\008\KillScientist2.ogg")
 						PlayerRoom\NPC[0]\SoundCHN = PlaySound_Strict(PlayerRoom\NPC[0]\Sound)
 						
+						de.Decals = CreateDecal(DECAL_BLOOD_2, EntityX(PlayerRoom\NPC[0]\Collider), 544.0 * RoomScale + 0.01, EntityZ(PlayerRoom\NPC[0]\Collider), 90.0, Rnd(360.0), 0.0, 0.8)
+						EntityParent(de\OBJ, PlayerRoom\OBJ)
 						msg\DeathMsg = SubjectName + " found ingesting Dr. [DATA REDACTED] at Sector [DATA REDACTED]. Subject was immediately terminated by Nine-Tailed Fox and sent for autopsy. "
 						msg\DeathMsg = msg\DeathMsg + "SCP-008 infection was confirmed, after which the body was incinerated."
 						Kill()
-						de.Decals = CreateDecal(DECAL_BLOOD_2, EntityX(PlayerRoom\NPC[0]\Collider), 544.0 * RoomScale + 0.01, EntityZ(PlayerRoom\NPC[0]\Collider), 90.0, Rnd(360.0), 0.0, 0.8)
-						EntityParent(de\OBJ, PlayerRoom\OBJ)
 					ElseIf I_008\Timer > 96.0
 						me\BlinkTimer = Max(Min((-10.0) * (I_008\Timer - 96.0), me\BlinkTimer), -10.0)
 					Else
@@ -7573,8 +7574,8 @@ Function Update008%()
 					TurnEntity(me\Head, 80.0 + (Sin(MilliSecs() / 5.0)) * 30.0, (Sin(MilliSecs() / 5.0)) * 40.0, 0.0)
 				EndIf
 			Else
-				Kill()
 				me\BlinkTimer = Max(Min((-10.0) * (I_008\Timer - 96.0), me\BlinkTimer), -10.0)
+				Kill()
 				If PlayerRoom\RoomTemplate\Name = "dimension_1499" Then
 					msg\DeathMsg = "The whereabouts of SCP-1499 are still unknown, but a recon team has been dispatched to investigate reports of a violent attack to a church in the Russian town of [DATA REDACTED]."
 				ElseIf PlayerRoom\RoomTemplate\Name = "gate_b" Lor PlayerRoom\RoomTemplate\Name = "gate_a"
