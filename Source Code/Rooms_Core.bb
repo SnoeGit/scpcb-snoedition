@@ -1273,7 +1273,7 @@ Function FillRoom%(r.Rooms)
 					xTemp = 2298.0
 					zTemp = -936.0
 					xTemp2 = 2204.0
-					zTemp2 = 2887.0
+					zTemp2 = 2937.0
 					;[End Block]
 				Case 2
 					;[Block]
