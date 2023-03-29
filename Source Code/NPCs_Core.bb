@@ -3540,9 +3540,7 @@ Function UpdateNPCs%()
 				;[End Block] 
 			Case NPCType939
 				;[Block]
-				If PlayerRoom\RoomTemplate\Name <> "room3_storage" Then
-					n\State = 66.0
-				EndIf
+				If PlayerRoom\RoomTemplate\Name <> "room3_storage" Then n\State = 66.0
 				
 				; ~ State is set to 66 in the room3_storage-event if player isn't inside the room
 				If n\State < 66.0 Then 
@@ -3582,12 +3580,7 @@ Function UpdateNPCs%()
 							If (PrevFrame < 664.0 And n\Frame >= 664.0) Lor (PrevFrame > 673.0 And n\Frame < 654.0) Then
 								PlaySound2(Step2SFX[Rand(6, 9)], Camera, n\Collider, 12.0)
 								If Rand(10) = 1 Then
-									Temp = False
-									If (Not n\SoundCHN) Then 
-										Temp = True
-									ElseIf (Not ChannelPlaying(n\SoundCHN))
-										Temp = True
-									EndIf
+									If (Not n\SoundCHN) Lor (Not ChannelPlaying(n\SoundCHN)) Then Temp = True
 									If Temp Then
 										LoadNPCSound(n, "SFX\SCP\939\" + (n\ID Mod 3) + "Lure" + Rand(10) + ".ogg")
 										n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider, 10.0, 1.0, True)
@@ -3621,11 +3614,7 @@ Function UpdateNPCs%()
 									
 									Temp = False
 									
-									If PrevFrame < 24.0 And n\Frame >= 24.0 Then
-										Temp = True
-									ElseIf PrevFrame < 57.0 And n\Frame >= 57.0
-										Temp = True
-									EndIf
+									If PrevFrame < 24.0 And n\Frame >= 24.0 Lor PrevFrame < 57.0 And n\Frame >= 57.0 Then Temp = True
 									
 									If Temp Then
 										If DistanceSquared(n\EnemyX, EntityX(n\Collider), n\EnemyZ, EntityZ(n\Collider)) < 2.25 Then

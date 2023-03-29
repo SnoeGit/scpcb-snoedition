@@ -3422,16 +3422,16 @@ Function UpdateGUI%()
 						me\QuickHealTimer = GetINIFloat2(SCP294File, Loc, "Heal")
 						me\Bloodloss = Max(me\Bloodloss + GetINIInt2(SCP294File, Loc, "Blood Loss"), 0.0)
 						StrTemp =  GetINIString2(SCP294File, Loc, "Sound")
-						If StrTemp <> "" Then
-							PlaySound_Strict(LoadTempSound(StrTemp))
-						EndIf
+						If StrTemp <> "" Then PlaySound_Strict(LoadTempSound(StrTemp))
 						If GetINIInt2(SCP294File, Loc, "Stomach Ache") Then I_1025\State[3] = 1.0
 						
 						If GetINIInt2(SCP294File, Loc, "Infection") Then I_008\Timer = I_008\Timer + 1.0
 						
 						If GetINIInt2(SCP294File, Loc, "Crystallization") Then I_409\Timer = I_409\Timer + 1.0
 						
-						If GetINIInt2(SCP294File, Loc, "Mutation") Then I_427\Timer = 70.0 * 360.0
+						If GetINIInt2(SCP294File, Loc, "Mutation") Then
+							If I_427\Timer < 70.0 * 360.0 Then I_427\Timer = 70.0 * 360.0
+						EndIf
 						
 						If GetINIInt2(SCP294File, Loc, "Revitalize") Then
 							For i = 0 To 6
