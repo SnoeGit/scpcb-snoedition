@@ -1361,8 +1361,6 @@ Function LoadGame%(File$)
 		EndIf
 	EndIf
 	
-	UpdateTimer = 0.0
-	
 	CatchErrors("LoadGame")
 End Function
 
@@ -2075,8 +2073,6 @@ Function LoadGameQuick%(File$)
 		EndIf
 	EndIf
 	
-	UpdateTimer = 0.0
-	
 	; ~ Free some entities that could potentially cause memory leaks (for the endings)
 	; ~ This is only required for the LoadGameQuick function, as the other one is from the menu where everything is already deleted anyways
 	Local xTemp#, zTemp#
@@ -2179,16 +2175,12 @@ Function UpdateAutoSave%()
 		If as\Amount >= 5 Then as\Amount = 0
 	Else
 		as\Timer = as\Timer - fps\Factor[0]
-		If as\Timer <= 70.0 * 5.0 Then
-			CreateHintMsg("Auto save in: " + Str(Int(Ceil(as\Timer) / 70.0)) + "..")
-		EndIf
+		If as\Timer <= 70.0 * 5.0 Then CreateHintMsg("Auto save in: " + Str(Int(Ceil(as\Timer) / 70.0)) + "..")
 	EndIf
 End Function
 
 Function CancelAutoSave%()
-	If as\Timer <= 70.0 * 5.0 Then
-		CreateHintMsg("Auto save is canceled!")
-	EndIf
+	If as\Timer <= 70.0 * 5.0 Then CreateHintMsg("Auto save is canceled!")
 	If as\Timer <> 70.0 * 120.0 Then as\Timer = 70.0 * 120.0
 End Function
 

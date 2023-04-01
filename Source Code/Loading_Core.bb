@@ -993,7 +993,7 @@ Function LoadEvents%()
 	; ~ The dead guard
 	CreateEvent("room3_2_hcz", "room3_2_hcz", 0, 0.08)
 	
-	CreateEvent("room4_lcz", "room4_lcz", 0)
+	CreateEvent("room4_lcz_049", "room4_lcz", 0)
 	
 	If Rand(5) < 5 Then 
 		Select Rand(3)
@@ -1241,7 +1241,7 @@ Global TempSoundCHN%
 Global TempSoundIndex% = 0
 
 ; ~ The Music now has to be pre-defined, as the new system uses streaming instead of the usual sound loading system Blitz3D has
-Global Music$[30]
+Global Music$[29]
 
 Music[0] = "LightContainmentZone"
 Music[1] = "HeavyContainmentZone"
@@ -1257,22 +1257,21 @@ Music[10] = "106Chase"
 Music[11] = "Menu"
 Music[12] = "860_2Chase"
 Music[13] = "Cont_173_Intro"
-Music[14] = "Using178"
-Music[15] = "PDTrench"
-Music[16] = "Cont_205"
-Music[17] = "Gate_A"
-Music[18] = "1499"
-Music[19] = "1499_1Chase"
-Music[20] = "049Chase"
-Music[21] = "..\Ending\MenuBreath"
-Music[22] = "Cont_914"
-Music[23] = "Ending"
-Music[24] = "Credits"
-Music[25] = "SaveMeFrom"
-Music[26] = "Cont_106"
-Music[27] = "Cont_035"
-Music[28] = "Cont_409"
-Music[29] = "MaintenanceTunnels"
+Music[14] = "PDTrench"
+Music[15] = "Cont_205"
+Music[16] = "Gate_A"
+Music[17] = "1499"
+Music[18] = "1499_1Chase"
+Music[19] = "049Chase"
+Music[20] = "..\Ending\MenuBreath"
+Music[21] = "Cont_914"
+Music[22] = "Ending"
+Music[23] = "Credits"
+Music[24] = "SaveMeFrom"
+Music[25] = "Cont_106"
+Music[26] = "Cont_035"
+Music[27] = "Cont_409"
+Music[28] = "MaintenanceTunnels"
 
 Global MusicCHN%
 MusicCHN = StreamSound_Strict("SFX\Music\" + Music[2] + ".ogg", opt\MusicVolume, Mode)

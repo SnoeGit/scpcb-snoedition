@@ -2224,20 +2224,11 @@ Function UpdateDoors%()
 	Local d.Doors, p.Particles
 	Local x#, z#, Dist#, i%, FindButton%
 	
-	If UpdateTimer <= 0.0 Then
-		For d.Doors = Each Doors
-			Local xDist# = Abs(EntityX(me\Collider) - EntityX(d\FrameOBJ, True))
-			Local zDist# = Abs(EntityZ(me\Collider) - EntityZ(d\FrameOBJ, True))
-			
-			d\Dist = xDist + zDist
-		Next
-	EndIf
-	
 	d_I\ClosestButton = 0
 	d_I\ClosestDoor = Null
 	
 	For d.Doors = Each Doors
-		If (d\Dist <= HideDistance) Lor (d\IsElevatorDoor > 0) Then ; ~ Make elevator doors update everytime because if not, this can cause a bug where the elevators suddenly won't work, most noticeable in room2_mt -- ENDSHN
+		If (EntityDistanceSquared(d\FrameOBJ, me\Collider) <= PowTwo(HideDistance)) Lor (d\IsElevatorDoor > 0) Then ; ~ Make elevator doors update everytime because if not, this can cause a bug where the elevators suddenly won't work, most noticeable in room2_mt -- ENDSHN
 			; ~ Automatically disable d\AutoClose if the door is locked because if not, this can cause a locked door to be closed and player get stuck -- Jabka
 			If d\AutoClose And d\Locked > 0 Then d\AutoClose = False
 			
@@ -2629,7 +2620,6 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 						EndIf
 						
 						TeleportEntity(me\Collider, EntityX(SecondPivot, True) + x, (0.1 * fps\Factor[0]) + EntityY(SecondPivot, True) + (EntityY(me\Collider) - EntityY(FirstPivot, True)), EntityZ(SecondPivot, True) + z, 0.3, True)
-						UpdateTimer = 0.0
 						me\DropSpeed = 0.0
 						
 						door1\SoundCHN = PlaySound2(OpenDoorSFX(ELEVATOR_DOOR, Rand(0, 2)), Camera, door1\OBJ)
@@ -2740,7 +2730,6 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 							z = Max(Min((EntityZ(me\Collider) - EntityZ(SecondPivot, True)), (280 * RoomScale) - 0.22), ((-280) * RoomScale) + 0.22)
 						EndIf
 						TeleportEntity(me\Collider, EntityX(FirstPivot, True) + x, (0.1 * fps\Factor[0]) + EntityY(FirstPivot, True) + (EntityY(me\Collider) - EntityY(SecondPivot, True)), EntityZ(FirstPivot, True) + z, 0.3, True)
-						UpdateTimer = 0.0
 						me\DropSpeed = 0.0
 						
 						door2\SoundCHN = PlaySound2(OpenDoorSFX(ELEVATOR_DOOR, Rand(0, 2)), Camera, door2\OBJ)
@@ -3124,17 +3113,9 @@ End Function
 Function UpdateDecals%()
 	Local de.Decals
 	
-	If UpdateTimer <= 0.0 Then
-		For de.Decals = Each Decals
-			Local xDist# = Abs(EntityX(me\Collider) - EntityX(de\OBJ, True))
-			Local zDist# = Abs(EntityZ(me\Collider) - EntityZ(de\OBJ, True))
-			
-			de\Dist = xDist + zDist
-		Next
-	EndIf
 	
 	For de.Decals = Each Decals
-		If de\Dist <= HideDistance Then
+		If EntityDistanceSquared(de\OBJ, me\Collider) <= PowTwo(HideDistance) Then
 			If EntityHidden(de\OBJ) Then ShowEntity(de\OBJ)
 			If de\SizeChange <> 0.0 Then
 				de\Size = de\Size + (de\SizeChange * fps\Factor[0])
@@ -3276,24 +3257,15 @@ Function UpdateSecurityCams%()
 	CatchErrors("Uncaught (UpdateSecurityCams)")
 	
 	Local sc.SecurityCams
+	Local Close% = False
 	
 	; ~ CoffinEffect = 0, not affected by SCP-895
 	; ~ CoffinEffect = 1, constantly affected by SCP-895
 	; ~ CoffinEffect = 2, SCP-079 can broadcast SCP-895 feed on this screen
 	; ~ CoffinEffect = 3, SCP-079 broadcasting SCP-895 feed
 	
-	If UpdateTimer <= 0.0 Then
-		For sc.SecurityCams = Each SecurityCams
-			Local xDist# = Abs(EntityX(me\Collider) - EntityX(sc\BaseOBJ, True))
-			Local zDist# = Abs(EntityZ(me\Collider) - EntityZ(sc\BaseOBJ, True))
-			
-			sc\Dist = xDist + zDist
-		Next
-	EndIf
-	
 	For sc.SecurityCams = Each SecurityCams
-		If sc\Dist <= HideDistance Then
-			Local Close% = False
+		If sc\room\Dist <= HideDistance Then
 			
 			If sc\room = Null Then
 				If (Not EntityHidden(sc\Cam)) Then HideEntity(sc\Cam)
@@ -3797,21 +3769,10 @@ End Function
 
 Include "Source Code\Rooms_Core.bb"
 
-Global UpdateTimer#
-
-Function UpdateDistanceTimer%()
-	UpdateTimer = UpdateTimer - fps\Factor[0]
-End Function
-
-Function ResetDistanceTimer%()
-	If UpdateTimer <= 0.0 Then UpdateTimer = 35.0
-End Function
-
 Function TeleportToRoom%(r.Rooms)
 	Local it.Items
 	
 	PlayerRoom = r
-	UpdateTimer = 0.0
 	For it.Items = Each Items
 		it\DistTimer = 0.0
 	Next
@@ -4534,7 +4495,7 @@ Function CreateMap%()
 	
 	MapRoom(ROOM3, Floor(Rnd(0.2, 0.8) * Float(Room3Amount[0]))) = "room3_storage"
 	
-	MapRoom(ROOM3, Floor(0.8 * Float(Room3Amount[0]))) = "cont3_268"
+	MapRoom(ROOM3, Floor(0.85 * Float(Room3Amount[0]))) = "cont3_268"
 	
 	MapRoom(ROOM4, Floor(0.3 * Float(Room4Amount[0]))) = "room4_ic"
 	
@@ -4580,8 +4541,8 @@ Function CreateMap%()
 	MapRoom(ROOM2, MinPos + Floor(0.1 * Float(Room2Amount[2]))) = "room2_scientists"
 	
 	SetRoom("room2_cafeteria", ROOM2, MinPos + Floor(0.2 * Float(Room2Amount[2])), MinPos, MaxPos)
-	SetRoom("room2_office_3", ROOM2, MinPos + Floor(0.3 * Float(Room2Amount[2])), MinPos, MaxPos)
-	SetRoom("room2_bio", ROOM2, MinPos + Floor(0.35 * Float(Room2Amount[2])), MinPos, MaxPos)
+	SetRoom("room2_bio", ROOM2, MinPos + Floor(0.3 * Float(Room2Amount[2])), MinPos, MaxPos)
+	SetRoom("room2_office_3", ROOM2, MinPos + Floor(0.35 * Float(Room2Amount[2])), MinPos, MaxPos)
 	SetRoom("room2_servers_ez", ROOM2, MinPos + Floor(0.4 * Room2Amount[2]), MinPos, MaxPos)	
 	SetRoom("room2_ez", ROOM2, MinPos + Floor(0.45 * Room2Amount[2]), MinPos, MaxPos)
 	SetRoom("room2_office", ROOM2, MinPos + Floor(0.5 * Room2Amount[2]), MinPos, MaxPos)	

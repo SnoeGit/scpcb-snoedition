@@ -74,7 +74,7 @@ Else
 	Graphics3DExt(opt\GraphicWidth, opt\GraphicHeight, 0, (opt\DisplayMode = 2) + 1)
 EndIf
 
-Const VersionNumber$ = "1.9"
+Const VersionNumber$ = "1.100"
 
 AppTitle("SCP - Containment Breach Gameplay Overhaul v" + VersionNumber)
 
@@ -634,8 +634,6 @@ Function UpdateGame%()
 			me\RestoreSanity = True
 			ShouldEntitiesFall = True
 			
-			UpdateDistanceTimer()
-			
 			If PlayerInReachableRoom(False, True) Then
 				UpdateSecurityCams()
 				
@@ -980,8 +978,6 @@ Function UpdateGame%()
 		UpdateQuickLoading()
 		
 		UpdateAchievementMsg()
-		
-		ResetDistanceTimer()
 	Wend
 	
 	; ~ Go out of function immediately if the game has been quit
@@ -5099,7 +5095,7 @@ Function RenderGUI%()
 							Else
 								Color(30, 30, 30)
 							EndIf
-							If (MilliSecs() Mod 800) < 200 Then ; ~ TODO: FIND THE WAY TO GET RID OF MILLISECS2
+							If (MilliSecs() Mod 800) < 200 Then
 								If Offline Then Text(x - (NAV_WIDTH / 2) + (10 * MenuScale), y - (NAV_HEIGHT / 2) + (10 * MenuScale), "MAP DATABASE OFFLINE")
 								
 								YawValue = EntityYaw(me\Collider) - 90.0
@@ -5115,53 +5111,27 @@ Function RenderGUI%()
 							Local SCPs_Found% = 0, Dist#
 							
 							If SelectedItem\ItemTemplate\TempName = "navulti" And (MilliSecs() Mod 600) < 400 Then
-								If n_I\Curr173 <> Null Then
-									Dist = EntityDistanceSquared(Camera, n_I\Curr173\OBJ)
-									If Dist < 900.0 Then
-										Dist = Sqr(Ceil(Dist / 8.0) * 8.0) ; ~ This is probably done to disguise SCP-173's teleporting behavior
-										Color(100, 0, 0)
-										Oval(x - (Dist * (3 * MenuScale)), y - (7 * MenuScale) - (Dist * (3 * MenuScale)), Dist * (6 * MenuScale), Dist * (6 * MenuScale), False)
-										Text(x - (NAV_WIDTH / 2) + (10 * MenuScale), y - (NAV_HEIGHT / 2) + (30 * MenuScale), "SCP-173")
-										SCPs_Found = SCPs_Found + 1
-									EndIf
-								EndIf
-								If n_I\Curr106 <> Null Then
-									Dist = EntityDistanceSquared(Camera, n_I\Curr106\OBJ)
-									If Dist < 900.0 Then
-										Dist = Sqr(Dist)
-										Color(100, 0, 0)
-										Oval(x - (Dist * (1.5 * MenuScale)), y - (7 * MenuScale) - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
-										Text(x - (NAV_WIDTH / 2) + (10 * MenuScale), y - (NAV_HEIGHT / 2) + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-106")
-										SCPs_Found = SCPs_Found + 1
-									EndIf
-								EndIf
-								If n_I\Curr096 <> Null Then 
-									Dist = EntityDistanceSquared(Camera, n_I\Curr096\OBJ)
-									If Dist < 900.0 Then
-										Dist = Sqr(Dist)
-										Color(100, 0, 0)
-										Oval(x - (Dist * (1.5 * MenuScale)), y - (7 * MenuScale) - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
-										Text(x - (NAV_WIDTH / 2) + (10 * MenuScale), y - (NAV_HEIGHT / 2) + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-096")
-										SCPs_Found = SCPs_Found + 1
-									EndIf
-								EndIf
-								If n_I\Curr049 <> Null Then
-									If (Not n_I\Curr049\HideFromNVG) Then
-									Dist = EntityDistanceSquared(Camera, n_I\Curr049\OBJ)
-										If Dist < 900.0 Then
-											Dist = Sqr(Dist)
-											Color(100, 0, 0)
-											Oval(x - (Dist * (1.5 * MenuScale)), y - (7 * MenuScale) - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
-											Text(x - (NAV_WIDTH / 2) + (10 * MenuScale), y - (NAV_HEIGHT / 2) + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-049")
-											SCPs_Found = SCPs_Found + 1
+								Local np.NPCs
+								
+								For np.NPCs = Each NPCs
+									If np\NPCType = NPCType173 Lor np\NPCType = NPCType106 Lor np\NPCType = NPCType096 Lor np\NPCType = NPCType049 Lor np\NPCType = NPCType066 Then
+										If (Not np\HideFromNVG) Then
+											Dist = EntityDistanceSquared(Camera, np\Collider)
+											If Dist < 900.0 Then
+												SqrValue = Sqr(Dist)
+												Color(100, 0, 0)
+												Oval(x - (SqrValue * (1.5 * MenuScale)), y - (SqrValue * (1.5 * MenuScale)), SqrValue * (3 * MenuScale), SqrValue * (3 * MenuScale), False)
+												Text(x - (NAV_WIDTH / 2) + (10 * MenuScale), y - (NAV_HEIGHT / 2) + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), np\NVGName)
+												SCPs_Found = SCPs_Found + 1
+											EndIf
 										EndIf
 									EndIf
-								EndIf
+								Next
 								If PlayerRoom\RoomTemplate\Name = "cont1_895" Then
 									If CoffinDistance < 8.0 Then
 										Dist = Rnd(4.0, 8.0)
 										Color(100, 0, 0)
-										Oval(x - (Dist * (1.5 * MenuScale)), y - (7 * MenuScale) - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
+										Oval(x - (Dist * (1.5 * MenuScale)), y - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
 										Text(x - (NAV_WIDTH / 2) + (10 * MenuScale), y - (NAV_HEIGHT / 2) + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-895")
 									EndIf
 								EndIf
@@ -5190,16 +5160,14 @@ Function RenderGUI%()
 					;[End Block]
 				Case "hazmatsuit", "finehazmatsuit", "superhazmatsuit", "heavyhazmatsuit"
 					;[Block]
-					If wi\BallisticVest = 0 Then
-						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
-						
-						Width = 300 * MenuScale
-						Height = 20 * MenuScale
-						x = mo\Viewport_Center_X - (Width / 2)
-						y = mo\Viewport_Center_Y + (80 * MenuScale)
-						
-						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
-					EndIf
+					DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
+					
+					Width = 300 * MenuScale
+					Height = 20 * MenuScale
+					x = mo\Viewport_Center_X - (Width / 2)
+					y = mo\Viewport_Center_Y + (80 * MenuScale)
+					
+					RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					;[End Block]
 				Case "gasmask", "finegasmask", "supergasmask", "heavygasmask", "helmet", "vest", "finevest"
 					;[Block]
@@ -6295,10 +6263,10 @@ Function UpdateEnding%()
 			me\EndingScreen = LoadImage_Strict("GFX\menu\ending_screen.png")
 			me\EndingScreen = ScaleImage2(me\EndingScreen, MenuScale, MenuScale)
 			
-			ShouldPlay = 23
+			ShouldPlay = 22
 			opt\CurrMusicVolume = opt\MusicVolume
 			StopStream_Strict(MusicCHN) : MusicCHN = 0
-			MusicCHN = StreamSound_Strict("SFX\Music\" + Music[23] + ".ogg", opt\CurrMusicVolume * opt\MasterVolume, 0)
+			MusicCHN = StreamSound_Strict("SFX\Music\" + Music[22] + ".ogg", opt\CurrMusicVolume * opt\MasterVolume, 0)
 			NowPlaying = ShouldPlay
 			
 			PlaySound_Strict(LightSFX)
@@ -6325,7 +6293,7 @@ Function UpdateEnding%()
 					y = y + 75 * MenuScale
 					
 					If UpdateMainMenuButton(x, y, 430 * MenuScale, 60 * MenuScale, "MAIN MENU", True)
-						ShouldPlay = 24
+						ShouldPlay = 23
 						NowPlaying = ShouldPlay
 						For i = 0 To 9
 							If TempSounds[i] <> 0 Then FreeSound_Strict(TempSounds[i]) : TempSounds[i] = 0
@@ -6339,12 +6307,12 @@ Function UpdateEnding%()
 						InitCredits()
 					EndIf
 				Else
-					ShouldPlay = 23
+					ShouldPlay = 22
 					UpdateMenu()
 				EndIf
 			; ~ Credits
 			ElseIf me\EndingTimer <= -2000.0
-				ShouldPlay = 24
+				ShouldPlay = 23
 				UpdateCredits()
 			EndIf
 		EndIf
@@ -6520,7 +6488,7 @@ Function UpdateCredits%()
 		Delete Each CreditsLine
 		NullGame(False)
 		StopStream_Strict(MusicCHN) : MusicCHN = 0
-		ShouldPlay = 21
+		ShouldPlay = 20
 		CurrSave = Null
 		ResetInput()
 		Return

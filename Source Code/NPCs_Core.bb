@@ -1194,7 +1194,6 @@ Function UpdateNPCs%()
 								n\SoundCHN = StreamSound_Strict("SFX\Music\096.ogg", 0)
 								n\SoundCHN_IsStream = True
 							EndIf
-							UpdateStreamSoundOrigin(n\SoundCHN, Camera, n\Collider, 8.0, 1.0, True)
 							
 							If n\State3 = -1.0
 								AnimateNPC(n, 936.0, 1263.0, 0.1, False)
@@ -1236,6 +1235,7 @@ Function UpdateNPCs%()
 								EndIf
 							EndIf
 						EndIf
+						UpdateStreamSoundOrigin(n\SoundCHN, Camera, n\Collider, 8.0, 1.0, True)
 						;[End Block]
 					Case 4.0
 						;[Block]
@@ -1438,7 +1438,6 @@ Function UpdateNPCs%()
 								n\SoundCHN = StreamSound_Strict("SFX\Music\096.ogg", 0)
 								n\SoundCHN_IsStream = True
 							EndIf
-							UpdateStreamSoundOrigin(n\SoundCHN, Camera, n\Collider, 14.0, 1.0, True)
 							
 							If n\Frame >= 422.0 Then
 								n\State2 = n\State2 + fps\Factor[0]
@@ -1507,6 +1506,7 @@ Function UpdateNPCs%()
 								EndIf
 							EndIf
 						EndIf
+						UpdateStreamSoundOrigin(n\SoundCHN, Camera, n\Collider, 14.0, 1.0, True)
 						;[End Block]
 				End Select
 				
@@ -1647,7 +1647,7 @@ Function UpdateNPCs%()
 													Next
 												Else
 													msg\DeathMsg = "An active instance of SCP-049-2 was discovered in [REDACTED]. Terminated by Nine-Tailed Fox."
-													me\KillAnim = 0 : Kill()
+													Kill() : me\KillAnim = 0
 												EndIf
 												PlaySound_Strict(HorrorSFX[13])
 												LoadNPCSound(n, "SFX\SCP\049\Kidnap" + Rand(2) + ".ogg", 1)
@@ -1962,7 +1962,7 @@ Function UpdateNPCs%()
 								EndIf
 							EndIf
 							
-							If PlayerRoom\RoomTemplate\Name = "room2_sl" Then ShouldPlay = 20
+							If PlayerRoom\RoomTemplate\Name = "room2_sl" Then ShouldPlay = 19
 							
 							If n\CurrSpeed > 0.005 Then
 								If (PrevFrame < 361.0 And n\Frame >= 361.0) Lor (PrevFrame < 377.0 And n\Frame >= 377.0) Then
@@ -4446,7 +4446,7 @@ Function UpdateNPCs%()
 							;[Block]
 							If chs\NoTarget Then n\State = 0.0
 							
-							If PlayerRoom\RoomTemplate\Name = "dimension_1499" And n\PrevState = 0 Then ShouldPlay = 19
+							If PlayerRoom\RoomTemplate\Name = "dimension_1499" And n\PrevState = 0 Then ShouldPlay = 18
 							
 							PointEntity(n\OBJ, me\Collider)
 							RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 20.0), 0.0)
