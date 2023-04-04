@@ -912,9 +912,7 @@ Function LoadGame%(File$)
 			Delete(r\fr) : r\fr = Null
 		EndIf
 		
-		If r\x = r1499_x And r\z = r1499_z
-			I_1499\PrevRoom = r
-		EndIf
+		If r\x = r1499_x And r\z = r1499_z Then I_1499\PrevRoom = r
 	Next
 	
 	If ReadInt(f) <> 954 Then RuntimeError("Couldn't load the game, save file may be corrupted (error 2)")
@@ -1782,9 +1780,7 @@ Function LoadGameQuick%(File$)
 		
 		If Temp2 = 1 Then PlayerRoom = r
 		
-		If r\x = r1499_x And r\z = r1499_z
-			I_1499\PrevRoom = r
-		EndIf
+		If r\x = r1499_x And r\z = r1499_z Then I_1499\PrevRoom = r
 	Next
 	
 	If ReadInt(f) <> 954 Then RuntimeError("Couldn't load the game, save file may be corrupted (error 2)")
@@ -1927,9 +1923,7 @@ Function LoadGameQuick%(File$)
 				e\room\Objects[1] = CreatePivot()
 			EndIf
 		ElseIf e\EventID = e_cont2_860_1
-			If e\EventState = 1.0 Then
-				ShowEntity(e\room\fr\Forest_Pivot)
-			EndIf
+			If e\EventState = 1.0 Then ShowEntity(e\room\fr\Forest_Pivot)
 		EndIf
 	Next
 	
@@ -2068,9 +2062,7 @@ Function LoadGameQuick%(File$)
 		EndIf
 		ShowEntity(me\Collider)
 		TeleportEntity(me\Collider, EntityX(me\Collider), EntityY(me\Collider) + 0.5, EntityZ(me\Collider), 0.3, True)
-		If PlayerRoom <> Null Then
-			HideEntity(PlayerRoom\OBJ)
-		EndIf
+		If PlayerRoom <> Null Then HideEntity(PlayerRoom\OBJ)
 	EndIf
 	
 	; ~ Free some entities that could potentially cause memory leaks (for the endings)
@@ -2290,9 +2282,7 @@ Function LoadSavedMaps%()
 		If File = "" Then Exit
 		If FileType(CurrentDir() + MapCreatorPath + File) = 1 Then 
 			If File <> "." And File <> ".." Then
-				If Right(File, 6) = "cbmap2" Lor Right(File, 5) = "cbmap" Then
-					SavedMapsAmount = SavedMapsAmount + 1
-				EndIf
+				If Right(File, 6) = "cbmap2" Lor Right(File, 5) = "cbmap" Then SavedMapsAmount = SavedMapsAmount + 1
 			EndIf
 		EndIf 
 	Forever 
@@ -2338,9 +2328,7 @@ Function LoadMap%(File$)
 	
 	f = ReadFile(File)
 	
-	If CurrMapGrid <> Null Then
-		Delete(CurrMapGrid) : CurrMapGrid = Null
-	EndIf
+	If CurrMapGrid <> Null Then Delete(CurrMapGrid) : CurrMapGrid = Null
 	CurrMapGrid = New MapGrid
 	
 	CoffinDistance = 100.0
@@ -2414,9 +2402,7 @@ Function LoadMap%(File$)
 		
 		Local fr.Forest
 		
-		If ForestRoom <> Null Then
-			fr.Forest = New Forest
-		EndIf
+		If ForestRoom <> Null Then fr.Forest = New Forest
 		
 		; ~ Forest rooms
 		For i = 0 To ForestPieceAmount - 1
@@ -2481,9 +2467,7 @@ Function LoadMap%(File$)
 			EndIf
 		Next
 		
-		If MTRoom <> Null Then
-			MTRoom\mt = New MTGrid
-		EndIf
+		If MTRoom <> Null Then MTRoom\mt = New MTGrid
 		
 		; ~ Maintenance tunnels rooms
 		For i = 0 To MTPieceAmount - 1
@@ -2493,15 +2477,9 @@ Function LoadMap%(File$)
 			
 			Angle = ReadByte(f)
 			
-			If Angle <> 1.0 And Angle <> 3.0 Then
-				Angle = Angle + 2.0
-			EndIf
-			If Name = "maintenance tunnel corner" Lor Name = "maintenance tunnel t-shaped room" Then
-				Angle = Angle + 3.0
-			EndIf
-			If Angle > 3.0 Then
-				Angle = (Angle Mod 4.0)
-			EndIf
+			If Angle <> 1.0 And Angle <> 3.0 Then Angle = Angle + 2.0
+			If Name = "maintenance tunnel corner" Lor Name = "maintenance tunnel t-shaped room" Then Angle = Angle + 3.0
+			If Angle > 3.0 Then Angle = (Angle Mod 4.0)
 			
 			x = (MTGridSize - 1) - x
 			

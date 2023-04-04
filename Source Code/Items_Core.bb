@@ -555,7 +555,7 @@ Function PickItem%(item.Items)
 						CreateMsg(Chr(34) + "I won't pick up that!" + Chr(34))
 						Return
 						;[End Block]
-					Case "firstaid", "finefirstaid", "veryfinefirstaid", "firstaid2"
+					Case "firstaid", "finefirstaid", "veryfinefirstaid", "bluefirstaid"
 						;[Block]
 						item\State = 0.0
 						;[End Block]
