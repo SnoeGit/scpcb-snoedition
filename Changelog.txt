@@ -1,3 +1,33 @@
+v1.200
+
+Rooms:
+
+- SCP-205 Storage room sign changed to say Storage Area 1C.
+- Can't pause in the Pocket Dimension anymore.
+
+Bug Fixes:
+
+- Fixed "Stop Hiding!" spam.
+
+v1.100
+
+General:
+
+- Ballistic Helmet reduces the speed of blinking caused by smoke.
+
+NPCs:
+
+SCP-173 is more likely to open doors on higher difficulties.
+
+Rooms:
+
+- SCP-205 was given a Storage room that can be accessed with a Level 1 Key Card
+- Storage Area 6(room3_storage) new room from Ultimate Edition 1.1 has been ported over.
+
+Bug Fixes:
+
+- Fixes SCP-096 Voices still being tied to SFX.
+
 v1.95
 
 General:

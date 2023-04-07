@@ -5268,16 +5268,21 @@ Function UpdateMenu%()
 	Local x%, y%, z%, Width%, Height%, i%
 	
 	If MenuOpen Then
-		If PlayerRoom\RoomTemplate\Name <> "gate_b" And PlayerRoom\RoomTemplate\Name <> "gate_a"  And (Not me\Terminated) Then
+		If PlayerRoom\RoomTemplate\Name = "dimension_106" Lor me\FallTimer =< -1.0 And (Not me\Terminated) Then
+			mm\ShouldDeleteGadgets = True
+			MenuOpen = False
+			Return
+		EndIf
+		If PlayerRoom\RoomTemplate\Name <> "gate_b" And PlayerRoom\RoomTemplate\Name <> "gate_a" And (Not me\Terminated) Then
 			If me\StopHidingTimer = 0.0 Then
 				If n_I\Curr106 <> Null And EntityDistanceSquared(n_I\Curr106\Collider, me\Collider) < 16.0 Then me\StopHidingTimer = 1.0
-			ElseIf me\StopHidingTimer < 10.0
+			ElseIf me\StopHidingTimer < 35.0
 				me\StopHidingTimer = me\StopHidingTimer + 1.0
-			ElseIf me\StopHidingTimer = 10.0 Then
+			ElseIf me\StopHidingTimer = 35.0 And n_I\Curr106 <> Null And EntityDistanceSquared(n_I\Curr106\Collider, me\Collider) < 16.0 Then
 				PlaySound_Strict(HorrorSFX[15])
 				CreateMsg("STOP HIDING!")
 				mm\ShouldDeleteGadgets = True
-				me\StopHidingTimer = 0.0
+				me\StopHidingTimer = 36.0
 				MenuOpen = False
 				Return
 			EndIf

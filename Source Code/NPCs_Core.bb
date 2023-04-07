@@ -1096,7 +1096,7 @@ Function UpdateNPCs%()
 								EndIf
 							EndIf
 							
-							If me\FallTimer < -1.0 Then
+							If me\FallTimer =< -1.0 Then
 								CanSave = False
 								If me\FallTimer < -250.0 Then
 									MoveToPocketDimension()
