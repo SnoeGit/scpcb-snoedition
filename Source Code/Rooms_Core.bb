@@ -3235,6 +3235,11 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case "cont2c_066"
 			;[Block]
+			d.Doors = CreateDoor(r\x + 256.0 * RoomScale, r\y, r\z - 576.0 * RoomScale, 90.0, r, False, DEFAULT_DOOR, KEY_CARD_2)
+			d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
+			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
+			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.165, True)
+			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			d.Doors = CreateDoor(r\x - 268.0 * RoomScale, r\y, r\z, 90.0, r, True, DEFAULT_DOOR, KEY_CARD_3)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) + 0.018, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) - 0.018, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)

@@ -3,7 +3,7 @@ v1.200
 Rooms:
 
 - SCP-205 Storage room sign changed to say Storage Area 1C.
-- Can't pause in the Pocket Dimension anymore.
+- Improve Medical Bay Info Center ceiling.
 
 Bug Fixes:
 
